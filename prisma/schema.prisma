@@ -9,3 +9,46 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id            Int         @id @default(autoincrement())
+  email         String      @unique
+  dateCreated   DateTime    @default(now())
+  username      String      @unique @db.VarChar(60)
+  password      String      @db.VarChar(60)
+  
+  habits        Habit[]     @relation("Owner")
+  contacts      Contact[]   @relation("Contacter")
+}
+
+model Habit {
+  id              Int         @id @default(autoincrement())
+  routine         String       
+  dateCreated     DateTime    @default(now())
+  datesCompleted  DateTime   
+
+  owner           User        @relation("Owner", fields: [ownerId], references: [id])
+  ownerId         Int
+
+  checkIn         CheckIn?    @relation("HabitChecked")
+}
+
+model CheckIn {
+  id            Int         @id @default(autoincrement())
+  dayOfTheWeek  String
+  
+  habit         Habit       @relation("HabitChecked", fields: [habitId], references: [id])
+  habitId       Int         @unique
+  contacts      Contact[]   @relation("CheckIn")
+
+}
+
+model Contact {
+  id            Int         @id @default(autoincrement())
+  email         String      @db.VarChar(60)
+  
+  contacter     User        @relation("Contacter", fields: [contacterId], references: [id])
+  contacterId   Int
+  checkIn       CheckIn     @relation("CheckIn", fields: [checkInId], references: [id])
+  checkInId       Int         
+}
