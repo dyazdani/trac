@@ -16,39 +16,36 @@ model User {
   dateCreated   DateTime    @default(now())
   username      String      @unique @db.VarChar(60)
   password      String      @db.VarChar(60)
+  isAdmin       Boolean
   
   habits        Habit[]     @relation("Owner")
-  contacts      Contact[]   @relation("Contacter")
 }
 
 model Habit {
   id              Int         @id @default(autoincrement())
-  routine         String       
   dateCreated     DateTime    @default(now())
+  dateUpdated     DateTime    @updatedAt
   datesCompleted  DateTime[]  
-
-  owner           User        @relation("Owner", fields: [ownerId], references: [id])
+  checkInDay      String
+  
+  owner           User        @relation("Owner", fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId         Int
 
-  checkIn         CheckIn?    @relation("HabitChecked")
+  routine Routine? 
 }
 
-model CheckIn {
-  id            Int         @id @default(autoincrement())
-  dayOfTheWeek  String
-  
-  habit         Habit       @relation("HabitChecked", fields: [habitId], references: [id])
-  habitId       Int         @unique
-  contacts      Contact[]   @relation("CheckIn")
+model Routine {
+  id    Int @id @default(autoincrement())
+  dateCreated   DateTime  @default(now())
+  dateUpdated   DateTime  @updatedAt
+  monday Boolean
+  tuesday Boolean
+  wednesday Boolean
+  thursday Boolean
+  friday Boolean
+  saturday Boolean
+  sunday Boolean
 
-}
-
-model Contact {
-  id            Int         @id @default(autoincrement())
-  email         String      @db.VarChar(60)
-  
-  contacter     User        @relation("Contacter", fields: [contacterId], references: [id])
-  contacterId   Int
-  checkIn       CheckIn     @relation("CheckIn", fields: [checkInId], references: [id])
-  checkInId       Int         
+  habit Habit? @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  habitId Int @unique
 }
