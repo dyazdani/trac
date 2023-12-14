@@ -1,0 +1,36 @@
+{
+    "users": [
+        {
+            "email": "bilbo@shire.me",
+            "username": "bbaggins",
+            "password": "followyourfeet"
+        },
+        {
+            "email": "elrond@rivendell.me",
+            "username": "elrondDaElf",
+            "password": "i'dratherberidingaswanboatdownrauros"
+        },
+        {
+            "email": "tombombadil@oldforest.me",
+            "username": "OldTomBombadillo",
+            "password": "bright_blue_his_jacket_is_and_his_boots_are_yellow"
+        }
+    ],
+    "habits": [
+        {
+            "routine": "Hey Tony, can I join the Avengers?",
+            "ownerId": 1,
+            "datesCompleted": [
+                "1987-12-03T19:16:45.333Z",
+                "1987-12-04T19:16:45.333Z",
+                "1987-12-05T19:16:45.333Z"
+            ]
+        }
+
+    ],
+    "checkIns": [
+    ],
+    "contacts": [
+        
+    ]
+}

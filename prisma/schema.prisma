@@ -25,7 +25,7 @@ model Habit {
   id              Int         @id @default(autoincrement())
   routine         String       
   dateCreated     DateTime    @default(now())
-  datesCompleted  DateTime   
+  datesCompleted  DateTime[]  
 
   owner           User        @relation("Owner", fields: [ownerId], references: [id])
   ownerId         Int
