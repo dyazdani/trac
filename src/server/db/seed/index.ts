@@ -1,11 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-import { users, habits, routines} from './seedData.json';
+import { users, habits, routines, checkIns} from './seedData.json';
 const prisma = new PrismaClient();
 
 interface HabitSeedData {
     name: string
     datesCompleted: string[]
-    checkInDay: string
     ownerId: number
 }
 
@@ -27,6 +26,9 @@ const load = async () => {
         await prisma.user.deleteMany();
         console.log("Deleted records in users table");
 
+        await prisma.checkIn.deleteMany();
+        console.log("Deleted records in checkIns table")
+
         await prisma.$executeRaw`ALTER SEQUENCE "User_id_seq" RESTART WITH 1;`;
         console.log("reset user auto increment to 1")
 
@@ -35,6 +37,9 @@ const load = async () => {
 
         await prisma.$executeRaw`ALTER SEQUENCE "Routine_id_seq" RESTART WITH 1;`;
         console.log("reset routine auto increment to 1")
+
+        await prisma.$executeRaw`ALTER SEQUENCE "CheckIn_id_seq" RESTART WITH 1;`;
+        console.log("reset checkIn auto increment to 1")
 
         await prisma.user.createMany({
             data: users
@@ -50,6 +55,11 @@ const load = async () => {
             data: routines
         });
         console.log("Added routine data")
+
+        await prisma.checkIn.createMany({
+            data: checkIns
+        });
+        console.log("Added checkIn data")
 
     } catch(e) {
         console.error(e);
