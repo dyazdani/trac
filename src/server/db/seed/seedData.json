@@ -13,24 +13,235 @@
         {
             "email": "tombombadil@oldforest.me",
             "username": "OldTomBombadillo",
-            "password": "bright_blue_his_jacket_is_and_his_boots_are_yellow"
+            "password": "bright_blue_his_jacket_is_and_his_boots_are_yellow",
+            "isAdmin": true
+        },
+        {
+            "email": "sauron@mordor.me",
+            "username": "TheDarkLord",
+            "password": "one-ring-to-rule-them-all"
         }
     ],
     "habits": [
         {
-            "routine": "Hey Tony, can I join the Avengers?",
-            "ownerId": 1,
+            "name": "Eat second breakfast",
             "datesCompleted": [
                 "1987-12-03T19:16:45.333Z",
                 "1987-12-04T19:16:45.333Z",
                 "1987-12-05T19:16:45.333Z"
-            ]
+            ],
+            "ownerId": 1
+        },
+        {
+            "name": "Ogle ring",
+            "datesCompleted": [
+                "1987-12-07T19:16:45.333Z",
+                "1987-12-09T19:16:45.333Z",
+                "1987-12-11T19:16:45.333Z",
+                "1987-12-14T19:16:45.333Z",
+                "1987-12-16T19:16:45.333Z",
+                "1987-12-18T19:16:45.333Z"
+            ],
+            "ownerId": 1
+        },
+        {
+            "name": "Write letter to Arwen",
+            "datesCompleted": [
+                "1987-12-12T19:00:00.000Z"
+            ],
+            "ownerId": 2
+        },
+        {
+            "name": "Pilates",
+            "datesCompleted": [
+                "1987-12-12T13:00:00.000Z",
+                "1987-12-14T13:00:00.000Z",
+                "1987-12-15T13:00:00.000Z",
+                "1987-12-16T13:00:00.000Z",
+                "1987-12-17T13:00:00.000Z",
+                "1987-12-19T13:00:00.000Z",
+                "1987-12-20T13:00:00.000Z",
+                "1987-12-21T13:00:00.000Z",
+                "1987-12-22T13:00:00.000Z",
+                "1987-12-23T13:00:00.000Z"
+            ],
+            "ownerId": 2
+        },
+        {
+            "name": "Refine lembas recipe",
+            "datesCompleted": [
+                "1987-12-12T15:00:00.000Z",
+                "1987-12-13T15:30:00.000Z",
+                "1987-12-19T14:24:00.000Z",
+                "1987-12-20T13:55:00.000Z",
+                "1987-12-26T15:50:00.000Z",
+                "1987-12-27T14:53:00.000Z"
+            ],
+            "ownerId": 2
+        },
+        {
+            "name": "Make some orcs",
+            "datesCompleted": [
+                "1987-12-14T20:00:00.000Z",
+                "1987-12-15T12:30:00.000Z",
+                "1987-12-16T14:24:00.000Z",
+                "1987-12-17T13:55:00.000Z",
+                "1987-12-18T18:15:00.000Z",
+                "1987-12-21T14:53:00.000Z",
+                "1987-12-22T20:50:00.000Z",
+                "1987-12-25T21:50:00.000Z"
+            ],
+            "ownerId": 4
+        },
+        {
+            "name": "Complete eye exercises",
+            "datesCompleted": [
+                "1987-12-14T12:00:00.000Z",
+                "1987-12-15T12:25:20.000Z",
+                "1987-12-17T13:55:00.000Z",
+                "1987-12-18T18:00:00.000Z",
+                "1987-12-21T14:00:00.000Z",
+                "1987-12-24T17:36:00.000Z"
+            ],
+            "ownerId": 4
+        },
+        {
+            "name": "Practice ukelele",
+            "datesCompleted": [
+                "1987-12-10T20:30:00.000Z",
+                "1987-12-11T20:30:00.000Z",                
+                "1987-12-12T20:30:00.000Z",
+                "1987-12-13T20:30:00.000Z",
+                "1987-12-14T20:30:00.000Z",
+                "1987-12-15T20:30:00.000Z",
+                "1987-12-16T20:30:00.000Z",
+                "1987-12-17T20:30:00.000Z",
+                "1987-12-18T20:30:00.000Z",
+                "1987-12-19T20:30:00.000Z",
+                "1987-12-20T20:30:00.000Z",
+                "1987-12-21T20:30:00.000Z",
+                "1987-12-22T20:30:00.000Z",
+                "1987-12-23T20:30:00.000Z"
+            ],
+            "ownerId": 4
         }
 
+
+    ],
+    "routines": [
+        {
+            "monday": true,
+            "tuesday": true,
+            "wednesday": true,
+            "thursday": true,
+            "friday": true,
+            "saturday": true,
+            "sunday": true,
+            "habitId": 1
+        },
+        {
+            "monday": true,
+            "tuesday": false,
+            "wednesday": true,
+            "thursday": false,
+            "friday": true,
+            "saturday": false,
+            "sunday": false,
+            "habitId": 2
+        },
+        {
+            "monday": false,
+            "tuesday": false,
+            "wednesday": false,
+            "thursday": false,
+            "friday": false,
+            "saturday": true,
+            "sunday": false,
+            "habitId": 3
+        },
+        {
+            "monday": true,
+            "tuesday": true,
+            "wednesday": true,
+            "thursday": true,
+            "friday": true,
+            "saturday": true,
+            "sunday": true,
+            "habitId": 4
+        },
+        {
+            "monday": false,
+            "tuesday": false,
+            "wednesday": false,
+            "thursday": false,
+            "friday": false,
+            "saturday": true,
+            "sunday": true,
+            "habitId": 5
+        },
+        {
+            "monday": true,
+            "tuesday": true,
+            "wednesday": true,
+            "thursday": true,
+            "friday": true,
+            "saturday": false,
+            "sunday": false,
+            "habitId": 6
+        },
+        {
+            "monday": true,
+            "tuesday": true,
+            "wednesday": false,
+            "thursday": true,
+            "friday": true,
+            "saturday": false,
+            "sunday": false,
+            "habitId": 7
+        },
+        {
+            "monday": true,
+            "tuesday": true,
+            "wednesday": true,
+            "thursday": true,
+            "friday": true,
+            "saturday": true,
+            "sunday": true,
+            "habitId": 8
+        }
     ],
     "checkIns": [
-    ],
-    "contacts": [
-        
-    ]
+        {
+            "dayOfTheWeek": "Monday",
+            "habitId": 1
+        },
+        {
+            "dayOfTheWeek": "Saturday",
+            "habitId": 2
+        },
+        {
+            "dayOfTheWeek": "Sunday",
+            "habitId": 3
+        },
+        {
+            "dayOfTheWeek": "Sunday",
+            "habitId": 4
+        },
+        {
+            "dayOfTheWeek": "Monday",
+            "habitId": 5
+        },
+        {
+            "dayOfTheWeek": "Saturday",
+            "habitId": 6
+        },
+        {
+            "dayOfTheWeek": "Saturday",
+            "habitId": 7
+        },
+        {
+            "dayOfTheWeek": "Saturday",
+            "habitId": 8
+        }
+    ]   
 }
