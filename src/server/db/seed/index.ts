@@ -16,8 +16,6 @@ const habitsWithDateObjects = habits.map((habit: HabitSeedData) => {
     })
 })
 
-console.log("habitsWithDateObjects: ", habitsWithDateObjects);
-
 const load = async () => {
     try {
         await prisma.habit.deleteMany();
