@@ -7,7 +7,9 @@
     "seed": "tsx src/server/db/seed/index.ts"
   },
   "scripts": {
-    "dev": "nodemon -w src/server -x tsx src/server/main.ts",
+    "build:dev": "tsc --watch --preserveWatchOutput",
+    "start:dev": "node dist/index.js",
+    "dev": "concurrently 'npm run build:dev' 'npm run start:dev'",
     "start": "NODE_ENV=production tsx src/server/main.ts",
     "build": "vite build",
     "preview": "vite preview"
@@ -28,6 +30,7 @@
     "@types/react": "^18.0.38",
     "@types/react-dom": "^18.2.16",
     "@vitejs/plugin-react": "^4.2.0",
+    "concurrently": "^8.2.2",
     "nodemon": "^3.0.1",
     "prisma": "^5.7.0",
     "ts-node": "^10.9.2",
