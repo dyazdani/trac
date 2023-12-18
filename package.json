@@ -7,7 +7,9 @@
     "seed": "tsx src/server/db/seed/index.ts"
   },
   "scripts": {
-    "test": "dotenv -e .env.test -- jest -i",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "test": "npm run docker:up && dotenv -e .env.test -- npx prisma migrate dev && dotenv -e .env.test -- jest -i",
     "test-seq": "jest /__tests__",
     "dev": "nodemon -w src/server -x tsx src/server/main.ts",
     "start": "NODE_ENV=production tsx src/server/main.ts",
