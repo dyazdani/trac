@@ -212,35 +212,35 @@
     ],
     "checkIns": [
         {
-            "dayOfTheWeek": "Monday",
+            "dayOfTheWeek": "MONDAY",
             "habitId": 1
         },
         {
-            "dayOfTheWeek": "Saturday",
+            "dayOfTheWeek": "SATURDAY",
             "habitId": 2
         },
         {
-            "dayOfTheWeek": "Sunday",
+            "dayOfTheWeek": "SUNDAY",
             "habitId": 3
         },
         {
-            "dayOfTheWeek": "Sunday",
+            "dayOfTheWeek": "SUNDAY",
             "habitId": 4
         },
         {
-            "dayOfTheWeek": "Monday",
+            "dayOfTheWeek": "MONDAY",
             "habitId": 5
         },
         {
-            "dayOfTheWeek": "Saturday",
+            "dayOfTheWeek": "SATURDAY",
             "habitId": 6
         },
         {
-            "dayOfTheWeek": "Saturday",
+            "dayOfTheWeek": "SATURDAY",
             "habitId": 7
         },
         {
-            "dayOfTheWeek": "Saturday",
+            "dayOfTheWeek": "SATURDAY",
             "habitId": 8
         }
     ]   

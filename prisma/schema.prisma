@@ -51,9 +51,19 @@ model Routine {
   habitId       Int       @unique
 }
 
+enum DayOfTheWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
 model CheckIn {
   id            Int       @id @default(autoincrement())
-  dayOfTheWeek  String  
+  dayOfTheWeek  DayOfTheWeek 
 
   habit         Habit     @relation(fields: [habitId], references: [id], onDelete: Cascade)
   habitId       Int       @unique  
