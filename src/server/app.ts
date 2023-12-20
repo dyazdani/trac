@@ -7,6 +7,9 @@ import morgan from "morgan";
 const app = express();
 app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "tiny"));
 
+import apiRouter from "./api/index.js";
+app.use("/api", apiRouter);
+
 app.get("/health", async (_, res, next) => {
   try {
     res.send({ status: "UP" });
