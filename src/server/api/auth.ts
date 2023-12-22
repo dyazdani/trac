@@ -17,6 +17,7 @@ const authRouter = express.Router();
 
 // POST /api/auth/register
 authRouter.post("/register", async (req, res, next) => {
+    //TODO: Is this where an error or server response code should occur when email or username is not unique?
     try {
         const { email, username, password } = req.body;
         bcrypt.hash(password, SALT_ROUNDS, async function(err: Error | undefined, hash: string) {
