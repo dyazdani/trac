@@ -13,10 +13,6 @@ const prisma = new PrismaClient();
 const app = express();
 app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "tiny"));
 
-// TODO: Not sure if we still need these?
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
