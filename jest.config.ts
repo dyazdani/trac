@@ -2,6 +2,7 @@ import type { JestConfigWithTsJest } from 'ts-jest'
 
 const jestConfig: JestConfigWithTsJest = {
   preset: 'ts-jest',
+  globalSetup: './src/utils/test/reset-db.ts',
   testEnvironment: 'node',
   moduleDirectories: [
     "node_modules", 
