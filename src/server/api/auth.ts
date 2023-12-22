@@ -21,6 +21,18 @@ authRouter.post("/register", async (req, res, next) => {
         const { email, username, password } = req.body;
         bcrypt.hash(password, SALT_ROUNDS, async function(err: Error | undefined, hash: string) {
             if (err) next(err);
+            // Querying DB to see if user with that email already exists
+            const userInDB = await prisma.user.findUnique({
+                where: {
+                    email: email
+                }
+            })
+
+            if (userInDB) {
+                res.status(400).send({ name: "Bad Request", message: "The server could not complete the request because a user with this email already exists." });
+                next();
+            }
+
             const user = await prisma.user.create({
                 data: {
                     email,
