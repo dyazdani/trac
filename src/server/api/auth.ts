@@ -1,8 +1,8 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import { prismaExclude } from "prisma-exclude";
-const bcrypt = require("bcrypt")
-const jwt = require('jsonwebtoken');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const SALT_ROUNDS = 10;
 
@@ -29,10 +29,12 @@ authRouter.post("/register", async (req, res, next) => {
                 }
         })
         // JSON Web Token returned to client
-        const token = jwt.sign({
-            username: user.username,
-            id: user.id,
-        }, ACCESS_TOKEN_SECRET);
+        const token = ACCESS_TOKEN_SECRET ? 
+            jwt.sign({
+                username: user.username,
+                id: user.id,
+            }, ACCESS_TOKEN_SECRET) :
+            next({name: "InvalidAccessTokenSecret", message: "Access token secret is undefined"})
         
         res.send({
             token,
