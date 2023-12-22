@@ -8,13 +8,13 @@ const prisma = new PrismaClient();
 
 const {ACCESS_TOKEN_SECRET} = process.env;
 
-const usersRouter = express.Router();
+const authRouter = express.Router();
 
 
 // POST /api/auth/register
-usersRouter.post("/register", requireUser, async (req, res, next) => {
+authRouter.post("/register", requireUser, async (req, res, next) => {
 })
 
 
-export default usersRouter;
+export default authRouter;
 
