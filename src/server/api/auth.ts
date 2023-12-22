@@ -11,11 +11,46 @@ const exclude = prismaExclude(prisma);
 
 const { ACCESS_TOKEN_SECRET } = process.env;
 
-const usersRouter = express.Router();
+const SALT_ROUNDS = 10;
+
+const authRouter = express.Router();
+
+// POST /api/auth/register
+authRouter.post("/register", async (req, res, next) => {
+  //TODO: Is this where an error or server response code should occur when email or username is not unique?
+  try {
+      const { email, username, password } = req.body;
+      bcrypt.hash(password, SALT_ROUNDS, async function(err: Error | undefined, hash: string) {
+          if (err) next(err);
+          const user = await prisma.user.create({
+              data: {
+                  email,
+                  username,
+                  password: hash
+              }
+      })
+      // JSON Web Token returned to client
+      const token = ACCESS_TOKEN_SECRET ? 
+          jwt.sign({
+              username: user.username,
+              id: user.id,
+          }, ACCESS_TOKEN_SECRET) :
+          next({name: "InvalidAccessTokenSecret", message: "Access token secret is undefined"})
+      
+      res.send({
+          token,
+          user: exclude("user", ["password"])
+      });
+  })
+  } catch (e) {
+      next(e)
+  }
+
+})
 
 
 // POST /api/login
-usersRouter.post("/login", async (req, res, next) => {
+authRouter.post("/login", async (req, res, next) => {
     try {
         const { email, password } = req.body;
     
@@ -60,5 +95,5 @@ usersRouter.post("/login", async (req, res, next) => {
 })
 
 
-export default usersRouter;
+export default authRouter;
 
