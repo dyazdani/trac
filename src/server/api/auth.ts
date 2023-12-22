@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 import { prismaExclude } from "prisma-exclude";
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken');
-import requireUser from "../../utils/requireUser.js";
 
 const SALT_ROUNDS = 10;
 
@@ -17,7 +16,7 @@ const authRouter = express.Router();
 
 
 // POST /api/auth/register
-authRouter.post("/register", requireUser, async (req, res, next) => {
+authRouter.post("/register", async (req, res, next) => {
     try {
         const { email, username, password } = req.body;
         bcrypt.hash(password, SALT_ROUNDS, async function(err: Error | undefined, hash: string) {
