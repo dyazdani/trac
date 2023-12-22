@@ -2,6 +2,7 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import { prismaExclude } from "prisma-exclude";
 const bcrypt = require("bcrypt")
+const jwt = require('jsonwebtoken');
 import requireUser from "../../utils/requireUser.js";
 
 const SALT_ROUNDS = 10;
