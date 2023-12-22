@@ -13,7 +13,7 @@ apiRouter.get("/", (req, res, next): void => {
 
 
 import authRouter from './auth.js';
-apiRouter.use("/users", authRouter);
+apiRouter.use("/auth", authRouter);
 
 apiRouter.use((req, res): void => {
   res.status(404).send({ message: "Invalid API endpoint" });
