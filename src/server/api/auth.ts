@@ -1,7 +1,7 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 import { prismaExclude } from "prisma-exclude";
 import excludePassword from "../../utils/exclude.js";
 
@@ -69,13 +69,15 @@ authRouter.post("/login", async (req, res, next) => {
               res.status(500).send({ error: "Internal Server Error" });
             } else if (result) {
               // JSON Web Token returned to client
-              const token = jwt.sign(
+              // TODO This solves an error, investigate other way to solve
+              const token = ACCESS_TOKEN_SECRET ?
+              jwt.sign(
                 {
                   username: user.username,
                   id: user.id,
                 },
-                ACCESS_TOKEN_SECRET
-              );
+                ACCESS_TOKEN_SECRET) : 
+                next({name: "InvalidAccessTokenSecret", message: "Access token secret is undefined"});
     
               res.send({
                 token,
