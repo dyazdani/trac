@@ -18,6 +18,31 @@ const authRouter = express.Router();
 authRouter.post("/register", async (req, res, next) => {
     try {
         const { email, username, password } = req.body;
+        // TODO: turn this into a helper function
+        // If required req.body fields are missing, send 400 response 
+        if (!email || !username || !password) {
+            const emailMissing = !email ? 'email' : '';
+            const usernameMissing = !username ? 'username' : '';
+            const passwordMissing = !password ? 'password' : '';
+            const missingFields = [emailMissing, usernameMissing, passwordMissing].filter(e => e);
+            let missingFieldsString = ''
+
+            for(let i = missingFields.length - 1; i > -1; i--) {
+                if (i === missingFields.length - 1) {
+                    missingFieldsString = missingFields[i] + missingFieldsString;
+                    continue;
+                }
+                if (i === missingFields.length - 2) {
+                    missingFieldsString = missingFields[i] + " and "  + missingFieldsString;
+                    continue;
+                }
+
+                missingFieldsString = missingFields[i] + ", " + missingFieldsString;
+            }
+
+            return res.status(400).send({ name: "Bad Request", message: `The server could not complete the request because required field(s) ${missingFieldsString} missing from request body.` });
+
+        }
         bcrypt.hash(password, SALT_ROUNDS, async function(err: Error | undefined, hash: string) {
             if (err) next(err);
             // Querying DB to see if user with that email already exists
@@ -37,6 +62,8 @@ authRouter.post("/register", async (req, res, next) => {
                     username: username
                 }
             })
+
+            console.dir(userWithUsernameInDB)
 
             if (userWithUsernameInDB) {
                 return res.status(400).send({ name: "Bad Request", message: "The server could not complete the request because a user with this username already exists." });

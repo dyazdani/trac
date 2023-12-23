@@ -82,6 +82,39 @@ describe('api/auth', () => {
             expect(status).toBe(400)
             expect(body.message).toBe("The server could not complete the request because a user with this email already exists." )
             expect(body).not.toHaveProperty('user')
+        }),
+        // it('should respond with a `400` status code if a user exists with the provided username', async () => {
+        //     await prisma.user.create({
+        //         data: {
+        //           email: 'test4@email.com',
+        //           username: 'testusername4',
+        //           password: 'somepassword4'
+        //         }
+        //       })
+    
+        //     const { status, body } = await request
+        //         .post('/api/auth/register')
+        //         .send({
+        //             email: 'test3000@email.com',
+        //             username: 'testusername4',
+        //             password: 'somepassword4'
+        //         })
+    
+        //     expect(status).toBe(400)
+        //     expect(body.message).toBe("The server could not complete the request because a user with this username already exists." )
+        //     expect(body).not.toHaveProperty('user')
+    
+        // }),
+        it('should respond with a `400` status code if a required field is missing from request body', async () => {
+            const { status, body } = await request
+                .post('/api/auth/register')
+                .send({
+                    username: 'testusername5',
+                    password: 'somepassword5'
+                })
+    
+            expect(status).toBe(400)
+            expect(body.message).toBe("The server could not complete the request because required field(s) email missing from request body." );
         })
     })
 })
