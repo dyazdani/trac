@@ -3,6 +3,8 @@ import app from '../../server/app.js';
 const request = supertest(app)
 import prisma from '../../utils/test/prisma.js';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt'
+import { User } from '.prisma/client';
 
 describe('api/auth', () => {
 
@@ -115,6 +117,29 @@ describe('api/auth', () => {
     
             expect(status).toBe(400)
             expect(body.message).toBe("The server could not complete the request because required field(s) email missing from request body." );
+        }),
+        it('should encrypt password in the database', async () => {
+            await request
+                .post('/api/auth/register')
+                .send({
+                    email: 'test6@email.com',
+                    username: 'testusername6',
+                    password: 'somepassword6'
+                })
+
+            const user = await prisma.user.findUnique({
+                where: {
+                    email: 'test6@email.com'
+                }
+            })
+
+            if (user) {
+                expect(user.password).not.toBe('somepassword6');
+
+                const match = await bcrypt.compare('somepassword6', user.password) 
+
+                expect(match).toBe(true);
+            }   
         })
     })
 })
