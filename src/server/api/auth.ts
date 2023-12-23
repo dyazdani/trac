@@ -2,12 +2,12 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { prismaExclude } from "prisma-exclude";
+// import { prismaExclude } from "prisma-exclude";
 import excludePassword from "../../utils/exclude.js";
 
 const prisma = new PrismaClient();
 
-const exclude = prismaExclude(prisma);
+// const exclude = prismaExclude(prisma);
 
 const { ACCESS_TOKEN_SECRET } = process.env;
 
@@ -39,7 +39,7 @@ authRouter.post("/register", async (req, res, next) => {
       
       res.send({
           token,
-          user: exclude("user", ["password"])
+          user: excludePassword(user)
       });
   })
   } catch (e) {
