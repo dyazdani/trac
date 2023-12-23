@@ -6,6 +6,8 @@ import morgan from "morgan";
 
 const app = express();
 app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "tiny"));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 import apiRouter from "./api/index.js";
 app.use("/api", apiRouter);
