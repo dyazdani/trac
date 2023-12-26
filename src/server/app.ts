@@ -35,6 +35,8 @@ app.get("/hello", (_, res) => {
   res.send("Hello Vite + React + TypeScript!");
 });
 
+// TODO: Need 404 status middleware?
+
 app.use((error: Error, req: Request, res: Response, next: NextFunction):void => {
   res.status(500)
     .send({ name: error.name, message: error.message })
