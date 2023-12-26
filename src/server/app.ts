@@ -38,6 +38,7 @@ app.get("/hello", (_, res) => {
 // TODO: Need 404 status middleware?
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction):void => {
+  console.error(error.stack)
   res.status(500)
     .send({ name: error.name, message: error.message })
 })
