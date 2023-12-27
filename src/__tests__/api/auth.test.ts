@@ -40,83 +40,94 @@ describe('api/auth', () => {
                 })
             
             expect(body).toHaveProperty('token')
-            expect(jwt.verify(body.token, process.env.ACCESS_TOKEN_SECRET as string))
+            expect(jwt.verify(body.token, process.env.ACCESS_TOKEN_SECRET as string)).toHaveProperty('username');
+            expect(jwt.verify(body.token, process.env.ACCESS_TOKEN_SECRET as string)).toBeTruthy();
         }),
-        it('should respond with a `400` status code if a user exists with the provided username', async () => {
-            await prisma.user.create({
-                data: {
-                  email: 'test4@email.com',
-                  username: 'testusername4',
-                  password: 'somepassword4'
-                }
-              })
+        describe('Responses with 400 status codes', () => {
+            it('should respond with a `400` status code if a user exists with the provided username', async () => {
+                await prisma.user.create({
+                    data: {
+                      email: 'test4@email.com',
+                      username: 'testusername4',
+                      password: 'somepassword4'
+                    }
+                  })
+        
+                const { status, body } = await request
+                    .post('/api/auth/register')
+                    .send({
+                        email: 'test3000@email.com',
+                        username: 'testusername4',
+                        password: 'somepassword4'
+                    })
+        
+                expect(status).toBe(400)
+                expect(body.name).toBe("RequestError")
+                expect(body.details).toBe("A request error was thrown by the database because the username and/or email field(s) sent in HTTP request body is already in database. Please choose a unique email and username." )
+                expect(body).not.toHaveProperty('user')
+        
+            }),
+            it('should respond with a `400` status code if a user exists with the provided email', async () => {
+                await prisma.user.create({
+                    data: {
+                      email: 'test3@email.com',
+                      username: 'testusername3',
+                      password: 'somepassword3'
+                    }
+                  })
     
-            const { status, body } = await request
-                .post('/api/auth/register')
-                .send({
-                    email: 'test3000@email.com',
-                    username: 'testusername4',
-                    password: 'somepassword4'
-                })
-    
-            expect(status).toBe(400)
-            expect(body.message).toBe("The server could not complete the request because a user with this username already exists." )
-            expect(body).not.toHaveProperty('user')
-    
-        }),
-        it('should respond with a `400` status code if a user exists with the provided email', async () => {
-            await prisma.user.create({
-                data: {
-                  email: 'test3@email.com',
-                  username: 'testusername3',
-                  password: 'somepassword3'
-                }
-              })
-
-            const { status, body } = await request
-                .post('/api/auth/register')
-                .send({
-                    email: 'test3@email.com',
-                    username: 'testusername300',
-                    password: 'somepassword3'
-                })
-    
-            expect(status).toBe(400)
-            expect(body.message).toBe("The server could not complete the request because a user with this email already exists." )
-            expect(body).not.toHaveProperty('user')
-        }),
-        // it('should respond with a `400` status code if a user exists with the provided username', async () => {
-        //     await prisma.user.create({
-        //         data: {
-        //           email: 'test4@email.com',
-        //           username: 'testusername4',
-        //           password: 'somepassword4'
-        //         }
-        //       })
-    
-        //     const { status, body } = await request
-        //         .post('/api/auth/register')
-        //         .send({
-        //             email: 'test3000@email.com',
-        //             username: 'testusername4',
-        //             password: 'somepassword4'
-        //         })
-    
-        //     expect(status).toBe(400)
-        //     expect(body.message).toBe("The server could not complete the request because a user with this username already exists." )
-        //     expect(body).not.toHaveProperty('user')
-    
-        // }),
-        it('should respond with a `400` status code if a required field is missing from request body', async () => {
-            const { status, body } = await request
-                .post('/api/auth/register')
-                .send({
-                    username: 'testusername5',
-                    password: 'somepassword5'
-                })
-    
-            expect(status).toBe(400)
-            expect(body.message).toBe("The server could not complete the request because required field(s) email missing from request body." );
+                const { status, body } = await request
+                    .post('/api/auth/register')
+                    .send({
+                        email: 'test3@email.com',
+                        username: 'testusername300',
+                        password: 'somepassword3'
+                    })
+        
+                expect(status).toBe(400)
+                expect(body.name).toBe("RequestError")
+                expect(body.details).toBe("A request error was thrown by the database because the username and/or email field(s) sent in HTTP request body is already in database. Please choose a unique email and username." )
+                expect(body).not.toHaveProperty('user')
+            }),
+            it('should respond with a `400` status code if the email field is missing from request body', async () => {
+                const { status, body } = await request
+                    .post('/api/auth/register')
+                    .send({
+                        username: 'testusername5',
+                        password: 'somepassword5'
+                    })
+        
+                expect(status).toBe(400)
+                expect(body.name).toBe("ValidationError")
+                expect(body.details).toBe("A validation error was thrown by the database due to invalid or missing field in HTTP request body." )
+                expect(body).not.toHaveProperty('user')
+            }),
+            it('should respond with a `400` status code if the username field is missing from request body', async () => {
+                const { status, body } = await request
+                    .post('/api/auth/register')
+                    .send({
+                        email: 'test77@email.com',
+                        password: 'somepassword5'
+                    })
+        
+                expect(status).toBe(400)
+                expect(body.name).toBe("ValidationError")
+                expect(body.details).toBe("A validation error was thrown by the database due to invalid or missing field in HTTP request body." )
+                expect(body).not.toHaveProperty('user')
+            }),
+            it('should respond with a `400` status code if the password field is missing from request body', async () => {
+                const { status, body } = await request
+                    .post('/api/auth/register')
+                    .send({
+                        email: 'test88@email.com',
+                        username: 'testuser88'
+                    })
+        
+                expect(status).toBe(400)
+                expect(body.name).toBe("ValidationError")
+                expect(body.details).toBe("A validation error was thrown by the database due to invalid or missing field in HTTP request body." )
+                expect(body).not.toHaveProperty('user')
+            })
         }),
         it('should encrypt password in the database', async () => {
             await request
