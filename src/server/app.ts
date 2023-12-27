@@ -2,10 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express, { Request, Response, NextFunction } from "express";
-import { PrismaClient } from "@prisma/client";
 import morgan from "morgan";
-
-const prisma = new PrismaClient();
 
 
 const app = express();
