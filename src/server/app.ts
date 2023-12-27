@@ -3,6 +3,7 @@ dotenv.config();
 
 import express, { Request, Response, NextFunction } from "express";
 import morgan from "morgan";
+import authenticateJWT from "../utils/authentication.js";
 
 
 const app = express();
@@ -10,6 +11,7 @@ app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "tiny"));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(authenticateJWT);
 
 import apiRouter from "./api/index.js";
 app.use("/api", apiRouter);
