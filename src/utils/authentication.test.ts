@@ -3,7 +3,7 @@ import app from '../server/app.js';
 const request = supertest(app)
 
 describe('jsonwebtoken authentication middleware', () => {
-    it('should respond with 200 status if user has a valid JSON web token', async () => {       
+    it('should allow access to routes that do not requireUser, and send 200 status code if user has a valid JSON web token', async () => {       
         let response;
         expect(response).toBeFalsy()
 
@@ -18,17 +18,12 @@ describe('jsonwebtoken authentication middleware', () => {
         // Ensure that response was successful and that token was returned
         expect(response).toBeTruthy();
         expect(response.body.token).toBeTruthy();
+        expect(response.status).toBe(200);
 
         // Ensure successful HTTP request if token is valid
         const { status } = await request
         .get('/api/users')
         .set('Authorization', `Bearer ${response.body.token}`)
-
-        expect(status).toBe(200);
-    }),
-    it('should respond with 200 status code if user request has no authorization header', async () => {       
-        const { status } = await request
-        .get('/api/users')
 
         expect(status).toBe(200);
     }),
