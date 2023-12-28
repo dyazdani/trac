@@ -37,6 +37,7 @@ authRouter.post("/register", async (req, res, next) => {
                     res.status(400)
                     .send({
                         name: "ValidationError", 
+                        //TODO: make message and details less verbose
                         message: e.message,
                         details: "A validation error was thrown by the database due to invalid or missing field in HTTP request body."
                     })
@@ -48,7 +49,9 @@ authRouter.post("/register", async (req, res, next) => {
                     }
                     res.status(400)
                     .send({
-                        name: "RequestError", 
+                        name: "RequestError",
+                    //TODO: make message and details less verbose
+ 
                         message: e.message,
                         details: "A request error was thrown by the database because the username and/or email field(s) sent in HTTP request body is already in database. Please choose a unique email and username."
                     })
