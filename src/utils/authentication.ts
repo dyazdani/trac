@@ -21,12 +21,7 @@ const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
         const token = authHeader.split(' ')[1];
         try {
             user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
-            // Jwt should throw error if token cannot be verified,
-            // however jwt.verify also returns a string of the token that failed
-            // and only returns a JwtPayload object if successful.
-            // Therefore, this check for user being a string is a safeguard in case
-            // jwt does not throw error.
-            if (user && typeof user !== 'string') {
+            if (user) {
                 req.user = user
             } else {
                 req.user = null
