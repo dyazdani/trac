@@ -3,7 +3,7 @@ import app from '../server/app.js';
 const request = supertest(app)
 
 describe('jsonwebtoken authentication middleware', () => {
-    it('should respond with 200 status code without throwing error if user has a valid JSON web token', async () => {       
+    it('should respond with 200 status if user has a valid JSON web token', async () => {       
         let response;
         expect(response).toBeFalsy()
 
@@ -25,9 +25,13 @@ describe('jsonwebtoken authentication middleware', () => {
         .set('Authorization', `Bearer ${response.body.token}`)
 
         expect(status).toBe(200);
-
     }),
-    
+    it('should respond with 200 status code if user request has no authorization header', async () => {       
+        const { status } = await request
+        .get('/api/users')
+
+        expect(status).toBe(200);
+    }),
     it('should respond with 401 status and error message if user uses invalid JSON web token', async () => {
         // Random JWT obtained from https://www.javainuse.com/jwtgenerator
         let invalidToken = "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcwMzc4NDc4MiwiaWF0IjoxNzAzNzg0NzgyfQ.16IB7vwOMSALWMrZncFvIZmkScoiIP605g4NSxbt4DM"
