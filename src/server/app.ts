@@ -16,12 +16,6 @@ app.use(express.json());
 import apiRouter from "./api/index.js";
 app.use("/api", apiRouter);
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-
-import apiRouter from "./api/index.js";
-app.use("/api", apiRouter);
-
 app.get("/health", async (_, res, next) => {
   try {
     res.send({ status: "UP" });
