@@ -28,23 +28,15 @@ const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
             // jwt does not throw error.
             if (user && typeof user !== 'string') {
                 req.user = user
+            } else {
+                req.user = null
             }
-            console.log(req.user)
             next();
         } catch (e) {
-            if (!user) {
-                req.user = null;
-            }
-            console.log(req.user)
             next(e);
         } 
     } else {
-        if (!user) {
-            req.user = null;
-        }
-        console.log("request: ", req.user)
-        res.status(401)
-        .send({name: "MissingAuthorizationHeader", message: "Request authorization header missing or has falsy value"})
+        next();
     }
 }
 
