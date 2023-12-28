@@ -41,6 +41,7 @@ app.use((e: Error, req: Request, res: Response, next: NextFunction):void => {
   //TODO: Would prefer to instanceof checks instead of string
   // comparison of e.name property however that keeps throwing a SyntaxError
   // stemming from the augmentation of 'jsonwebtoken' module in authentication.ts.
+  // TODO: Is checking error name like this in this part of the app best practice?
   if (
     e.name === 'JsonWebTokenError' ||
     e.name === 'TokenExpiredError' ||
