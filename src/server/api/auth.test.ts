@@ -4,7 +4,6 @@ const request = supertest(app)
 import prisma from '../../utils/test/prisma.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
-import { User } from '.prisma/client';
 
 describe('api/auth', () => {
 
