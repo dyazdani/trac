@@ -1,9 +1,15 @@
 import { useState } from "react";
+import { useAppSelector } from "./app/hooks.js";
 
 import reactLogo from "./assets/react.svg";
 
 function App() {
   const [count, setCount] = useState(0);
+
+  const currentUser = useAppSelector((state) => state.auth.user)
+  console.log("currentUser is: ", currentUser);
+  const token = useAppSelector((state) => state.auth.token)
+  console.log("token is: ", token);
 
   return (
     <div className="App">
