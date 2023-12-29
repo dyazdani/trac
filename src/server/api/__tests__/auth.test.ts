@@ -17,7 +17,11 @@ describe('api/auth', () => {
                     password: 'testpassword'
                 })
 
-            const newUser = await prisma.user.findFirst()
+                const newUser = await prisma.user.findUnique({
+                    where: {
+                        email: 'test@email.com'
+                    }
+                })
 
             expect(status).toBe(200)
             expect(newUser).not.toBeNull()

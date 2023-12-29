@@ -14,9 +14,9 @@ describe('requireUser middleware', () => {
         const { status } = await request
             .post('/api/auth/register')
             .send({
-                email: "an_email.com",
-                username: "a_username",
-                password: "Definitely not a BORING password"
+                email: "yet_another_email.com",
+                username: "yet_another_username",
+                password: "DefinitelyAGoodPassword"
             })
         expect(status).toBe(200);
     }),
