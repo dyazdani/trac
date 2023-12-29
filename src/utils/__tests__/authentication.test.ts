@@ -1,5 +1,5 @@
 import supertest from 'supertest';
-import app from '../server/app.js';
+import app from '../../server/app.js';
 const request = supertest(app)
 
 describe('jsonwebtoken authentication middleware', () => {
