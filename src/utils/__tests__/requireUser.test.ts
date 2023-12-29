@@ -19,17 +19,23 @@ describe('requireUser middleware', () => {
                 password: "Definitely not a BORING password"
             })
         expect(status).toBe(200);
-    })
-    // it('should allow access to endpoint that calls requireUser if user us logged in', async () => {       
-    //     const { status } = await request
-    //         .post('/api/auth/register')
-    //         .send({
-    //             email: "an_email.com",
-    //             username: "a_username",
-    //             password: "Definitely not a BORING password"
-    //         })
+    }),
+    it('should allow access to endpoint that calls requireUser if user us logged in', async () => {       
+        const { body } = await request
+            .post('/api/auth/register')
+            .send({
+                email: "another_email.com",
+                username: "another_username",
+                password: "TheMostSecurePassword"
+            })
 
-    //     expect(status).toBe(200);
-    // })
+            const token = body.token
+
+            const { status} = await request
+                .get('/api/users')
+                .set('Authorization', `Bearer ${token}`)
+
+        expect(status).toBe(200);
+    })
 })
 
