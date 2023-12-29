@@ -3,6 +3,7 @@ import { PrismaClient, Prisma } from "@prisma/client";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import excludePassword from "../../utils/excludePassword.js";
+import { User } from "@prisma/client";
 
 const SALT_ROUNDS = 10;
 
@@ -83,51 +84,56 @@ authRouter.post("/register", async (req, res, next) => {
     }
 })
 
-// POST /api/login
+// POST /api/auth/login
 authRouter.post("/login", async (req, res, next) => {
-    try {
-        const { email, password } = req.body;
-    
-        const user = await prisma.user.findUniqueOrThrow({
-          where: {
-            email: email,
+  try {
+    const { email, password } = req.body;
+
+    const user = await prisma.user.findUniqueOrThrow({
+        where: {
+          email: email,
+        },
+      });
+  
+
+    // if (user) {
+    bcrypt.compare(
+      password,
+      user.password,
+      async function (err: Error | undefined, result: boolean) {
+        if (err) {
+          console.error("Error in bcrypt.compare:", err);
+          res.status(500).send({ error: "Internal Server Error" });
+        } else if (result) {
+          // JSON Web Token returned to client
+          // TODO This solves an error, investigate other way to solve
+          const token = ACCESS_TOKEN_SECRET ?
+          jwt.sign({
+            username: user.username,
+            id: user.id,
           },
-        });
-    
-        bcrypt.compare(
-          password,
-          user.password,
-          async function (err: Error | undefined, result: boolean) {
-            if (err) {
-              console.error("Error in bcrypt.compare:", err);
-              res.status(500).send({ error: "Internal Server Error" });
-            } else if (result) {
-              // JSON Web Token returned to client
-              // TODO This solves an error, investigate other way to solve
-              const token = ACCESS_TOKEN_SECRET ?
-              jwt.sign(
-                {
-                  username: user.username,
-                  id: user.id,
-                },
-                ACCESS_TOKEN_SECRET) : 
-                next({name: "InvalidAccessTokenSecret", message: "Access token secret is undefined"});
-    
-              res.send({
-                token,
-                user: excludePassword(user),
-              });
-            } else {
-              next({
-                name: "IncorrectPassword",
-                message: "The password you entered is incorrect",
-              });
-            }
-          }
-        );
-      } catch (e) {
-        next(e);
+            ACCESS_TOKEN_SECRET) : 
+            next({
+              name: "InvalidAccessTokenSecret", 
+              message: "Access token secret is undefined"
+            });
+
+          res.send({
+            token,
+            user: excludePassword(user),
+          });
+        } else {
+          next({
+            name: "IncorrectPassword",
+            message: "The password you entered is incorrect",
+          });
+        }
       }
+    )
+  // };
+  } catch (e) {
+    next(e);
+  }
 })
 
 
