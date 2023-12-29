@@ -20,7 +20,13 @@ authRouter.post("/register", async (req, res, next) => {
         const { email, username, password } = req.body;
 
         bcrypt.hash(password, SALT_ROUNDS, async function(err: Error | undefined, hash: string) {
-            if (err) next(err);
+            if (err?.message === 'data and salt arguments required') {
+                res.status(401);
+                next({
+                    name: 'MissingPassword', 
+                    message: 'Must include password when registering'
+                })
+            }
            
             let user;
             try {
@@ -35,11 +41,9 @@ authRouter.post("/register", async (req, res, next) => {
                 if (e instanceof Prisma.PrismaClientValidationError) {
                     console.log(e.message)
                     res.status(401)
-                    .send({
+                    next({
                         name: "ValidationError", 
-                        //TODO: make message and details less verbose
-                        message: e.message,
-                        details: "A validation error was thrown by the database due to invalid or missing field in HTTP request body."
+                        message: e.message                    
                     })
                 }
                   if (e instanceof Prisma.PrismaClientKnownRequestError) {
@@ -48,12 +52,9 @@ authRouter.post("/register", async (req, res, next) => {
                       console.log(e.message)
                     }
                     res.status(401)
-                    .send({
-                        name: "RequestError",
-                    //TODO: make message and details less verbose
- 
-                        message: e.message,
-                        details: "A request error was thrown by the database because the username and/or email field(s) sent in HTTP request body is already in database. Please choose a unique email and username."
+                    next({
+                        name: "RequestError", 
+                        message: e.message                    
                     })
                 }
                 
@@ -65,18 +66,18 @@ authRouter.post("/register", async (req, res, next) => {
                 jwt.sign({
                     username: user?.username,
                     id: user?.id,
-                }, ACCESS_TOKEN_SECRET) :
+                }, ACCESS_TOKEN_SECRET) : 
+                res.status(401)
                 next({
                     name: "InvalidAccessTokenSecret", 
                     message: "Access token secret is undefined"
-                })
+                });
             
                 res.send({
                     token,
                     user: excludePassword(user)
                 });
             }
-        
         })
     } catch (e) {
         next(e)
