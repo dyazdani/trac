@@ -35,40 +35,12 @@ app.get("/hello", (_, res) => {
   res.send("Hello Vite + React + TypeScript!");
 });
 
-app.use((error: Error, req: Request, res: Response, next: NextFunction):void => {
-  if (error.name === "NotLoggedIn") {
-    res.status(401)
-    .send({ 
-      name: error.name, 
-      message: error.message
-    })
+app.use((e: Error, req: Request, res: Response, next: NextFunction):void => {
+  if(res.statusCode === 200) {
+    res.status(500);
   }
-  // Send 401 or 400 error if the error is a certain jwt error
-  
-  //TODO: Would prefer to instanceof checks instead of string
-  // comparison of e.name property however that keeps throwing a SyntaxError
-  // stemming from the augmentation of 'jsonwebtoken' module in authentication.ts.
-  // TODO: Is checking error name like this in this part of the app best practice?
-  if (
-    error.name === 'JsonWebTokenError' ||
-    error.name === 'TokenExpiredError' ||
-    error.name === 'NotBeforeError'
-  ) {
-    if (error.message === "invalid signature") {
-      res.status(401)
-      .send({name: error.name, message: error.message})
-    } else {
-      res.status(400)
-      .send({name: error.name, message: error.message})
-    }
-  } else {
-    // send 500 status code for all other errors caught
-      res.status(500)
-    .send({ 
-      name: error.name, 
-      message: error.message 
-    })
-  }
+  res.send({ name: e.name, message: e.message})
+
 })
 
 

@@ -39,14 +39,14 @@ describe('jsonwebtoken authentication middleware', () => {
         expect(response.body.name).toMatch('JsonWebTokenError');
         expect(response.body.message).toMatch('invalid signature');
     }),
-    it('should respond with 400 status and error message if user uses string that is not a token', async () => {
+    it('should respond with 1 status and error message if user uses string that is not a token', async () => {
         let nonTokenString = "abcdefg"
 
         const response = await request
         .get('/api/users')
         .set('Authorization', `Bearer ${nonTokenString}`)
         
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(401);
         expect(response.body.name).toMatch('JsonWebTokenError');
         expect(response.body.message).toMatch('jwt malformed');
     })
