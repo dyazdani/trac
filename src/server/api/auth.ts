@@ -20,7 +20,13 @@ authRouter.post("/register", async (req, res, next) => {
         const { email, username, password } = req.body;
 
         bcrypt.hash(password, SALT_ROUNDS, async function(err: Error | undefined, hash: string) {
-            if (err) next(err);
+            if (err?.message === 'data and salt arguments required') {
+                res.status(401);
+                next({
+                    name: 'MissingPassword', 
+                    message: 'Must include password when registering'
+                })
+            }
            
             let user;
             try {
