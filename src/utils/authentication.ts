@@ -27,14 +27,16 @@ const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
                 req.user = null
             }
             next();
-        } catch (e: any) {
-            if (
-                e.name === 'JsonWebTokenError' ||
-                e.name === 'TokenExpiredError' ||
-                e.name === 'NotBeforeError'
-            ) {
-                res.status(401);
-            } 
+        } catch (e) {
+            if (e instanceof Error) {
+                if (
+                    e.name === 'JsonWebTokenError' ||
+                    e.name === 'TokenExpiredError' ||
+                    e.name === 'NotBeforeError'
+                ) {
+                    res.status(401);
+                } 
+            }
             next(e);
         } 
     } else {
