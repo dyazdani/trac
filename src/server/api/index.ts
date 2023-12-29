@@ -11,7 +11,6 @@ apiRouter.get("/", (req, res, next): void => {
   }
 });
 
-
 import authRouter from './auth.js';
 apiRouter.use("/auth", authRouter);
 

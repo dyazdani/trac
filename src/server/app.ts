@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(authenticateJWT);
 
 import apiRouter from "./api/index.js";
+import e from "express";
 app.use("/api", apiRouter);
 
 app.get("/health", async (_, res, next) => {
