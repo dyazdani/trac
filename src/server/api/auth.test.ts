@@ -42,8 +42,8 @@ describe('api/auth', () => {
             expect(jwt.verify(body.token, process.env.ACCESS_TOKEN_SECRET as string)).toHaveProperty('username');
             expect(jwt.verify(body.token, process.env.ACCESS_TOKEN_SECRET as string)).toBeTruthy();
         }),
-        describe('Responses with 400 status codes', () => {
-            it('should respond with a `400` status code if a user exists with the provided username', async () => {
+        describe('Responses with 401 status codes', () => {
+            it('should respond with a `401` status code if a user exists with the provided username', async () => {
                 await prisma.user.create({
                     data: {
                       email: 'test4@email.com',
@@ -60,13 +60,12 @@ describe('api/auth', () => {
                         password: 'somepassword4'
                     })
         
-                expect(status).toBe(400)
+                expect(status).toBe(401)
                 expect(body.name).toBe("RequestError")
-                expect(body.details).toBe("A request error was thrown by the database because the username and/or email field(s) sent in HTTP request body is already in database. Please choose a unique email and username." )
                 expect(body).not.toHaveProperty('user')
         
             }),
-            it('should respond with a `400` status code if a user exists with the provided email', async () => {
+            it('should respond with a `401` status code if a user exists with the provided email', async () => {
                 await prisma.user.create({
                     data: {
                       email: 'test3@email.com',
@@ -83,12 +82,11 @@ describe('api/auth', () => {
                         password: 'somepassword3'
                     })
         
-                expect(status).toBe(400)
+                expect(status).toBe(401)
                 expect(body.name).toBe("RequestError")
-                expect(body.details).toBe("A request error was thrown by the database because the username and/or email field(s) sent in HTTP request body is already in database. Please choose a unique email and username." )
                 expect(body).not.toHaveProperty('user')
             }),
-            it('should respond with a `400` status code if the email field is missing from request body', async () => {
+            it('should respond with a `401` status code if the email field is missing from request body', async () => {
                 const { status, body } = await request
                     .post('/api/auth/register')
                     .send({
@@ -96,12 +94,11 @@ describe('api/auth', () => {
                         password: 'somepassword5'
                     })
         
-                expect(status).toBe(400)
+                expect(status).toBe(401)
                 expect(body.name).toBe("ValidationError")
-                expect(body.details).toBe("A validation error was thrown by the database due to invalid or missing field in HTTP request body." )
                 expect(body).not.toHaveProperty('user')
             }),
-            it('should respond with a `400` status code if the username field is missing from request body', async () => {
+            it('should respond with a `401` status code if the username field is missing from request body', async () => {
                 const { status, body } = await request
                     .post('/api/auth/register')
                     .send({
@@ -109,12 +106,11 @@ describe('api/auth', () => {
                         password: 'somepassword5'
                     })
         
-                expect(status).toBe(400)
+                expect(status).toBe(401)
                 expect(body.name).toBe("ValidationError")
-                expect(body.details).toBe("A validation error was thrown by the database due to invalid or missing field in HTTP request body." )
                 expect(body).not.toHaveProperty('user')
             }),
-            it('should respond with a `400` status code if the password field is missing from request body', async () => {
+            it('should respond with a `401` status code if the password field is missing from request body', async () => {
                 const { status, body } = await request
                     .post('/api/auth/register')
                     .send({
@@ -122,9 +118,9 @@ describe('api/auth', () => {
                         username: 'testuser88'
                     })
         
-                expect(status).toBe(400)
-                expect(body.name).toBe("ValidationError")
-                expect(body.details).toBe("A validation error was thrown by the database due to invalid or missing field in HTTP request body." )
+                expect(status).toBe(401)
+                expect(body.name).toBe("MissingPassword")
+                expect(body.message).toBe("Must include password when registering" )
                 expect(body).not.toHaveProperty('user')
             })
         }),
