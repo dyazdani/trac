@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
+import type { RootState } from '../app/store.js'
+import { api } from './api.js'
 import { User } from '@prisma/client'
 
 interface AuthState {
@@ -19,9 +21,20 @@ const authSlice = createSlice({
       state.token = null
       state.user = null
     }
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      api.endpoints.register.matchFulfilled,
+      (state, { payload }) => {
+        state.token = payload.token;
+        state.user = payload.user;
+      }
+    );
   }
 })
 
 export const { logout } = authSlice.actions;
 
 export default authSlice.reducer
+
+export const selectCurrentUser = (state: RootState) => state.auth.user
