@@ -10,17 +10,16 @@ describe('requireUser middleware', () => {
         expect(status).toBe(401);
         expect(body.message).toMatch('Must be logged in to access this route.')
     })
-    // it('should allow logged out users access to endpoint if endpoint does not call requireUser', async () => {       
-    //     const { status } = await request
-    //         .post('/api/auth/register')
-    //         .send({
-    //             email: "an_email.com",
-    //             username: "a_username",
-    //             password: "Definitely not a BORING password"
-    //         })
-
-    //     expect(status).toBe(200);
-    // }),
+    it('should allow logged out users access to endpoint if endpoint does not call requireUser', async () => {       
+        const { status } = await request
+            .post('/api/auth/register')
+            .send({
+                email: "an_email.com",
+                username: "a_username",
+                password: "Definitely not a BORING password"
+            })
+        expect(status).toBe(200);
+    })
     // it('should allow access to endpoint that calls requireUser if user us logged in', async () => {       
     //     const { status } = await request
     //         .post('/api/auth/register')
