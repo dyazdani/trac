@@ -34,7 +34,7 @@ authRouter.post("/register", async (req, res, next) => {
             } catch (e) {
                 if (e instanceof Prisma.PrismaClientValidationError) {
                     console.log(e.message)
-                    res.status(400)
+                    res.status(401)
                     .send({
                         name: "ValidationError", 
                         //TODO: make message and details less verbose
@@ -47,7 +47,7 @@ authRouter.post("/register", async (req, res, next) => {
                     if (e.code === 'P2002') {
                       console.log(e.message)
                     }
-                    res.status(400)
+                    res.status(401)
                     .send({
                         name: "RequestError",
                     //TODO: make message and details less verbose

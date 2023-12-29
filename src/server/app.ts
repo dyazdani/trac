@@ -36,7 +36,7 @@ app.get("/hello", (_, res) => {
 
 app.use((e: Error, req: Request, res: Response, next: NextFunction):void => {
   console.error(e.stack)
-  // Send 401 or 400 error if the error is a certain jwt error
+  // Send 401 error if the error is a certain jwt error
   
   //TODO: Would prefer to instanceof checks instead of string
   // comparison of e.name property however that keeps throwing a SyntaxError
@@ -47,13 +47,7 @@ app.use((e: Error, req: Request, res: Response, next: NextFunction):void => {
     e.name === 'TokenExpiredError' ||
     e.name === 'NotBeforeError'
   ) {
-    if (e.message === "invalid signature") {
       res.status(401)
-      .send({name: e.name, message: e.message})
-    } else {
-      res.status(400)
-      .send({name: e.name, message: e.message})
-    }
   } else {
     // send 500 status code for all other errors caught
     res.status(500)
