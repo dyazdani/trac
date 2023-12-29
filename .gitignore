@@ -26,3 +26,5 @@ dist-ssr
 .env*
 
 docker-compose.yml
+
+vite.config.ts.timestamp*
