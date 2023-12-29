@@ -132,6 +132,18 @@ authRouter.post("/login", async (req, res, next) => {
     )
   // };
   } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (e.code === 'P2001') {
+        console.log(e.message)
+      }
+      res.status(401)
+      .send({
+          name: "RequestError",
+          message: e.message,
+          details: "Could not find the provided email"
+      })
+  }
     next(e);
   }
 })
