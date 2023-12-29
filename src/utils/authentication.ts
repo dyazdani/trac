@@ -21,7 +21,7 @@ const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
         const token = authHeader.split(' ')[1];
         try {
             user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
-            if (user) {
+            if (user && typeof user !== 'string') {
                 req.user = user
             } else {
                 req.user = null
