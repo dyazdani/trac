@@ -103,8 +103,6 @@ authRouter.post("/login", async (req, res, next) => {
       user.password,
       async function (err: Error | undefined, result: boolean) {
         if (err) {
-          // console.error("Error in bcrypt.compare:", err);
-          res.status(500);
           next(err)
         } else if (result) {
           // JSON Web Token returned to client
