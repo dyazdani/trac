@@ -3,7 +3,6 @@ import { PrismaClient, Prisma } from "@prisma/client";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import excludePassword from "../../utils/excludePassword.js";
-import { User } from "@prisma/client";
 
 const SALT_ROUNDS = 10;
 
@@ -103,16 +102,18 @@ authRouter.post("/login", async (req, res, next) => {
       user.password,
       async function (err: Error | undefined, result: boolean) {
         if (err) {
-          next(err)
-        } else if (result) {
+	        console.error("Error in bcrypt.compare:", err);
+	        res.status(500);
+	          next({name: "InternalServerError"})
+	        } else if (result) {
           // JSON Web Token returned to client
-          // TODO This solves an error, investigate other way to solve
           const token = ACCESS_TOKEN_SECRET ?
           jwt.sign({
             username: user.username,
             id: user.id,
           },
             ACCESS_TOKEN_SECRET) : 
+            res.status(401)
             next({
               name: "InvalidAccessTokenSecret", 
               message: "Access token secret is undefined"
@@ -123,6 +124,7 @@ authRouter.post("/login", async (req, res, next) => {
             user: excludePassword(user),
           });
         } else {
+          res.status(401);
           next({
             name: "IncorrectPassword",
             message: "The password you entered is incorrect",
@@ -138,10 +140,9 @@ authRouter.post("/login", async (req, res, next) => {
         console.log(e.message)
       }
       res.status(401)
-      .send({
-          name: "RequestError",
-          message: e.message,
-          details: "Could not find the provided email"
+      next({
+        name: "RequestError",
+        message: "Could not find the provided email"
       })
   }
     next(e);

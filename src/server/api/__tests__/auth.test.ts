@@ -155,13 +155,14 @@ describe('api/auth', () => {
 
     describe('[POST] api/auth/login', () => {
 
-        beforeAll( async () => { await request
-                .post('/api/auth/register')
-                .send({
-                    email: 'test100@email.com',
-                    username: 'testusername100',
-                    password: 'testpassword100'
-                })
+        beforeAll( async () => { 
+            await request
+                 .post('/api/auth/register')
+                 .send({
+                        email: 'test100@email.com',
+                        username: 'testusername100',
+                        password: 'testpassword100'
+                  })
         })
         
         it('should respond with a `200` status code and user details', async () => {
@@ -214,7 +215,7 @@ describe('api/auth', () => {
                     password: 'testpassword110'
                 })
     
-            expect(status).toBe(500)
+            expect(status).toBe(401)
             expect(body.name).toBe("IncorrectPassword")
             expect(body.message).toBe("The password you entered is incorrect")
             expect(body).not.toHaveProperty('user')
