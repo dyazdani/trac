@@ -173,8 +173,6 @@ describe('api/auth', () => {
                     password: 'testpassword100'
                 })
 
-                // console.log(body, "BODY")
-
             expect(status).toBe(200)
             expect(body.user.username).toBe('testusername100');
             expect(body.user.email).toBe('test100@email.com');
@@ -203,8 +201,6 @@ describe('api/auth', () => {
                     email: 'test110@email.com',
                     password: 'testpassword100'
                 })
-
-                console.log(body, "BODY")
     
             expect(status).toBe(401)
             expect(body.name).toBe("RequestError")
@@ -218,9 +214,6 @@ describe('api/auth', () => {
                     email: 'test100@email.com',
                     password: 'testpassword110'
                 })
-
-                console.log(status, "STATUS")
-                console.log(body, "BODY")
     
             expect(status).toBe(500)
             expect(body.name).toBe("IncorrectPassword")
