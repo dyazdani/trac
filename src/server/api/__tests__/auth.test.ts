@@ -204,6 +204,7 @@ describe('api/auth', () => {
     
             expect(status).toBe(401)
             expect(body.name).toBe("RequestError")
+            expect(body.message).toBe("Could not find the provided email")
             expect(body).not.toHaveProperty('user')
         }),
         it('should respond with a `401` status code if the provided password does not match', async () => {
