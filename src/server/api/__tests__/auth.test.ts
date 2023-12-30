@@ -4,6 +4,7 @@ const request = supertest(app)
 import prisma from '../../../utils/test/prisma.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
+import { stat } from 'fs';
 
 describe('api/auth', () => {
 
@@ -152,4 +153,48 @@ describe('api/auth', () => {
             }   
         })
     })
+
+    describe('[POST] api/auth/login', () => {
+
+        beforeAll( async () => { await request
+                .post('/api/auth/register')
+                .send({
+                    email: 'test10@email.com',
+                    username: 'testusername10',
+                    password: 'testpassword10'
+                })
+        })
+        
+        it('should respond with a `200` status code and user details', async () => {
+            const { status, body } = await request
+                .post('/api/auth/login')
+                .send({
+                    email: 'test10@email.com',
+                    password: 'testpassword10'
+                })
+
+                console.log(body, "BODY")
+
+            expect(status).toBe(200)
+            expect(body.user.username).toBe('testusername10');
+            expect(body.user.email).toBe('test10@email.com');
+            //excludePassword helper function should make password return undefined
+            expect(body.user.password).toBeUndefined();
+            expect(body.user.isAdmin).toBe(false);
+        }),
+        it('should respond with a valid session token when successful', async () => {
+            const { status, body } = await request
+                .post('/api/auth/login')
+                .send({
+                    email: 'test10@email.com',
+                    password: 'testpassword10'
+                })
+            
+            expect(status).toBe(200);
+            expect(body).toHaveProperty('token')
+            expect(jwt.verify(body.token, process.env.ACCESS_TOKEN_SECRET as string)).toHaveProperty('username');
+            expect(jwt.verify(body.token, process.env.ACCESS_TOKEN_SECRET as string)).toBeTruthy();
+        })
+    })
+    
 })
