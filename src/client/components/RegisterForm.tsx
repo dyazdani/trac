@@ -125,7 +125,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
             </CardBody>
             <CardFooter>
                 <Text> 
-                    Already signed up? <Link onClick={handleLinkClick} color="teal">Log in.</Link>
+                    Already registered? <Link onClick={handleLinkClick} color="teal">Log in.</Link>
                 </Text>
             </CardFooter>
         </Card>
