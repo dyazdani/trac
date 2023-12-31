@@ -39,7 +39,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
         <Card
             variant="elevated"
             align="center"
-            size="md"  
+            size="md" 
         >
             <CardHeader>
                 <Heading>trac</Heading>
