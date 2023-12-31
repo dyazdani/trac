@@ -22,16 +22,23 @@ const LandingPage = () => {
             w="100vw"
             bg="#b9eefe"
         >
+            <Spacer />
             <Image
                 src={mountainClimber}
                 alt="mountain climber scaling mountain"
                 maxW="50vw"
                 maxH="100%"
                 h="100vh"
-                objectFit="contain"
+                objectFit="cover"
+                borderRadius="50%"
+                border="5px"
+                bgColor="#564740"
+                p="4"
+                boxSize="45vw"
             />
     
-            <Spacer/>
+            <Spacer />
+            <Spacer />
             <RegisterForm 
                 handleLinkClick={handleLinkClick}    
             />
@@ -43,7 +50,9 @@ const LandingPage = () => {
             <RegisterForm 
                 handleLinkClick={handleLinkClick}
             />} */}
-            <Spacer />            
+            <Spacer />    
+            <Spacer />
+        
         </Flex>
         
     )
