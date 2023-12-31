@@ -16,7 +16,11 @@ import {
 } from "@chakra-ui/react";
 import { useRegisterMutation } from "../features/api.js";
 
-const RegisterForm = () => {
+export interface RegisterFormProps {
+    handleLinkClick: () => void
+}
+
+const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
     const [register, { isLoading, isError, data}] = useRegisterMutation();
 
     const [email, setEmail] = useState("");
@@ -86,11 +90,12 @@ const RegisterForm = () => {
                             <Text>Sign Up</Text>
                         </Button> 
                     </VStack>
- 
                 </Box>    
             </CardBody>
             <CardFooter>
-                <Text>Already signed up? <Link>Log in.</Link></Text>
+                <Text> 
+                    Already signed up? <Link onClick={handleLinkClick} color="teal">Log in.</Link>
+                </Text>
             </CardFooter>
         </Card>
     )

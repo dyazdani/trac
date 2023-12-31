@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { 
     Image,
     Flex,
@@ -8,6 +9,11 @@ import RegisterForm from "./RegisterForm.js";
 import mountainClimber from "../../../public/images/mountain-climber.jpg";
 
 const LandingPage = () => {
+    const [isLoginShowing, setIsLoginShowing] = useState(false)
+
+    const handleLinkClick = () => {
+        setIsLoginShowing(!isLoginShowing)
+    }
 
     return (
         <Flex
@@ -26,7 +32,17 @@ const LandingPage = () => {
             />
     
             <Spacer/>
-            <RegisterForm />
+            <RegisterForm 
+                handleLinkClick={handleLinkClick}    
+            />
+            {/* The following commented out code will replace the line above once a LoginForm is created. */}
+            {/* {isLoginShowing ? 
+            <LoginForm
+                handleLinkClick={handleLinkClick}
+            /> :  
+            <RegisterForm 
+                handleLinkClick={handleLinkClick}
+            />} */}
             <Spacer />            
         </Flex>
         
