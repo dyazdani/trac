@@ -14,15 +14,14 @@ const LandingPage = () => {
             alignItems="center"
             h="100vh"
             w="100vw"
-            bg="red"
+            bg="#b9eefe"
         >
-            <Spacer />
             <Image
                 src={mountainClimber}
                 alt="mountain climber scaling mountain"
                 maxW="50vw"
                 maxH="100%"
-                h="90vh"
+                h="100vh"
                 objectFit="contain"
             />
     
