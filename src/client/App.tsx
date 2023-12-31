@@ -1,7 +1,7 @@
 import React from 'react'
 import RegisterForm from './components/RegisterFOrm.js';
 
-function App() {
+const App: React.FC = () => {
 
 
   return (
