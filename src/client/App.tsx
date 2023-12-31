@@ -1,10 +1,14 @@
+import React from 'react'
+import RegisterForm from './components/RegisterFOrm.js';
 
 function App() {
 
 
   return (
-    <div className="App">
-      trac • a habit tracker
+    <div 
+      className="App"
+    >
+      <RegisterForm />
     </div>
   );
 }
