@@ -12,8 +12,12 @@ import {
     Heading,
     Text,
     Button,
-    Link
+    Link,
+    InputGroup,
+    InputRightElement,
+    IconButton
 } from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 import { useRegisterMutation } from "../features/api.js";
 
 export interface RegisterFormProps {
@@ -68,21 +72,47 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                         </FormControl>
                         <FormControl>
                             <FormLabel>Password</FormLabel>
-                                <Input 
-                                    type={showPassword ? "text" : "password"}
-                                    onChange={e => setPassword(e.target.value)}
-                                    value={password}
-                                    required
-                                />
+                                <InputGroup size="md">
+                                    <Input
+                                        pr="4.5rem" 
+                                        type={showPassword ? "text" : "password"}
+                                        onChange={e => setPassword(e.target.value)}
+                                        value={password}
+                                        required
+                                    />
+                                    <InputRightElement width="2.5rem">
+                                        <IconButton 
+                                            size="sm"
+                                            h="1.75rem"
+                                            icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                                            aria-label="toggle password visibility"
+                                            onClick={() => setShowPassword((show) => !show)}
+                                            onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) => e.preventDefault()}
+                                        />
+                                    </InputRightElement>
+                                </InputGroup>
                         </FormControl>
                         <FormControl>
                             <FormLabel>Confirm Password</FormLabel>
-                            <Input 
-                                type={showConfirmPassword ? "text" : "password"}
-                                onChange={e => setConfirmPassword(e.target.value)}
-                                value={confirmPassword}
-                                required
-                            />
+                            <InputGroup size="md">
+                                    <Input
+                                        pr="4.5rem" 
+                                        type={showConfirmPassword ? "text" : "password"}
+                                        onChange={e => setConfirmPassword(e.target.value)}
+                                        value={confirmPassword}
+                                        required
+                                    />
+                                    <InputRightElement width="2.5rem">
+                                        <IconButton 
+                                            size="sm"
+                                            h="1.75rem"
+                                            icon={showConfirmPassword ? <ViewOffIcon /> : <ViewIcon />}
+                                            aria-label="toggle password visibility"
+                                            onClick={() => setShowConfirmPassword((show) => !show)}
+                                            onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) => e.preventDefault()}
+                                        />
+                                    </InputRightElement>
+                                </InputGroup>
                         </FormControl>
                         <Button
                             colorScheme="yellow"    
