@@ -1,16 +1,14 @@
 import React from 'react'
-// TODO: this import has a TS error when the "o" in the filepath is lowercase (i.e., "./components/RegisterForm.tsx"). WHY? 
-import RegisterForm from "./components/RegisterFOrm.js"
+import { Route, Routes } from 'react-router-dom'
+import LandingPage from './components/LandingPage.js';
 
 const App: React.FC = () => {
 
 
   return (
-    <div 
-      className="App"
-    >
-      <RegisterForm />
-    </div>
+      <Routes>
+        <Route path="/" element={<LandingPage />}/>
+      </Routes>
   );
 }
 
