@@ -20,8 +20,8 @@ const LandingPage = () => {
     return (
         <Flex
             alignItems="center"
-            h="100vh"
             w="100vw"
+            h="100%"
             bg="#b9eefe"
         >
             <Spacer />
@@ -44,10 +44,10 @@ const LandingPage = () => {
                 <Spacer /> 
                 <Spacer />
             </Hide>
-            
-            <RegisterForm 
-                handleLinkClick={handleLinkClick}    
-            />
+                <RegisterForm 
+                    handleLinkClick={handleLinkClick}    
+                />
+        
             {/* The following commented out code will replace the line above once a LoginForm is created. */}
             {/* {isLoginShowing ? 
             <LoginForm
@@ -63,7 +63,6 @@ const LandingPage = () => {
             </Hide>
             <Spacer /> 
         </Flex>
-        
     )
 }
 
