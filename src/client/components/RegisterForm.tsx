@@ -29,7 +29,9 @@ const RegisterForm = () => {
 
     return (
         <Card
-            variant="elevated"    
+            variant="elevated"
+            align="center"
+            size="md"  
         >
             <CardHeader>
                 <Heading>trac</Heading>
