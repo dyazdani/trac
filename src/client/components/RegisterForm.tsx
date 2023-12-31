@@ -45,7 +45,7 @@ const RegisterForm = () => {
                         as="fieldset"
                     >
                         <FormControl>
-                            <FormLabel>Email address</FormLabel>
+                            <FormLabel>Email Address</FormLabel>
                             <Input 
                                 type='email' 
                                 onChange={e => setEmail(e.target.value)}
@@ -80,7 +80,9 @@ const RegisterForm = () => {
                                 required
                             />
                         </FormControl>
-                        <Button>
+                        <Button
+                            colorScheme="yellow"    
+                        >
                             <Text>Sign Up</Text>
                         </Button> 
                     </VStack>
@@ -88,7 +90,7 @@ const RegisterForm = () => {
                 </Box>    
             </CardBody>
             <CardFooter>
-                <Text>Already signed up? <Link>Log In</Link></Text>
+                <Text>Already signed up? <Link>Log in.</Link></Text>
             </CardFooter>
         </Card>
     )
