@@ -19,7 +19,6 @@ const LandingPage = () => {
             <Spacer />
             <Image
                 src={mountainClimber}
-                p="4"
                 alt="mountain climber scaling mountain"
                 maxW="50vw"
                 maxH="100%"
@@ -28,7 +27,7 @@ const LandingPage = () => {
             />
     
             <Spacer/>
-            <RegisterForm />
+                <RegisterForm />
             <Spacer />            
         </Flex>
         
