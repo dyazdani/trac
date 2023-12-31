@@ -28,13 +28,7 @@ const LandingPage = () => {
             />
     
             <Spacer/>
-            {/* <Box
-                as="div"
-                p="4"
-                w="50vw"
-            > */}
-                <RegisterForm />
-            {/* </Box> */}
+            <RegisterForm />
             <Spacer />            
         </Flex>
         
