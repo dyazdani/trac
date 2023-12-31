@@ -23,7 +23,15 @@ export const api = createApi({
           body: { email, username, password },
         }),
         invalidatesTags: ["CurrentUser"],
-      })
+      }),
+      login: builder.mutation({
+        query: ({ email, password }) => ({
+          url: "auth/login",
+          method: "POST",
+          body: { email, password },
+        }),
+        invalidatesTags: ["CurrentUser"],
+      }),
     })
   })
   
@@ -33,5 +41,6 @@ export const api = createApi({
   export default api;
   
   export const { 
-    useRegisterMutation 
+    useRegisterMutation,
+    useLoginMutation 
   } = api
