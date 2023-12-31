@@ -26,7 +26,7 @@ const LandingPage = () => {
             />
     
             <Spacer/>
-                <RegisterForm />
+            <RegisterForm />
             <Spacer />            
         </Flex>
         
