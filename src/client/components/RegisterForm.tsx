@@ -22,9 +22,10 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 
 export interface RegisterFormProps {
     handleLinkClick: () => void
+    handleSubmit: () => void
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
+const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick, handleSubmit}) => {
     // const [register, { isLoading, isError, data}] = useRegisterMutation();
 
     const [email, setEmail] = useState("");
@@ -49,6 +50,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
             <CardBody>
                 <Box
                     as="form"
+                    onSubmit={handleSubmit}
                 >
                     <VStack
                         as="fieldset"
@@ -116,7 +118,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                 </InputGroup>
                         </FormControl>
                         <Button
-                            colorScheme="yellow"    
+                            colorScheme="yellow"
+                            data-testid="submit-button"
+                            type="submit"    
                         >
                             <Text>Sign Up</Text>
                         </Button> 
@@ -125,7 +129,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
             </CardBody>
             <CardFooter>
                 <Text> 
-                    Already registered? <Link data-testid="loginLink" onClick={handleLinkClick} color="teal">Log in.</Link>
+                    Already registered? <Link data-testid="login-link" onClick={handleLinkClick} color="teal">Log in.</Link>
                 </Text>
             </CardFooter>
         </Card>

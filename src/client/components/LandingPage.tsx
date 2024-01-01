@@ -8,13 +8,18 @@ import {
     Box
 } from "@chakra-ui/react";
 import RegisterForm from "./RegisterForm.js";
-import mountainClimber from "../../../public/images/mountain-climber.jpg";
+import mountainClimber from "../../../images/mountain-climber.jpg";
 
 const LandingPage = () => {
     const [isLoginShowing, setIsLoginShowing] = useState(false)
 
     const handleLinkClick = () => {
         setIsLoginShowing(!isLoginShowing)
+    }
+
+    // Placeholder function until work on form submit begins
+    const handleSubmit = () => {
+        console.log("form submitted")
     }
 
     return (
@@ -45,7 +50,8 @@ const LandingPage = () => {
                 <Spacer />
             </Hide>
                 <RegisterForm 
-                    handleLinkClick={handleLinkClick}    
+                    handleLinkClick={handleLinkClick}
+                    handleSubmit={handleSubmit}    
                 />
         
             {/* The following commented out code will replace the line above once a LoginForm is created. */}
