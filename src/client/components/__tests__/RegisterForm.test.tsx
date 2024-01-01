@@ -21,22 +21,34 @@ describe("RegisterForm component", () => {
         )
 
         // Card header with app name and tag line
+        const header = screen.queryByText('trac');
+        const headerSubtitle = screen.queryByText('Stay on trac by signing up.')
+
+        expect(header).toBeInTheDocument();
+        expect(headerSubtitle).toBeInTheDocument();
 
         // Inputs and their labels
         const emailInput = screen.queryByLabelText('Email Address');
-        expect(emailInput).toBeInTheDocument();
         const usernameInput = screen.queryByLabelText('Username');
-        expect(usernameInput).toBeInTheDocument();
         const passwordInput = screen.queryByLabelText('Password');
-        expect(passwordInput).toBeInTheDocument();
         const confirmPasswordInput = screen.queryByLabelText('Confirm Password');
+
+        expect(emailInput).toBeInTheDocument();
+        expect(usernameInput).toBeInTheDocument();
+        expect(passwordInput).toBeInTheDocument();
         expect(confirmPasswordInput).toBeInTheDocument();
 
-        // Show/Hide password buttons
+        // Show/Hide password buttons and Form button
+        const buttons = screen.queryAllByRole('button')
 
-        // Form button
+        expect(buttons.length).toBe(3);
 
         // Card footer with link
 
+        const footer = screen.queryByText(/Already/);
+        const loginLink = screen.queryByTestId('loginLink')
+
+        expect(footer).toBeInTheDocument();
+        expect(loginLink).toBeInTheDocument();
     })
 })
