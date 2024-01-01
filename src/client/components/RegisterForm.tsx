@@ -23,9 +23,14 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 export interface RegisterFormProps {
     handleLinkClick: () => void
     handleSubmit: () => void
+    handleOnMouseDown: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick, handleSubmit}) => {
+const RegisterForm: React.FC<RegisterFormProps> = ({
+    handleLinkClick, 
+    handleSubmit,
+    handleOnMouseDown
+}) => {
     // const [register, { isLoading, isError, data}] = useRegisterMutation();
 
     const [email, setEmail] = useState("");
@@ -90,7 +95,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick, handleSubmi
                                             icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
                                             aria-label="toggle password visibility"
                                             onClick={() => setShowPassword((show) => !show)}
-                                            onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) => e.preventDefault()}
+                                            onMouseDown={handleOnMouseDown}
+                                            data-testid="password-visibility-button"
                                         />
                                     </InputRightElement>
                                 </InputGroup>
@@ -112,7 +118,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick, handleSubmi
                                             icon={showConfirmPassword ? <ViewOffIcon /> : <ViewIcon />}
                                             aria-label="toggle password visibility"
                                             onClick={() => setShowConfirmPassword((show) => !show)}
-                                            onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) => e.preventDefault()}
+                                            onMouseDown={handleOnMouseDown}
+                                            data-testid="confirm-password-visibility-button"
                                         />
                                     </InputRightElement>
                                 </InputGroup>

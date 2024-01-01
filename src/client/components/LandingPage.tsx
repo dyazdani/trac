@@ -22,6 +22,10 @@ const LandingPage = () => {
         console.log("form submitted")
     }
 
+    // To be used to toggle password visibility
+    const handleOnMouseDown = (e: React.MouseEvent<HTMLButtonElement>) =>  e.preventDefault();
+    
+
     return (
         <Flex
             alignItems="center"
@@ -51,7 +55,8 @@ const LandingPage = () => {
             </Hide>
                 <RegisterForm 
                     handleLinkClick={handleLinkClick}
-                    handleSubmit={handleSubmit}    
+                    handleSubmit={handleSubmit}
+                    handleOnMouseDown={handleOnMouseDown}    
                 />
         
             {/* The following commented out code will replace the line above once a LoginForm is created. */}

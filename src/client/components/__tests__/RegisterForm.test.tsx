@@ -13,6 +13,7 @@ import RegisterForm from '../RegisterForm.js';
 
 const mockHandleLinkClick = jest.fn();
 const mockHandleSubmit = jest.fn();
+const mockHandleOnMouseDown = jest.fn();
 
 describe("RegisterForm component", () => {
     beforeEach(() =>{
@@ -20,6 +21,7 @@ describe("RegisterForm component", () => {
             <RegisterForm
                 handleLinkClick={mockHandleLinkClick}
                 handleSubmit={mockHandleSubmit}
+                handleOnMouseDown={mockHandleOnMouseDown}
             />
         )
     })
@@ -48,7 +50,6 @@ describe("RegisterForm component", () => {
         expect(buttons.length).toBe(3);
 
         // Card footer with link
-
         const footer = screen.queryByText(/Already/);
         const loginLink = screen.queryByTestId('login-link')
 
@@ -80,6 +81,16 @@ describe("RegisterForm component", () => {
         const loginLink = screen.getByTestId('login-link')
         await user.click(loginLink)
 
-        expect(mockHandleLinkClick).toHaveBeenCalled();
+        expect(mockHandleLinkClick).toHaveBeenCalledTimes(1);
+    }),
+    it("should fire onClick and onMouseDown handlers when password visibility buttons are clicked", async () => {
+        const user = userEvent.setup();
+
+        const passwordVisibilityButton = screen.getByTestId('password-visibility-button')
+        const confirmPasswordVisibilityButton = screen.getByTestId('confirm-password-visibility-button')
+        await user.click(passwordVisibilityButton)
+        await user.click(confirmPasswordVisibilityButton)
+
+        expect(mockHandleOnMouseDown).toHaveBeenCalledTimes(2);
     })
 })
