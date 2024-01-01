@@ -18,14 +18,14 @@ import {
     IconButton
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
-import { useRegisterMutation } from "../features/api.js";
+// import { useRegisterMutation } from "../features/api.js";
 
 export interface RegisterFormProps {
     handleLinkClick: () => void
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
-    const [register, { isLoading, isError, data}] = useRegisterMutation();
+    // const [register, { isLoading, isError, data}] = useRegisterMutation();
 
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
