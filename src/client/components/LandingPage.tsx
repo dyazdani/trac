@@ -40,13 +40,7 @@ const LandingPage = () => {
         <Spacer />
         <Spacer />
       </Hide>
-      {/* <RegisterForm 
-                    handleLinkClick={handleLinkClick}
-                    handleSubmit={handleSubmit}
-                    handleOnMouseDown={handleOnMouseDown}    
-                /> */}
-
-      {/* The following commented out code will replace the line above once a LoginForm is created. */}
+ 
       {isLoginShowing ? (
         <LoginForm
           handleLinkClick={handleLinkClick}
