@@ -41,7 +41,7 @@ const LandingPage = () => {
         <Flex
             alignItems="center"
             w="100vw"
-            h="100%"
+            h="100vh"
             bg="#b9eefe"
         >
             <Spacer />
