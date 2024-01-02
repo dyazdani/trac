@@ -5,25 +5,38 @@ import {
     Spacer,
     Hide,
 } from "@chakra-ui/react";
-import RegisterForm from "./RegisterForm.js";
+import { useRegisterMutation } from "../features/api.js";
+
+import RegisterForm, { RegisterFormProps, handleSubmit } from "./RegisterForm.js";
 import mountainClimber from "../../../images/mountain-climber.jpg";
+
 
 const LandingPage = () => {
     const [isLoginShowing, setIsLoginShowing] = useState(false)
+
+    const [register, { isLoading, isError, data}] = useRegisterMutation();
+
 
     const handleLinkClick = () => {
         setIsLoginShowing(!isLoginShowing)
     }
 
-    // Placeholder function until work on form submit begins
-    const handleSubmit = () => {
-        console.log("form submitted")
-    }
-
-    // To be used to toggle password visibility
-    const handleOnMouseDown = (e: React.MouseEvent<HTMLButtonElement>) =>  e.preventDefault();
+    const handleSubmit: handleSubmit = async (
+        e,
+        email,
+        username,
+        password, 
+        confirmPassword
+    ) => {
+        e.preventDefault();
+        if (password === confirmPassword) {
+          const user = await register({ email, username, password });
+          console.log(user)
+        } else {
+          alert("Password confirmation does not match");
+        }
+      };
     
-
     return (
         <Flex
             alignItems="center"
@@ -53,8 +66,7 @@ const LandingPage = () => {
             </Hide>
                 <RegisterForm 
                     handleLinkClick={handleLinkClick}
-                    handleSubmit={handleSubmit}
-                    handleOnMouseDown={handleOnMouseDown}    
+                    handleSubmit={handleSubmit}   
                 />
         
             {/* The following commented out code will replace the line above once a LoginForm is created. */}

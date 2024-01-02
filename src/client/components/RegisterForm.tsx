@@ -18,21 +18,25 @@ import {
     IconButton
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
-// import { useRegisterMutation } from "../features/api.js";
+import e from "express";
 
 export interface RegisterFormProps {
     handleLinkClick: () => void
-    handleSubmit: () => void
-    handleOnMouseDown: (e: React.MouseEvent<HTMLButtonElement>) => void
+    handleSubmit: handleSubmit
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({
-    handleLinkClick, 
-    handleSubmit,
-    handleOnMouseDown
-}) => {
-    // const [register, { isLoading, isError, data}] = useRegisterMutation();
+export type handleSubmit = (
+    e: React.FormEvent<HTMLDivElement>,
+    email: string,
+    username: string,
+    password: string,
+    confirmPassword: string
+    ) => void
 
+const RegisterForm: React.FC<RegisterFormProps> = ({
+    handleLinkClick,
+    handleSubmit
+}) => {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -40,6 +44,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+ 
 
     return (
         <Card
@@ -55,7 +60,15 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             <CardBody>
                 <Box
                     as="form"
-                    onSubmit={handleSubmit}
+                    onSubmit={(e: React.FormEvent<HTMLDivElement>) => {
+                        handleSubmit(
+                            e,
+                            email,
+                            username,
+                            password,
+                            confirmPassword
+                        );
+                    }}
                 >
                     <VStack
                         as="fieldset"
@@ -95,7 +108,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                                             icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
                                             aria-label="toggle password visibility"
                                             onClick={() => setShowPassword((show) => !show)}
-                                            onMouseDown={handleOnMouseDown}
+                                            onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>  e.preventDefault()}
                                             data-testid="password-visibility-button"
                                         />
                                     </InputRightElement>
@@ -118,7 +131,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                                             icon={showConfirmPassword ? <ViewOffIcon /> : <ViewIcon />}
                                             aria-label="toggle password visibility"
                                             onClick={() => setShowConfirmPassword((show) => !show)}
-                                            onMouseDown={handleOnMouseDown}
+                                            onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>  e.preventDefault()}
                                             data-testid="confirm-password-visibility-button"
                                         />
                                     </InputRightElement>
