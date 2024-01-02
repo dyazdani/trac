@@ -18,7 +18,6 @@ import {
     IconButton
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
-import e from "express";
 import { useRegisterMutation } from "../features/api.js";
 
 export interface RegisterFormProps {
