@@ -21,7 +21,6 @@ describe("RegisterForm component", () => {
             <RegisterForm
                 handleLinkClick={mockHandleLinkClick}
                 handleSubmit={mockHandleSubmit}
-                handleOnMouseDown={mockHandleOnMouseDown}
             />
         )
     })
@@ -87,7 +86,11 @@ describe("RegisterForm component", () => {
         const user = userEvent.setup();
 
         const passwordVisibilityButton = screen.getByTestId('password-visibility-button')
+        passwordVisibilityButton.onclick = mockHandleOnMouseDown;
         const confirmPasswordVisibilityButton = screen.getByTestId('confirm-password-visibility-button')
+        confirmPasswordVisibilityButton.onclick = mockHandleOnMouseDown;
+
+
         await user.click(passwordVisibilityButton)
         await user.click(confirmPasswordVisibilityButton)
 
