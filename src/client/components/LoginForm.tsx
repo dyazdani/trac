@@ -15,7 +15,8 @@ import {
     Link,
     InputGroup,
     InputRightElement,
-    IconButton
+    IconButton,
+    ButtonGroup
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 // import { useRegisterMutation } from "../features/api.js";
@@ -34,23 +35,23 @@ const LoginForm: React.FC<LoginFormProps> = ({
     // const [register, { isLoading, isError, data}] = useRegisterMutation();
 
     const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
+    // const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    // const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    // const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 
     return (
         <Card
             variant="elevated"
             align="center"
-            size="md" 
+            size="lg" 
             m="4"
         >
             <CardHeader>
                 <Heading>trac</Heading>
-                <Text>Stay on trac by signing up.</Text>
+                <Text>Stay on trac by logging in.</Text>
             </CardHeader>
             <CardBody>
                 <Box
@@ -69,7 +70,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                                 required
                             />
                         </FormControl>
-                        <FormControl>
+                        {/* <FormControl>
                             <FormLabel>Username</FormLabel>
                             <Input 
                                 type='username' 
@@ -77,7 +78,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                                 value={username}
                                 required
                             />
-                        </FormControl>
+                        </FormControl> */}
                         <FormControl>
                             <FormLabel>Password</FormLabel>
                                 <InputGroup size="md">
@@ -101,7 +102,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                                     </InputRightElement>
                                 </InputGroup>
                         </FormControl>
-                        <FormControl>
+                        {/* <FormControl>
                             <FormLabel>Confirm Password</FormLabel>
                             <InputGroup size="md">
                                     <Input
@@ -123,20 +124,30 @@ const LoginForm: React.FC<LoginFormProps> = ({
                                         />
                                     </InputRightElement>
                                 </InputGroup>
-                        </FormControl>
-                        <Button
-                            colorScheme="yellow"
-                            data-testid="submit-button"
-                            type="submit"    
-                        >
-                            <Text>Sign Up</Text>
-                        </Button> 
+                        </FormControl> */}
+                        <ButtonGroup>
+                            <Button
+                                colorScheme="yellow"
+                                data-testid="submit-button"
+                                type="submit"    
+                            >
+                                <Text>Log In</Text>
+                            </Button> 
+                            <Button
+                                colorScheme="yellow"
+                                variant='outline'
+                                data-testid="submit-button"
+                                type="submit"    
+                            >
+                                <Text>Log In With Demo User</Text>
+                            </Button> 
+                        </ButtonGroup>
                     </VStack>
                 </Box>    
             </CardBody>
             <CardFooter>
                 <Text> 
-                    Already registered? <Link data-testid="login-link" onClick={handleLinkClick} color="teal">Log in.</Link>
+                    Don't have an account? <Link data-testid="signup-link" onClick={handleLinkClick} color="teal">Sign Up.</Link>
                 </Text>
             </CardFooter>
         </Card>
