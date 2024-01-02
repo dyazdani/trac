@@ -6,12 +6,6 @@ import { extendTheme } from "@chakra-ui/react";
 const themes = {
     styles: {
         global: {
-            body: {
-                height: '100vh',
-                display: 'flex',
-                'align-items': 'center',
-                'background-color': '#b9eefe',
-            },
         },
     },
 }
