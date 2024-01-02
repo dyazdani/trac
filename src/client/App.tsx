@@ -1,8 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import LandingPage from './client/components/LandingPage.js';
-
-import './App.css';
+import LandingPage from './components/LandingPage.js';
 
 const App: React.FC = () => {
 
