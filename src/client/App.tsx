@@ -1,11 +1,14 @@
+import React from 'react'
+import { Route, Routes } from 'react-router-dom'
+import LandingPage from './components/LandingPage.js';
 
-function App() {
+const App: React.FC = () => {
 
 
   return (
-    <div className="App">
-      trac • a habit tracker
-    </div>
+      <Routes>
+        <Route path="/" element={<LandingPage />}/>
+      </Routes>
   );
 }
 
