@@ -5,37 +5,17 @@ import {
     Spacer,
     Hide,
 } from "@chakra-ui/react";
-import { useRegisterMutation } from "../features/api.js";
 
-import RegisterForm, { RegisterFormProps, handleSubmit } from "./RegisterForm.js";
+import RegisterForm from "./RegisterForm.js";
 import mountainClimber from "../../../images/mountain-climber.jpg";
 
 
 const LandingPage = () => {
     const [isLoginShowing, setIsLoginShowing] = useState(false)
 
-    const [register, { isLoading, isError, data}] = useRegisterMutation();
-
-
     const handleLinkClick = () => {
         setIsLoginShowing(!isLoginShowing)
     }
-
-    const handleSubmit: handleSubmit = async (
-        e,
-        email,
-        username,
-        password, 
-        confirmPassword
-    ) => {
-        e.preventDefault();
-        if (password === confirmPassword) {
-          const user = await register({ email, username, password });
-          console.log(user)
-        } else {
-          alert("Password confirmation does not match");
-        }
-      };
     
     return (
         <Flex
@@ -65,8 +45,7 @@ const LandingPage = () => {
                 <Spacer />
             </Hide>
                 <RegisterForm 
-                    handleLinkClick={handleLinkClick}
-                    handleSubmit={handleSubmit}   
+                    handleLinkClick={handleLinkClick} 
                 />
         
             {/* The following commented out code will replace the line above once a LoginForm is created. */}

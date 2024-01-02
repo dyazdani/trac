@@ -19,32 +19,31 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 import e from "express";
+import { useRegisterMutation } from "../features/api.js";
 
 export interface RegisterFormProps {
     handleLinkClick: () => void
-    handleSubmit: handleSubmit
 }
 
-export type handleSubmit = (
-    e: React.FormEvent<HTMLDivElement>,
-    email: string,
-    username: string,
-    password: string,
-    confirmPassword: string
-    ) => void
 
-const RegisterForm: React.FC<RegisterFormProps> = ({
-    handleLinkClick,
-    handleSubmit
-}) => {
+const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
  
+    const [register] = useRegisterMutation();
+
+    const handleSubmit = async () => {
+        if (password === confirmPassword) {
+            const user = await register({ email, username, password });
+            console.log(user)
+        } else {
+            alert("Password confirmation does not match");
+        }
+    };
 
     return (
         <Card
@@ -52,6 +51,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             align="center"
             size="md" 
             m="4"
+            data-testid="register-form"
         >
             <CardHeader>
                 <Heading>trac</Heading>
@@ -61,13 +61,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 <Box
                     as="form"
                     onSubmit={(e: React.FormEvent<HTMLDivElement>) => {
-                        handleSubmit(
-                            e,
-                            email,
-                            username,
-                            password,
-                            confirmPassword
-                        );
+                        e.preventDefault();
+                        handleSubmit()
                     }}
                 >
                     <VStack
