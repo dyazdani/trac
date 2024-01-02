@@ -84,6 +84,71 @@ authRouter.post("/register", async (req, res, next) => {
     }
 })
 
+// POST /api/auth/login
+authRouter.post("/login", async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await prisma.user.findUniqueOrThrow({
+        where: {
+          email: email,
+        },
+      });
+  
+
+    // if (user) {
+    bcrypt.compare(
+      password,
+      user.password,
+      async function (err: Error | undefined, result: boolean) {
+        if (err) {
+	        console.error("Error in bcrypt.compare:", err);
+	        res.status(500);
+	          next({name: "InternalServerError"})
+	        } else if (result) {
+          // JSON Web Token returned to client
+          const token = ACCESS_TOKEN_SECRET ?
+          jwt.sign({
+            username: user.username,
+            id: user.id,
+          },
+            ACCESS_TOKEN_SECRET) : 
+            res.status(401)
+            next({
+              name: "InvalidAccessTokenSecret", 
+              message: "Access token secret is undefined"
+            });
+
+          res.send({
+            token,
+            user: excludePassword(user),
+          });
+        } else {
+          res.status(401);
+          next({
+            name: "IncorrectPassword",
+            message: "The password you entered is incorrect",
+          });
+        }
+      }
+    )
+  // };
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (e.code === 'P2001') {
+        console.log(e.message)
+      }
+      res.status(401)
+      next({
+        name: "RequestError",
+        message: "Could not find the provided email"
+      })
+  }
+    next(e);
+  }
+})
+
 
 export default authRouter;
 
