@@ -3,9 +3,7 @@ import {
     Image,
     Flex,
     Spacer,
-    Show,
     Hide,
-    Box
 } from "@chakra-ui/react";
 import RegisterForm from "./RegisterForm.js";
 import mountainClimber from "../../../images/mountain-climber.jpg";
