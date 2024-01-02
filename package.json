@@ -14,7 +14,7 @@
     "migrate:dev": "dotenv -e .env -- npx prisma migrate dev",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "test": "npm run docker:up && dotenv -e .env.test -- npx prisma migrate deploy && dotenv -e .env.test -- jest -i",
+    "test": " dotenv -e .env.test -- npx prisma migrate deploy && dotenv -e .env.test -- jest -i",
     "test-seq": "jest /__tests__"
   },
   "dependencies": {
