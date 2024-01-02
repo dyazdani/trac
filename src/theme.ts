@@ -9,8 +9,8 @@ const themes = {
             body: {
                 height: '100vh',
                 display: 'flex',
-                'align-items': 'center',
-                'background-color': '#b9eefe',
+                'alignItems': 'center',
+                'backgroundColor': '#b9eefe',
             },
         },
     },
