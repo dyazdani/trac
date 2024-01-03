@@ -18,6 +18,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useLoginMutation } from "../features/api.js";
 
 export interface LoginFormProps {
   handleLinkClick: () => void;
@@ -28,9 +29,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // Placeholder function until work on form submit begins
-  const handleSubmit = () => {
-    console.log("form submitted");
+  const [login, { isLoading }] = useLoginMutation();
+
+  const handleSubmit = async () => {
+    const user = await login({ email, password })
   };
 
   return (
@@ -88,6 +90,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
               colorScheme="yellow"
               data-testid="submit-button"
               type="submit"
+              isLoading={isLoading}
             >
               <Text>Log In</Text>
             </Button>
