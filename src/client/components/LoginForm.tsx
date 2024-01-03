@@ -31,10 +31,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
 
   const [login, { isLoading }] = useLoginMutation();
 
-  // Placeholder function until work on form submit begins
   const handleSubmit = async () => {
     const user = await login({ email, password })
-    console.log("THE CURRENT USER", user);
   };
 
   return (
