@@ -9,6 +9,8 @@ import {
     screen
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../../client/app/store.js'
 import RegisterForm from '../RegisterForm.js';
 
 const mockHandleLinkClick = jest.fn();
@@ -18,11 +20,12 @@ const mockHandleOnMouseDown = jest.fn();
 describe("RegisterForm component", () => {
     beforeEach(() =>{
         render(
-            <RegisterForm
+            <Provider store={store}>
+                <RegisterForm
                 handleLinkClick={mockHandleLinkClick}
-                handleSubmit={mockHandleSubmit}
-                handleOnMouseDown={mockHandleOnMouseDown}
             />
+            </Provider>
+            
         )
     })
     it("should render all elements", () => {
@@ -70,10 +73,12 @@ describe("RegisterForm component", () => {
         await user.type(confirmPasswordInput, 'bobbybobpassword')
 
         const submitButton = screen.getByTestId('submit-button');
+        const form = screen.getByTestId('register-form');
+
+        form.onsubmit = mockHandleSubmit;
         await user.click(submitButton)
 
         expect(mockHandleSubmit).toHaveBeenCalledTimes(1)
-
     }),
     it("should fire click handler when link in card footer is clicked", async () => {
         const user = userEvent.setup();
@@ -87,7 +92,11 @@ describe("RegisterForm component", () => {
         const user = userEvent.setup();
 
         const passwordVisibilityButton = screen.getByTestId('password-visibility-button')
+        passwordVisibilityButton.onclick = mockHandleOnMouseDown;
         const confirmPasswordVisibilityButton = screen.getByTestId('confirm-password-visibility-button')
+        confirmPasswordVisibilityButton.onclick = mockHandleOnMouseDown;
+
+
         await user.click(passwordVisibilityButton)
         await user.click(confirmPasswordVisibilityButton)
 
