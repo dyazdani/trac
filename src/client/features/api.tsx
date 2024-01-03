@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
+import { Habit } from '@prisma/client';
+import { createHabitReqBody } from '../../types/index.js';
 
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
@@ -32,6 +34,18 @@ export const api = createApi({
         }),
         invalidatesTags: ["CurrentUser"],
       }),
+      createHabit: builder.mutation<{habit: Habit}, {id: number, habitDetails: createHabitReqBody}>({
+        query: ({id, habitDetails}) => ({
+          url: `/users/${id}/habits`,
+          method: "POST",
+          body: {
+            name: habitDetails.name, 
+            routineDays: habitDetails.routineDays, 
+            checkInDay: habitDetails.checkInDay
+          },
+        }),
+        invalidatesTags: ["Habit"],
+      }),
     })
   })
   
@@ -42,5 +56,6 @@ export const api = createApi({
   
   export const { 
     useRegisterMutation,
-    useLoginMutation 
+    useLoginMutation ,
+    useCreateHabitMutation
   } = api
