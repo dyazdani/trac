@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Image, Flex, Spacer, Hide } from "@chakra-ui/react";
+
 import RegisterForm from "./RegisterForm.js";
 import LoginForm from "./LoginForm.js";
 import mountainClimber from "../../../images/mountain-climber.jpg";
@@ -11,17 +12,13 @@ const LandingPage = () => {
     setIsLoginShowing(!isLoginShowing);
   };
 
-  // Placeholder function until work on form submit begins
-  const handleSubmit = () => {
-    console.log("form submitted");
-  };
-
-  // To be used to toggle password visibility
-  const handleOnMouseDown = (e: React.MouseEvent<HTMLButtonElement>) =>
-    e.preventDefault();
-
   return (
-    <Flex alignItems="center" w="100vw" h="100vh" bg="#b9eefe">
+    <Flex 
+        alignItems="center" 
+        w="100vw" 
+        h="100vh" 
+        bg="#b9eefe"
+    >
       <Spacer />
       <Hide breakpoint="(max-width: 600px)">
         <Image
@@ -40,19 +37,11 @@ const LandingPage = () => {
         <Spacer />
         <Spacer />
       </Hide>
- 
+
       {isLoginShowing ? (
-        <LoginForm
-          handleLinkClick={handleLinkClick}
-          handleSubmit={handleSubmit}
-          handleOnMouseDown={handleOnMouseDown}
-        />
+        <LoginForm handleLinkClick={handleLinkClick} />
       ) : (
-        <RegisterForm
-          handleLinkClick={handleLinkClick}
-          handleSubmit={handleSubmit}
-          handleOnMouseDown={handleOnMouseDown}
-        />
+        <RegisterForm handleLinkClick={handleLinkClick} />
       )}
       <Hide breakpoint="(max-width: 600px)">
         <Spacer />

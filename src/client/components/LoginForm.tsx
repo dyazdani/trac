@@ -21,18 +21,17 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export interface LoginFormProps {
   handleLinkClick: () => void;
-  handleSubmit: () => void;
-  handleOnMouseDown: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({
-  handleLinkClick,
-  handleSubmit,
-  handleOnMouseDown,
-}) => {
+const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  // Placeholder function until work on form submit begins
+  const handleSubmit = () => {
+    console.log("form submitted");
+  };
 
   return (
     <Card variant="elevated" align="center" size="md" m="4">
@@ -41,7 +40,13 @@ const LoginForm: React.FC<LoginFormProps> = ({
         <Text>Stay on trac by logging in.</Text>
       </CardHeader>
       <CardBody>
-        <Box as="form" onSubmit={handleSubmit}>
+        <Box
+          as="form"
+          onSubmit={(e: React.FormEvent<HTMLDivElement>) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+        >
           <VStack as="fieldset">
             <FormControl>
               <FormLabel>Email Address</FormLabel>
@@ -70,7 +75,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
                     aria-label="toggle password visibility"
                     onClick={() => setShowPassword((show) => !show)}
-                    onMouseDown={handleOnMouseDown}
+                    onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      e.preventDefault()
+                    }
                     data-testid="password-visibility-button"
                   />
                 </InputRightElement>
