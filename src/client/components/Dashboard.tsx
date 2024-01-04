@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
+import DiamondCheckbox from "./DiamondCheckbox.js";
 
 
 const Dashboard = () => {
@@ -10,6 +11,7 @@ const Dashboard = () => {
             h="100vh"
             w="100vw"
         >
+            <DiamondCheckbox/>
             <RightDrawer />
         </Box>
     )
