@@ -6,9 +6,7 @@ const Dashboard = () => {
 
     return (
         <>
-            <p>Dashboard component</p>
-            <MyHabits />
-            
+            <MyHabits /> 
         </>
         
     )
