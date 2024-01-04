@@ -10,3 +10,27 @@ declare global {
     }
   }
 }
+
+// Type for req.body.routine when creating a Habit 
+// with POST /api/users/:id/habits
+
+export interface createHabitReqBody {
+  name: string
+  routineDays: {
+    monday: boolean
+    tuesday: boolean
+    wednesday: boolean
+    thursday: boolean
+    friday: boolean
+    saturday: boolean
+    sunday: boolean
+  }
+  checkInDay: 
+    "MONDAY" | 
+    "TUESDAY" |
+    "WEDNESDAY" |
+    "THURSDAY" |
+    "FRIDAY" |
+    "SATURDAY" |
+    "SUNDAY"
+}
