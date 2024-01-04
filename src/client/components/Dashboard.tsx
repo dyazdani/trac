@@ -1,11 +1,8 @@
-import { Box, Button } from "@chakra-ui/react";
-import { useAppDispatch } from "../app/hooks.js";
-import { logout } from "../features/authSlice.js";
+import { Box } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
 
 
 const Dashboard = () => {
-    const dispatch = useAppDispatch()
 
     return (
         <Box
@@ -13,16 +10,8 @@ const Dashboard = () => {
             h="100vh"
             w="100vw"
         >
-            <p>Dashboard component</p>
-            <Button
-                type="button"
-                onClick={() => {dispatch(logout())}}
-            >
-                Logout
-            </Button>
             <RightDrawer />
         </Box>
-        
     )
 }
 
