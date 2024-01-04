@@ -1,4 +1,8 @@
 import React from "react";
+import { Button } from "@chakra-ui/react";
+import { useAppDispatch } from "../app/hooks.js";
+import { logout } from "../features/authSlice.js";
+
 import { 
     HStack, 
     Box, 
@@ -8,6 +12,7 @@ import {
 type AppHeaderProps = {};
 
 const AppHeader = (props: AppHeaderProps) => {
+    const dispatch = useAppDispatch()
   return (
     <>
       <Box 
@@ -17,6 +22,12 @@ const AppHeader = (props: AppHeaderProps) => {
         >
         <HStack>
           <Text fontSize='2xl'>trac</Text>
+          <Button
+                type="button"
+                onClick={() => {dispatch(logout())}}
+            >
+                Logout
+            </Button>
         </HStack>
       </Box>
     </>
