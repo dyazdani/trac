@@ -1,4 +1,4 @@
-import {  User } from '@prisma/client';
+import {  DayOfTheWeek, User } from '@prisma/client';
 
 // to make the file a module and avoid the TypeScript error
 export {}
@@ -24,17 +24,8 @@ export type routineDays = {
   sunday: boolean
 }
 
-export type checkInDay =     
-"MONDAY" | 
-"TUESDAY" |
-"WEDNESDAY" |
-"THURSDAY" |
-"FRIDAY" |
-"SATURDAY" |
-"SUNDAY"
-
 export interface createHabitReqBody {
   name: string
   routineDays: routineDays
-  checkInDay: checkInDay
+  checkInDay: DayOfTheWeek
 }
