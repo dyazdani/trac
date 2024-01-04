@@ -20,6 +20,7 @@ usersRouter.get("/", requireUser, async (req, res, next): Promise<void> => {
 usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<void> => {
     if (req.user) {
         try {
+            // TODO: There is potentially a more concise way to write this endpoint:  https://www.prisma.io/docs/orm/prisma-client/queries/relation-queries#nested-writes
             const { 
                 name,
                 routineDays, 
