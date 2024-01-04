@@ -35,6 +35,7 @@ import { useAppSelector } from '../app/hooks.js'
 const RightDrawer = () => {
     const [menuValue, setMenuValue] = useState<string | undefined>()
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const inputRef = React.useRef<HTMLInputElement>(null);
     // TODO: use checkboxGroupValue to require at least one checkbox selected before submitting form
     const {value: checkboxGroupValue} = useCheckboxGroup();
 
@@ -63,6 +64,7 @@ const RightDrawer = () => {
                 closeOnEsc={false}
                 closeOnOverlayClick={false}
                 size="sm"
+                initialFocusRef={inputRef}
             >
                 <DrawerOverlay />
                 <DrawerContent>
@@ -89,7 +91,7 @@ const RightDrawer = () => {
                                     defaultValue='New Habit'
                                 >
                                     <EditablePreview />
-                                    <EditableInput id="habitName"/>
+                                    <EditableInput id="habitName" ref={inputRef}/>
                                 </Editable>
                             </FormControl>
                             
