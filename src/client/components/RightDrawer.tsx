@@ -118,7 +118,6 @@ const RightDrawer = () => {
                                 <MenuButton 
                                     as={Button} 
                                     rightIcon={<ChevronDownIcon />}
-                                    // TODO: figure out a way to make this button text not all caps
                                 >{menuValue}</MenuButton>
                                 <MenuList>
                                     <MenuOptionGroup 
