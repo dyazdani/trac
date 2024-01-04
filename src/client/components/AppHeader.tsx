@@ -2,6 +2,8 @@ import React from "react";
 import { Button } from "@chakra-ui/react";
 import { useAppDispatch } from "../app/hooks.js";
 import { logout } from "../features/authSlice.js";
+import { useCreateHabitMutation } from "../features/api.js";
+import { DayOfTheWeek } from "@prisma/client";
 
 import { 
     HStack, 
@@ -9,9 +11,26 @@ import {
     Text 
 } from "@chakra-ui/react";
 
+// Moving this code to AppHeader to get it out of the way of the MyHabits page
+const habitDetails = {
+  name: `"THIS IS A TEST"`,
+  routineDays: {
+      monday: false,
+      tuesday: false,
+      wednesday: true,
+      thursday: false,
+      friday: true,
+      saturday: false,
+      sunday: false
+  },
+  checkInDay: DayOfTheWeek.MONDAY
+}
+
 type AppHeaderProps = {};
 
 const AppHeader = (props: AppHeaderProps) => {
+  const [createHabit, {data, isLoading, error}] = useCreateHabitMutation();
+
     const dispatch = useAppDispatch()
   return (
     <>
@@ -27,6 +46,24 @@ const AppHeader = (props: AppHeaderProps) => {
                 onClick={() => {dispatch(logout())}}
             >
                 Logout
+            </Button>
+            <Button
+                type="button"
+                onClick={async (e) => {
+                    e.preventDefault();
+                    if (!isLoading) {
+                        const data = await createHabit({id: 2, habitDetails});
+                        if (error) {
+                            console.error(error);
+                        } 
+                        if (data) {
+                            console.log(data);
+                        }
+                    }
+
+                }}
+            >
+                Create Habit
             </Button>
         </HStack>
       </Box>
