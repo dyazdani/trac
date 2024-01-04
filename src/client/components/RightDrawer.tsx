@@ -33,7 +33,8 @@ import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { useAppSelector } from '../app/hooks.js'
 
 const RightDrawer = () => {
-    const [menuValue, setMenuValue] = useState<string | undefined>()
+    // TODO: Set this value to upper case when sending it to database
+    const [menuValue, setMenuValue] = useState<string | string[]>()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const inputRef = React.useRef<HTMLInputElement>(null);
     // TODO: use checkboxGroupValue to require at least one checkbox selected before submitting form
@@ -122,17 +123,16 @@ const RightDrawer = () => {
                                 <MenuList>
                                     <MenuOptionGroup type='radio' onChange={
                                         (e) => {
-                                            if (typeof e === 'string')
                                             setMenuValue(e)
                                         }}
                                     >
-                                        <MenuItemOption value='MONDAY'>Monday</MenuItemOption>
-                                        <MenuItemOption value='TUESDAY'>Tuesday</MenuItemOption>
-                                        <MenuItemOption value='WEDNESDAY'>Wednesday</MenuItemOption>
-                                        <MenuItemOption value='THURSDAY'>Thursday</MenuItemOption>
-                                        <MenuItemOption value='FRIDAY'>Friday</MenuItemOption>
-                                        <MenuItemOption value='SATURDAY'>Saturday</MenuItemOption>
-                                        <MenuItemOption value='SUNDAY'>Sunday</MenuItemOption>
+                                        <MenuItemOption value='Monday'>Monday</MenuItemOption>
+                                        <MenuItemOption value='Tuesday'>Tuesday</MenuItemOption>
+                                        <MenuItemOption value='Wednesday'>Wednesday</MenuItemOption>
+                                        <MenuItemOption value='Thursday'>Thursday</MenuItemOption>
+                                        <MenuItemOption value='Friday'>Friday</MenuItemOption>
+                                        <MenuItemOption value='Saturday'>Saturday</MenuItemOption>
+                                        <MenuItemOption value='Sunday'>Sunday</MenuItemOption>
                                     </MenuOptionGroup>
                                 </MenuList>
                             </Menu>
