@@ -34,7 +34,7 @@ import { useAppSelector } from '../app/hooks.js'
 
 const RightDrawer = () => {
     // TODO: Set this value to upper case when sending it to database
-    const [menuValue, setMenuValue] = useState<string | string[]>()
+    const [menuValue, setMenuValue] = useState<string | string[]>('Monday')
     const { isOpen, onOpen, onClose } = useDisclosure()
     const inputRef = React.useRef<HTMLInputElement>(null);
     // TODO: use checkboxGroupValue to require at least one checkbox selected before submitting form
@@ -121,10 +121,13 @@ const RightDrawer = () => {
                                     // TODO: figure out a way to make this button text not all caps
                                 >{menuValue}</MenuButton>
                                 <MenuList>
-                                    <MenuOptionGroup type='radio' onChange={
+                                    <MenuOptionGroup 
+                                    type='radio'
+                                    value={menuValue}
+                                    onChange={
                                         (e) => {
                                             setMenuValue(e)
-                                        }}
+                                    }}
                                     >
                                         <MenuItemOption value='Monday'>Monday</MenuItemOption>
                                         <MenuItemOption value='Tuesday'>Tuesday</MenuItemOption>
