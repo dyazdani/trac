@@ -1,6 +1,4 @@
 import { Button } from "@chakra-ui/react";
-import { useAppDispatch } from "../app/hooks.js";
-import { logout } from "../features/authSlice.js";
 import { useCreateHabitMutation } from "../features/api.js";
 import { DayOfTheWeek } from "@prisma/client";
 
@@ -19,18 +17,11 @@ const habitDetails = {
 }
 
 const Dashboard = () => {
-    const dispatch = useAppDispatch()
     const [createHabit, {data, isLoading, error}] = useCreateHabitMutation();
 
     return (
         <>
             <p>Dashboard component</p>
-            <Button
-                type="button"
-                onClick={() => {dispatch(logout())}}
-            >
-                Logout
-            </Button>
             <Button
                 type="button"
                 onClick={async (e) => {
