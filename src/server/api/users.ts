@@ -16,6 +16,21 @@ usersRouter.get("/", requireUser, async (req, res, next): Promise<void> => {
     }
 })
 
+// GET /api/users/:id/habits
+usersRouter.get("/:id/habits", requireUser, async (req, res, next): Promise<void> => {
+    const ownerId = Number(req.params.id)
+    try {
+        const habits = await prisma.habit.findMany({
+            where: {
+                ownerId: ownerId
+            }
+        })
+        res.send({ habits})
+    } catch(e) {
+
+    }
+})
+
 // POST /api/users/:id/habits
 usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<void> => {
     if (req.user) {
