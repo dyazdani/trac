@@ -1,6 +1,7 @@
 import { Button } from "@chakra-ui/react";
 import { useCreateHabitMutation } from "../features/api.js";
 import { DayOfTheWeek } from "@prisma/client";
+import MyHabits from "./MyHabits.js";
 
 const habitDetails = {
     name: `"THIS IS A TEST"`,
@@ -22,6 +23,7 @@ const Dashboard = () => {
     return (
         <>
             <p>Dashboard component</p>
+            <MyHabits />
             <Button
                 type="button"
                 onClick={async (e) => {
