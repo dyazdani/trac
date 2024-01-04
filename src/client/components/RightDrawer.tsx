@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import {
     Drawer,
     DrawerBody,
@@ -31,7 +31,6 @@ import {
   } from '@chakra-ui/react'
 import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { useAppSelector } from '../app/hooks.js'
-import { DayOfTheWeek } from '@prisma/client'
 
 const RightDrawer = () => {
     const [menuValue, setMenuValue] = useState<string | undefined>()
@@ -125,7 +124,6 @@ const RightDrawer = () => {
                                             setMenuValue(e)
                                         }}
                                     >
-
                                         <MenuItemOption value='MONDAY'>Monday</MenuItemOption>
                                         <MenuItemOption value='TUESDAY'>Tuesday</MenuItemOption>
                                         <MenuItemOption value='WEDNESDAY'>Wednesday</MenuItemOption>
