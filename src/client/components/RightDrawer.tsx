@@ -35,14 +35,13 @@ import { useAppSelector } from '../app/hooks.js'
 const RightDrawer = () => {
     // TODO: Set this value to upper case when sending it to database
     const [menuValue, setMenuValue] = useState<string | string[]>('Monday')
+    const [checkboxGroupValue, setCheckboxGroupValue] = useState<(string | number)[]>()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const inputRef = React.useRef<HTMLInputElement>(null);
     // TODO: use checkboxGroupValue to require at least one checkbox selected before submitting form
-    const {value: checkboxGroupValue} = useCheckboxGroup();
 
     const currentUser = useAppSelector((state) => state.auth.user);
 
-    
     return (
         <>
         {currentUser && 
@@ -100,15 +99,19 @@ const RightDrawer = () => {
                         {/* TODO: Prevent submitting form unless > 0 boxes are checked */}
                         <Box as="fieldset">
                             <FormLabel>Weekly Routine</FormLabel>
-                            <CheckboxGroup>
+                            <CheckboxGroup colorScheme='teal' onChange={(e) => {
+                                setCheckboxGroupValue(e);
+                            }} 
+                                value={checkboxGroupValue}
+                            >
                                 <Stack direction='row'>
-                                    <Checkbox>M</Checkbox>
-                                    <Checkbox>T</Checkbox>
-                                    <Checkbox>W</Checkbox>
-                                    <Checkbox>Th</Checkbox>
-                                    <Checkbox>F</Checkbox>
-                                    <Checkbox>Sa</Checkbox>
-                                    <Checkbox>Su</Checkbox>
+                                    <Checkbox value="Monday">M</Checkbox>
+                                    <Checkbox value="Tuesday">T</Checkbox>
+                                    <Checkbox value="Wednesday">W</Checkbox>
+                                    <Checkbox value="Thursday">Th</Checkbox>
+                                    <Checkbox value="Friday">F</Checkbox>
+                                    <Checkbox value="Saturday">Sa</Checkbox>
+                                    <Checkbox value="Sunday">Su</Checkbox>
                                 </Stack>
                             </CheckboxGroup>
                         </Box>
