@@ -34,6 +34,10 @@ export const api = createApi({
         }),
         invalidatesTags: ["CurrentUser"],
       }),
+      getHabitsByUser: builder.query<{ habits: Habit[] }, number>({
+        query: (id) => `/users/${id}/habits`,
+        providesTags: ["Habit"]
+      }),
       createHabit: builder.mutation<{habit: Habit}, {id: number, habitDetails: createHabitReqBody}>({
         query: ({id, habitDetails}) => ({
           url: `/users/${id}/habits`,
@@ -56,6 +60,7 @@ export const api = createApi({
   
   export const { 
     useRegisterMutation,
-    useLoginMutation ,
+    useLoginMutation,
+    useGetHabitsByUserQuery,
     useCreateHabitMutation
   } = api
