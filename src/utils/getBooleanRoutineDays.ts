@@ -1,6 +1,6 @@
-import { routineDays } from "../types/index.js";
+import { RoutineDays } from "../types/index.js";
 
-export type routineDaysArrayType = (
+export type RoutineDaysArrayType = (
     "monday" |
     "tuesday" |
     "wednesday" |
@@ -11,8 +11,8 @@ export type routineDaysArrayType = (
 )[] | [];
 
 
-const getBooleanRoutineDays = (routineDaysArray: routineDaysArrayType) => {
-    const finalObject: routineDays = {
+const getBooleanRoutineDays = (routineDaysArray: RoutineDaysArrayType) => {
+    const finalObject: RoutineDays = {
         monday: false,
         tuesday: false,
         wednesday: false,
