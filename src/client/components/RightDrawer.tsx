@@ -27,7 +27,8 @@ import {
     MenuList,
     MenuItem,
     MenuOptionGroup,
-    MenuItemOption
+    MenuItemOption,
+    useToast
   } from '@chakra-ui/react'
 import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { useCreateHabitMutation } from '../features/api.js'
@@ -42,6 +43,7 @@ const RightDrawer = () => {
     const [habitNameValue, setHabitNameValue] = useState("")
     const { isOpen, onOpen, onClose } = useDisclosure()
     const inputRef = React.useRef<HTMLInputElement>(null);
+    const toast = useToast();
 
     const [createHabit, {isLoading, data, error}] = useCreateHabitMutation();
 
@@ -101,6 +103,13 @@ const RightDrawer = () => {
                             }
                             onClose()
                             setCheckboxGroupValue([])
+                            toast({
+                                title: 'Habit created.',
+                                description: 'Your new Habit was created and added to your dashboard.',
+                                status: 'success',
+                                duration: 9000,
+                                isClosable: true
+                            })
                         }}
                         id="habitForm"
                         spacing="3vw"
