@@ -38,6 +38,8 @@ const AppHeader = (props: AppHeaderProps) => {
         bg="#b9eefe" 
         w="100%" 
         p={4}
+        position={"sticky"}
+        top={"0px"}
         >
         <HStack>
           <Text fontSize='2xl'>trac</Text>
