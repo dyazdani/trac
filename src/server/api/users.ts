@@ -23,6 +23,14 @@ usersRouter.get("/:id/habits", requireUser, async (req, res, next): Promise<void
         const habits = await prisma.habit.findMany({
             where: {
                 ownerId: ownerId
+            },
+            include: {
+                routine: true,
+                checkIn: {
+                    select: {
+                        dayOfTheWeek: true
+                    }
+                }
             }
         })
         res.send({ habits})
