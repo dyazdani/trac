@@ -30,15 +30,20 @@ import {
     MenuItemOption
   } from '@chakra-ui/react'
 import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
+import { useCreateHabitMutation } from '../features/api.js'
 import { useAppSelector } from '../app/hooks.js'
+import getBooleanRoutineDays, { routineDaysArrayType } from '../../utils/getBooleanRoutineDays.js'
+import { DayOfTheWeek } from '@prisma/client'
 
 const RightDrawer = () => {
     // TODO: Set this value to upper case when sending it to database
     const [menuValue, setMenuValue] = useState<string | string[]>('Monday')
-    const [checkboxGroupValue, setCheckboxGroupValue] = useState<(string | number)[]>()
+    const [checkboxGroupValue, setCheckboxGroupValue] = useState<routineDaysArrayType>([])
+    const [habitNameValue, setHabitNameValue] = useState("")
     const { isOpen, onOpen, onClose } = useDisclosure()
     const inputRef = React.useRef<HTMLInputElement>(null);
-    // TODO: use checkboxGroupValue to require at least one checkbox selected before submitting form
+
+    const [createHabit, {isLoading, data, error}] = useCreateHabitMutation();
 
     const currentUser = useAppSelector((state) => state.auth.user);
 
@@ -76,7 +81,27 @@ const RightDrawer = () => {
                 <DrawerBody>
                     <Stack
                         as="form"
-                        onSubmit={onClose}
+                        onSubmit={async (e) => {
+                            e.preventDefault();
+                            if (
+                                currentUser && 
+                                typeof menuValue === 'string' && 
+                                checkboxGroupValue &&
+                                !checkboxGroupValue.some(el => typeof el === 'number')
+                                ) {
+                                const habit = await createHabit({
+                                    id: currentUser.id,
+                                    habitDetails: {
+                                        name: habitNameValue,
+                                        routineDays: getBooleanRoutineDays(checkboxGroupValue),
+                                        checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek]
+                                    }
+                                })
+                                console.log(habit)
+                            }
+                            onClose()
+                            setCheckboxGroupValue([])
+                        }}
                         id="habitForm"
                         spacing="3vw"
                     >
@@ -91,7 +116,12 @@ const RightDrawer = () => {
                                     defaultValue='New Habit'
                                 >
                                     <EditablePreview />
-                                    <EditableInput id="habitName" ref={inputRef}/>
+                                    <EditableInput 
+                                        id="habitName" 
+                                        ref={inputRef}
+                                        onChange={(e) => {setHabitNameValue(e.target.value)}}
+                                        value={habitNameValue}
+                                    />
                                 </Editable>
                             </FormControl>
                             
@@ -99,19 +129,19 @@ const RightDrawer = () => {
                         {/* TODO: Prevent submitting form unless > 0 boxes are checked */}
                         <Box as="fieldset">
                             <FormLabel>Weekly Routine</FormLabel>
-                            <CheckboxGroup colorScheme='teal' onChange={(e) => {
+                            <CheckboxGroup colorScheme='teal' onChange={(e: routineDaysArrayType) => {
                                 setCheckboxGroupValue(e);
                             }} 
                                 value={checkboxGroupValue}
                             >
                                 <Stack direction='row'>
-                                    <Checkbox value="Monday">M</Checkbox>
-                                    <Checkbox value="Tuesday">T</Checkbox>
-                                    <Checkbox value="Wednesday">W</Checkbox>
-                                    <Checkbox value="Thursday">Th</Checkbox>
-                                    <Checkbox value="Friday">F</Checkbox>
-                                    <Checkbox value="Saturday">Sa</Checkbox>
-                                    <Checkbox value="Sunday">Su</Checkbox>
+                                    <Checkbox value="monday">M</Checkbox>
+                                    <Checkbox value="tuesday">T</Checkbox>
+                                    <Checkbox value="wednesday">W</Checkbox>
+                                    <Checkbox value="thursday">Th</Checkbox>
+                                    <Checkbox value="friday">F</Checkbox>
+                                    <Checkbox value="saturday">Sa</Checkbox>
+                                    <Checkbox value="sunday">Su</Checkbox>
                                 </Stack>
                             </CheckboxGroup>
                         </Box>
