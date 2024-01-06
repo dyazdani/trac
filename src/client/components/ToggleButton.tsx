@@ -17,7 +17,7 @@ const ToggleButton = ({date}: ToggleButtonProps) => {
 
     // give button purple outline if it has today's date
     const isToday = isDateToday(date);
-    const outlineColor = isToday ? ".3vw solid purple" : ".3vw solid black";
+    const outlineColor = isToday ? "3px solid purple" : "3px solid black";
 
     // extract day of the week abbreviation for label
     const dayAbbreviation = getDayOfWeekLabelText(date);
