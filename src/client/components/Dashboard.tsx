@@ -2,18 +2,15 @@ import { Box } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
 import UpdateHabitButton from "./UpdateHabitButton.js";
 import { useGetHabitsByUserQuery } from "../features/api.js";
-import { useSelector } from "react-redux";
-import { RootState } from "../app/store.js";
-import { DayOfTheWeek } from "@prisma/client";
+import { useAppSelector } from "../app/hooks.js";
 
 const Dashboard = () => {
-  const user = useSelector((state: RootState) => state.auth.user);
+  const currentUser = useAppSelector((state) => state.auth.user);
 
   let habits;
-  if (user) {
-    const { data } = useGetHabitsByUserQuery(user.id);
+  if (currentUser) {
+    const { data } = useGetHabitsByUserQuery(currentUser.id);
     habits = data?.habits || [];
-    {console.log(habits, "I AM A HABIT")}
   }
 
     return (
@@ -27,7 +24,7 @@ const Dashboard = () => {
           <div key={habit.id}>
             
             <p>{habit.name}</p>
-            {habit.checkIn && habit.checkIn.dayOfTheWeek && (
+            {habit.checkIn && (
             <p>Check in day: {habit.checkIn.dayOfTheWeek}</p>
           )}
           </div>
