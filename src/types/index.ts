@@ -1,4 +1,4 @@
-import {  DayOfTheWeek, User } from '@prisma/client';
+import {  CheckIn, DayOfTheWeek, Routine, User } from '@prisma/client';
 
 // to make the file a module and avoid the TypeScript error
 export {}
@@ -14,7 +14,7 @@ declare global {
 // Types for req.body when creating a Habit 
 // with POST /api/users/:id/habits
 
-export type routineDays = {
+export type RoutineDays = {
   monday: boolean
   tuesday: boolean
   wednesday: boolean
@@ -24,8 +24,26 @@ export type routineDays = {
   sunday: boolean
 }
 
-export interface createHabitReqBody {
+export interface CreateHabitReqBody {
   name: string
-  routineDays: routineDays
+  routineDays: RoutineDays
   checkInDay: DayOfTheWeek
+}
+
+export interface UpdateHabitReqBody {
+  name: string
+  datesCompleted: Date[]
+  routineDays: RoutineDays
+  checkInDay: DayOfTheWeek
+}
+
+export interface HabitWithDetails {
+  id: number
+  dateCreated: Date
+  dateUpdated: Date
+  name: string
+  datesCompleted: Date[]
+  ownerId: number
+  routine: Routine
+  checkIn: CheckIn
 }

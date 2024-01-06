@@ -2,7 +2,7 @@ import express from "express";
 import excludePassword from "../../utils/excludePassword.js";
 import prisma from "../../utils/test/prisma.js";
 import requireUser from "../../utils/requireUser.js";
-import { createHabitReqBody } from "../../types/index.js";
+import { CreateHabitReqBody, RoutineDays, UpdateHabitReqBody } from "../../types/index.js";
 
 const usersRouter = express.Router();
 
@@ -16,6 +16,29 @@ usersRouter.get("/", requireUser, async (req, res, next): Promise<void> => {
     }
 })
 
+// GET /api/users/:id/habits
+usersRouter.get("/:id/habits", requireUser, async (req, res, next): Promise<void> => {
+    const ownerId = Number(req.params.id)
+    try {
+        const habits = await prisma.habit.findMany({
+            where: {
+                ownerId: ownerId
+            },
+            include: {
+                routine: true,
+                checkIn: {
+                    select: {
+                        dayOfTheWeek: true
+                    }
+                }
+            }
+        })
+        res.send({ habits})
+    } catch(e) {
+
+    }
+})
+
 // POST /api/users/:id/habits
 usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<void> => {
     if (req.user) {
@@ -25,7 +48,7 @@ usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<voi
                 name,
                 routineDays, 
                 checkInDay
-            }: createHabitReqBody = req.body
+            }: CreateHabitReqBody = req.body
 
             // Create Habit
             const ownerId = Number(req.params.id);
@@ -62,3 +85,52 @@ usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<voi
 })
 
 export default usersRouter;
+
+// PUT /api/users/:id/habits
+usersRouter.put("/:id/habits", requireUser, async (req, res, next) => {
+    try {
+        const habitId = Number(req.body.habitId)
+        
+        const { 
+            name, 
+            datesCompleted, 
+            routineDays, 
+            checkInDay 
+        }: UpdateHabitReqBody = req.body
+
+        // Update Routine associated with Habit
+        const routine = await prisma.routine.update({
+            where: {
+                habitId: habitId
+            },
+            data: {
+                ...routineDays
+            }
+        })
+
+        // Update CheckIn associated with Habit
+        const checkIn = await prisma.checkIn.update({
+            where: {
+                habitId: habitId
+            },
+            data: {
+                dayOfTheWeek: checkInDay
+            }
+        })
+
+        // Update non-relational fields on Habit
+        const habit = await prisma.habit.update({
+            where: {
+                id: habitId
+            },
+            data: {
+                name,
+                datesCompleted
+            }
+        })
+
+        res.send({habit, routine, checkIn});
+    } catch (e) {
+        next(e);
+    }
+})
