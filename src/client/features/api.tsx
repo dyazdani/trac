@@ -38,7 +38,7 @@ export const api = createApi({
         query: (id) => `/users/${id}/habits`,
         providesTags: ["Habit"]
       }),
-      getHabitsById: builder.query<{ habit: HabitWithDetails }, {id: number, habitId: number}>({
+      getHabitById: builder.query<{ habit: HabitWithDetails }, {id: number, habitId: number}>({
         query: ({id, habitId}) => `/users/${id}/habits/${habitId}`,
         providesTags: ["Habit"]
       }),
@@ -81,5 +81,6 @@ export const api = createApi({
     useLoginMutation,
     useGetHabitsByUserQuery,
     useCreateHabitMutation,
-    useUpdateHabitMutation
+    useUpdateHabitMutation,
+    useGetHabitByIdQuery
   } = api
