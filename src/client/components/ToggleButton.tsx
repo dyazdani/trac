@@ -21,33 +21,35 @@ const ToggleButton = ({date}: ToggleButtonProps) => {
 
     return (
         <Box>
-            <Button
-        onClick={setFlag.toggle}
-        w="1.5vw"
-        h="1.5vw"
-        minW="1.5vw"
-        px="0"
-        border="2px solid white"
-        borderRadius="50%"
-        outline={outlineColor}
-        backgroundColor="white"
-        colorScheme="teal"
-        top="50px"
-        left="50px"
-        >
-            { flag && <Box 
-                position="absolute"
-                w="1.2vw"
-                h="1.2vw"
-                minW="1.2vw"
-                top="50%"
-                left= "50%"
-                transform="translate(-50%, -50%)"
-                backgroundColor="teal"
+             <Button
+                onClick={setFlag.toggle}
+                w="15px"
+                h="15px"
+                minW="10px"
+                px="0"
+                border="2px solid white"
                 borderRadius="50%"
-            /> }
+                outline={outlineColor}
+                backgroundColor="white"
+                colorScheme="teal"
+                position="relative"
+                bottom="-27px"
+                right="7px"
+                zIndex="1"       
+            >
+                { flag && <Box 
+                    position="absolute"
+                    w="1.2vw"
+                    h="1.2vw"
+                    minW="1.2vw"
+                    top="50%"
+                    left= "50%"
+                    transform="translate(-50%, -50%)"
+                    backgroundColor="teal"
+                    borderRadius="50%"
+                /> }
 
-        </Button>
+            </Button>
         </Box>
         
         
