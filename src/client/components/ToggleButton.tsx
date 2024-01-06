@@ -19,6 +19,13 @@ const ToggleButton = ({date}: ToggleButtonProps) => {
     // Disable button if it's date is before date when habit was created or is in the future
     // TODO: Get start date from single habit query here. Then call isDayOutOfRange with dateCreated
 
+    const dayOfWeekNumber = date.getDay()
+        // TODO: Get habit checkInDay from single habit query variable here. Convert to number 0-6.
+        // Then compare with dayOfWeekNumber to conditionally render diamond toggle button =
+        // This all maybe needs to go in a parent component
+    const isCheckInDay = 
+
+
     return (
         <Box>
             <Button
