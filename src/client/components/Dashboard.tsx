@@ -4,6 +4,7 @@ import UpdateHabitButton from "./UpdateHabitButton.js";
 import { useGetHabitsByUserQuery } from "../features/api.js";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store.js";
+import { DayOfTheWeek } from "@prisma/client";
 
 const Dashboard = () => {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -12,6 +13,7 @@ const Dashboard = () => {
   if (user) {
     const { data } = useGetHabitsByUserQuery(user.id);
     habits = data?.habits || [];
+    {console.log(habits, "I AM A HABIT")}
   }
 
     return (
@@ -23,9 +25,11 @@ const Dashboard = () => {
           {habits &&
         habits.map((habit) => (
           <div key={habit.id}>
+            
             <p>{habit.name}</p>
-            <p>{habit.checkIn.dayOfTheWeek}</p>
-            <p></p>
+            {habit.checkIn && habit.checkIn.dayOfTheWeek && (
+            <p>Check in day: {habit.checkIn.dayOfTheWeek}</p>
+          )}
           </div>
         ))}
             <RightDrawer />
