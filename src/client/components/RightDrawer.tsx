@@ -33,13 +33,13 @@ import {
 import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { useCreateHabitMutation } from '../features/api.js'
 import { useAppSelector } from '../app/hooks.js'
-import getBooleanRoutineDays, { routineDaysArrayType } from '../../utils/getBooleanRoutineDays.js'
+import getBooleanRoutineDays, { RoutineDaysArrayType } from '../../utils/getBooleanRoutineDays.js'
 import { DayOfTheWeek } from '@prisma/client'
 
 const RightDrawer = () => {
     // TODO: Set this value to upper case when sending it to database
     const [menuValue, setMenuValue] = useState<string | string[]>('Monday')
-    const [checkboxGroupValue, setCheckboxGroupValue] = useState<routineDaysArrayType>([])
+    const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>([])
     const [habitNameValue, setHabitNameValue] = useState("")
     const { isOpen, onOpen, onClose } = useDisclosure()
     const inputRef = React.useRef<HTMLInputElement>(null);
@@ -138,7 +138,7 @@ const RightDrawer = () => {
                         {/* TODO: Prevent submitting form unless > 0 boxes are checked */}
                         <Box as="fieldset">
                             <FormLabel>Weekly Routine</FormLabel>
-                            <CheckboxGroup colorScheme='teal' onChange={(e: routineDaysArrayType) => {
+                            <CheckboxGroup colorScheme='teal' onChange={(e: RoutineDaysArrayType) => {
                                 setCheckboxGroupValue(e);
                             }} 
                                 value={checkboxGroupValue}
