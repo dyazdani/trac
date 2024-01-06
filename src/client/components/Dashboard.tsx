@@ -19,6 +19,8 @@ const Dashboard = () => {
         habits.map((habit) => (
           <div key={habit.id}>
             <p>{habit.name}</p>
+            <p>{habit.checkIn.dayOfTheWeek}</p>
+            <p></p>
           </div>
         ))}
       <RightDrawer />
