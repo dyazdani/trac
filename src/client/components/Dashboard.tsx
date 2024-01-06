@@ -14,7 +14,9 @@ const Dashboard = () => {
         >
             <RightDrawer />
             {/* <UpdateHabitButton/> */}
-            <ToggleButton/>
+            <ToggleButton
+                date={new Date("1990-01-01")}
+            />
         </Box>
     )
 }

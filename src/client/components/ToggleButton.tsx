@@ -3,9 +3,17 @@ import {
     Box,
     useBoolean
  } from "@chakra-ui/react";
+ import isDateToday from "../../utils/isDateToday.js";
 
-const ToggleButton = () => {
+ export interface ToggleButtonProps {
+    date: Date
+ }
+
+const ToggleButton = ({date}: ToggleButtonProps) => {
     const [flag, setFlag] = useBoolean();
+
+    const isToday = isDateToday(date);
+    const outlineColor = isToday ? ".3vw solid purple" : ".3vw solid black";
 
     return (
         <Box>
@@ -17,9 +25,11 @@ const ToggleButton = () => {
         px="0"
         border="2px solid white"
         borderRadius="50%"
-        outline=".3vw solid black"
+        outline={outlineColor}
         backgroundColor="white"
         colorScheme="teal"
+        top="50px"
+        left="50px"
         >
             { flag && <Box 
                 position="absolute"
