@@ -24,8 +24,9 @@ const AppHeader = (props: AppHeaderProps) => {
         <HStack>
           <Text fontSize='2xl'>trac</Text>
           <Spacer/>
+          {/* TODO: these test toggle buttons will need to be removed */}
+            <ToggleButton date={(new Date("1998-12-26"))}/>
             <ToggleButton date={new Date(Date.now())} />
-            <ToggleButton date={(new Date("1999-01-01"))}/>
             <Spacer/>
             <Button
                 type="button"
