@@ -20,39 +20,31 @@ const ToggleButton = ({date}: ToggleButtonProps) => {
     // TODO: Get start date from single habit query here. Then call isDayOutOfRange with dateCreated
 
     return (
-        <Box>
-             <Button
-                onClick={setFlag.toggle}
-                w="15px"
-                h="15px"
-                minW="10px"
-                px="0"
-                border="2px solid white"
+        <Button
+            onClick={setFlag.toggle}
+            w="15px"
+            h="15px"
+            minW="10px"
+            px="0"
+            border="2px solid white"
+            borderRadius="50%"
+            outline={outlineColor}
+            backgroundColor="white"
+            colorScheme="teal"
+            zIndex="1"       
+        >
+            { flag && <Box 
+                position="absolute"
+                w="10.5px"
+                h="10.5px"
+                minW="10.5px"
+                top="53%"
+                left= "51%"
+                transform="translate(-52%, -52%)"
+                backgroundColor="teal"
                 borderRadius="50%"
-                outline={outlineColor}
-                backgroundColor="white"
-                colorScheme="teal"
-                position="relative"
-                bottom="-27px"
-                right="7px"
-                zIndex="1"       
-            >
-                { flag && <Box 
-                    position="absolute"
-                    w="1.2vw"
-                    h="1.2vw"
-                    minW="1.2vw"
-                    top="50%"
-                    left= "50%"
-                    transform="translate(-50%, -50%)"
-                    backgroundColor="teal"
-                    borderRadius="50%"
-                /> }
-
-            </Button>
-        </Box>
-        
-        
+            /> }
+        </Button>
     )
 
 }
