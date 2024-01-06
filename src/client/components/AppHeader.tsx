@@ -9,6 +9,7 @@ import {
     Text 
 } from "@chakra-ui/react";
 import ToggleButton from "./ToggleButton.js";
+import DiamondToggleButton from "./DiamondImage.js";
 
 type AppHeaderProps = {};
 
@@ -24,10 +25,6 @@ const AppHeader = (props: AppHeaderProps) => {
         <HStack>
           <Text fontSize='2xl'>trac</Text>
           <Spacer/>
-          {/* TODO: these test toggle buttons will need to be removed */}
-            <ToggleButton date={(new Date("1998-12-26"))}/>
-            <ToggleButton date={new Date(Date.now())} />
-            <Spacer/>
             <Button
                 type="button"
                 onClick={() => {dispatch(logout())}}
