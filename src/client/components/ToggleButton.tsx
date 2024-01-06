@@ -19,7 +19,7 @@ const ToggleButton = ({date}: ToggleButtonProps) => {
     const isToday = isDateToday(date);
     const outlineColor = isToday ? ".3vw solid purple" : ".3vw solid black";
 
-    // extract day of the week from date prop and then display appropriate text in label
+    // extract day of the week abbreviation for label
     const dayAbbreviation = getDayOfWeekLabelText(date);
 
     // Disable button if it's date is before date when habit was created or is in the future
@@ -28,8 +28,14 @@ const ToggleButton = ({date}: ToggleButtonProps) => {
 
 
     return (
-        <FormControl>
-            <FormLabel>{dayAbbreviation}</FormLabel>
+        <FormControl
+            w="fit-content"
+        >
+            <FormLabel
+                w="fit-content"
+            >
+                {dayAbbreviation}
+            </FormLabel>
             <Button
                 onClick={setFlag.toggle}
                 w="15px"
