@@ -14,7 +14,7 @@ const ToggleButton = ({date}: ToggleButtonProps) => {
 
     // give button purple outline if it has today's date
     const isToday = isDateToday(date);
-    const outlineColor = isToday ? ".3vw solid purple" : ".3vw solid black";
+    const outlineColor = isToday ? "3px solid purple" : "3px solid black";
 
     // Disable button if it's date is before date when habit was created or is in the future
     // TODO: Get start date from single habit query here. Then call isDayOutOfRange with dateCreated
@@ -23,17 +23,19 @@ const ToggleButton = ({date}: ToggleButtonProps) => {
         <Box>
             <Button
         onClick={setFlag.toggle}
-        w="1.5vw"
-        h="1.5vw"
-        minW="1.5vw"
+        w="15px"
+        h="15px"
+        minW="10px"
         px="0"
         border="2px solid white"
         borderRadius="50%"
         outline={outlineColor}
         backgroundColor="white"
         colorScheme="teal"
-        top="50px"
-        left="50px"
+        position="relative"
+        bottom="-27px"
+        right="7px"
+        zIndex="1"       
         >
             { flag && <Box 
                 position="absolute"
