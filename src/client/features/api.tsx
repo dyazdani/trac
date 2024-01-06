@@ -38,6 +38,10 @@ export const api = createApi({
         query: (id) => `/users/${id}/habits`,
         providesTags: ["Habit"]
       }),
+      getHabitsById: builder.query<{ habit: HabitWithDetails }, {id: number, habitId: number}>({
+        query: ({id, habitId}) => `/users/${id}/habits/${habitId}`,
+        providesTags: ["Habit"]
+      }),
       createHabit: builder.mutation<{habit: Habit}, {id: number, habitDetails: CreateHabitReqBody}>({
         query: ({id, habitDetails}) => ({
           url: `/users/${id}/habits`,
