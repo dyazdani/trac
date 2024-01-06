@@ -3,6 +3,7 @@ import RightDrawer from "./RightDrawer.js";
 import DiamondCheckbox from "./DiamondToggleButton.js";
 import UpdateHabitButton from "./UpdateHabitButton.js";
 import ToggleButton from "./ToggleButton.js";
+import DiamondToggleButton from "./DiamondToggleButton.js";
 
 
 const Dashboard = () => {
@@ -13,7 +14,7 @@ const Dashboard = () => {
             h="100vh"
             w="100vw"
         >
-            <DiamondCheckbox/>
+            <DiamondToggleButton/>
             <RightDrawer />
             {/* <UpdateHabitButton/> */}
         </Box>
