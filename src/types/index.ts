@@ -1,4 +1,4 @@
-import {  DayOfTheWeek, User } from '@prisma/client';
+import {  CheckIn, DayOfTheWeek, Routine, User } from '@prisma/client';
 
 // to make the file a module and avoid the TypeScript error
 export {}
@@ -35,4 +35,15 @@ export interface UpdateHabitReqBody {
   datesCompleted: Date[]
   routineDays: RoutineDays
   checkInDay: DayOfTheWeek
+}
+
+export interface HabitWithDetails {
+  id: number
+  dateCreated: Date
+  dateUpdated: Date
+  name: string
+  datesCompleted: Date[]
+  ownerId: number
+  routine: Routine
+  checkIn: CheckIn
 }
