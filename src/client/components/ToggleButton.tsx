@@ -3,16 +3,19 @@ import {
     Box,
     useBoolean,
     FormLabel,
-    FormControl
+    FormControl,
+    VStack
  } from "@chakra-ui/react";
  import isDateToday from "../../utils/isDateToday.js";
 import getDayOfWeekLabelText from "../../utils/getDayOfWeekLabelText.js";
+import DiamondImage from "./DiamondImage.js";
 
  export interface ToggleButtonProps {
     date: Date
+    isCheckInDay: boolean
  }
 
-const ToggleButton = ({date}: ToggleButtonProps) => {
+const ToggleButton = ({date, isCheckInDay}: ToggleButtonProps) => {
     const [flag, setFlag] = useBoolean();
 
     // give button purple outline if it has today's date
@@ -30,7 +33,9 @@ const ToggleButton = ({date}: ToggleButtonProps) => {
     return (
         <FormControl
             w="fit-content"
+            position="relative"
         >
+            {isCheckInDay && <DiamondImage/>}
             <FormLabel
                 w="fit-content"
             >
@@ -64,7 +69,6 @@ const ToggleButton = ({date}: ToggleButtonProps) => {
                 }
             </Button>
         </FormControl>
-        
     )
 
 }
