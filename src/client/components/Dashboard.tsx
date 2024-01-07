@@ -30,7 +30,7 @@ const Dashboard = () => {
           </div>
         ))}
             <RightDrawer />
-            <UpdateHabitButton/>
+            {/* <UpdateHabitButton/> */}
         </Box>
     )
 }
