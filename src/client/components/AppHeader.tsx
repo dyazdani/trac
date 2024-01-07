@@ -4,8 +4,6 @@ import { useAppDispatch } from "../app/hooks.js";
 import { logout } from "../features/authSlice.js";
 import { useCreateHabitMutation } from "../features/api.js";
 import { DayOfTheWeek } from "@prisma/client";
-import UpdateHabitButton from "./UpdateHabitButton.js";
-
 
 import { 
     HStack, 
@@ -52,25 +50,7 @@ const AppHeader = (props: AppHeaderProps) => {
             >
                 Logout
             </Button>
-        <UpdateHabitButton />
-            <Button
-                type="button"
-                onClick={async (e) => {
-                    e.preventDefault();
-                    if (!isLoading) {
-                        const data = await createHabit({id: 2, habitDetails});
-                        if (error) {
-                            console.error(error);
-                        } 
-                        if (data) {
-                            console.log(data);
-                        }
-                    }
-
-                }}
-            >
-                Create Habit
-            </Button>
+            
         </HStack>
       </Box>
     </>
