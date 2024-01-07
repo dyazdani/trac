@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
 import UpdateHabitButton from "./UpdateHabitButton.js";
 import { 
@@ -6,6 +6,7 @@ import {
     useGetHabitByIdQuery 
 } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
+import ToggleButton from "./ToggleButton.js";
 
 const Dashboard = () => {
   const currentUser = useAppSelector((state) => state.auth.user);
@@ -32,6 +33,13 @@ const Dashboard = () => {
             h="100vh"
             w="100vw"
         >
+          <HStack
+              ml="10px"
+              mt="50px"
+            >
+              {/* TODO: these test toggle buttons will need to be removed */}
+              <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
+          </HStack>
           {habits &&
         habits.map((habit) => (
           <div key={habit.id}>

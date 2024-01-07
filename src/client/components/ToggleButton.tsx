@@ -3,7 +3,8 @@ import {
     Box,
     useBoolean,
     FormLabel,
-    FormControl
+    FormControl,
+    VStack
  } from "@chakra-ui/react";
  import isDateToday from "../../utils/isDateToday.js";
 import getDayOfWeekLabelText from "../../utils/getDayOfWeekLabelText.js";
@@ -11,13 +12,15 @@ import { useGetHabitByIdQuery, useUpdateHabitMutation } from "../features/api.js
 import { useAppSelector } from "../app/hooks.js";
 import { HabitWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
+import DiamondImage from "./DiamondImage.js";
 
  export interface ToggleButtonProps {
     date: Date
     habitId: number
+    isCheckInDay: boolean
  }
 
-const ToggleButton = ({date, habitId}: ToggleButtonProps) => {
+const ToggleButton = ({date, habitId, isCheckInDay}: ToggleButtonProps) => {
     const [flag, setFlag] = useBoolean();
     const currentUser = useAppSelector((state) => state.auth.user)
 
@@ -104,6 +107,7 @@ const ToggleButton = ({date, habitId}: ToggleButtonProps) => {
             }}
             as="form"
         >
+            {isCheckInDay && <DiamondImage/>}
             <FormLabel
                 w="fit-content"
             >
@@ -137,7 +141,6 @@ const ToggleButton = ({date, habitId}: ToggleButtonProps) => {
                 }
             </Button>
         </FormControl>
-        
     )
 
 }
