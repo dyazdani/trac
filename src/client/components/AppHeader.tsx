@@ -2,7 +2,6 @@ import React from "react";
 import { Button } from "@chakra-ui/react";
 import { useAppDispatch } from "../app/hooks.js";
 import { logout } from "../features/authSlice.js";
-import { useCreateHabitMutation } from "../features/api.js";
 
 import { 
     HStack, 
@@ -13,7 +12,6 @@ import {
 type AppHeaderProps = {};
 
 const AppHeader = (props: AppHeaderProps) => {
-  const [createHabit, {data, isLoading, error}] = useCreateHabitMutation();
 
     const dispatch = useAppDispatch()
   return (
