@@ -7,13 +7,36 @@ import {
  } from "@chakra-ui/react";
  import isDateToday from "../../utils/isDateToday.js";
 import getDayOfWeekLabelText from "../../utils/getDayOfWeekLabelText.js";
+import { useGetHabitByIdQuery, useUpdateHabitMutation } from "../features/api.js";
+import { useAppSelector } from "../app/hooks.js";
+import { HabitWithDetails } from "../../types/index.js";
+import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
 
  export interface ToggleButtonProps {
     date: Date
+    habitId: number
  }
 
-const ToggleButton = ({date}: ToggleButtonProps) => {
+const ToggleButton = ({date, habitId}: ToggleButtonProps) => {
     const [flag, setFlag] = useBoolean();
+    const currentUser = useAppSelector((state) => state.auth.user)
+
+    const [updateHabit, {data, isLoading, error}] = useUpdateHabitMutation();
+    
+    // variable for current habit details to be sent with update mutation
+    let habitData: HabitWithDetails;
+
+    if (currentUser) {
+        const { data } = useGetHabitByIdQuery({id: currentUser.id, habitId})
+       if (data){
+        habitData = data?.habit
+       }
+    }
+        
+
+    
+
+    
 
     // give button purple outline if it has today's date
     const isToday = isDateToday(date);
@@ -26,10 +49,60 @@ const ToggleButton = ({date}: ToggleButtonProps) => {
     // TODO: Get start date from single habit query here. Then call isDayOutOfRange with dateCreated
 
 
+    const handleSubmit = async () => {
+        if (currentUser && habitData && !isLoading) {
+            const {
+                monday,
+                tuesday,
+                wednesday,
+                thursday,
+                friday,
+                saturday,
+                sunday
+            } = habitData.routine
+
+            // determine whether to add or subtract this button's date
+            
+            
+            const newDatesCompleted = flag ? 
+                habitData.datesCompleted.filter((el) => {
+                    return !areDatesSameDayMonthYear(new Date(el), date);
+                }) : 
+                [...habitData.datesCompleted, date]
+
+            const currentHabit = await updateHabit({
+                id: currentUser?.id,
+                habitId,
+                newHabit: {
+                    name: habitData.name,
+                    datesCompleted: newDatesCompleted,
+                    routineDays: {
+                        monday,
+                        tuesday,
+                        wednesday,
+                        thursday,
+                        friday,
+                        saturday,
+                        sunday
+                    },
+                    checkInDay: habitData.checkIn.dayOfTheWeek
+                }
+            })
+
+            console.log("currentHabit from updateHabit)(): ,", currentHabit)
+        }
+    }
+
 
     return (
         <FormControl
             w="fit-content"
+            onSubmit={(e) => {
+                e.preventDefault();
+                setFlag.toggle();
+                handleSubmit();               
+            }}
+            as="form"
         >
             <FormLabel
                 w="fit-content"
@@ -37,7 +110,7 @@ const ToggleButton = ({date}: ToggleButtonProps) => {
                 {dayAbbreviation}
             </FormLabel>
             <Button
-                onClick={setFlag.toggle}
+                type="submit"
                 w="15px"
                 h="15px"
                 minW="10px"
