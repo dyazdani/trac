@@ -6,7 +6,9 @@ const Dashboard = () => {
   return (
     <>
       <RightDrawer />
-      <Box as="div" h="100vh" w="100vw">
+      <Box as="div" 
+      w="100vw"
+      >
         <MyHabits />
       </Box>
     </>

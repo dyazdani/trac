@@ -40,6 +40,7 @@ const AppHeader = (props: AppHeaderProps) => {
         bg="#b9eefe" 
         w="100%" 
         p={4}
+        minHeight="70px"
         position={"sticky"}
         top={"0px"}
         >
