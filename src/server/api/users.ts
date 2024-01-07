@@ -39,6 +39,33 @@ usersRouter.get("/:id/habits", requireUser, async (req, res, next): Promise<void
     }
 })
 
+// GET /api/users/:id/habits/:habitId
+usersRouter.get("/:id/habits/:habitId", requireUser, async (req, res, next): Promise<void> => {
+    const ownerId = Number(req.params.id)
+    const habitId = Number(req.params.habitId)
+
+    try {
+        const habit = await prisma.habit.findUnique({
+            where: {
+                ownerId: ownerId,
+                id: habitId
+            },
+            include: {
+                routine: true,
+                checkIn: {
+                    select: {
+                        dayOfTheWeek: true
+                    }
+                }
+            }
+        })
+        res.send({ habit})
+    } catch(e) {
+
+    }
+})
+
+
 // POST /api/users/:id/habits
 usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<void> => {
     if (req.user) {
