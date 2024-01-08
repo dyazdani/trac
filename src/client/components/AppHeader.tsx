@@ -9,8 +9,6 @@ import {
     Button,
     Spacer
 } from "@chakra-ui/react";
-import ToggleButton from "./ToggleButton.js";
-import DiamondToggleButton from "./DiamondImage.js";
 
 type AppHeaderProps = {};
 
