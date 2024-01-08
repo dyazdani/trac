@@ -11,7 +11,7 @@ import {
   Image, 
   HStack, 
   VStack, 
-  Box 
+  Box
 } from "@chakra-ui/react";
 
 
@@ -29,9 +29,10 @@ const MyHabits = () => {
           w="100vw"
           h="100%"
           pl={10}
-          bg="inherit"
+          bg="tomato"
           display="flex"
           flexDirection="column"
+          paddingBottom="50px"
         >
           <Box
             marginTop={10}
@@ -52,6 +53,7 @@ const MyHabits = () => {
           <VStack
             paddingTop="4rem"
             align="start"
+            spacing="20"
           >
             {habits &&
               habits.map((habit) => (

@@ -27,8 +27,10 @@ const Habit = (props: HabitProps) => {
   return (
     <>
       <Card 
-        size={"sm"} 
-        maxW={"3xl"}
+        size={"md"} 
+        // minW={"lg"}
+        w="xl"
+        // minW="lg"
         bg={"pink"}
         sx={{ borderRadius: "20px"}}
       >
