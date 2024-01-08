@@ -57,7 +57,7 @@ const MyHabits = () => {
           >
             {habits &&
               habits.map((habit) => (
-                <Habit key={habit.id} />
+                <Habit key={habit.id} habit={habit} />
               ))}
           </VStack>
         </Box>

@@ -1,5 +1,6 @@
 import React from "react";
 import ToggleButton from "./ToggleButton.js";
+import { HabitWithDetails } from "../../types/index.js";
 
 import {
   HStack,
@@ -21,9 +22,11 @@ import {
     ArrowRightIcon,
 } from "@chakra-ui/icons";
 
-type HabitProps = {};
+type HabitProps = {
+  habit: HabitWithDetails
+};
 
-const Habit = (props: HabitProps) => {
+const Habit = ({ habit }: HabitProps) => {
   return (
     <>
       <Card 
