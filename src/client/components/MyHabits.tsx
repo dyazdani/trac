@@ -3,6 +3,7 @@ import todayImg from "../../../images/trac_today_icon.png";
 import checkInDayImg from "../../../images/trac_check_in_day_img.png";
 import { useGetHabitsByUserQuery } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
+import Habit from "./Habit.js";
 
 import { 
   Heading, 
@@ -54,12 +55,7 @@ const MyHabits = () => {
           >
             {habits &&
               habits.map((habit) => (
-                <div key={habit.id}>
-                  <p>{habit.name}</p>
-                  {habit.checkIn && (
-                    <p>Check in day: {habit.checkIn.dayOfTheWeek}</p>
-                  )}
-                </div>
+                <Habit key={habit.id} />
               ))}
           </VStack>
         </Box>
