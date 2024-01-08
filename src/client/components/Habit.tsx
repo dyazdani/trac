@@ -47,9 +47,17 @@ const Habit = (props: HabitProps) => {
             align={"center"}
             >
           <CardBody>
-          <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
+            <HStack>
+                <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={true}/>
+                <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
+                <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
+                <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
+                <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
+                <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
+                <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
+            </HStack>
           </CardBody>
-          <CardFooter>ex: 1.23.34 - 5.67.89</CardFooter>
+          <CardFooter>1.23.34 - 5.67.89</CardFooter>
         </Flex>
       </Card>
     </>
