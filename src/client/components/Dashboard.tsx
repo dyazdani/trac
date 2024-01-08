@@ -1,6 +1,7 @@
 import { Box, HStack } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
 import UpdateHabitButton from "./UpdateHabitButton.js";
+import Habit from "./Habit.js";
 import { 
     useGetHabitsByUserQuery, 
     useGetHabitByIdQuery 
@@ -51,6 +52,8 @@ const Dashboard = () => {
           </div>
         ))}
             <RightDrawer />
+            <Habit />
+
             {/* <UpdateHabitButton/> */}
         </Box>
     )

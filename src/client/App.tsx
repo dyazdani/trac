@@ -12,7 +12,6 @@ const currentUser = useAppSelector((state) => state.auth.user);
   return (
     <>
       {currentUser && <AppHeader />}
-      <Habit />
       <Routes>
         <Route path="/" element={currentUser ? <Dashboard /> : <LandingPage />}/>
       </Routes>
