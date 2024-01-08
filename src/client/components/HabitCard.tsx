@@ -61,7 +61,7 @@ const HabitCard = ({ habit }: HabitProps) => {
                 sx={{ marginRight: "auto" }} 
                 size="md"
             >
-              Habit Name
+              {habit.name}
             </Heading>
             <IconButton 
                 aria-label="edit-habit-button" 
