@@ -1,8 +1,8 @@
 import React from "react";
+import ToggleButton from "./ToggleButton.js";
 
 import {
   HStack,
-  Text,
   Card,
   CardHeader,
   CardBody,
@@ -47,7 +47,7 @@ const Habit = (props: HabitProps) => {
             align={"center"}
             >
           <CardBody>
-            <Text>Hello</Text>
+          <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
           </CardBody>
           <CardFooter>ex: 1.23.34 - 5.67.89</CardFooter>
         </Flex>
