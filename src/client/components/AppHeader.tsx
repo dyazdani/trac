@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@chakra-ui/react";
+import { Button, Spacer } from "@chakra-ui/react";
 import { useAppDispatch } from "../app/hooks.js";
 import { logout } from "../features/authSlice.js";
 
@@ -8,6 +8,8 @@ import {
     Box, 
     Text 
 } from "@chakra-ui/react";
+import ToggleButton from "./ToggleButton.js";
+import DiamondToggleButton from "./DiamondImage.js";
 
 type AppHeaderProps = {};
 
@@ -26,7 +28,8 @@ const AppHeader = (props: AppHeaderProps) => {
         >
         <HStack>
           <Text fontSize='2xl'>trac</Text>
-          <Button
+            <Spacer/>
+            <Button
                 type="button"
                 onClick={() => {dispatch(logout())}}
             >

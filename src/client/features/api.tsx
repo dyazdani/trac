@@ -38,6 +38,11 @@ export const api = createApi({
         query: (id) => `/users/${id}/habits`,
         providesTags: ["Habit"]
       }),
+      getHabitById: builder.query<{ habit: HabitWithDetails }, {id: number, habitId: number}>({
+        query: ({id, habitId}) => `/users/${id}/habits/${habitId}`,
+        providesTags: ["Habit"]
+      }),
+            //TODO: the return type could be switched to HabitWithDetails to include relations
       createHabit: builder.mutation<{habit: Habit}, {id: number, habitDetails: CreateHabitReqBody}>({
         query: ({id, habitDetails}) => ({
           url: `/users/${id}/habits`,
@@ -50,6 +55,7 @@ export const api = createApi({
         }),
         invalidatesTags: ["Habit"],
       }),
+      //TODO: the return type could be switched to HabitWithDetails to include relations
       updateHabit: builder.mutation<{habit: Habit}, {id: number, habitId: number, newHabit: UpdateHabitReqBody}>({
         query: ({id, habitId, newHabit}) => ({
           url: `users/${id}/habits`,
@@ -77,5 +83,6 @@ export const api = createApi({
     useLoginMutation,
     useGetHabitsByUserQuery,
     useCreateHabitMutation,
-    useUpdateHabitMutation
+    useUpdateHabitMutation,
+    useGetHabitByIdQuery
   } = api
