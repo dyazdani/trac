@@ -14,7 +14,11 @@ import {
 
 import { 
     EditIcon, 
-    DeleteIcon 
+    DeleteIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    ArrowLeftIcon,
+    ArrowRightIcon
 } from "@chakra-ui/icons";
 
 type HabitProps = {};
@@ -25,7 +29,28 @@ const Habit = (props: HabitProps) => {
       <Card 
         size={"sm"} 
         maxW={"3xl"}
+        bg={"pink"}
+        sx={{ borderRadius: "20px"}}
       >
+        <IconButton 
+            aria-label="habit-navigate-left" 
+            icon={<ArrowLeftIcon />} 
+            pos="absolute" 
+            top="40%" 
+            left="0"
+            size="lg"
+            variant="unstyled"
+        />
+        <IconButton 
+            aria-label="habit-navigate-right" 
+            icon={<ArrowRightIcon />} 
+            pos="absolute" 
+            top="40%" 
+            right="0"
+            size="lg"
+            variant="unstyled"
+            colorScheme="teal"
+        />
         <CardHeader>
           <HStack justify={"end"}>
             <Heading 
@@ -34,12 +59,16 @@ const Habit = (props: HabitProps) => {
             >
               Habit Name
             </Heading>
-            <IconButton aria-label="edit-habit-button">
-              <EditIcon />
-            </IconButton>
-            <IconButton aria-label="delete-habit-button">
-              <DeleteIcon />
-            </IconButton>
+            <IconButton 
+                aria-label="edit-habit-button" 
+                icon={<EditIcon />} 
+                variant="unstyled"
+            />
+            <IconButton 
+                aria-label="delete-habit-button" 
+                icon={<DeleteIcon />} 
+                variant="unstyled"
+            />
           </HStack>
         </CardHeader>
         <Flex 
