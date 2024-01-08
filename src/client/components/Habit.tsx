@@ -9,7 +9,7 @@ import {
   CardFooter,
   Heading,
   IconButton,
-  Flex,
+  Flex
 } from "@chakra-ui/react";
 
 import { 
@@ -18,7 +18,7 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
     ArrowLeftIcon,
-    ArrowRightIcon
+    ArrowRightIcon,
 } from "@chakra-ui/icons";
 
 type HabitProps = {};
@@ -28,9 +28,7 @@ const Habit = (props: HabitProps) => {
     <>
       <Card 
         size={"md"} 
-        // minW={"lg"}
         w="xl"
-        // minW="lg"
         bg={"pink"}
         sx={{ borderRadius: "20px"}}
       >
