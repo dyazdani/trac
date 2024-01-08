@@ -1,12 +1,13 @@
 import React from "react";
-import { Button, Spacer } from "@chakra-ui/react";
 import { useAppDispatch } from "../app/hooks.js";
 import { logout } from "../features/authSlice.js";
 
 import { 
     HStack, 
     Box, 
-    Text 
+    Text,
+    Button,
+    Spacer
 } from "@chakra-ui/react";
 import ToggleButton from "./ToggleButton.js";
 import DiamondToggleButton from "./DiamondImage.js";
