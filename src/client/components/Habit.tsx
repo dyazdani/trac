@@ -20,10 +20,14 @@ import {
     ArrowLeftIcon,
     ArrowRightIcon
 } from "@chakra-ui/icons";
+import { Habit } from "@prisma/client";
+import { HabitWithDetails } from "../../types/index.js";
 
-type HabitProps = {};
+type HabitProps = {
+  habit: HabitWithDetails
+};
 
-const Habit = (props: HabitProps) => {
+const Habit = ({ habit }: HabitProps) => {
   return (
     <>
       <Card 
