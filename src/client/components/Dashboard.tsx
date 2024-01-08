@@ -2,7 +2,7 @@ import { Box, HStack } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
 import MyHabits from "./MyHabits.js";
 import UpdateHabitButton from "./UpdateHabitButton.js";
-import Habit from "./Habit.js";
+import HabitCard from "./HabitCard.js";
 import { 
     useGetHabitsByUserQuery, 
     useGetHabitByIdQuery 
