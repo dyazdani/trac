@@ -29,7 +29,6 @@ const MyHabits = () => {
           w="100vw"
           h="100%"
           pl={10}
-          bg="tomato"
           display="flex"
           flexDirection="column"
           paddingBottom="50px"
