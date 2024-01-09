@@ -151,7 +151,6 @@ const HabitCard = ({ habit }: HabitProps) => {
 
                   )
                 })}
-                <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={true}/>
             </HStack>
           </CardBody>
           {/* TODO: make this date string less verbose */}
