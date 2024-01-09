@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import todayImg from "../../../images/trac_today_icon.png";
 import checkInDayImg from "../../../images/trac_check_in_day_img.png";
 import { useGetHabitsByUserQuery } from "../features/api.js";
@@ -13,16 +13,22 @@ import {
   VStack, 
   Box 
 } from "@chakra-ui/react";
+import { HabitWithDetails } from "../../types/index.js";
 
 type MyHabitsProps = {};
 
 const MyHabits = (props: MyHabitsProps) => {
+  const [habitNames, setHabitNames] = useState<string[]>([])
   const currentUser = useAppSelector((state) => state.auth.user);
 
   let habits;
   if (currentUser) {
     const { data } = useGetHabitsByUserQuery(currentUser.id);
     habits = data?.habits || [];
+
+    if (habits.length !== habitNames.length) {
+      setHabitNames(habits.map(habit => habit.name))
+    }
     
     return (
       <>
@@ -55,7 +61,21 @@ const MyHabits = (props: MyHabitsProps) => {
             align={"start"}
           >
             {habits &&
-              habits.map((habit) => (
+              [...habits].sort((a, b) => {
+                const aIndex = habitNames.indexOf(a.name)
+                const bIndex = habitNames.indexOf(b.name)
+
+                if (aIndex > bIndex) {
+                  return 1
+                }
+
+                if (aIndex < bIndex) {
+                  return -1
+                }
+
+                return 0
+
+              }).map((habit) => (
                 <HabitCard 
                   key={habit.id}
                   habit={habit}
