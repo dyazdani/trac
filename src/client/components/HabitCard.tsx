@@ -35,9 +35,13 @@ const DAY_STRINGS = [
   "SATURDAY"
 ]
 
+const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
+
+
 const HabitCard = ({ habit }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
 
+  console.log("currentWeek: ", currentWeek)
   if (!currentWeek.length) {
     let firstWeek = [];
     const today = new Date(Date.now())
@@ -54,7 +58,6 @@ const HabitCard = ({ habit }: HabitProps) => {
       firstWeek.push(new Date(newDate.setDate(firstWeek[i - 1].getDate() + 1)))
     }
 
-    console.log(firstWeek)
     setCurrentWeek(firstWeek);
   }
 
@@ -63,8 +66,9 @@ const HabitCard = ({ habit }: HabitProps) => {
 
     for (let i = 0; i < currentWeek.length; i++) {
       const newDate = new Date();
-      previousWeek.push(new Date(newDate.setDate(currentWeek[i].getDate() - 7)))
+      previousWeek.push(new Date(newDate.setTime(currentWeek[i].getTime() - SEVEN_DAYS_IN_MILLISECONDS)))
     }
+    console.log("previousWeek: ", previousWeek)
     setCurrentWeek(previousWeek);
   }
 
@@ -73,8 +77,9 @@ const HabitCard = ({ habit }: HabitProps) => {
 
     for (let i = 0; i < currentWeek.length; i++) {
       const newDate = new Date();
-      nextWeek.push(new Date(newDate.setDate(currentWeek[i].getDate() + 7)))
+      nextWeek.push(new Date(newDate.setTime(currentWeek[i].getTime() + SEVEN_DAYS_IN_MILLISECONDS)))
     }
+    console.log("next: ", nextWeek)
     setCurrentWeek(nextWeek);
   }
 
@@ -154,8 +159,7 @@ const HabitCard = ({ habit }: HabitProps) => {
             </HStack>
           </CardBody>
           {/* TODO: make this date string less verbose */}
-          <CardFooter>{!currentWeek.length && `${currentWeek[0].toDateString()} - ${currentWeek[6].toDateString()
-          }`}</CardFooter>
+          {/* <CardFooter>{!currentWeek.length && `${currentWeek[0].toDateString()} - ${currentWeek[6].toDateString()}`}</CardFooter> */}
         </Flex>
       </Card>
     </>
