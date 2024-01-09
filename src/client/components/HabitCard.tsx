@@ -139,7 +139,8 @@ const HabitCard = ({ habit }: HabitProps) => {
                 <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
             </HStack>
           </CardBody>
-          <CardFooter>1.23.34 - 5.67.89</CardFooter>
+          {/* TODO: make this date string less verbose */}
+          <CardFooter>{`${currentWeek[0].toDateString()} - ${currentWeek[6].toDateString()}`}</CardFooter>
         </Flex>
       </Card>
     </>
