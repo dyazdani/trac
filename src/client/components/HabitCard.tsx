@@ -41,6 +41,8 @@ const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 const HabitCard = ({ habit }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
 
+  // Variable for display date range at bottom of HabitCard
+  let dateRange = ""
   console.log("currentWeek: ", currentWeek)
   if (!currentWeek.length) {
     let firstWeek = [];
@@ -57,8 +59,10 @@ const HabitCard = ({ habit }: HabitProps) => {
       const newDate = new Date();
       firstWeek.push(new Date(newDate.setDate(firstWeek[i - 1].getDate() + 1)))
     }
-
+    console.log(firstWeek)
     setCurrentWeek(firstWeek);
+  } else {
+    dateRange = `${currentWeek[0].toDateString()} - ${currentWeek[6].toDateString()}`
   }
 
   const handleLeftArrowClick = () => {
@@ -159,7 +163,7 @@ const HabitCard = ({ habit }: HabitProps) => {
             </HStack>
           </CardBody>
           {/* TODO: make this date string less verbose */}
-          {/* <CardFooter>{!currentWeek.length && `${currentWeek[0].toDateString()} - ${currentWeek[6].toDateString()}`}</CardFooter> */}
+          <CardFooter>{dateRange}</CardFooter>
         </Flex>
       </Card>
     </>
