@@ -48,6 +48,17 @@ const HabitCard = ({ habit }: HabitProps) => {
     setCurrentWeek(firstWeek);
   }
 
+  const handleLeftArrowClick = () => {
+    const previousWeek: Date[] = [];
+
+    for (let i = 0; i < currentWeek.length; i++) {
+      const newDate = new Date();
+      previousWeek.push(new Date(newDate.setDate(currentWeek[i].getDate() - 7)))
+    }
+    setCurrentWeek(previousWeek);
+  }
+
+  console.log(currentWeek)
   return (
     <>
       <Card 
@@ -68,6 +79,7 @@ const HabitCard = ({ habit }: HabitProps) => {
             isDisabled={currentWeek.some(day => {
               return areDatesSameDayMonthYear(day, new Date(habit.dateCreated))
             })}
+            onClick={handleLeftArrowClick}
         />
         <IconButton 
             aria-label="habit-navigate-right" 
