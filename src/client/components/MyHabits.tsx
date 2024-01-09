@@ -15,9 +15,8 @@ import {
 } from "@chakra-ui/react";
 import { HabitWithDetails } from "../../types/index.js";
 
-type MyHabitsProps = {};
 
-const MyHabits = (props: MyHabitsProps) => {
+const MyHabits = () => {
   const [habitNames, setHabitNames] = useState<string[]>([])
   const currentUser = useAppSelector((state) => state.auth.user);
 
@@ -33,12 +32,12 @@ const MyHabits = (props: MyHabitsProps) => {
     return (
       <>
         <Box
-          w={"100vw"}
-          h={"100%"}
+          w="100vw"
+          h="100%"
           pl={10}
-          bg={"inherit"}
-          display={"flex"}
-          flexDirection={"column"}
+          bg="inherit"
+          display="flex"
+          flexDirection="column"
         >
           <Box
             marginTop={10}
@@ -46,19 +45,19 @@ const MyHabits = (props: MyHabitsProps) => {
             <Heading as='h1' size='2xl' >My Habits</Heading>
             <HStack>
               <HStack spacing={0}>
-                <Image src={todayImg} p={0} />
+                <Image src={todayImg} alt="purple circle indicating today" p={0} />
                 <Text>= today</Text>
               </HStack>
               <HStack spacing={0}>
-                <Image src={checkInDayImg} />
+                <Image src={checkInDayImg} alt="yellow diamond indicating check-in day" />
                 <Text>= check-in day</Text>
               </HStack>
             </HStack>
           </Box>
 
           <VStack
-            paddingTop={"4rem"}
-            align={"start"}
+            paddingTop="4rem"
+            align="start"
           >
             {habits &&
               [...habits].sort((a, b) => {
