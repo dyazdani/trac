@@ -25,6 +25,16 @@ type HabitProps = {
   habit: HabitWithDetails
 };
 
+const DAY_STRINGS = [
+  "SUNDAY",
+  "MONDAY",
+  "TUESDAY",
+  "WEDNESDAY",
+  "THURSDAY",
+  "FRIDAY",
+  "SATURDAY"
+]
+
 const HabitCard = ({ habit }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
 
@@ -130,17 +140,23 @@ const HabitCard = ({ habit }: HabitProps) => {
             >
           <CardBody>
             <HStack>
+                {currentWeek.map(day => {
+                  return (
+                    <ToggleButton
+                      key={Date.parse(day.toISOString())} 
+                      date={day}
+                      habitId={habit.id}
+                      isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn.dayOfTheWeek}
+                    />
+
+                  )
+                })}
                 <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={true}/>
-                <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
-                <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
-                <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
-                <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
-                <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
-                <ToggleButton date={new Date(Date.now())} habitId={23} isCheckInDay={false}/>
             </HStack>
           </CardBody>
           {/* TODO: make this date string less verbose */}
-          <CardFooter>{`${currentWeek[0].toDateString()} - ${currentWeek[6].toDateString()}`}</CardFooter>
+          <CardFooter>{!currentWeek.length && `${currentWeek[0].toDateString()} - ${currentWeek[6].toDateString()
+          }`}</CardFooter>
         </Flex>
       </Card>
     </>
