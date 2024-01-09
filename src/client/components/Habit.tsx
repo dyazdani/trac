@@ -29,7 +29,9 @@ const Habit = ({ habit }: HabitProps) => {
     <>
       <Card 
         size={"md"} 
-        w="xl"
+        w="35vw"
+        minW="sm"
+        maxW="650px"
         bg={"pink"}
         sx={{ borderRadius: "20px"}}
       >
