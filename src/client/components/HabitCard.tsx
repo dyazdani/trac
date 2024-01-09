@@ -15,12 +15,9 @@ import {
 import { 
     EditIcon, 
     DeleteIcon,
-    ChevronLeftIcon,
-    ChevronRightIcon,
     ArrowLeftIcon,
     ArrowRightIcon
 } from "@chakra-ui/icons";
-import { Habit } from "@prisma/client";
 import { HabitWithDetails } from "../../types/index.js";
 
 type HabitProps = {
