@@ -65,7 +65,7 @@ const HabitCard = ({ habit }: HabitProps) => {
     setCurrentWeek(firstWeek);
   } else {
 
-    dateRangeString = `${currentWeek[0].toDateString()} - ${currentWeek[6].toDateString()}`
+    dateRangeString = `${currentWeek[0].toDateString().slice(4)} - ${currentWeek[6].toDateString().slice(4)}`
   }
 
   // Function for left arrow button that displays previous week
@@ -167,7 +167,6 @@ const HabitCard = ({ habit }: HabitProps) => {
                 })}
             </HStack>
           </CardBody>
-          {/* TODO: make this date string less verbose */}
           <CardFooter>{dateRangeString}</CardFooter>
         </Flex>
       </Card>
