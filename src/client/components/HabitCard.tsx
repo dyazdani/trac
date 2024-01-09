@@ -19,6 +19,7 @@ import {
     ArrowRightIcon
 } from "@chakra-ui/icons";
 import { HabitWithDetails } from "../../types/index.js";
+import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -73,6 +74,9 @@ const HabitCard = ({ habit }: HabitProps) => {
             size="lg"
             variant="unstyled"
             colorScheme="teal"
+            isDisabled={currentWeek.some(day => {
+              return areDatesSameDayMonthYear(day, new Date(Date.now()))
+            })}
         />
         <CardHeader>
           <HStack justify={"end"}>
