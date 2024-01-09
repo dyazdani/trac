@@ -25,6 +25,7 @@ type HabitProps = {
   habit: HabitWithDetails
 };
 
+// for comparison with DayOfTheWeek enum on CheckIn model
 const DAY_STRINGS = [
   "SUNDAY",
   "MONDAY",
@@ -41,8 +42,9 @@ const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 const HabitCard = ({ habit }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
 
-  // Variable for display date range at bottom of HabitCard
-  let dateRange = ""
+  // Variable for displaying date range at bottom of HabitCard
+  let dateRangeString = ""
+
   console.log("currentWeek: ", currentWeek)
   if (!currentWeek.length) {
     let firstWeek = [];
@@ -51,10 +53,10 @@ const HabitCard = ({ habit }: HabitProps) => {
     // Get number associated with day of the week
     const todayNumber = new Date(today).getDay()
 
-    // Push Sunday date before today't date to firstWeek array
+    // Push Sunday before today's date to firstWeek array
     firstWeek.push(new Date(today.setDate(today.getDate() - todayNumber)))
 
-    // Push the rest of the following dates that week to firstWeek array
+    // Push the rest of dates in that week to firstWeek array
     for (let i = 1; i < 7; i++) {
       const newDate = new Date();
       firstWeek.push(new Date(newDate.setDate(firstWeek[i - 1].getDate() + 1)))
@@ -62,9 +64,11 @@ const HabitCard = ({ habit }: HabitProps) => {
     console.log(firstWeek)
     setCurrentWeek(firstWeek);
   } else {
-    dateRange = `${currentWeek[0].toDateString()} - ${currentWeek[6].toDateString()}`
+
+    dateRangeString = `${currentWeek[0].toDateString()} - ${currentWeek[6].toDateString()}`
   }
 
+  // Function for left arrow button that displays previous week
   const handleLeftArrowClick = () => {
     const previousWeek: Date[] = [];
 
@@ -76,6 +80,7 @@ const HabitCard = ({ habit }: HabitProps) => {
     setCurrentWeek(previousWeek);
   }
 
+    // Function for right arrow button that displays previous week
   const handleRightArrowClick = () => {
     const nextWeek: Date[] = [];
 
@@ -163,7 +168,7 @@ const HabitCard = ({ habit }: HabitProps) => {
             </HStack>
           </CardBody>
           {/* TODO: make this date string less verbose */}
-          <CardFooter>{dateRange}</CardFooter>
+          <CardFooter>{dateRangeString}</CardFooter>
         </Flex>
       </Card>
     </>
