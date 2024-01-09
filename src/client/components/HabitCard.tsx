@@ -47,6 +47,7 @@ const HabitCard = ({ habit }: HabitProps) => {
     console.log(firstWeek)
     setCurrentWeek(firstWeek);
   }
+
   return (
     <>
       <Card 
@@ -64,6 +65,9 @@ const HabitCard = ({ habit }: HabitProps) => {
             left="0"
             size="lg"
             variant="unstyled"
+            isDisabled={currentWeek.some(day => {
+              return areDatesSameDayMonthYear(day, new Date(habit.dateCreated))
+            })}
         />
         <IconButton 
             aria-label="habit-navigate-right" 
