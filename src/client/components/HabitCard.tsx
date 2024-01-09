@@ -58,7 +58,16 @@ const HabitCard = ({ habit }: HabitProps) => {
     setCurrentWeek(previousWeek);
   }
 
-  console.log(currentWeek)
+  const handleRightArrowClick = () => {
+    const nextWeek: Date[] = [];
+
+    for (let i = 0; i < currentWeek.length; i++) {
+      const newDate = new Date();
+      nextWeek.push(new Date(newDate.setDate(currentWeek[i].getDate() + 7)))
+    }
+    setCurrentWeek(nextWeek);
+  }
+
   return (
     <>
       <Card 
@@ -93,6 +102,7 @@ const HabitCard = ({ habit }: HabitProps) => {
             isDisabled={currentWeek.some(day => {
               return areDatesSameDayMonthYear(day, new Date(Date.now()))
             })}
+            onClick={handleRightArrowClick}
         />
         <CardHeader>
           <HStack justify={"end"}>
