@@ -1,45 +1,221 @@
-import { IconButton } from "@chakra-ui/react";
-import { EditIcon } from "@chakra-ui/icons";
-import { useUpdateHabitMutation } from "../features/api.js";
+import { 
+    Box, 
+    Button, 
+    ButtonGroup, 
+    Checkbox, 
+    CheckboxGroup, 
+    Drawer, 
+    DrawerBody, 
+    DrawerContent, 
+    DrawerFooter, 
+    DrawerHeader, 
+    DrawerOverlay, 
+    Editable, 
+    EditableInput, 
+    EditablePreview, 
+    FormControl, 
+    FormLabel, 
+    IconButton, 
+    Menu, 
+    MenuButton, 
+    MenuItemOption, 
+    MenuList, 
+    MenuOptionGroup, 
+    Stack, 
+    useDisclosure, 
+    useToast 
+} from "@chakra-ui/react";
+import { AddIcon, ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
+import { useUpdateHabitMutation, useGetHabitByIdQuery } from "../features/api.js";
 import { DayOfTheWeek } from "@prisma/client";
+import React, { useState } from "react";
+import getBooleanRoutineDays, { RoutineDaysArrayType } from "../../utils/getBooleanRoutineDays.js";
+import { useAppSelector } from "../app/hooks.js";
+import { HabitWithDetails, RoutineDays } from "../../types/index.js";
 
-const date1 = new Date("2024-01-04T10:30:53.604Z");
-const date2 = new Date("2024-01-05T08:00:53.604Z");
-
-const updateData = {
-    name: "Bobbing for bananas",
-    datesCompleted: [
-        date1,
-        date2
-    ],
-    routineDays: {
-        monday: false,
-        tuesday: false,
-        wednesday: true,
-        thursday: false,
-        friday: true,
-        saturday: false,
-        sunday: false
-    },
-    checkInDay: DayOfTheWeek.MONDAY
+export interface UpdateHabitButtonProps{
+    habit: HabitWithDetails
 }
 
-const UpdateHabitButton = () => {
-    const [updateHabit, {data, isLoading, error}] = useUpdateHabitMutation()
-    return (
-        <IconButton 
-            aria-label="Edit Habit"
-            icon={<EditIcon />}
-            onClick={ async () => {
-                    const habit = await updateHabit({
-                        id: 1, 
-                        habitId: 2, 
-                        newHabit: updateData
-                    })
-                    console.log(habit)
-            }}
-        />
-    )
+const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
+    const [menuValue, setMenuValue] = useState<string | string[]>(habit.checkIn.dayOfTheWeek)
+
+    // Get initial value for checkboxGroupValue
+    const routineDays = (({ id, dateCreated, dateUpdated, ...object }) => object)(habit.routine);
+    let routineDaysArray: RoutineDaysArrayType = []; 
+    for (const key in routineDays) {
+        if (routineDays[key as keyof typeof routineDays]) {
+            [...routineDaysArray, routineDays[key as keyof typeof routineDays]]
+        }
+    }
+
+    const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>(routineDaysArray)
+    const [habitNameValue, setHabitNameValue] = useState(habit.name)
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const inputRef = React.useRef<HTMLInputElement>(null);
+    const toast = useToast();
+
+    const [updateHabit] = useUpdateHabitMutation();
+
+    const currentUser = useAppSelector((state) => state.auth.user);
+
+    if (currentUser) {
+        useGetHabitByIdQuery({id: currentUser.id, habitId: habit.id});
+
+        return (
+            <>
+            <IconButton 
+                aria-label="edit-habit-button" 
+                icon={<EditIcon />} 
+                variant="unstyled"
+                onClick={onOpen}
+            />
+                <Drawer 
+                    placement='right' 
+                    onClose={onClose} 
+                    isOpen={isOpen}
+                    closeOnEsc={false}
+                    closeOnOverlayClick={false}
+                    size="sm"
+                    initialFocusRef={inputRef}
+                >
+                    <DrawerOverlay />
+                    <DrawerContent>
+                    <DrawerHeader 
+                        borderBottomWidth='1px'
+                    >
+                        Edit a Habit
+                    </DrawerHeader>
+                    <DrawerBody>
+                        <Stack
+                            as="form"
+                            onSubmit={async (e) => {
+                                e.preventDefault();
+                                if (
+                                    currentUser && 
+                                    typeof menuValue === 'string' && 
+                                    checkboxGroupValue &&
+                                    !checkboxGroupValue.some(el => typeof el === 'number')
+                                    ) {
+                                    const newHabit = await updateHabit({
+                                        id: currentUser.id,
+                                        habitId: habit.id,
+                                        newHabit: {
+                                            name: habitNameValue,
+                                            datesCompleted: habit.datesCompleted,
+                                            routineDays: getBooleanRoutineDays(checkboxGroupValue),
+                                            checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek]
+                                        }
+                                    })
+                                }
+                                onClose()
+                                setCheckboxGroupValue([])
+                                toast({
+                                    title: 'Habit updated.',
+                                    description: 'Your Habit was successfully updated.',
+                                    status: 'success',
+                                    duration: 9000,
+                                    isClosable: true
+                                })
+                            }}
+                            id="habitForm"
+                            spacing="3vw"
+                        >
+                            <Box>
+                                <FormControl isRequired>
+                                    <FormLabel
+                                        htmlFor="habitName"
+                                    >
+                                        Name
+                                    </FormLabel>
+                                    <Editable
+                                        defaultValue={habitNameValue}
+                                    >
+                                        <EditablePreview />
+                                        <EditableInput 
+                                            id="habitName" 
+                                            ref={inputRef}
+                                            onChange={(e) => {setHabitNameValue(e.target.value)}}
+                                            value={habitNameValue}
+                                        />
+                                    </Editable>
+                                </FormControl>
+                                
+                            </Box>
+                            {/* TODO: Prevent submitting form unless > 0 boxes are checked */}
+                            <Box as="fieldset">
+                                <FormLabel>Weekly Routine</FormLabel>
+                                <CheckboxGroup colorScheme='teal' onChange={(e: RoutineDaysArrayType) => {
+                                    setCheckboxGroupValue(e);
+                                }} 
+                                    value={checkboxGroupValue}
+                                >
+                                    <Stack direction='row'>
+                                        <Checkbox isChecked={habit.routine.monday} value="monday">M</Checkbox>
+                                        <Checkbox isChecked={habit.routine.tuesday} value="tuesday">T</Checkbox>
+                                        <Checkbox isChecked={habit.routine.wednesday} value="wednesday">W</Checkbox>
+                                        <Checkbox isChecked={habit.routine.thursday} value="thursday">Th</Checkbox>
+                                        <Checkbox isChecked={habit.routine.friday} value="friday">F</Checkbox>
+                                        <Checkbox isChecked={habit.routine.saturday} value="saturday">Sa</Checkbox>
+                                        <Checkbox isChecked={habit.routine.sunday} value="sunday">Su</Checkbox>
+                                    </Stack>
+                                </CheckboxGroup>
+                            </Box>
+                            <Box>
+                                <FormLabel>Check-In Day</FormLabel>
+                                <Menu>
+                                    <MenuButton 
+                                        as={Button} 
+                                        rightIcon={<ChevronDownIcon />}
+                                    >{menuValue}</MenuButton>
+                                    <MenuList>
+                                        <MenuOptionGroup 
+                                        type='radio'
+                                        value={menuValue}
+                                        onChange={
+                                            (e) => {
+                                                setMenuValue(e)
+                                        }}
+                                        >
+                                            <MenuItemOption value='Monday'>Monday</MenuItemOption>
+                                            <MenuItemOption value='Tuesday'>Tuesday</MenuItemOption>
+                                            <MenuItemOption value='Wednesday'>Wednesday</MenuItemOption>
+                                            <MenuItemOption value='Thursday'>Thursday</MenuItemOption>
+                                            <MenuItemOption value='Friday'>Friday</MenuItemOption>
+                                            <MenuItemOption value='Saturday'>Saturday</MenuItemOption>
+                                            <MenuItemOption value='Sunday'>Sunday</MenuItemOption>
+                                        </MenuOptionGroup>
+                                    </MenuList>
+                                </Menu>
+                            </Box>
+                        </Stack>
+                    </DrawerBody>
+                    <DrawerFooter>
+                        <ButtonGroup>
+                            <Button 
+                                variant="outline" 
+                                colorScheme='teal' 
+                                mr={3} 
+                                onClick={onClose}
+                            >
+                                Cancel
+                            </Button>
+                            <Button 
+                                mr={3}  
+                                colorScheme='teal' 
+                                type="submit"
+                                form="habitForm"
+                            >
+                                Create
+                            </Button>
+                        </ButtonGroup>
+                        
+                    </DrawerFooter>
+                    </DrawerContent>
+                </Drawer>
+            </>
+        )
+    }
 }
 
 export default UpdateHabitButton;

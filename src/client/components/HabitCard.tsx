@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/icons";
 import { HabitWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
+import UpdateHabitButton from "./UpdateHabitButton.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -136,11 +137,7 @@ const HabitCard = ({ habit }: HabitProps) => {
             >
               {habit.name}
             </Heading>
-            <IconButton 
-                aria-label="edit-habit-button" 
-                icon={<EditIcon />} 
-                variant="unstyled"
-            />
+            <UpdateHabitButton habit={habit}/>
             <IconButton 
                 aria-label="delete-habit-button" 
                 icon={<DeleteIcon />} 
