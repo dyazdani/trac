@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import ToggleButton from "./ToggleButton.js";
 
 import {
@@ -27,7 +27,39 @@ type HabitProps = {
   habit: HabitWithDetails
 };
 
+// Reference array to help for currentWeek array
+const DAYS_ARRAY = [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat"
+]
+
 const HabitCard = ({ habit }: HabitProps) => {
+  const [currentWeek, setCurrentWeek] = useState<Date[]>([])
+
+  if (!currentWeek.length) {
+    let firstWeek = [];
+    const today = new Date(Date.now())
+
+    // Get number associated with day of the week
+    const todayNumber = new Date(today).getDay()
+
+    // Push Sunday date before today't date to firstWeek array
+    firstWeek.push(new Date(today.setDate(today.getDate() - todayNumber)))
+
+    // Push the rest of the following dates that week to firstWeek array
+    for (let i = 1; i < 7; i++) {
+      const newDate = new Date();
+      firstWeek.push(new Date(newDate.setDate(firstWeek[i - 1].getDate() + 1)))
+    }
+
+    console.log(firstWeek)
+    setCurrentWeek(firstWeek);
+  }
   return (
     <>
       <Card 
