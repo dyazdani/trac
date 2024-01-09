@@ -24,17 +24,6 @@ type HabitProps = {
   habit: HabitWithDetails
 };
 
-// Reference array to help for currentWeek array
-const DAYS_ARRAY = [
-  "Sun",
-  "Mon",
-  "Tue",
-  "Wed",
-  "Thu",
-  "Fri",
-  "Sat"
-]
-
 const HabitCard = ({ habit }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
 
