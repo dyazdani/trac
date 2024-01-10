@@ -28,6 +28,8 @@ const MyHabits = () => {
     if (habits.length !== habitNames.length) {
       setHabitNames(habits.map(habit => habit.name))
     }
+
+    console.log(habits)
     
     return (
       <>
@@ -60,21 +62,9 @@ const MyHabits = () => {
             align="start"
           >
             {habits &&
-              [...habits].sort((a, b) => {
-                const aIndex = habitNames.indexOf(a.name)
-                const bIndex = habitNames.indexOf(b.name)
-
-                if (aIndex > bIndex) {
-                  return 1
-                }
-
-                if (aIndex < bIndex) {
-                  return -1
-                }
-
-                return 0
-
-              }).map((habit) => (
+              [...habits]
+              .sort((a, b) => a.id - b.id)
+              .map((habit) => (
                 <HabitCard 
                   key={habit.id}
                   habit={habit}
