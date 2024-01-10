@@ -12,7 +12,7 @@ const getRoutineDaysStringArray = (routine: Routine) => {
             finalArray = [...finalArray, dayString]
         }
     }
-    console.log(finalArray)
+
     return finalArray
 }
 
