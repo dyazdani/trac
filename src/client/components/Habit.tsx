@@ -110,3 +110,4 @@ const Habit = ({ habit }: HabitProps) => {
 };
 
 export default Habit;
+
