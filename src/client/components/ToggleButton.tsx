@@ -31,10 +31,7 @@ const ToggleButton = ({date, habit, isCheckInDay}: ToggleButtonProps) => {
     let habitData: HabitWithDetails;
 
     if (currentUser) {
-        const { data } = useGetHabitByIdQuery({id: currentUser.id, habitId: habit.id})
-       if (data){
-        habitData = data?.habit
-       }
+        habitData = habit
     }
         
 
