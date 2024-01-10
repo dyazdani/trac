@@ -1,6 +1,8 @@
 import React from "react";
 import ToggleButton from "./ToggleButton.js";
 import { HabitWithDetails } from "../../types/index.js";
+import { useDeleteHabitMutation } from "../features/api.js";
+import { useAppSelector } from "../app/hooks.js";
 
 import {
   HStack,
@@ -25,6 +27,16 @@ type HabitProps = {
 };
 
 const Habit = ({ habit }: HabitProps) => {
+  const currentUser = useAppSelector(state => state.auth.user);
+  const [deleteHabit, { isLoading, isError, error }] = useDeleteHabitMutation();
+
+  const handleDeleteHabit = async () => {
+    if (currentUser) {
+      const deletedHabit = await deleteHabit({id: currentUser.id, habitId: habit.id})
+      console.log(deletedHabit, "THE DELETED HABIT")
+    }
+  }
+  
   return (
     <>
       <Card 
@@ -71,6 +83,7 @@ const Habit = ({ habit }: HabitProps) => {
                 aria-label="delete-habit-button" 
                 icon={<DeleteIcon />} 
                 variant="unstyled"
+                onClick={handleDeleteHabit}
             />
           </HStack>
         </CardHeader>
