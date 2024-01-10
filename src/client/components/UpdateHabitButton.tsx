@@ -40,11 +40,15 @@ export interface UpdateHabitButtonProps{
 
 const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
     const [menuValue, setMenuValue] = useState<string | string[]>(habit.checkIn.dayOfTheWeek)
-    const [checkboxGroupValue, setCheckboxGroupValue] = useState<string[]>(getRoutineDaysStringArray(habit.routine))
+    const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>(getRoutineDaysStringArray(habit.routine))
     const [habitNameValue, setHabitNameValue] = useState(habit.name)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const inputRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
+
+    console.log("menuValue: ", menuValue)
+    console.log("checkboxGroupValue: ", checkboxGroupValue)
+    console.log("habitNameValue: ", habitNameValue)
 
     const [updateHabit] = useUpdateHabitMutation();
 
@@ -99,7 +103,6 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                     })
                                 }
                                 onClose()
-                                setCheckboxGroupValue([])
                                 toast({
                                     title: 'Habit updated.',
                                     description: 'Your Habit was successfully updated.',
