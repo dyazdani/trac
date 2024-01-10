@@ -25,13 +25,14 @@ import {
     useDisclosure, 
     useToast 
 } from "@chakra-ui/react";
-import { AddIcon, ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
 import { useUpdateHabitMutation, useGetHabitByIdQuery } from "../features/api.js";
 import { DayOfTheWeek } from "@prisma/client";
 import React, { useState } from "react";
-import getBooleanRoutineDays, { RoutineDaysArrayType } from "../../utils/getBooleanRoutineDays.js";
+import getBooleanRoutineDays from "../../utils/getBooleanRoutineDays.js";
 import { useAppSelector } from "../app/hooks.js";
-import { HabitWithDetails, RoutineDays } from "../../types/index.js";
+import { HabitWithDetails, RoutineDaysArrayType } from "../../types/index.js";
+import getRoutineDaysStringArray from "../../utils/getRoutineDaysStringArray.js";
 
 export interface UpdateHabitButtonProps{
     habit: HabitWithDetails
@@ -39,17 +40,7 @@ export interface UpdateHabitButtonProps{
 
 const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
     const [menuValue, setMenuValue] = useState<string | string[]>(habit.checkIn.dayOfTheWeek)
-
-    // Get initial value for checkboxGroupValue
-    const routineDays = (({ id, dateCreated, dateUpdated, ...object }) => object)(habit.routine);
-    let routineDaysArray: RoutineDaysArrayType = []; 
-    for (const key in routineDays) {
-        if (routineDays[key as keyof typeof routineDays]) {
-            [...routineDaysArray, routineDays[key as keyof typeof routineDays]]
-        }
-    }
-
-    const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>(routineDaysArray)
+    const [checkboxGroupValue, setCheckboxGroupValue] = useState<string[]>(getRoutineDaysStringArray(habit.routine))
     const [habitNameValue, setHabitNameValue] = useState(habit.name)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const inputRef = React.useRef<HTMLInputElement>(null);
@@ -61,7 +52,6 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
 
     if (currentUser) {
         useGetHabitByIdQuery({id: currentUser.id, habitId: habit.id});
-
         return (
             <>
             <IconButton 
@@ -103,7 +93,7 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                         newHabit: {
                                             name: habitNameValue,
                                             datesCompleted: habit.datesCompleted,
-                                            routineDays: getBooleanRoutineDays(checkboxGroupValue),
+                                            routineDays: getBooleanRoutineDays(checkboxGroupValue as RoutineDaysArrayType),
                                             checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek]
                                         }
                                     })
