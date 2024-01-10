@@ -9,8 +9,6 @@ import {
     Button,
     Spacer
 } from "@chakra-ui/react";
-import ToggleButton from "./ToggleButton.js";
-import DiamondToggleButton from "./DiamondImage.js";
 
 type AppHeaderProps = {};
 
@@ -26,6 +24,7 @@ const AppHeader = (props: AppHeaderProps) => {
         minHeight="70px"
         position={"sticky"}
         top={"0px"}
+        zIndex={100}
         >
         <HStack>
           <Text fontSize='2xl'>trac</Text>
