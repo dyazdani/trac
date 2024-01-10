@@ -159,7 +159,7 @@ const HabitCard = ({ habit }: HabitProps) => {
                     <ToggleButton
                       key={Date.parse(day.toISOString())} 
                       date={day}
-                      habitId={habit.id}
+                      habit={habit}
                       isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn.dayOfTheWeek}
                     />
 

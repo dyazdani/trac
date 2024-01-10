@@ -13,14 +13,15 @@ import { useAppSelector } from "../app/hooks.js";
 import { HabitWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
 import DiamondImage from "./DiamondImage.js";
+import isDateOutOfRange from "../../utils/isDateOutOfRange.js";
 
  export interface ToggleButtonProps {
     date: Date
-    habitId: number
+    habit: HabitWithDetails
     isCheckInDay: boolean
  }
 
-const ToggleButton = ({date, habitId, isCheckInDay}: ToggleButtonProps) => {
+const ToggleButton = ({date, habit, isCheckInDay}: ToggleButtonProps) => {
     const [flag, setFlag] = useBoolean();
     const currentUser = useAppSelector((state) => state.auth.user)
 
@@ -30,7 +31,7 @@ const ToggleButton = ({date, habitId, isCheckInDay}: ToggleButtonProps) => {
     let habitData: HabitWithDetails;
 
     if (currentUser) {
-        const { data } = useGetHabitByIdQuery({id: currentUser.id, habitId})
+        const { data } = useGetHabitByIdQuery({id: currentUser.id, habitId: habit.id})
        if (data){
         habitData = data?.habit
        }
@@ -75,7 +76,7 @@ const ToggleButton = ({date, habitId, isCheckInDay}: ToggleButtonProps) => {
 
             const currentHabit = await updateHabit({
                 id: currentUser?.id,
-                habitId,
+                habitId: habit.id,
                 newHabit: {
                     name: habitData.name,
                     datesCompleted: newDatesCompleted,
@@ -124,7 +125,14 @@ const ToggleButton = ({date, habitId, isCheckInDay}: ToggleButtonProps) => {
                 outline={outlineColor}
                 backgroundColor="white"
                 colorScheme="teal"
-                zIndex="1"       
+                zIndex="1"   
+                isDisabled={
+                    isDateOutOfRange(
+                        new Date(habit.dateCreated), 
+                        new Date(Date.now()),
+                        date
+                    )
+                }    
             >
                 { flag && 
                     <Box 
