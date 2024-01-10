@@ -22,6 +22,7 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@knocklabs/node": "^0.5.1",
     "@prisma/client": "^5.7.1",
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^6.1.6",
