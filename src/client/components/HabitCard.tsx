@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import ToggleButton from "./ToggleButton.js";
+import DeleteHabitButton from "./DeleteHabitButton.js";
 
 import {
   HStack,
@@ -141,11 +142,7 @@ const HabitCard = ({ habit }: HabitProps) => {
                 icon={<EditIcon />} 
                 variant="unstyled"
             />
-            <IconButton 
-                aria-label="delete-habit-button" 
-                icon={<DeleteIcon />} 
-                variant="unstyled"
-            />
+            <DeleteHabitButton />
           </HStack>
         </CardHeader>
         <Flex 

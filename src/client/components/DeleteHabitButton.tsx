@@ -1,11 +1,26 @@
-import React from "react";
+import { useAppSelector } from "../app/hooks.js";
+import { useDeleteHabitMutation } from "../features/api.js";
+
+import { 
+    useToast,
+    IconButton 
+} from "@chakra-ui/react";
+
+import { 
+    DeleteIcon 
+} from "@chakra-ui/icons";
 
 type DeleteHabitButtonProps = {}
 
 const DeleteHabitButton = (props: DeleteHabitButtonProps) =>  {
+    
     return(
         <>
-            <div>I am the DeleteHabitButton component</div>
+            <IconButton 
+                aria-label="delete-habit-button" 
+                icon={<DeleteIcon />} 
+                variant="unstyled"
+            />
         </>
     );
 }
