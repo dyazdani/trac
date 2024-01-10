@@ -160,7 +160,7 @@ const HabitCard = ({ habit }: HabitProps) => {
                       key={Date.parse(day.toISOString())} 
                       date={day}
                       habit={habit}
-                      isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn.dayOfTheWeek}
+                      isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek}
                     />
 
                   )
