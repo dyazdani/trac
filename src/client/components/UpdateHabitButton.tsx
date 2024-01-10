@@ -196,7 +196,7 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                 type="submit"
                                 form="habitForm"
                             >
-                                Create
+                                Save
                             </Button>
                         </ButtonGroup>
                         
