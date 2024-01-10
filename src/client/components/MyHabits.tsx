@@ -25,6 +25,9 @@ const MyHabits = () => {
     const { data } = useGetHabitsByUserQuery(currentUser.id);
     habits = data?.habits || [];
 
+    console.log("habits: ", habits)
+    console.log("habitNames: ", habitNames)
+
     if (habits.length !== habitNames.length) {
       setHabitNames(habits.map(habit => habit.name))
     }

@@ -100,7 +100,7 @@ const RightDrawer = () => {
                                         checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek]
                                     }
                                 })
-                                console.log(habit)
+                                // console.log(habit)
                             }
                             onClose()
                             setCheckboxGroupValue([])
