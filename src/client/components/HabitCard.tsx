@@ -142,7 +142,7 @@ const HabitCard = ({ habit }: HabitProps) => {
                 icon={<EditIcon />} 
                 variant="unstyled"
             />
-            <DeleteHabitButton />
+            <DeleteHabitButton habit={habit} />
           </HStack>
         </CardHeader>
         <Flex 
