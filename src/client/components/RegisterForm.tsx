@@ -38,7 +38,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
     const handleSubmit = async () => {
         if (password === confirmPassword) {
             const user = await register({ email, username, password });
-            console.log(user)
+            // console.log(user)
         } else {
             alert("Password confirmation does not match");
         }
