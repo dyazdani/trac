@@ -161,3 +161,21 @@ usersRouter.put("/:id/habits", requireUser, async (req, res, next) => {
         next(e);
     }
 })
+
+// TODO: DELETE THIS BEFORE PULL REQUEST
+// DELETE /api/users/:id/habits/:habitId
+usersRouter.delete("/:id/habits/:habitId", requireUser, async (req, res, next): Promise<void> => {
+    const ownerId = Number(req.params.id);
+    const habitId = Number(req.params.habitId);
+    try {
+        const habit = await prisma.habit.delete({
+            where: {
+                ownerId: ownerId,
+                id: habitId 
+            }
+        })
+        res.send({ habit })
+    } catch(e) {
+        next(e)
+    }
+})
