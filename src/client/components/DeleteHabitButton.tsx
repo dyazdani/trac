@@ -17,13 +17,20 @@ type DeleteHabitButtonProps = {
 
 const DeleteHabitButton = ({ habit }: DeleteHabitButtonProps) =>  {
   const currentUser = useAppSelector(state => state.auth.user);
-  const [deleteHabit, { isSuccess, isLoading, isError, error }] = useDeleteHabitMutation();
+  const [deleteHabit, { isLoading }] = useDeleteHabitMutation();
   const toast = useToast();
 
   const handleDeleteHabit = async () => {
     if (currentUser) {
-      const deletedHabit = await deleteHabit({id: currentUser.id, habitId: habit.id})
-      console.log(deletedHabit, "THE DELETED HABIT")
+        const deletedHabit = await deleteHabit({id: currentUser.id, habitId: habit.id})
+        toast({
+            title: 'Habit deleted.',
+            description: 'Your habit has been successfully deleted',
+            status: 'success',
+            duration: 4000,
+            isClosable: true
+        })
+        console.log(deletedHabit, "THE DELETED HABIT")
     }
   }
     
@@ -31,7 +38,8 @@ const DeleteHabitButton = ({ habit }: DeleteHabitButtonProps) =>  {
         <>
             <IconButton 
                 aria-label="delete-habit-button" 
-                icon={<DeleteIcon />} 
+                icon={<DeleteIcon />}
+                isLoading={isLoading} 
                 variant="unstyled"
                 onClick={handleDeleteHabit}
             />
