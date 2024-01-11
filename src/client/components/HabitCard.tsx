@@ -15,7 +15,6 @@ import {
 
 import { 
     EditIcon, 
-    DeleteIcon,
     ArrowLeftIcon,
     ArrowRightIcon
 } from "@chakra-ui/icons";

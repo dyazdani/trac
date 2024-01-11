@@ -30,7 +30,6 @@ const DeleteHabitButton = ({ habit }: DeleteHabitButtonProps) =>  {
             duration: 4000,
             isClosable: true
         })
-        console.log(deletedHabit, "THE DELETED HABIT")
     }
   }
     
