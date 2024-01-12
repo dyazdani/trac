@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
 import { Habit } from '@prisma/client';
 import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails } from '../../types/index.js';
+import { Schedule } from '@knocklabs/node';
 import { User as KnockUser } from '@knocklabs/node';
 
 // Define a service using a base URL and expected endpoints

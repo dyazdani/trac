@@ -1,3 +1,4 @@
+import { DaysOfWeek } from '@knocklabs/node';
 import {  CheckIn, DayOfTheWeek, Routine, User } from '@prisma/client';
 
 // to make the file a module and avoid the TypeScript error
@@ -57,4 +58,11 @@ export interface HabitWithDetails {
   ownerId: number
   routine: Routine
   checkIn: CheckIn
+}
+
+
+export interface CreateScheduleReqBody {
+  habitName: string
+  days: DaysOfWeek[]
+  workflowKey: string
 }

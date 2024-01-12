@@ -1,10 +1,45 @@
 import express from "express";
-import { Knock } from "@knocklabs/node";
+import { Knock, RepeatFrequency } from "@knocklabs/node";
+import requireUser from "../../utils/requireUser.js";
+import { CreateScheduleReqBody } from "../../types/index.js";
 import requireUser from "../../utils/requireUser.js";
 
 const notificationsRouter = express.Router();
 
 const knock = new Knock(process.env.KNOCK_API_KEY);
+
+// POST /api/notifications/schedules
+notificationsRouter.post("/schedules", requireUser, async (req, res, next) => {
+    if (req.user) {
+        try {
+            const userId = String(req.user.id)
+            const { 
+                habitName,
+                days,
+                workflowKey
+            }: CreateScheduleReqBody = req.body
+
+           const schedules = await knock.workflows.createSchedules(workflowKey, {
+                recipients: [userId],
+                repeats: [
+                    {
+                    frequency: RepeatFrequency.Weekly,
+                    days,
+                    hours: 5,
+                    minutes: 0
+                    }
+                ],
+                data: {
+                    habit: habitName
+                }
+            })
+
+            res.send({schedules})
+        } catch (e) {
+            next(e);
+        }
+    }
+} )
 
 // DELETE /api/notifications/users/:user_id
 notificationsRouter.delete("/users/:user_id", requireUser, async (req, res, next) => {
