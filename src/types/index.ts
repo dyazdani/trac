@@ -51,6 +51,7 @@ export interface HabitWithDetails {
 
 
 export interface CreateScheduleReqBody {
+  userId: string
   habitName: string
   days: DaysOfWeek[]
   workflowKey: string
