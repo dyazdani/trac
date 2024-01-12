@@ -12,9 +12,7 @@ notificationsRouter.put("/users/:user_id", requireUser, async (req, res, next): 
         try {
             const id = req.params.user_id
             const { email, username } = req.body;
-            if (!id) {
-                console.log("id: ", id)
-            }
+            
             const user = await knock.users.identify(id, {
                 email,
                 username
