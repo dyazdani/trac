@@ -1,7 +1,7 @@
 import express from "express";
 import { Knock, RepeatFrequency } from "@knocklabs/node";
 import requireUser from "../../utils/requireUser.js";
-import { CreateCheckInScheduleReqBody } from "../../types/index.js";
+import { CreateScheduleReqBody } from "../../types/index.js";
 
 const notificationsRouter = express.Router();
 
@@ -16,14 +16,14 @@ notificationsRouter.post("/schedules", requireUser, async (req, res, next) => {
                 habitName,
                 checkInDay,
                 workflowKey
-            }: CreateCheckInScheduleReqBody = req.body
+            }: CreateScheduleReqBody = req.body
 
            const schedules = await knock.workflows.createSchedules(workflowKey, {
                 recipients: [userId],
                 repeats: [
                     {
                     frequency: RepeatFrequency.Weekly,
-                    days: [checkInDay],
+                    days: checkInDay,
                     hours: 5,
                     minutes: 0
                     }

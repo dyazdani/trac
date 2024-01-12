@@ -50,8 +50,8 @@ export interface HabitWithDetails {
 }
 
 
-export interface CreateCheckInScheduleReqBody {
+export interface CreateScheduleReqBody {
   habitName: string
-  checkInDay: DaysOfWeek
-  workflowKey: "check-in-day"
+  checkInDay: DaysOfWeek[]
+  workflowKey: string
 }
