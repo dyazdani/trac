@@ -1,4 +1,5 @@
 import {  CheckIn, DayOfTheWeek, Routine, User } from '@prisma/client';
+import { RoutineDaysArrayType } from '../utils/getBooleanRoutineDays.js';
 
 // to make the file a module and avoid the TypeScript error
 export {}
@@ -46,4 +47,10 @@ export interface HabitWithDetails {
   ownerId: number
   routine: Routine
   checkIn: CheckIn
+}
+
+export interface CreateScheduleReqBody {
+  habitName: string
+  routineDays: RoutineDaysArrayType
+  workflowKey: string
 }
