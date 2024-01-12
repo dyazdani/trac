@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/icons";
 import { HabitWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
+import UpdateHabitButton from "./UpdateHabitButton.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -45,7 +46,7 @@ const HabitCard = ({ habit }: HabitProps) => {
   // Variable for displaying date range at bottom of HabitCard
   let dateRangeString = ""
 
-  console.log("currentWeek: ", currentWeek)
+  // console.log("currentWeek: ", currentWeek)
   if (!currentWeek.length) {
     let firstWeek = [];
     const today = new Date(Date.now())
@@ -61,7 +62,7 @@ const HabitCard = ({ habit }: HabitProps) => {
       const newDate = new Date();
       firstWeek.push(new Date(newDate.setDate(firstWeek[i - 1].getDate() + 1)))
     }
-    console.log(firstWeek)
+    // console.log(firstWeek)
     setCurrentWeek(firstWeek);
   } else {
 
@@ -76,7 +77,7 @@ const HabitCard = ({ habit }: HabitProps) => {
       const newDate = new Date();
       previousWeek.push(new Date(newDate.setTime(currentWeek[i].getTime() - SEVEN_DAYS_IN_MILLISECONDS)))
     }
-    console.log("previousWeek: ", previousWeek)
+    // console.log("previousWeek: ", previousWeek)
     setCurrentWeek(previousWeek);
   }
 
@@ -88,7 +89,7 @@ const HabitCard = ({ habit }: HabitProps) => {
       const newDate = new Date();
       nextWeek.push(new Date(newDate.setTime(currentWeek[i].getTime() + SEVEN_DAYS_IN_MILLISECONDS)))
     }
-    console.log("next: ", nextWeek)
+    // console.log("next: ", nextWeek)
     setCurrentWeek(nextWeek);
   }
 
@@ -136,11 +137,7 @@ const HabitCard = ({ habit }: HabitProps) => {
             >
               {habit.name}
             </Heading>
-            <IconButton 
-                aria-label="edit-habit-button" 
-                icon={<EditIcon />} 
-                variant="unstyled"
-            />
+            <UpdateHabitButton habit={habit}/>
             <DeleteHabitButton habit={habit} />
           </HStack>
         </CardHeader>
