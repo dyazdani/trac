@@ -3,6 +3,7 @@ import { RootState } from '../app/store.js';
 import { Habit } from '@prisma/client';
 import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails, CreateScheduleReqBody } from '../../types/index.js';
 import { DaysOfWeek, Schedule } from '@knocklabs/node';
+import { User as KnockUser } from '@knocklabs/node';
 
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
@@ -57,6 +58,24 @@ export const api = createApi({
         }),
         invalidatesTags: ["Schedule"],
       }),
+      deleteKnockUser: builder.mutation<{message: string}, {id: string}>({
+        query: ({id}) => ({
+          url: `/notifications/users/${id}`,
+          method: "DELETE"
+        }),
+        invalidatesTags: ["KnockUser"],
+      }),
+      identifyUser: builder.mutation<{user: KnockUser}, {id: string, email: string, username: string}>({
+        query: ({id, email, username}) => ({
+          url: `/notifications/users/${id}`,
+          method: "PUT",
+          body: {
+            email,
+            username
+          }
+        }),
+        invalidatesTags: ["KnockUser"]
+      }),
       getHabitsByUser: builder.query<{ habits: HabitWithDetails[] }, number>({
         query: (id) => `/users/${id}/habits`,
         providesTags: ["Habit"]
@@ -92,6 +111,13 @@ export const api = createApi({
           },
         }),
         invalidatesTags: ["Habit"],
+      }),
+      deleteHabit: builder.mutation<{habit: Habit}, {id: number, habitId: number}>({
+        query: ({ id, habitId }) => ({
+          url: `/users/${id}/habits/${habitId}`,
+          method: 'DELETE'
+        }),
+        invalidatesTags: ["Habit"]
       })
     })
   })
@@ -108,5 +134,8 @@ export const api = createApi({
     useCreateHabitMutation,
     useUpdateHabitMutation,
     useGetHabitByIdQuery,
-    useCreateScheduleMutation
+    useCreateScheduleMutation,
+    useDeleteKnockUserMutation,
+    useIdentifyUserMutation,
+    useDeleteHabitMutation
   } = api
