@@ -18,7 +18,7 @@ import {
     IconButton
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
-import { useRegisterMutation } from "../features/api.js";
+import { useRegisterMutation, useIdentifyUserMutation } from "../features/api.js";
 
 export interface RegisterFormProps {
     handleLinkClick: () => void
@@ -34,11 +34,17 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
  
     const [register] = useRegisterMutation();
+    const [identifyUser] = useIdentifyUserMutation();
+
 
     const handleSubmit = async () => {
         if (password === confirmPassword) {
             const user = await register({ email, username, password });
-            // console.log(user)
+            console.log(user)
+            if ('data' in user) {
+                const knockUser = await identifyUser({id: String(user.data.user.id), email, username})
+                console.log(knockUser)
+            }
         } else {
             //TODO: replace this alert with something in the UI
             alert("Password confirmation does not match");
