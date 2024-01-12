@@ -1,17 +1,7 @@
-import { RoutineDays } from "../types/index.js";
-
-export type RoutineDaysArrayType = (
-    "monday" |
-    "tuesday" |
-    "wednesday" |
-    "thursday" |
-    "friday" | 
-    "saturday" |
-    "sunday"
-)[] | [];
-
+import { RoutineDays, RoutineDaysArrayType } from "../types/index.js";
 
 const getBooleanRoutineDays = (routineDaysArray: RoutineDaysArrayType) => {
+
     const finalObject: RoutineDays = {
         monday: false,
         tuesday: false,

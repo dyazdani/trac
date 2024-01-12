@@ -1,4 +1,4 @@
-import express from "express";
+import express, {Request, Response, NextFunction} from "express";
 import excludePassword from "../../utils/excludePassword.js";
 import prisma from "../../utils/test/prisma.js";
 import requireUser from "../../utils/requireUser.js";
@@ -159,5 +159,23 @@ usersRouter.put("/:id/habits", requireUser, async (req, res, next) => {
         res.send({habit, routine, checkIn});
     } catch (e) {
         next(e);
+    }
+})
+
+
+// DELETE /api/users/:id/habits/:habitId
+usersRouter.delete("/:id/habits/:habitId", requireUser, async (req, res, next): Promise<void> => {
+    const ownerId = Number(req.params.id);
+    const habitId = Number(req.params.habitId);
+    try {
+        const habit = await prisma.habit.delete({
+            where: {
+                ownerId: ownerId,
+                id: habitId 
+            }
+        })
+        res.send({ habit })
+    } catch(e) {
+        next(e)
     }
 })

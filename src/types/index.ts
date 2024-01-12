@@ -24,6 +24,17 @@ export type RoutineDays = {
   sunday: boolean
 }
 
+export type DayString = 
+  "monday" |
+  "tuesday" |
+  "wednesday" |
+  "thursday" |
+  "friday" | 
+  "saturday" |
+  "sunday"
+
+export type RoutineDaysArrayType = DayString[] | [];
+
 export interface CreateHabitReqBody {
   name: string
   routineDays: RoutineDays
