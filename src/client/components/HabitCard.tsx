@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import ToggleButton from "./ToggleButton.js";
+import DeleteHabitButton from "./DeleteHabitButton.js";
 
 import {
   HStack,
@@ -14,7 +15,6 @@ import {
 
 import { 
     EditIcon, 
-    DeleteIcon,
     ArrowLeftIcon,
     ArrowRightIcon
 } from "@chakra-ui/icons";
@@ -138,11 +138,7 @@ const HabitCard = ({ habit }: HabitProps) => {
               {habit.name}
             </Heading>
             <UpdateHabitButton habit={habit}/>
-            <IconButton 
-                aria-label="delete-habit-button" 
-                icon={<DeleteIcon />} 
-                variant="unstyled"
-            />
+            <DeleteHabitButton habit={habit} />
           </HStack>
         </CardHeader>
         <Flex 
@@ -157,7 +153,7 @@ const HabitCard = ({ habit }: HabitProps) => {
                       key={Date.parse(day.toISOString())} 
                       date={day}
                       habit={habit}
-                      isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn.dayOfTheWeek}
+                      isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek}
                     />
 
                   )
