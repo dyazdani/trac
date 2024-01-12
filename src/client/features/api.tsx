@@ -48,6 +48,7 @@ export const api = createApi({
           url: `/notifications/schedules`,
           method: "POST",
           body: {
+            //TODO: move userId out of request body once testing is done, as the endpoint will use req.user.id in final version
             userId,
             habitName,
             days,
