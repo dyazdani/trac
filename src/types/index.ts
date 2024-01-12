@@ -1,5 +1,5 @@
+import { DaysOfWeek } from '@knocklabs/node';
 import {  CheckIn, DayOfTheWeek, Routine, User } from '@prisma/client';
-import { RoutineDaysArrayType } from '../utils/getBooleanRoutineDays.js';
 
 // to make the file a module and avoid the TypeScript error
 export {}
@@ -49,8 +49,9 @@ export interface HabitWithDetails {
   checkIn: CheckIn
 }
 
-export interface CreateScheduleReqBody {
+
+export interface CreateCheckInScheduleReqBody {
   habitName: string
-  routineDays: RoutineDaysArrayType
-  workflowKey: string
+  checkInDay: DaysOfWeek
+  workflowKey: "check-in-day"
 }
