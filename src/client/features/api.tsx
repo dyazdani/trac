@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
 import { Habit } from '@prisma/client';
-import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails } from '../../types/index.js';
-import { Schedule } from '@knocklabs/node';
+import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails, CreateScheduleReqBody } from '../../types/index.js';
+import { DaysOfWeek, Schedule } from '@knocklabs/node';
 
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
@@ -17,7 +17,15 @@ export const api = createApi({
         return headers;
       },
     }),
-    tagTypes: ['CurrentUser', 'Routine', 'CheckIn', 'Habit', 'User'],
+    tagTypes: [
+      'CurrentUser', 
+      'Routine', 
+      'CheckIn', 
+      'Habit', 
+      'User', 
+      'KnockUser',
+      'Schedule'
+    ],
     endpoints: (builder) => ({
       register: builder.mutation({
         query: ({ email, username, password }) => ({
@@ -34,6 +42,19 @@ export const api = createApi({
           body: { email, password },
         }),
         invalidatesTags: ["CurrentUser"],
+      }),
+      createSchedule: builder.mutation<{schedules: Schedule[]}, {userId: string, habitName: string, days: DaysOfWeek[], workflowKey: string}>({
+        query: ({userId, habitName, days, workflowKey}) => ({
+          url: `/notifications/schedules`,
+          method: "POST",
+          body: {
+            userId,
+            habitName,
+            days,
+            workflowKey
+          },
+        }),
+        invalidatesTags: ["Schedule"],
       }),
       getHabitsByUser: builder.query<{ habits: HabitWithDetails[] }, number>({
         query: (id) => `/users/${id}/habits`,
@@ -85,5 +106,6 @@ export const api = createApi({
     useGetHabitsByUserQuery,
     useCreateHabitMutation,
     useUpdateHabitMutation,
-    useGetHabitByIdQuery
+    useGetHabitByIdQuery,
+    useCreateScheduleMutation
   } = api
