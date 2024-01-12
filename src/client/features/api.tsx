@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
 import { Habit } from '@prisma/client';
 import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails } from '../../types/index.js';
+import { User as KnockUser } from '@knocklabs/node';
+import { User as PrismaUser } from '@prisma/client'
 
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
@@ -16,9 +18,9 @@ export const api = createApi({
         return headers;
       },
     }),
-    tagTypes: ['CurrentUser', 'Routine', 'CheckIn', 'Habit', 'User'],
+    tagTypes: ['CurrentUser', 'Routine', 'CheckIn', 'Habit', 'User', 'KnockUser'],
     endpoints: (builder) => ({
-      register: builder.mutation({
+      register: builder.mutation<{user: PrismaUser}, {email: string, username: string, password: string}>({
         query: ({ email, username, password }) => ({
           url: "auth/register",
           method: "POST",
@@ -33,6 +35,17 @@ export const api = createApi({
           body: { email, password },
         }),
         invalidatesTags: ["CurrentUser"],
+      }),
+      identifyUser: builder.mutation<{user: KnockUser}, {id: string, email: string, username: string}>({
+        query: ({id, email, username}) => ({
+          url: `/notifications/users/${id}`,
+          method: "PUT",
+          body: {
+            email,
+            username
+          }
+        }),
+        invalidatesTags: ["KnockUser"]
       }),
       getHabitsByUser: builder.query<{ habits: HabitWithDetails[] }, number>({
         query: (id) => `/users/${id}/habits`,
@@ -69,6 +82,13 @@ export const api = createApi({
           },
         }),
         invalidatesTags: ["Habit"],
+      }),
+      deleteHabit: builder.mutation<{habit: Habit}, {id: number, habitId: number}>({
+        query: ({ id, habitId }) => ({
+          url: `/users/${id}/habits/${habitId}`,
+          method: 'DELETE'
+        }),
+        invalidatesTags: ["Habit"]
       })
     })
   })
@@ -84,5 +104,7 @@ export const api = createApi({
     useGetHabitsByUserQuery,
     useCreateHabitMutation,
     useUpdateHabitMutation,
-    useGetHabitByIdQuery
+    useGetHabitByIdQuery,
+    useIdentifyUserMutation,
+    useDeleteHabitMutation
   } = api

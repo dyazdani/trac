@@ -33,7 +33,8 @@ import {
 import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { useCreateHabitMutation } from '../features/api.js'
 import { useAppSelector } from '../app/hooks.js'
-import getBooleanRoutineDays, { RoutineDaysArrayType } from '../../utils/getBooleanRoutineDays.js'
+import getBooleanRoutineDays from '../../utils/getBooleanRoutineDays.js'
+import { RoutineDaysArrayType } from '../../types/index.js'
 import { DayOfTheWeek } from '@prisma/client'
 
 const RightDrawer = () => {
@@ -99,7 +100,7 @@ const RightDrawer = () => {
                                         checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek]
                                     }
                                 })
-                                console.log(habit)
+                                // console.log(habit)
                             }
                             onClose()
                             setCheckboxGroupValue([])
