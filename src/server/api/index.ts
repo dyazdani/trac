@@ -14,6 +14,9 @@ apiRouter.get("/", (req, res, next): void => {
 import authRouter from './auth.js';
 apiRouter.use("/auth", authRouter);
 
+import notificationsRouter from "./notifications.js";
+apiRouter.use("/notifications", notificationsRouter)
+
 import usersRouter from './users.js';
 apiRouter.use("/users", usersRouter);
 
