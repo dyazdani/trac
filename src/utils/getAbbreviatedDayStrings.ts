@@ -2,15 +2,6 @@
 import { DaysOfWeek } from "@knocklabs/node";
 import { RoutineDaysArrayType } from "./getBooleanRoutineDays.js";
 
-export type AbbreviatedDayString = 
-    "mon" |
-    "tue" |
-    "wed" |
-    "thu" |
-    "fri" |
-    "sat" |
-    "sun"
-
 export type KnockDaysOfWeekType = {
     monday: DaysOfWeek
     tuesday: DaysOfWeek
