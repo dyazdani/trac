@@ -3,7 +3,6 @@ import { RootState } from '../app/store.js';
 import { Habit } from '@prisma/client';
 import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails } from '../../types/index.js';
 import { User as KnockUser } from '@knocklabs/node';
-import { User as PrismaUser } from '@prisma/client'
 
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
@@ -20,7 +19,7 @@ export const api = createApi({
     }),
     tagTypes: ['CurrentUser', 'Routine', 'CheckIn', 'Habit', 'User', 'KnockUser'],
     endpoints: (builder) => ({
-      register: builder.mutation<{user: PrismaUser}, {email: string, username: string, password: string}>({
+      register: builder.mutation({
         query: ({ email, username, password }) => ({
           url: "auth/register",
           method: "POST",
@@ -35,6 +34,13 @@ export const api = createApi({
           body: { email, password },
         }),
         invalidatesTags: ["CurrentUser"],
+      }),
+      deleteKnockUser: builder.mutation<{message: string}, {id: string}>({
+        query: ({id}) => ({
+          url: `/notifications/users/${id}`,
+          method: "DELETE"
+        }),
+        invalidatesTags: ["KnockUser"],
       }),
       identifyUser: builder.mutation<{user: KnockUser}, {id: string, email: string, username: string}>({
         query: ({id, email, username}) => ({
@@ -105,6 +111,7 @@ export const api = createApi({
     useCreateHabitMutation,
     useUpdateHabitMutation,
     useGetHabitByIdQuery,
+    useDeleteKnockUserMutation,
     useIdentifyUserMutation,
     useDeleteHabitMutation
   } = api
