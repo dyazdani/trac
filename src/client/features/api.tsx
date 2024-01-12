@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
 import { Habit } from '@prisma/client';
-import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails, CreateScheduleReqBody } from '../../types/index.js';
+import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails } from '../../types/index.js';
 import { DaysOfWeek, Schedule } from '@knocklabs/node';
 import { User as KnockUser } from '@knocklabs/node';
 
