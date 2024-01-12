@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
 import { Habit } from '@prisma/client';
 import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails } from '../../types/index.js';
+import { Knock } from '@knocklabs/node';
 
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
@@ -16,7 +17,7 @@ export const api = createApi({
         return headers;
       },
     }),
-    tagTypes: ['CurrentUser', 'Routine', 'CheckIn', 'Habit', 'User'],
+    tagTypes: ['CurrentUser', 'Routine', 'CheckIn', 'Habit', 'User', 'KnockUser'],
     endpoints: (builder) => ({
       register: builder.mutation({
         query: ({ email, username, password }) => ({
@@ -33,6 +34,13 @@ export const api = createApi({
           body: { email, password },
         }),
         invalidatesTags: ["CurrentUser"],
+      }),
+      deleteKnockUser: builder.mutation<{message: string}, {id: string}>({
+        query: ({id}) => ({
+          url: `/notifications/users/${id}`,
+          method: "DELETE"
+        }),
+        invalidatesTags: ["KnockUser"],
       }),
       getHabitsByUser: builder.query<{ habits: HabitWithDetails[] }, number>({
         query: (id) => `/users/${id}/habits`,
@@ -84,5 +92,6 @@ export const api = createApi({
     useGetHabitsByUserQuery,
     useCreateHabitMutation,
     useUpdateHabitMutation,
-    useGetHabitByIdQuery
+    useGetHabitByIdQuery,
+    useDeleteKnockUserMutation
   } = api
