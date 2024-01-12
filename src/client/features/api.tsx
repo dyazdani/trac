@@ -82,6 +82,13 @@ export const api = createApi({
           },
         }),
         invalidatesTags: ["Habit"],
+      }),
+      deleteHabit: builder.mutation<{habit: Habit}, {id: number, habitId: number}>({
+        query: ({ id, habitId }) => ({
+          url: `/users/${id}/habits/${habitId}`,
+          method: 'DELETE'
+        }),
+        invalidatesTags: ["Habit"]
       })
     })
   })
@@ -98,5 +105,6 @@ export const api = createApi({
     useCreateHabitMutation,
     useUpdateHabitMutation,
     useGetHabitByIdQuery,
-    useIdentifyUserMutation
+    useIdentifyUserMutation,
+    useDeleteHabitMutation
   } = api
