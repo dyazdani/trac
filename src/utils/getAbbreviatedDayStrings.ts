@@ -1,3 +1,4 @@
+// This utility module can be used for getting the array type needed to create a habit routine reminder schedule in Knock
 import { DaysOfWeek } from "@knocklabs/node";
 import { RoutineDaysArrayType } from "./getBooleanRoutineDays.js";
 
