@@ -2,9 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
 import { Habit } from '@prisma/client';
 import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails } from '../../types/index.js';
-import { Knock } from '@knocklabs/node';
 import { User as KnockUser } from '@knocklabs/node';
-import { User as PrismaUser } from '@prisma/client'
 
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
@@ -21,7 +19,7 @@ export const api = createApi({
     }),
     tagTypes: ['CurrentUser', 'Routine', 'CheckIn', 'Habit', 'User', 'KnockUser'],
     endpoints: (builder) => ({
-      register: builder.mutation<{user: PrismaUser}, {email: string, username: string, password: string}>({
+      register: builder.mutation({
         query: ({ email, username, password }) => ({
           url: "auth/register",
           method: "POST",
