@@ -14,7 +14,7 @@ notificationsRouter.post("/schedules", requireUser, async (req, res, next) => {
             const userId = String(req.user.id)
             const { 
                 habitName,
-                checkInDay,
+                days,
                 workflowKey
             }: CreateScheduleReqBody = req.body
 
@@ -23,7 +23,7 @@ notificationsRouter.post("/schedules", requireUser, async (req, res, next) => {
                 repeats: [
                     {
                     frequency: RepeatFrequency.Weekly,
-                    days: checkInDay,
+                    days,
                     hours: 5,
                     minutes: 0
                     }
