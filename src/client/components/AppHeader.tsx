@@ -18,7 +18,7 @@ const AppHeader = (props: AppHeaderProps) => {
   const [createSchedule] = useCreateScheduleMutation();
   const dispatch = useAppDispatch()
 
-  // This handleClick function is causing an error related to the "buffer" module
+  // TODO: Delete this handClick and the button it's in in a future branch
   const handleClick = async () => {
     const schedules = await createSchedule({
       userId: "1",
