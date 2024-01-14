@@ -1,6 +1,7 @@
 import React from "react";
 import { useAppDispatch } from "../app/hooks.js";
 import { logout } from "../features/authSlice.js";
+import { useCreateScheduleMutation } from "../features/api.js";
 
 import { 
     HStack, 
@@ -9,12 +10,25 @@ import {
     Button,
     Spacer
 } from "@chakra-ui/react";
+import { DaysOfWeek } from "@knocklabs/node";
 
 type AppHeaderProps = {};
 
 const AppHeader = (props: AppHeaderProps) => {
+  const [createSchedule] = useCreateScheduleMutation();
+  const dispatch = useAppDispatch()
 
-    const dispatch = useAppDispatch()
+  // TODO: Delete this handClick and the button it's in in a future branch
+  const handleClick = async () => {
+    const schedules = await createSchedule({
+      userId: "1",
+      habitName: "Workout",
+      days: [DaysOfWeek.Mon, DaysOfWeek.Sun],
+      workflowKey: "check-in-day"
+    })
+    console.log(schedules)
+  } 
+
   return (
     <>
       <Box 
@@ -35,6 +49,13 @@ const AppHeader = (props: AppHeaderProps) => {
             >
                 Logout
             </Button>
+            <Button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault()
+                handleClick()
+              }}
+            >Create Knock Schedule</Button>
             
         </HStack>
       </Box>
