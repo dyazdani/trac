@@ -15,6 +15,7 @@ export default defineConfig({
     esbuildOptions: {
       // Enable esbuild polyfill plugins
       plugins: [NodeModulesPolyfillPlugin()],
+      exclude: ['chunk-KXW2NGCQ.js']
     },
   },
   build: {

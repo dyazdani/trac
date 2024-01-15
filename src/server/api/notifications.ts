@@ -2,7 +2,6 @@ import express from "express";
 import { Knock, RepeatFrequency } from "@knocklabs/node";
 import requireUser from "../../utils/requireUser.js";
 import { CreateScheduleReqBody } from "../../types/index.js";
-import requireUser from "../../utils/requireUser.js";
 
 const notificationsRouter = express.Router();
 

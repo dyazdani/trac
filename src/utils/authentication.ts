@@ -1,5 +1,6 @@
 import {Request, Response, NextFunction} from 'express';
 import jwt from 'jsonwebtoken';
+import prisma from './test/prisma.js';
 
 declare module "jsonwebtoken" {
     export interface JwtPayload {
@@ -13,7 +14,7 @@ declare module "jsonwebtoken" {
 }
 
 
-const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
+const authenticateJWT = async (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
     let user;
 
@@ -22,7 +23,16 @@ const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
         try {
             user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
             if (user && typeof user !== 'string') {
-                req.user = user
+
+                const userFromDatabase = await prisma.user.findUnique({
+                    where: {
+                        id: user.id
+                    }
+                })
+
+                if (userFromDatabase) {
+                    req.user = {...user, isAdmin: userFromDatabase.isAdmin}
+                }
             } else {
                 req.user = null
             }
