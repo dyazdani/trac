@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
 import { Habit } from '@prisma/client';
 import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails } from '../../types/index.js';
-import { Schedule } from '@knocklabs/node';
+import { DaysOfWeek, Schedule } from '@knocklabs/node';
 import { User as KnockUser } from '@knocklabs/node';
 
 // Define a service using a base URL and expected endpoints
@@ -18,7 +18,15 @@ export const api = createApi({
         return headers;
       },
     }),
-    tagTypes: ['CurrentUser', 'Routine', 'CheckIn', 'Habit', 'User', 'KnockUser'],
+    tagTypes: [
+      'CurrentUser', 
+      'Routine', 
+      'CheckIn', 
+      'Habit', 
+      'User', 
+      'KnockUser',
+      'Schedule'
+    ],
     endpoints: (builder) => ({
       register: builder.mutation({
         query: ({ email, username, password }) => ({
@@ -35,6 +43,20 @@ export const api = createApi({
           body: { email, password },
         }),
         invalidatesTags: ["CurrentUser"],
+      }),
+      createSchedule: builder.mutation<{schedules: Schedule[]}, {userId: string, habitName: string, days: DaysOfWeek[], workflowKey: string}>({
+        query: ({userId, habitName, days, workflowKey}) => ({
+          url: `/notifications/schedules`,
+          method: "POST",
+          body: {
+            //TODO: move userId out of request body once testing is done, as the endpoint will use req.user.id in final version
+            userId,
+            habitName,
+            days,
+            workflowKey
+          },
+        }),
+        invalidatesTags: ["Schedule"],
       }),
       deleteKnockUser: builder.mutation<{message: string}, {id: string}>({
         query: ({id}) => ({
@@ -112,6 +134,7 @@ export const api = createApi({
     useCreateHabitMutation,
     useUpdateHabitMutation,
     useGetHabitByIdQuery,
+    useCreateScheduleMutation,
     useDeleteKnockUserMutation,
     useIdentifyUserMutation,
     useDeleteHabitMutation
