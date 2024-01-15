@@ -1,13 +1,14 @@
-import express, {Request, Response, NextFunction} from "express";
+import express from "express";
 import excludePassword from "../../utils/excludePassword.js";
 import prisma from "../../utils/test/prisma.js";
 import requireUser from "../../utils/requireUser.js";
-import { CreateHabitReqBody, RoutineDays, UpdateHabitReqBody } from "../../types/index.js";
+import { CreateHabitReqBody, UpdateHabitReqBody } from "../../types/index.js";
+import requireAdmin from "../../utils/requireAdmin.js";
 
 const usersRouter = express.Router();
 
 // GET /api/users
-usersRouter.get("/", requireUser, async (req, res, next): Promise<void> => {
+usersRouter.get("/", requireUser, requireAdmin, async (req, res, next): Promise<void> => {
     try {
         const users = await prisma.user.findMany();
         res.send({users: users.map(user => ({user: excludePassword(user)}))});

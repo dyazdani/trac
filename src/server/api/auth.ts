@@ -16,72 +16,72 @@ const authRouter = express.Router();
 
 // POST /api/auth/register
 authRouter.post("/register", async (req, res, next) => {
-    try {
-        const { email, username, password } = req.body;
+  try {
+    const { email, username, password, adminPasscode } = req.body;
 
-        bcrypt.hash(password, SALT_ROUNDS, async function(err: Error | undefined, hash: string) {
-            if (err?.message === 'data and salt arguments required') {
-                res.status(401);
-                next({
-                    name: 'MissingPassword', 
-                    message: 'Must include password when registering'
-                })
-            }
-           
-            let user;
-            try {
-                user = await prisma.user.create({
-                    data: {
-                        email,
-                        username,
-                        password: hash
-                    }
-                })
-            } catch (e) {
-                if (e instanceof Prisma.PrismaClientValidationError) {
-                    console.log(e.message)
-                    res.status(401)
-                    next({
-                        name: "ValidationError", 
-                        message: e.message                    
-                    })
-                }
-                  if (e instanceof Prisma.PrismaClientKnownRequestError) {
-                    // The .code property can be accessed in a type-safe manner
-                    if (e.code === 'P2002') {
-                      console.log(e.message)
-                    }
-                    res.status(401)
-                    next({
-                        name: "RequestError", 
-                        message: e.message                    
-                    })
-                }
-                
-            }
-
-            if (user) {
-                // JSON Web Token returned to client
-                const token = ACCESS_TOKEN_SECRET ? 
-                jwt.sign({
-                    username: user?.username,
-                    id: user?.id,
-                }, ACCESS_TOKEN_SECRET) : 
-                res.status(401)
-                next({
-                    name: "InvalidAccessTokenSecret", 
-                    message: "Access token secret is undefined"
-                });
-            
-                res.send({
-                    token,
-                    user: excludePassword(user)
-                });
-            }
+    bcrypt.hash(password, SALT_ROUNDS, async function(err: Error | undefined, hash: string) {
+      if (err?.message === 'data and salt arguments required') {
+        res.status(401);
+        next({
+          name: 'MissingPassword', 
+          message: 'Must include password when registering'
         })
-    } catch (e) {
-        next(e)
-    }
+      }
+      
+      let isAdmin = adminPasscode === process.env.ADMIN_PASSCODE
+
+      let user;
+      try {
+        user = await prisma.user.create({
+          data: {
+            email,
+            username,
+            password: hash,
+            isAdmin
+          }
+        })
+      } catch (e) {
+        if (e instanceof Prisma.PrismaClientValidationError) {
+          console.log(e.message)
+          res.status(401)
+          next({
+            name: "ValidationError", 
+            message: e.message                    
+          })
+        }
+        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+          // The .code property can be accessed in a type-safe manner
+          if (e.code === 'P2002') {
+            console.log(e.message)
+          }
+          res.status(401)
+          next({
+            name: "RequestError", 
+            message: e.message                    
+          })
+        }   
+      }
+      if (user) {
+        // JSON Web Token returned to client
+        const token = ACCESS_TOKEN_SECRET ? 
+        jwt.sign({
+          username: user?.username,
+          id: user?.id,
+        }, ACCESS_TOKEN_SECRET) : 
+        res.status(401)
+        next({
+          name: "InvalidAccessTokenSecret", 
+          message: "Access token secret is undefined"
+        });
+        res.send({
+          token,
+          user: excludePassword(user)
+        });
+      }
+    })
+  } catch (e) {
+    next(e)
+  }
 })
 
 // POST /api/auth/login
@@ -90,13 +90,11 @@ authRouter.post("/login", async (req, res, next) => {
     const { email, password } = req.body;
 
     const user = await prisma.user.findUniqueOrThrow({
-        where: {
-          email: email,
-        },
-      });
+      where: {
+        email: email,
+      },
+    });
   
-
-    // if (user) {
     bcrypt.compare(
       password,
       user.password,
@@ -104,20 +102,20 @@ authRouter.post("/login", async (req, res, next) => {
         if (err) {
 	        console.error("Error in bcrypt.compare:", err);
 	        res.status(500);
-	          next({name: "InternalServerError"})
-	        } else if (result) {
+	        next({name: "InternalServerError"})
+        } else if (result) {
           // JSON Web Token returned to client
           const token = ACCESS_TOKEN_SECRET ?
           jwt.sign({
             username: user.username,
             id: user.id,
           },
-            ACCESS_TOKEN_SECRET) : 
-            res.status(401)
-            next({
-              name: "InvalidAccessTokenSecret", 
-              message: "Access token secret is undefined"
-            });
+          ACCESS_TOKEN_SECRET) : 
+          res.status(401)
+          next({
+            name: "InvalidAccessTokenSecret", 
+            message: "Access token secret is undefined"
+          });
 
           res.send({
             token,
@@ -132,7 +130,7 @@ authRouter.post("/login", async (req, res, next) => {
         }
       }
     )
-  // };
+
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner
@@ -144,11 +142,10 @@ authRouter.post("/login", async (req, res, next) => {
         name: "RequestError",
         message: "Could not find the provided email"
       })
-  }
+    }
     next(e);
   }
 })
-
 
 export default authRouter;
 
