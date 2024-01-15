@@ -104,10 +104,9 @@ const RightDrawer = () => {
                                 })
                                 const schedules = await createSchedule({
                                     habitName: habitNameValue,
-                                    days: [DaysOfWeek.Mon, DaysOfWeek.Wed],
+                                    days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]],
                                     workflowKey: "check-in-day"
                                 })
-                                console.log("HABIT: ", habit)
                                 console.log("SCHEDULES: ", schedules)
                             }
                             onClose()
