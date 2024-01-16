@@ -2,27 +2,10 @@ import express from "express";
 import { Knock, RepeatFrequency } from "@knocklabs/node";
 import requireUser from "../../utils/requireUser.js";
 import { CreateScheduleReqBody } from "../../types/index.js";
-import nodemailer from 'nodemailer';
 
 const notificationsRouter = express.Router();
 
 const knock = new Knock(process.env.KNOCK_API_KEY);
-
-const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-  });
-
-  transporter.verify(function (error, success) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Server is ready to take our messages");
-    }
-  });
 
 // POST /api/notifications/schedules
 notificationsRouter.post("/schedules", requireUser, async (req, res, next) => {

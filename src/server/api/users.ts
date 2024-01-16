@@ -4,8 +4,25 @@ import prisma from "../../utils/test/prisma.js";
 import requireUser from "../../utils/requireUser.js";
 import { CreateHabitReqBody, UpdateHabitReqBody } from "../../types/index.js";
 import requireAdmin from "../../utils/requireAdmin.js";
+import nodemailer from 'nodemailer';
 
 const usersRouter = express.Router();
+
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  transporter.verify(function (error, success) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Server is ready to take our messages");
+    }
+  });
 
 // GET /api/users
 usersRouter.get("/", requireUser, requireAdmin, async (req, res, next): Promise<void> => {
@@ -176,6 +193,29 @@ usersRouter.delete("/:id/habits/:habitId", requireUser, async (req, res, next): 
             }
         })
         res.send({ habit })
+    } catch(e) {
+        next(e)
+    }
+})
+
+
+// POST /api/users/:id/habits/:habitId/status-reports
+usersRouter.post("/:id/habits/:habitId/status-reports", requireUser, async (req, res, next): Promise<void> => {
+    const ownerId = Number(req.params.id);
+    const habitId = Number(req.params.habitId);
+    try {
+        const { user, habitName, emails, message } = req.body
+        const statusReport = {
+          bcc: emails,
+          subject: `Status Report for ${user} 📈`,
+          text: message,
+          html: `<h1>${habitName}</h1>
+            <p>${message}</p>`,
+        };
+        
+        transporter.sendMail(statusReport);
+        
+        res.send({status: "Message Sent"});
     } catch(e) {
         next(e)
     }
