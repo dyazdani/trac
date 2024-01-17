@@ -201,8 +201,6 @@ usersRouter.delete("/:id/habits/:habitId", requireUser, async (req, res, next): 
 
 // POST /api/users/:id/habits/:habitId/status-reports
 usersRouter.post("/:id/habits/:habitId/status-reports", requireUser, async (req, res, next): Promise<void> => {
-    const ownerId = Number(req.params.id);
-    const habitId = Number(req.params.habitId);
     try {
         const { user, habitName, emails, message } = req.body
         const statusReport = {
