@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
 import { Habit } from '@prisma/client';
-import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails } from '../../types/index.js';
+import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails, SendStatusReportReqBody } from '../../types/index.js';
 import { DaysOfWeek, Schedule } from '@knocklabs/node';
 import { User as KnockUser } from '@knocklabs/node';
 
@@ -25,7 +25,8 @@ export const api = createApi({
       'Habit', 
       'User', 
       'KnockUser',
-      'Schedule'
+      'Schedule',
+      'StatusReport'
     ],
     endpoints: (builder) => ({
       register: builder.mutation({
@@ -118,6 +119,19 @@ export const api = createApi({
           method: 'DELETE'
         }),
         invalidatesTags: ["Habit"]
+      }),
+      sendStatusReport: builder.mutation<{status: "Message Sent"}, SendStatusReportReqBody>({
+        query: ({id, habitId, user, habitName, emails, message}) => ({
+          url: `/users/${id}/habits/${habitId}/status-reports`,
+          method: "POST",
+          body: {
+            user,
+            habitName,
+            emails,
+            message
+          },
+        }),
+        invalidatesTags: ["StatusReport"],
       })
     })
   })
@@ -137,5 +151,6 @@ export const api = createApi({
     useCreateScheduleMutation,
     useDeleteKnockUserMutation,
     useIdentifyUserMutation,
-    useDeleteHabitMutation
+    useDeleteHabitMutation,
+    useSendStatusReportMutation
   } = api
