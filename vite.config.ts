@@ -12,10 +12,11 @@ export default defineConfig({
     'process.env': process.env
   },
   optimizeDeps: {
+    exclude: ['chunk-KXW2NGCQ.js'],
     esbuildOptions: {
       // Enable esbuild polyfill plugins
-      plugins: [NodeModulesPolyfillPlugin()],
-      exclude: ['chunk-KXW2NGCQ.js']
+      plugins: [NodeModulesPolyfillPlugin()]
+
     },
   },
   build: {
