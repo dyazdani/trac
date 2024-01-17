@@ -1,6 +1,9 @@
 import React from "react";
 import { useAppDispatch } from "../app/hooks.js";
 import { logout } from "../features/authSlice.js";
+import {
+  KnockFeedProvider
+} from "@knocklabs/react-notification-feed";
 
 import { 
     HStack, 
@@ -9,6 +12,7 @@ import {
     Button,
     Spacer
 } from "@chakra-ui/react";
+import MessagesMenu from "./MessagesMenu.js";
 
 type AppHeaderProps = {};
 
@@ -29,6 +33,7 @@ const AppHeader = (props: AppHeaderProps) => {
         <HStack>
           <Text fontSize='2xl'>trac</Text>
             <Spacer/>
+            <MessagesMenu />
             <Button
                 type="button"
                 onClick={() => {dispatch(logout())}}
