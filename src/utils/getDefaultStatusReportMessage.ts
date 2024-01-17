@@ -20,7 +20,7 @@ const getDefaultStatusReportMessage = (habit: HabitWithDetails, username: string
 Thank you for helping to keep me accountable and motivated! I'll be sending another status report next week.
 
     
-Onward and Upward,
+Onward and upward,
 ${username}
     `)
     } else {
@@ -32,7 +32,7 @@ ${username}
 Thank you for helping to keep me accountable and motivated! I'll be sending another status report next week.
 
     
-Onward and Upward,
+Onward and upward,
 ${username}
     `)
     }
