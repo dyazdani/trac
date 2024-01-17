@@ -57,7 +57,7 @@ const RightDrawer = () => {
                 isRound={true}
                 variant='solid'
                 colorScheme='teal'
-                aria-label='Create'
+                aria-label='Create Habit'
                 fontSize='20px'
                 icon={<AddIcon />}
                 position="fixed"
