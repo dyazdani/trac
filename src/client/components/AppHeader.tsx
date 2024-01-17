@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppDispatch } from "../app/hooks.js";
 import { logout } from "../features/authSlice.js";
-import { useCreateScheduleMutation } from "../features/api.js";
+import { useSendStatusReportMutation } from "../features/api.js";
 
 import { 
     HStack, 
@@ -11,22 +11,24 @@ import {
     Spacer
 } from "@chakra-ui/react";
 import { DaysOfWeek } from "@knocklabs/node";
+import { DragHandleIcon } from "@chakra-ui/icons";
 
 type AppHeaderProps = {};
 
 const AppHeader = (props: AppHeaderProps) => {
-  const [createSchedule] = useCreateScheduleMutation();
+  const [sendStatusReport] = useSendStatusReportMutation();
   const dispatch = useAppDispatch()
 
-  // TODO: Delete this handClick and the button it's in in a future branch
   const handleClick = async () => {
-    const schedules = await createSchedule({
-      userId: "1",
-      habitName: "Workout",
-      days: [DaysOfWeek.Mon, DaysOfWeek.Sun],
-      workflowKey: "check-in-day"
+    const response = await sendStatusReport({
+      id: 4,
+      habitId: 27,
+      user: "Bob",
+      habitName: "Not a Good Habit",
+      emails: ["darayazdani@yahoo.com", "trac_app@yahoo.com"],
+      message: "This is a test of the sendStatusReport mutation"
     })
-    console.log(schedules)
+    console.log(response)
   } 
 
   return (
@@ -55,7 +57,7 @@ const AppHeader = (props: AppHeaderProps) => {
                 e.preventDefault()
                 handleClick()
               }}
-            >Create Knock Schedule</Button>
+            >Send Status Report</Button>
             
         </HStack>
       </Box>
