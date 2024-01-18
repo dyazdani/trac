@@ -1,4 +1,3 @@
-import React from "react";
 import { useAppDispatch } from "../app/hooks.js";
 import { logout } from "../features/authSlice.js";
 

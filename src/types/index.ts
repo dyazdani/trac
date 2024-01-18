@@ -68,3 +68,12 @@ export interface CreateScheduleReqBody {
   days: DaysOfWeek[]
   workflowKey: string
 }
+
+export interface SendStatusReportReqBody {
+  id: number
+  habitId: number
+  user: string
+  habitName: string
+  emails: string[]
+  message: string
+}

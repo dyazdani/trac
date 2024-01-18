@@ -4,9 +4,11 @@ dotenv.config();
 import express, { Request, Response, NextFunction } from "express";
 import morgan from "morgan";
 import authenticateJWT from "../utils/authentication.js";
+import cors from 'cors';
 
 
 const app = express();
+app.use(cors())
 app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "tiny"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

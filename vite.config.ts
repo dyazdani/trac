@@ -16,7 +16,6 @@ export default defineConfig({
     esbuildOptions: {
       // Enable esbuild polyfill plugins
       plugins: [NodeModulesPolyfillPlugin()]
-
     },
   },
   build: {
