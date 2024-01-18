@@ -41,12 +41,12 @@ const AppHeader = (props: AppHeaderProps) => {
         <HStack>
           <Text fontSize='2xl'>trac</Text>
             <Spacer/>
-            {process.env.KNOCK_API_KEY && 
+            {process.env.KNOCK_FEED_CHANNEL_ID && 
             process.env.KNOCK_PUBLIC_API_KEY && 
             currentUser &&
               <KnockFeedProvider
                 apiKey={process.env.KNOCK_PUBLIC_API_KEY}
-                feedId={process.env.KNOCK_API_KEY}
+                feedId={process.env.KNOCK_FEED_CHANNEL_ID}
                 userId={currentUser?.id.toString()}
               >
                 <MessagesMenu />
