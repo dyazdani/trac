@@ -22,7 +22,7 @@ import isDateOutOfRange from "../../utils/isDateOutOfRange.js";
  }
 
 const ToggleButton = ({date, habit, isCheckInDay}: ToggleButtonProps) => {
-    const [flag, setFlag] = useBoolean();
+    const [flag, setFlag] = useBoolean(!!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date)));
     const currentUser = useAppSelector((state) => state.auth.user)
 
     const [updateHabit, {data, isLoading, error}] = useUpdateHabitMutation();

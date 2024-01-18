@@ -28,6 +28,7 @@
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^6.1.6",
     "@testing-library/react": "^14.1.2",
+    "@tinymce/tinymce-react": "^4.3.2",
     "@types/react-redux": "^7.1.33",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",

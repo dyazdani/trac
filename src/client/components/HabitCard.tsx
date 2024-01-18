@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import ToggleButton from "./ToggleButton.js";
 import DeleteHabitButton from "./DeleteHabitButton.js";
 
@@ -11,6 +11,8 @@ import {
   Heading,
   IconButton,
   Flex,
+  Spacer,
+  Box,
 } from "@chakra-ui/react";
 
 import { 
@@ -21,6 +23,7 @@ import {
 import { HabitWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
 import UpdateHabitButton from "./UpdateHabitButton.js";
+import SendStatusReportButton from "./StatusReportFormButton.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -147,18 +150,24 @@ const HabitCard = ({ habit }: HabitProps) => {
             >
           <CardBody>
             <HStack>
-                {currentWeek.map(day => {
-                  return (
-                    <ToggleButton
-                      key={Date.parse(day.toISOString())} 
-                      date={day}
-                      habit={habit}
-                      isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek}
-                    />
-
-                  )
-                })}
+              {currentWeek.map(day => {
+                return (
+                  <ToggleButton
+                    key={Date.parse(day.toISOString())} 
+                    date={day}
+                    habit={habit}
+                    isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek}
+                  />
+                )
+              })}
             </HStack>
+            <Box
+              mt="5vh"
+            >
+              <SendStatusReportButton
+                habit={habit}
+              />
+            </Box>
           </CardBody>
           <CardFooter>{dateRangeString}</CardFooter>
         </Flex>
