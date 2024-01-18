@@ -45,13 +45,11 @@ export const api = createApi({
         }),
         invalidatesTags: ["CurrentUser"],
       }),
-      createSchedule: builder.mutation<{schedules: Schedule[]}, {userId: string, habitName: string, days: DaysOfWeek[], workflowKey: string}>({
-        query: ({userId, habitName, days, workflowKey}) => ({
+      createSchedule: builder.mutation<{schedules: Schedule[]}, {habitName: string, days: DaysOfWeek[], workflowKey: string}>({
+        query: ({habitName, days, workflowKey}) => ({
           url: `/notifications/schedules`,
           method: "POST",
           body: {
-            //TODO: move userId out of request body once testing is done, as the endpoint will use req.user.id in final version
-            userId,
             habitName,
             days,
             workflowKey

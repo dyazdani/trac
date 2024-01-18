@@ -31,11 +31,12 @@ import {
     useToast
   } from '@chakra-ui/react'
 import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
-import { useCreateHabitMutation } from '../features/api.js'
+import { useCreateHabitMutation, useCreateScheduleMutation } from '../features/api.js'
 import { useAppSelector } from '../app/hooks.js'
 import getBooleanRoutineDays from '../../utils/getBooleanRoutineDays.js'
 import { RoutineDaysArrayType } from '../../types/index.js'
 import { DayOfTheWeek } from '@prisma/client'
+import { DaysOfWeek } from '@knocklabs/node'
 
 const RightDrawer = () => {
     // TODO: Set this value to upper case when sending it to database
@@ -47,6 +48,7 @@ const RightDrawer = () => {
     const toast = useToast();
 
     const [createHabit, {isLoading, data, error}] = useCreateHabitMutation();
+    const [createSchedule] = useCreateScheduleMutation();
 
     const currentUser = useAppSelector((state) => state.auth.user);
 
@@ -100,10 +102,14 @@ const RightDrawer = () => {
                                         checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek]
                                     }
                                 })
-                                // console.log(habit)
+                                const schedules = await createSchedule({
+                                    habitName: habitNameValue,
+                                    days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]],
+                                    workflowKey: "check-in-day"
+                                })
+                                console.log("SCHEDULES: ", schedules)
                             }
                             onClose()
-                            setCheckboxGroupValue([])
                             toast({
                                 title: 'Habit created.',
                                 description: 'Your new Habit was created and added to your dashboard.',

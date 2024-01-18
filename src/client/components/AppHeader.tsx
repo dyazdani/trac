@@ -34,7 +34,6 @@ const AppHeader = (props: AppHeaderProps) => {
             >
                 Logout
             </Button>
-            
         </HStack>
       </Box>
     </>
