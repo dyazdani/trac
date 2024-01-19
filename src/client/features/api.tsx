@@ -57,6 +57,17 @@ export const api = createApi({
         }),
         invalidatesTags: ["Schedule"],
       }),
+      updateSchedule: builder.mutation<{schedules: Schedule[]}, {scheduleIds: string[], days: DaysOfWeek[]}>({
+        query: ({scheduleIds, days}) => ({
+          url: `/notifications/schedules`,
+          method: "PUT",
+          body: {
+            scheduleIds,
+            days
+          },
+        }),
+        invalidatesTags: ["Schedule"],
+      }),
       deleteKnockUser: builder.mutation<{message: string}, {id: string}>({
         query: ({id}) => ({
           url: `/notifications/users/${id}`,
@@ -150,5 +161,6 @@ export const api = createApi({
     useDeleteKnockUserMutation,
     useIdentifyUserMutation,
     useDeleteHabitMutation,
-    useSendStatusReportMutation
+    useSendStatusReportMutation,
+    useUpdateScheduleMutation
   } = api
