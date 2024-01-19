@@ -13,8 +13,9 @@ import {
   Flex,
   Spacer,
   Box,
+  keyframes
 } from "@chakra-ui/react";
-
+import { motion } from 'framer-motion';
 import { 
     EditIcon, 
     ArrowLeftIcon,
@@ -24,6 +25,7 @@ import { HabitWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
 import UpdateHabitButton from "./UpdateHabitButton.js";
 import SendStatusReportButton from "./StatusReportFormButton.js";
+import isTodayCheckInDay from "../../utils/isTodayCheckInDay.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -97,14 +99,26 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
     setCurrentWeek(nextWeek);
   }
 
+  const animationKeyframes = keyframes`to { background-position-x: 0% }`;
+
+  const animation = `${animationKeyframes} 1s infinite linear`; 
+
   return (
     <>
-      <Card 
+      <Card
+        as={motion.div}
+        animation={isTodayCheckInDay([habit.checkIn]) ? animation : ""}
         w="30vw" 
         maxW="400px"
         minW="320px"
-        bg={"pink"}
-        sx={{ borderRadius: "20px"}}
+        bg={isTodayCheckInDay([habit.checkIn]) ? "linear-gradient(-45deg, #ffc0cb 40%, #ffe4e1 50%, #ffc0cb 60%)" : "pink"}
+        borderRadius="20px"
+        border={isTodayCheckInDay([habit.checkIn]) ? "2mm ridge rgba(255,215,0, .6)" : ""}
+        backgroundSize={isTodayCheckInDay([habit.checkIn]) ? "300%" : ""}
+        sx={isTodayCheckInDay([habit.checkIn]) ? 
+          {backgroundPositionX: '100%'} : 
+          {}
+        }
       >
         <IconButton 
             aria-label="habit-navigate-left" 
