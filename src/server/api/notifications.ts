@@ -1,5 +1,5 @@
 import express from "express";
-import { DaysOfWeek, Knock, RepeatFrequency } from "@knocklabs/node";
+import { Knock, RepeatFrequency } from "@knocklabs/node";
 import requireUser from "../../utils/requireUser.js";
 import { CreateScheduleReqBody } from "../../types/index.js";
 
@@ -40,28 +40,6 @@ notificationsRouter.post("/schedules", requireUser, async (req, res, next) => {
         }
     }
 } )
-
-// PUT /api/notifications/schedules
-notificationsRouter.put("/schedules", requireUser, async (req, res, next) => {
-    if (req.user) {
-        try { 
-            const { scheduleIds, days }: {scheduleIds: string[], days: DaysOfWeek[] } = req.body
-            const updatedSchedules = await knock.workflows.updateSchedules({
-                schedule_ids: scheduleIds,
-                repeats: [
-                    {
-                        frequency: RepeatFrequency.Weekly,
-                        days
-                    }
-                ]
-            })
-
-            res.send({ updatedSchedules })
-        } catch (e) {
-            next(e);
-        }
-    }
-})
 
 // DELETE /api/notifications/users/:user_id
 notificationsRouter.delete("/users/:user_id", requireUser, async (req, res, next) => {
