@@ -13,9 +13,10 @@ import {
 
 type DeleteHabitButtonProps = {
     habit: HabitWithDetails
+    handleClick: () => void
 }
 
-const DeleteHabitButton = ({ habit }: DeleteHabitButtonProps) =>  {
+const DeleteHabitButton = ({ habit, handleClick }: DeleteHabitButtonProps) =>  {
   const currentUser = useAppSelector(state => state.auth.user);
   const [deleteHabit, { isLoading }] = useDeleteHabitMutation();
   const toast = useToast();
@@ -30,6 +31,7 @@ const DeleteHabitButton = ({ habit }: DeleteHabitButtonProps) =>  {
             duration: 4000,
             isClosable: true
         })
+        
     }
   }
     
@@ -40,7 +42,11 @@ const DeleteHabitButton = ({ habit }: DeleteHabitButtonProps) =>  {
                 icon={<DeleteIcon />}
                 isLoading={isLoading} 
                 variant="unstyled"
-                onClick={handleDeleteHabit}
+                onClick={(e) => {
+                    e.preventDefault();
+                    handleDeleteHabit();
+                    handleClick();
+                }}
             />
         </>
     );

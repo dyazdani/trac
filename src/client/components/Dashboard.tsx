@@ -19,26 +19,29 @@ const Dashboard = () => {
     const checkIns = data?.habits.map(habit => habit.checkIn)
 
     if (checkIns) {
+      console.log("check-ins: ", checkIns)
       isTodayACheckInDay = isTodayCheckInDay(checkIns)
     }
   }
 
+  console.log("isTodayACheckInDay: ", isTodayACheckInDay)
   const [isBannerDisplayed, setIsBannerDisplayed] = useState(isTodayACheckInDay)
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    setIsBannerDisplayed(false);
+  console.log("isBannerDisplayed: ", isBannerDisplayed)
+
+  const handleClick = () => {
+    setIsBannerDisplayed(!isBannerDisplayed);
   }
 
   return (
     <>
       {isBannerDisplayed && <CTABanner isBannerDisplayed={isBannerDisplayed} handleClick={handleClick}/>}
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
-      <RightDrawer />
+      <RightDrawer handleClick={handleClick}/>
       <Box as="div" 
       w="100vw"
       >
-        <MyHabits />
+        <MyHabits handleClick={handleClick}/>
       </Box>
     </>
   );

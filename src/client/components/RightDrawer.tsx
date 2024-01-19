@@ -38,7 +38,11 @@ import { RoutineDaysArrayType } from '../../types/index.js'
 import { DayOfTheWeek } from '@prisma/client'
 import { DaysOfWeek } from '@knocklabs/node'
 
-const RightDrawer = () => {
+export interface RightDrawerProps {
+    handleClick: () => void
+}
+
+const RightDrawer = ({ handleClick }: RightDrawerProps) => {
     // TODO: Set this value to upper case when sending it to database
     const [menuValue, setMenuValue] = useState<string | string[]>('Monday')
     const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>([])
@@ -117,6 +121,7 @@ const RightDrawer = () => {
                                 duration: 9000,
                                 isClosable: true
                             })
+                            handleClick();
                         }}
                         id="habitForm"
                         spacing="3vw"

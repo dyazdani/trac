@@ -27,6 +27,7 @@ import SendStatusReportButton from "./StatusReportFormButton.js";
 
 type HabitProps = {
   habit: HabitWithDetails
+  handleClick: () => void
 };
 
 // for comparison with DayOfTheWeek enum on CheckIn model
@@ -43,7 +44,7 @@ const DAY_STRINGS = [
 const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 
-const HabitCard = ({ habit }: HabitProps) => {
+const HabitCard = ({ habit, handleClick }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
 
   // Variable for displaying date range at bottom of HabitCard
@@ -140,8 +141,8 @@ const HabitCard = ({ habit }: HabitProps) => {
             >
               {habit.name}
             </Heading>
-            <UpdateHabitButton habit={habit}/>
-            <DeleteHabitButton habit={habit} />
+            <UpdateHabitButton habit={habit} handleClick={handleClick}/>
+            <DeleteHabitButton habit={habit} handleClick={handleClick}/>
           </HStack>
         </CardHeader>
         <Flex 

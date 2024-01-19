@@ -36,9 +36,10 @@ import getRoutineDaysStringArray from "../../utils/getRoutineDaysStringArray.js"
 
 export interface UpdateHabitButtonProps{
     habit: HabitWithDetails
+    handleClick: () => void
 }
 
-const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
+const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
     const [menuValue, setMenuValue] = useState<string | string[]>(habit.checkIn.dayOfTheWeek)
     const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>(getRoutineDaysStringArray(habit.routine))
     const [habitNameValue, setHabitNameValue] = useState(habit.name)
@@ -110,6 +111,7 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                     duration: 9000,
                                     isClosable: true
                                 })
+                                handleClick();
                             }}
                             id="habitForm"
                             spacing="3vw"
