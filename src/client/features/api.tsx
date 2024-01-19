@@ -154,5 +154,6 @@ export const api = createApi({
     useDeleteKnockUserMutation,
     useIdentifyUserMutation,
     useDeleteHabitMutation,
-    useSendStatusReportMutation
+    useSendStatusReportMutation,
+    useGetSchedulesByUserQuery
   } = api
