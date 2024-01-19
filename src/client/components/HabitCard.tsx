@@ -99,23 +99,24 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
     setCurrentWeek(nextWeek);
   }
 
-  const animationKeyframes = keyframes`to { background-position-x: 0% }`;
+  const isCheckIn = isTodayCheckInDay([habit.checkIn]);
 
+  const animationKeyframes = keyframes`to { background-position-x: 0% }`;
   const animation = `${animationKeyframes} 1s infinite linear`; 
 
   return (
     <>
       <Card
         as={motion.div}
-        animation={isTodayCheckInDay([habit.checkIn]) ? animation : ""}
+        animation={isCheckIn ? animation : ""}
         w="30vw" 
         maxW="400px"
         minW="320px"
-        bg={isTodayCheckInDay([habit.checkIn]) ? "linear-gradient(-45deg, #ffc0cb 40%, #ffe4e1 50%, #ffc0cb 60%)" : "pink"}
+        bg={isCheckIn ? "linear-gradient(-45deg, #ffc0cb 40%, #ffe4e1 50%, #ffc0cb 60%)" : "pink"}
         borderRadius="20px"
-        border={isTodayCheckInDay([habit.checkIn]) ? "2mm ridge rgba(255,215,0, .6)" : ""}
-        backgroundSize={isTodayCheckInDay([habit.checkIn]) ? "300%" : ""}
-        sx={isTodayCheckInDay([habit.checkIn]) ? 
+        border={isCheckIn ? "2mm ridge rgba(255,215,0, .6)" : ""}
+        backgroundSize={isCheckIn ? "300%" : ""}
+        sx={isCheckIn ? 
           {backgroundPositionX: '100%'} : 
           {}
         }
