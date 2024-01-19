@@ -48,6 +48,7 @@ const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 const HabitCard = ({ habit, handleClick }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
+  const [isStatusSent, setIsStatusSent] = useState(false)
 
   // Variable for displaying date range at bottom of HabitCard
   let dateRangeString = ""
@@ -99,6 +100,10 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
     setCurrentWeek(nextWeek);
   }
 
+  const statusSent = () => {
+    setIsStatusSent(true)
+  }
+
   const isCheckIn = isTodayCheckInDay([habit.checkIn]);
 
   const animationKeyframes = keyframes`to { background-position-x: 0% }`;
@@ -108,15 +113,15 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
     <>
       <Card
         as={motion.div}
-        animation={isCheckIn ? animation : ""}
+        animation={isCheckIn && !isStatusSent ? animation : ""}
         w="30vw" 
         maxW="400px"
         minW="320px"
-        bg={isCheckIn ? "linear-gradient(-45deg, #ffc0cb 40%, #ffe4e1 50%, #ffc0cb 60%)" : "pink"}
+        bg={isCheckIn && !isStatusSent ? "linear-gradient(-45deg, #ffc0cb 40%, #ffe4e1 50%, #ffc0cb 60%)" : "pink"}
         borderRadius="20px"
-        border={isCheckIn ? "2mm ridge rgba(255,215,0, .6)" : ""}
-        backgroundSize={isCheckIn ? "300%" : ""}
-        sx={isCheckIn ? 
+        border={isCheckIn && !isStatusSent ? "2mm ridge rgba(255,215,0, .6)" : ""}
+        backgroundSize={isCheckIn && !isStatusSent ? "300%" : ""}
+        sx={isCheckIn && !isStatusSent ? 
           {backgroundPositionX: '100%'} : 
           {}
         }
@@ -177,15 +182,20 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
                 )
               })}
             </HStack>
-            <Box
-              mt="5vh"
-            >
+          </CardBody>
+          <CardFooter>
+            {dateRangeString}
+          </CardFooter>
+          <Box
+            mt="15px"
+            mb="20px"
+          >
               <SendStatusReportButton
                 habit={habit}
+                handleClick={statusSent}
+                isStatusSent={isStatusSent}
               />
             </Box>
-          </CardBody>
-          <CardFooter>{dateRangeString}</CardFooter>
         </Flex>
       </Card>
     </>
