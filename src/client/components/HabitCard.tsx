@@ -186,16 +186,20 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
           <CardFooter>
             {dateRangeString}
           </CardFooter>
-          <Box
+          
+          {isCheckIn && 
+            <Box
             mt="15px"
             mb="20px"
           >
-              <SendStatusReportButton
-                habit={habit}
-                handleClick={statusSent}
-                isStatusSent={isStatusSent}
-              />
+            <SendStatusReportButton
+              habit={habit}
+              handleClick={statusSent}
+              isStatusSent={isStatusSent}
+            />
             </Box>
+          }
+          
         </Flex>
       </Card>
     </>
