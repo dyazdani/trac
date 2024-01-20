@@ -5,8 +5,11 @@ import requireUser from "../../utils/requireUser.js";
 import { CreateHabitReqBody, UpdateHabitReqBody } from "../../types/index.js";
 import requireAdmin from "../../utils/requireAdmin.js";
 import nodemailer from 'nodemailer';
+import { Knock } from "@knocklabs/node";
 
 const usersRouter = express.Router();
+
+const knock = new Knock(process.env.KNOCK_API_KEY);
 
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -217,4 +220,18 @@ usersRouter.post("/:id/habits/:habitId/status-reports", requireUser, async (req,
     } catch(e) {
         next(e)
     }
+})
+
+// GET /api/users/:id/schedules
+usersRouter.get("/:id/schedules", requireUser, async (req, res, next) => {
+    if (req.user) {
+        try {
+            const userId = String(req.params.id)
+            const { entries: schedules } = await knock.users.getSchedules(userId)
+
+            res.send({ schedules })
+        } catch (e) {
+            next(e);
+        }
+     }
 })
