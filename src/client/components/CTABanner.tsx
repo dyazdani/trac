@@ -3,10 +3,10 @@ import { Box, CloseButton, HStack, Spacer, Text } from "@chakra-ui/react";
 
 export interface CTABannerProps {
     isBannerDisplayed: boolean
-    handleClick: () => void
+    toggleBannerDisplayed: () => void
 }
 
-const CTABanner = ({isBannerDisplayed, handleClick}: CTABannerProps) => {
+const CTABanner = ({isBannerDisplayed, toggleBannerDisplayed}: CTABannerProps) => {
 
     return (
         <Box
@@ -33,7 +33,7 @@ const CTABanner = ({isBannerDisplayed, handleClick}: CTABannerProps) => {
                     colorScheme="teal"
                     onClick={(e) => {
                         e.preventDefault();
-                        handleClick()    
+                        toggleBannerDisplayed()    
                     }}
                 />
             </HStack>

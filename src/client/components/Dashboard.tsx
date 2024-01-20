@@ -19,29 +19,25 @@ const Dashboard = () => {
     const checkIns = data?.habits.map(habit => habit.checkIn)
 
     if (checkIns) {
-      console.log("check-ins: ", checkIns)
       isTodayACheckInDay = isTodayCheckInDay(checkIns)
     }
   }
 
-  console.log("isTodayACheckInDay: ", isTodayACheckInDay)
   const [isBannerDisplayed, setIsBannerDisplayed] = useState(isTodayACheckInDay)
 
-  console.log("isBannerDisplayed: ", isBannerDisplayed)
-
-  const handleClick = () => {
+  const toggleBannerDisplayed = () => {
     setIsBannerDisplayed(!isBannerDisplayed);
   }
 
   return (
     <>
-      {isBannerDisplayed && <CTABanner isBannerDisplayed={isBannerDisplayed} handleClick={handleClick}/>}
+      {isBannerDisplayed && <CTABanner isBannerDisplayed={isBannerDisplayed} toggleBannerDisplayed={toggleBannerDisplayed}/>}
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
-      <RightDrawer handleClick={handleClick}/>
+      <RightDrawer toggleBannerDisplayed={toggleBannerDisplayed}/>
       <Box as="div" 
       w="100vw"
       >
-        <MyHabits handleClick={handleClick}/>
+        <MyHabits toggleBannerDisplayed={toggleBannerDisplayed}/>
       </Box>
     </>
   );
