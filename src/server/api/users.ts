@@ -234,3 +234,22 @@ usersRouter.post("/:id/habits/:habitId/statusReports", requireUser, async (req, 
         next(e)
     }
 })
+
+// GET /api/users/:id/habits/:habitId/statusReports
+usersRouter.get("/:id/habits/:habitId/statusReports", requireUser, async (req, res, next): Promise<void> => {
+    try {
+        const statusReports = await prisma.habit.findUnique({
+            where: {
+                id: Number(req.params.habitId),
+                ownerId: Number(req.params.id)
+            }, 
+            select: {
+                statusReports: true
+            }
+        });
+
+        res.send({ statusReports })
+    } catch (e) {
+        next(e);
+    }
+})
