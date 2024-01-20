@@ -26,36 +26,47 @@ import {
     useToast 
 } from "@chakra-ui/react";
 import { ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
-import { useUpdateHabitMutation, useGetHabitByIdQuery } from "../features/api.js";
+import { 
+    useUpdateHabitMutation,
+    useGetSchedulesByUserQuery, 
+    useUpdateScheduleMutation 
+} from "../features/api.js";
 import { DayOfTheWeek } from "@prisma/client";
 import React, { useState } from "react";
 import getBooleanRoutineDays from "../../utils/getBooleanRoutineDays.js";
 import { useAppSelector } from "../app/hooks.js";
 import { HabitWithDetails, RoutineDaysArrayType } from "../../types/index.js";
 import getRoutineDaysStringArray from "../../utils/getRoutineDaysStringArray.js";
+import { DaysOfWeek } from "@knocklabs/node";
 
 export interface UpdateHabitButtonProps{
     habit: HabitWithDetails
 }
 
 const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
-    const [menuValue, setMenuValue] = useState<string | string[]>(habit.checkIn.dayOfTheWeek)
-    const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>(getRoutineDaysStringArray(habit.routine))
-    const [habitNameValue, setHabitNameValue] = useState(habit.name)
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [menuValue, setMenuValue] = useState<string | string[]>(habit.checkIn.dayOfTheWeek);
+    const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>(getRoutineDaysStringArray(habit.routine));
+    const [habitNameValue, setHabitNameValue] = useState(habit.name);
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const inputRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
 
-    console.log("menuValue: ", menuValue)
-    console.log("checkboxGroupValue: ", checkboxGroupValue)
-    console.log("habitNameValue: ", habitNameValue)
+    console.log("menuValue: ", menuValue);
+    console.log("checkboxGroupValue: ", checkboxGroupValue);
+    console.log("habitNameValue: ", habitNameValue);
 
     const [updateHabit] = useUpdateHabitMutation();
+    const [updateSchedule] = useUpdateScheduleMutation();
 
     const currentUser = useAppSelector((state) => state.auth.user);
 
     if (currentUser) {
-        useGetHabitByIdQuery({id: currentUser.id, habitId: habit.id});
+        const { data } = useGetSchedulesByUserQuery(currentUser.id);
+        let scheduleIds: string[];
+        if (data) {
+            scheduleIds = data.schedules.map(schedule => schedule.id);
+        }
+
         return (
             <>
             <IconButton 
@@ -90,7 +101,7 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                     typeof menuValue === 'string' && 
                                     checkboxGroupValue &&
                                     !checkboxGroupValue.some(el => typeof el === 'number')
-                                    ) {
+                                ) {
                                     const newHabit = await updateHabit({
                                         id: currentUser.id,
                                         habitId: habit.id,
@@ -100,16 +111,25 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                             routineDays: getBooleanRoutineDays(checkboxGroupValue as RoutineDaysArrayType),
                                             checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek]
                                         }
-                                    })
-                                }
-                                onClose()
-                                toast({
-                                    title: 'Habit updated.',
-                                    description: 'Your Habit was successfully updated.',
-                                    status: 'success',
-                                    duration: 9000,
-                                    isClosable: true
-                                })
+                                    });
+
+                                    console.log("newHabit: ", newHabit)
+                                    const updatedSchedules = await updateSchedule({
+                                        scheduleIds,
+                                        days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]]
+                                    });
+
+                                    console.log("updatedSchedules: ", updatedSchedules);
+
+                                    onClose();
+                                    toast({
+                                        title: 'Habit updated.',
+                                        description: 'Your Habit was successfully updated.',
+                                        status: 'success',
+                                        duration: 9000,
+                                        isClosable: true
+                                    });
+                                }   
                             }}
                             id="habitForm"
                             spacing="3vw"
