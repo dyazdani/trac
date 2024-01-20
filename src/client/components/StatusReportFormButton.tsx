@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSendStatusReportMutation } from '../features/api.js';
+import { useGetStatusReportsByHabitIdQuery, useSendStatusReportMutation } from '../features/api.js';
 import { Button, ButtonGroup } from '@chakra-ui/button';
 import { Box, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Editable, EditableInput, EditablePreview, FormControl, FormLabel, Input, Stack, Textarea, useDisclosure, useToast } from '@chakra-ui/react';
 import { useAppSelector } from '../app/hooks.js';
@@ -24,6 +24,7 @@ const SendStatusReportButton = ({habit, handleClick, isStatusSent}: SendStatusRe
         const inputRef = React.useRef<HTMLInputElement>(null);
         const toast = useToast();
 
+        const { data } = useGetStatusReportsByHabitIdQuery({id: currentUser.id, habitId: habit.id})
 
         const [sendStatusReport] = useSendStatusReportMutation();
         
@@ -68,7 +69,7 @@ const SendStatusReportButton = ({habit, handleClick, isStatusSent}: SendStatusRe
             
         }
         
-
+        console.log("STATUS_REPORTS: ", data?.statusReports);
 
         return (
             <>
