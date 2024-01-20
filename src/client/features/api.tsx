@@ -131,7 +131,11 @@ export const api = createApi({
           },
         }),
         invalidatesTags: ["StatusReport"],
-      })
+      }),
+      getStatusReportsByHabitId: builder.query<{statusReports: StatusReport[]}, {id: number, habitId: number}>({
+        query: ({id, habitId}) => `/users/${id}/habits/${habitId}/statusReports`,
+        providesTags: ["StatusReport"]
+      }),
     })
   })
   
@@ -151,5 +155,6 @@ export const api = createApi({
     useDeleteKnockUserMutation,
     useIdentifyUserMutation,
     useDeleteHabitMutation,
-    useSendStatusReportMutation
+    useSendStatusReportMutation,
+    useGetStatusReportsByHabitIdQuery
   } = api
