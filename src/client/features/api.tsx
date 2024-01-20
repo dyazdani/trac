@@ -58,7 +58,7 @@ export const api = createApi({
         invalidatesTags: ["Schedule"],
       }),
       getSchedulesByUser: builder.query<{ schedules: Schedule[] }, number>({
-        query: (id) => `/users/${id}/habits`,
+        query: (id) => `/users/${id}/schedules`,
         providesTags: ["Schedule"]
       }),
       deleteKnockUser: builder.mutation<{message: string}, {id: string}>({
