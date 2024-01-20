@@ -33,6 +33,8 @@ model Habit {
 
   routine         Routine?
   checkIn         CheckIn?
+
+  statusReports   StatusReport[]  @relation("StatusReports")
 }
 
 model Routine {
@@ -68,4 +70,14 @@ model CheckIn {
   habit         Habit     @relation(fields: [habitId], references: [id], onDelete: Cascade)
   habitId       Int       @unique  
 
+}
+
+model StatusReport {
+  id            Int       @id @default(autoincrement())
+  content       String    
+  dateCreated   DateTime  @default(now())
+  checkInDate   DateTime
+
+  habit           Habit        @relation("StatusReports", fields: [habitId], references: [id], onDelete: Cascade)
+  habitId         Int
 }
