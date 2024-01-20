@@ -222,6 +222,7 @@ usersRouter.post("/:id/habits/:habitId/statusReports", requireUser, async (req, 
         const habitId = Number(req.params.habitId)
         const statusReport = await prisma.statusReport.create({
             data: {
+                recipientEmails: emails,
                 content: message,
                 checkInDate,
                 habitId
