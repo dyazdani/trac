@@ -22,11 +22,11 @@ notificationsRouter.post("/schedules", requireUser, async (req, res, next) => {
                 recipients: [userId],
                 repeats: [
                     {
-                    frequency: RepeatFrequency.Weekly,
-                    days,
-                    //TODO: Eventually allow user to set the time of notification?
-                    hours: 5,
-                    minutes: 0
+                        frequency: RepeatFrequency.Weekly,
+                        days,
+                        //TODO: Eventually allow user to set the time of notification?
+                        hours: 5,
+                        minutes: 0
                     }
                 ],
                 data: {
