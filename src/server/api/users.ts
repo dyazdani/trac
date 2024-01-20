@@ -251,3 +251,36 @@ usersRouter.get("/:id/schedules", requireUser, async (req, res, next) => {
         }
      }
 })
+
+// GET /api/users/:id/schedules
+usersRouter.get("/:id/schedules", requireUser, async (req, res, next) => {
+    if (req.user) {
+        try {
+            const userId = String(req.params.id)
+            const { entries: schedules } = await knock.users.getSchedules(userId)
+
+            res.send({ schedules })
+        } catch (e) {
+            next(e);
+        }
+     }
+})
+
+// GET /api/users/:id/habits/:habitId/statusReports
+usersRouter.get("/:id/habits/:habitId/statusReports", requireUser, async (req, res, next): Promise<void> => {
+    try {
+        const statusReports = await prisma.habit.findUnique({
+            where: {
+                id: Number(req.params.habitId),
+                ownerId: Number(req.params.id)
+            }, 
+            select: {
+                statusReports: true
+            }
+        });
+
+        res.send({ statusReports })
+    } catch (e) {
+        next(e);
+    }
+})
