@@ -13,8 +13,9 @@ import {
   Flex,
   Spacer,
   Box,
+  keyframes
 } from "@chakra-ui/react";
-
+import { motion } from 'framer-motion';
 import { 
     EditIcon, 
     ArrowLeftIcon,
@@ -24,6 +25,7 @@ import { HabitWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
 import UpdateHabitButton from "./UpdateHabitButton.js";
 import SendStatusReportButton from "./StatusReportFormButton.js";
+import isTodayCheckInDay from "../../utils/isTodayCheckInDay.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -46,6 +48,7 @@ const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 const HabitCard = ({ habit, handleClick }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
+  const [isStatusSent, setIsStatusSent] = useState(false)
 
   // Variable for displaying date range at bottom of HabitCard
   let dateRangeString = ""
@@ -97,14 +100,31 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
     setCurrentWeek(nextWeek);
   }
 
+  const statusSent = () => {
+    setIsStatusSent(true)
+  }
+
+  const isCheckIn = isTodayCheckInDay([habit.checkIn]);
+
+  const animationKeyframes = keyframes`to { background-position-x: 0% }`;
+  const animation = `${animationKeyframes} 1s infinite linear`; 
+
   return (
     <>
-      <Card 
+      <Card
+        as={motion.div}
+        animation={isCheckIn && !isStatusSent ? animation : ""}
         w="30vw" 
         maxW="400px"
         minW="320px"
-        bg={"pink"}
-        sx={{ borderRadius: "20px"}}
+        bg={isCheckIn && !isStatusSent ? "linear-gradient(-45deg, #ffc0cb 40%, #ffe4e1 50%, #ffc0cb 60%)" : "pink"}
+        borderRadius="20px"
+        border={isCheckIn && !isStatusSent ? "2mm ridge rgba(255,215,0, .6)" : ""}
+        backgroundSize={isCheckIn && !isStatusSent ? "300%" : ""}
+        sx={isCheckIn && !isStatusSent ? 
+          {backgroundPositionX: '100%'} : 
+          {}
+        }
       >
         <IconButton 
             aria-label="habit-navigate-left" 
@@ -162,15 +182,24 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
                 )
               })}
             </HStack>
-            <Box
-              mt="5vh"
-            >
-              <SendStatusReportButton
-                habit={habit}
-              />
-            </Box>
           </CardBody>
-          <CardFooter>{dateRangeString}</CardFooter>
+          <CardFooter>
+            {dateRangeString}
+          </CardFooter>
+          
+          {isCheckIn && 
+            <Box
+            mt="15px"
+            mb="20px"
+          >
+            <SendStatusReportButton
+              habit={habit}
+              handleClick={statusSent}
+              isStatusSent={isStatusSent}
+            />
+            </Box>
+          }
+          
         </Flex>
       </Card>
     </>

@@ -9,15 +9,16 @@ import getDefaultStatusReportMessage from '../../utils/getDefaultStatusReportMes
 
 export interface SendStatusReportButtonProps {
     habit: HabitWithDetails
+    handleClick: () => void
+    isStatusSent: boolean
 }
 
-const SendStatusReportButton = ({habit}: SendStatusReportButtonProps) => {
+const SendStatusReportButton = ({habit, handleClick, isStatusSent}: SendStatusReportButtonProps) => {
     const currentUser = useAppSelector((state) => state.auth.user);
 
     if (currentUser) {
         const [emails, setEmails] = useState<string[]>([])
         const [message, setMessage] = useState(getDefaultStatusReportMessage(habit, currentUser.username))
-        const [isSent, setIsSent] = useState(false)
         const { isOpen, onOpen, onClose } = useDisclosure()
         const inputRef = React.useRef<HTMLInputElement>(null);
         const toast = useToast();
@@ -47,7 +48,7 @@ const SendStatusReportButton = ({habit}: SendStatusReportButtonProps) => {
                             duration: 9000,
                             isClosable: true
                         })
-                        setIsSent(true);
+                        handleClick();
                     } else {
                         toast({
                             title: 'Sending Failed',
@@ -68,13 +69,15 @@ const SendStatusReportButton = ({habit}: SendStatusReportButtonProps) => {
         return (
             <>
             <Button
-            variant='solid'
-            colorScheme='teal'
-            aria-label='Create'
+            variant={'solid'}
+            isDisabled={isStatusSent}
+            colorScheme="yellow"
+            aria-label='send-status-report-form'
             fontSize='20px'
+            border="2mm ridge rgba(255,215,0, .6)"
             onClick={onOpen}
             >
-                Send Status Report
+                {isStatusSent ? "Status Report Sent": "Send Status Report"}
             </Button>
             <Drawer 
                 placement='right' 
