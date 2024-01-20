@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
-import { Habit } from '@prisma/client';
-import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails, SendStatusReportReqBody } from '../../types/index.js';
+import { Habit, StatusReport } from '@prisma/client';
+import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails, SendStatusReportMutationArgs } from '../../types/index.js';
 import { DaysOfWeek, Schedule } from '@knocklabs/node';
 import { User as KnockUser } from '@knocklabs/node';
 
@@ -118,15 +118,16 @@ export const api = createApi({
         }),
         invalidatesTags: ["Habit"]
       }),
-      sendStatusReport: builder.mutation<{status: "Message Sent"}, SendStatusReportReqBody>({
-        query: ({id, habitId, user, habitName, emails, message}) => ({
-          url: `/users/${id}/habits/${habitId}/status-reports`,
+      sendStatusReport: builder.mutation<{status: "Message Sent", statusReport: StatusReport}, SendStatusReportMutationArgs>({
+        query: ({id, habitId, user, habitName, emails, message, checkInDate}) => ({
+          url: `/users/${id}/habits/${habitId}/statusReports`,
           method: "POST",
           body: {
             user,
             habitName,
             emails,
-            message
+            message,
+            checkInDate
           },
         }),
         invalidatesTags: ["StatusReport"],

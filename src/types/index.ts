@@ -1,5 +1,5 @@
 import { DaysOfWeek } from '@knocklabs/node';
-import {  CheckIn, DayOfTheWeek, Routine, User } from '@prisma/client';
+import {  CheckIn, DayOfTheWeek, Routine, StatusReport, User } from '@prisma/client';
 
 // to make the file a module and avoid the TypeScript error
 export {}
@@ -58,6 +58,7 @@ export interface HabitWithDetails {
   ownerId: number
   routine: Routine
   checkIn: CheckIn
+  statusReports: StatusReport[]
 }
 
 
@@ -69,11 +70,20 @@ export interface CreateScheduleReqBody {
   workflowKey: string
 }
 
-export interface SendStatusReportReqBody {
+export interface SendStatusReportMutationArgs {
   id: number
   habitId: number
   user: string
   habitName: string
   emails: string[]
   message: string
+  checkInDate: Date
+}
+
+export interface statusReportsPostReqBody {
+  user: string
+  habitName: string
+  emails: string[]
+  message: string
+  checkInDate: Date
 }

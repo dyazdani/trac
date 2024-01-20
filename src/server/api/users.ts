@@ -2,7 +2,7 @@ import express from "express";
 import excludePassword from "../../utils/excludePassword.js";
 import prisma from "../../utils/test/prisma.js";
 import requireUser from "../../utils/requireUser.js";
-import { CreateHabitReqBody, UpdateHabitReqBody } from "../../types/index.js";
+import { CreateHabitReqBody, UpdateHabitReqBody, statusReportsPostReqBody } from "../../types/index.js";
 import requireAdmin from "../../utils/requireAdmin.js";
 import nodemailer from 'nodemailer';
 import { Knock } from "@knocklabs/node";
@@ -202,11 +202,17 @@ usersRouter.delete("/:id/habits/:habitId", requireUser, async (req, res, next): 
 })
 
 
-// POST /api/users/:id/habits/:habitId/status-reports
-usersRouter.post("/:id/habits/:habitId/status-reports", requireUser, async (req, res, next): Promise<void> => {
+// POST /api/users/:id/habits/:habitId/statusReports
+usersRouter.post("/:id/habits/:habitId/statusReports", requireUser, async (req, res, next): Promise<void> => {
     try {
-        const { user, habitName, emails, message } = req.body
-        const statusReport = {
+        const { 
+            user, 
+            habitName, 
+            emails, 
+            message, 
+            checkInDate 
+        }: statusReportsPostReqBody = req.body
+        const statusReportEmail = {
           bcc: emails,
           subject: `Status Report for ${user} 📈`,
           text: message,
@@ -214,9 +220,19 @@ usersRouter.post("/:id/habits/:habitId/status-reports", requireUser, async (req,
             <p>${message}</p>`,
         };
         
-        transporter.sendMail(statusReport);
+        transporter.sendMail(statusReportEmail);
+
+        const habitId = Number(req.params.habitId)
+        const statusReport = await prisma.statusReport.create({
+            data: {
+                recipientEmails: emails,
+                content: message,
+                checkInDate,
+                habitId
+            }
+        })
         
-        res.send({status: "Message Sent"});
+        res.send({status: "Message Sent", statusReport});
     } catch(e) {
         next(e)
     }

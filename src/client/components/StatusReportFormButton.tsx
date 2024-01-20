@@ -5,6 +5,7 @@ import { Box, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, Dra
 import { useAppSelector } from '../app/hooks.js';
 import { HabitWithDetails } from '../../types/index.js';
 import getDefaultStatusReportMessage from '../../utils/getDefaultStatusReportMessage.js';
+import getMostRecentCheckInDayDate from '../../utils/getMostRecentCheckInDayDate.js';
 
 
 export interface SendStatusReportButtonProps {
@@ -26,44 +27,47 @@ const SendStatusReportButton = ({habit, handleClick, isStatusSent}: SendStatusRe
 
         const [sendStatusReport] = useSendStatusReportMutation();
         
+        const checkInDate = getMostRecentCheckInDayDate(habit);
 
         const handleSubmit = async (e: React.FormEvent<HTMLDivElement>) => {
-            if (currentUser) {
-                try {
-                    e.preventDefault();
-                    onClose();
+            try {
+                e.preventDefault();
+                onClose();
+                if (checkInDate) {
                     const response = await sendStatusReport({
                         id: currentUser?.id,
                         habitId: habit.id,
                         user: currentUser?.username,
                         habitName: habit.name,
                         emails,
-                        message
+                        message,
+                        checkInDate
                     })
-                    if (response) {
-                        toast({
-                            title: 'Status Report Sent.',
-                            description: `Your Status Report for ${habit.name} was sent.`,
-                            status: 'success',
-                            duration: 9000,
-                            isClosable: true
-                        })
-                        handleClick();
-                    } else {
-                        toast({
-                            title: 'Sending Failed',
-                            description: `Your Status Report for ${habit.name} failed to send. Please try again.`,
-                            status: 'error',
-                            duration: 9000,
-                            isClosable: true
-                        })
-                    }
-                    
-                } catch (error) {
-                    console.error(error)
-                }
+                    console.log("response: ", response)
+                if (response) {
+                    toast({
+                        title: 'Status Report Sent.',
+                        description: `Your Status Report for ${habit.name} was sent.`,
+                        status: 'success',
+                        duration: 9000,
+                        isClosable: true
+                    })
+                    handleClick();
+                } else {
+                    toast({
+                        title: 'Sending Failed',
+                        description: `Your Status Report for ${habit.name} failed to send. Please try again.`,
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true
+                    })
+                }}
+            } catch (error) {
+                console.error(error)
             }
+            
         }
+        
 
 
         return (
