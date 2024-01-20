@@ -16,8 +16,11 @@ import {
 import { HabitWithDetails } from "../../types/index.js";
 import compareArrays from "../../utils/compareStringArrays.js";
 
+export interface MyHabitsProps {
+  toggleBannerDisplayed: () => void
+}
 
-const MyHabits = () => {
+const MyHabits = ({toggleBannerDisplayed}: MyHabitsProps) => {
   const [habitNames, setHabitNames] = useState<string[]>([])
   const currentUser = useAppSelector((state) => state.auth.user);
 
@@ -73,6 +76,7 @@ const MyHabits = () => {
                 <HabitCard 
                   key={habit.id}
                   habit={habit}
+                  handleClick={toggleBannerDisplayed}
                 />
               ))
             }

@@ -9,9 +9,11 @@ import {
     Spacer
 } from "@chakra-ui/react";
 
-type AppHeaderProps = {};
+type AppHeaderProps = {
+  isBannerDisplayed: boolean | undefined
+};
 
-const AppHeader = (props: AppHeaderProps) => {
+const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
   const dispatch = useAppDispatch()
 
   return (
@@ -22,7 +24,7 @@ const AppHeader = (props: AppHeaderProps) => {
         p={4}
         minHeight="70px"
         position={"sticky"}
-        top={"0px"}
+        top={isBannerDisplayed ? "54px" : "0px"}
         zIndex={100}
         >
         <HStack>
