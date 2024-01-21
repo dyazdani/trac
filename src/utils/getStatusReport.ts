@@ -19,8 +19,6 @@ const getStatusReport = (habit: HabitWithDetails) => {
         ]
         let currentDateInMilliseconds = checkInDate?.getTime();
     
-        console.log("datesCompleted: ", habit.datesCompleted)
-
         for (let i = 6; i > -1; i--) {
             const targetDate = new Date(currentDateInMilliseconds);
             if (habit.datesCompleted.find(date => areDatesSameDayMonthYear(new Date(date), targetDate))) {

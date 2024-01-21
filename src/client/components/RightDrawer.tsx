@@ -111,7 +111,6 @@ const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
                                     days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]],
                                     workflowKey: "check-in-day"
                                 })
-                                console.log("SCHEDULES: ", schedules)
                             }
                             onClose()
                             toast({

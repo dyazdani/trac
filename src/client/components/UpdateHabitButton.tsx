@@ -52,10 +52,6 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
     const inputRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
 
-    console.log("menuValue: ", menuValue);
-    console.log("checkboxGroupValue: ", checkboxGroupValue);
-    console.log("habitNameValue: ", habitNameValue);
-
     const [updateHabit] = useUpdateHabitMutation();
     const [updateSchedule] = useUpdateScheduleMutation();
 
@@ -114,13 +110,11 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
                                         }
                                     });
 
-                                    console.log("newHabit: ", newHabit)
                                     const updatedSchedules = await updateSchedule({
                                         scheduleIds,
                                         days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]]
                                     });
 
-                                    console.log("updatedSchedules: ", updatedSchedules);
 
                                     onClose();
                                     toast({

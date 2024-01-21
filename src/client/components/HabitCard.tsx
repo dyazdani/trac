@@ -48,12 +48,11 @@ const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 const HabitCard = ({ habit, handleClick }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
-  const [isStatusSent, setIsStatusSent] = useState(false)
+  const [isStatusSent, setIsStatusSent] = useState(false) // TODO: do we need this?
 
   // Variable for displaying date range at bottom of HabitCard
   let dateRangeString = ""
 
-  // console.log("currentWeek: ", currentWeek)
   if (!currentWeek.length) {
     let firstWeek = [];
     const today = new Date(Date.now())
@@ -69,7 +68,6 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
       const newDate = new Date();
       firstWeek.push(new Date(newDate.setDate(firstWeek[i - 1].getDate() + 1)))
     }
-    // console.log(firstWeek)
     setCurrentWeek(firstWeek);
   } else {
 
@@ -84,7 +82,6 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
       const newDate = new Date();
       previousWeek.push(new Date(newDate.setTime(currentWeek[i].getTime() - SEVEN_DAYS_IN_MILLISECONDS)))
     }
-    // console.log("previousWeek: ", previousWeek)
     setCurrentWeek(previousWeek);
   }
 
@@ -96,13 +93,14 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
       const newDate = new Date();
       nextWeek.push(new Date(newDate.setTime(currentWeek[i].getTime() + SEVEN_DAYS_IN_MILLISECONDS)))
     }
-    // console.log("next: ", nextWeek)
     setCurrentWeek(nextWeek);
   }
 
   const statusSent = () => {
     setIsStatusSent(true)
   }
+
+
 
   const isCheckIn = isTodayCheckInDay([habit.checkIn]);
 
