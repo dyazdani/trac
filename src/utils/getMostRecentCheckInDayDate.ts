@@ -1,4 +1,5 @@
 import { HabitWithDetails } from "../types/index.js";
+import areDatesSameDayMonthYear from "./areDatesSameDayMonthYear.js";
 
 export const DAYS_OF_THE_WEEK = [
     "SUNDAY", 
@@ -17,6 +18,10 @@ const getMostRecentCheckInDayDate = (habit: HabitWithDetails) => {
     const checkInDayIndex = DAYS_OF_THE_WEEK.indexOf(habit.checkIn.dayOfTheWeek)
 
     if (today.getDay() === checkInDayIndex) {
+        if (areDatesSameDayMonthYear(today, new Date(habit.dateCreated))) {
+            // if today is the first day of the Habit and it is a check-in day, set first check-in day date to be a week in the future
+            return new Date(today.getTime() + (7 * ONE_DAY_IN_MILLISECONDS))
+        }
         return today
     }
 
