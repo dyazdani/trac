@@ -23,6 +23,9 @@ export interface MyHabitsProps {
 const MyHabits = ({toggleBannerDisplayed}: MyHabitsProps) => {
   const [habitNames, setHabitNames] = useState<string[]>([])
   const currentUser = useAppSelector((state) => state.auth.user);
+  const [statusReportCount, setStatusReportCount] = useState(0)
+
+  console.log("statusReoprtCount: ", statusReportCount)
 
   let habits: HabitWithDetails[];
   if (currentUser) {
@@ -35,6 +38,9 @@ const MyHabits = ({toggleBannerDisplayed}: MyHabitsProps) => {
       setHabitNames(habitNamesFromDatabase)
     }
     
+    const addToStatusReportCount = () => {
+      setStatusReportCount(statusReportCount + 1)
+    }
     return (
       <>
         <Box
@@ -74,6 +80,8 @@ const MyHabits = ({toggleBannerDisplayed}: MyHabitsProps) => {
                   key={habit.id}
                   habit={habit}
                   handleClick={toggleBannerDisplayed}
+                  addToStatusReportCount={addToStatusReportCount}
+                  statusReportCount={statusReportCount}
                 />
               ))
             }
