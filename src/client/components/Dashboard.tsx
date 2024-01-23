@@ -39,20 +39,6 @@ const Dashboard = () => {
       w="100vw"
       >
         <MyHabits toggleBannerDisplayed={toggleBannerDisplayed}/>
-        <Button
-          type="button"
-          onClick={async (e) => {
-            e.preventDefault();
-            const response = await deleteSchedules({
-              scheduleIds: ["2b0AC06mnUpU2L5BxA8bmJpMHpW"]
-            })
-            console.log(response)
-          }}
-
-        >
-
-          Delete schedule
-        </Button>
       </Box>
     </>
   );
