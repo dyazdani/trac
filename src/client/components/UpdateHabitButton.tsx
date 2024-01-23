@@ -62,6 +62,7 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
     const currentUser = useAppSelector((state) => state.auth.user);
 
     if (currentUser) {
+        // TODO: this needs to change because the update mutation will update all schedules the user has instead of schedule associated with a habit
         const { data } = useGetSchedulesByUserQuery(currentUser.id);
         let scheduleIds: string[];
         if (data) {
