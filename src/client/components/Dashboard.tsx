@@ -1,8 +1,8 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
 import MyHabits from "./MyHabits.js";
 import { useAppSelector } from "../app/hooks.js";
-import { useGetHabitsByUserQuery } from "../features/api.js";
+import { useDeleteSchedulesMutation, useGetHabitsByUserQuery } from "../features/api.js";
 import AppHeader from "./AppHeader.js";
 import CTABanner from "./CTABanner.js";
 import isTodayCheckInDay from "../../utils/isTodayCheckInDay.js";
@@ -11,6 +11,7 @@ import { useState } from "react";
 
 const Dashboard = () => {
   const currentUser = useAppSelector(state => state.auth.user)
+  const [deleteSchedules] = useDeleteSchedulesMutation();
 
   let isTodayACheckInDay;
   if (currentUser) {

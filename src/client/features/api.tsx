@@ -68,6 +68,16 @@ export const api = createApi({
         }),
         invalidatesTags: ["Schedule"],
       }),
+      deleteSchedules: builder.mutation<{message: "successfully deleted", schedules: Schedule[]}, {scheduleIds: string[]}>({
+        query: ({scheduleIds}) => ({
+          url: `/notifications/schedules`,
+          method: "DELETE",
+          body: {
+            scheduleIds
+          },
+        }),
+        invalidatesTags: ["Schedule"],
+      }),
       getSchedulesByUser: builder.query<{ schedules: Schedule[] }, number>({
         query: (id) => `/users/${id}/schedules`,
         providesTags: ["Schedule"]
@@ -173,5 +183,6 @@ export const api = createApi({
     useSendStatusReportMutation,
     useUpdateScheduleMutation,
     useGetSchedulesByUserQuery,
-    useGetStatusReportsByHabitIdQuery
+    useGetStatusReportsByHabitIdQuery,
+    useDeleteSchedulesMutation
   } = api
