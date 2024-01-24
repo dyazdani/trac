@@ -122,7 +122,8 @@ export const api = createApi({
             name: newHabit.name,
             datesCompleted: newHabit.datesCompleted,
             routineDays: newHabit.routineDays,
-            checkInDay: newHabit.checkInDay
+            checkInDay: newHabit.checkInDay,
+            scheduleId: newHabit.scheduleId
           },
         }),
         invalidatesTags: ["Habit"],
