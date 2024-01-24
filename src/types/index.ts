@@ -48,6 +48,7 @@ export interface UpdateHabitReqBody {
   datesCompleted: Date[]
   routineDays: RoutineDays
   checkInDay: DayOfTheWeek
+  scheduleId: string
 }
 
 export interface HabitWithDetails {
