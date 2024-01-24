@@ -145,7 +145,8 @@ usersRouter.put("/:id/habits", requireUser, async (req, res, next) => {
             name, 
             datesCompleted, 
             routineDays, 
-            checkInDay 
+            checkInDay,
+            scheduleId 
         }: UpdateHabitReqBody = req.body
 
         // Update Routine associated with Habit
@@ -175,7 +176,8 @@ usersRouter.put("/:id/habits", requireUser, async (req, res, next) => {
             },
             data: {
                 name,
-                datesCompleted
+                datesCompleted,
+                scheduleId
             }
         })
 
