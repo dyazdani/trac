@@ -59,7 +59,6 @@ export interface HabitWithDetails {
   routine: Routine
   checkIn: CheckIn
   statusReports: StatusReport[]
-  scheduleId: string | null
 }
 
 
