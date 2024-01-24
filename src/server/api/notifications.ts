@@ -68,7 +68,6 @@ notificationsRouter.put("/schedules", requireUser, async (req, res, next) => {
 notificationsRouter.delete("/schedules", requireUser, async (req, res, next) => {
     if (req.user) {
         try {
-
             const { scheduleIds } = req.body;
             const schedules = await knock.workflows.deleteSchedules({
                 schedule_ids: scheduleIds
