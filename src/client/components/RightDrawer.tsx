@@ -52,7 +52,14 @@ const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
     const toast = useToast();
 
     const [createHabit, {isLoading, data, error}] = useCreateHabitMutation();
-    const [createSchedule] = useCreateScheduleMutation();
+    const [
+        createSchedule, 
+        {
+            isLoading: isScheduleLoading,
+            data: scheduleData,
+            error: scheduleError
+        }
+    ] = useCreateScheduleMutation();
 
     const currentUser = useAppSelector((state) => state.auth.user);
 
@@ -97,31 +104,36 @@ const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
                                 typeof menuValue === 'string' && 
                                 checkboxGroupValue &&
                                 !checkboxGroupValue.some(el => typeof el === 'number')
-                                ) {
-                                const habit = await createHabit({
-                                    id: currentUser.id,
-                                    habitDetails: {
-                                        name: habitNameValue,
-                                        routineDays: getBooleanRoutineDays(checkboxGroupValue),
-                                        checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek]
-                                    }
-                                })
-                                const schedules = await createSchedule({
+                            ) {
+
+                                await createSchedule({
                                     habitName: habitNameValue,
                                     days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]],
                                     workflowKey: "check-in-day"
                                 })
-                                console.log("SCHEDULES: ", schedules)
+
+                                if (!scheduleError && scheduleData) {
+                                    const habit = await createHabit({
+                                        id: currentUser.id,
+                                        habitDetails: {
+                                            name: habitNameValue,
+                                            routineDays: getBooleanRoutineDays(checkboxGroupValue),
+                                            checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek],
+                                            scheduleId: scheduleData.schedules[0].id
+                                        }
+                                    })
+                                    console.log("NEW HABIT: ", habit)
+                                    onClose()
+                                    toast({
+                                        title: 'Habit created.',
+                                        description: 'Your new Habit was created and added to your dashboard.',
+                                        status: 'success',
+                                        duration: 9000,
+                                        isClosable: true
+                                    })
+                                    toggleBannerDisplayed();
+                                }   
                             }
-                            onClose()
-                            toast({
-                                title: 'Habit created.',
-                                description: 'Your new Habit was created and added to your dashboard.',
-                                status: 'success',
-                                duration: 9000,
-                                isClosable: true
-                            })
-                            toggleBannerDisplayed();
                         }}
                         id="habitForm"
                         spacing="3vw"
