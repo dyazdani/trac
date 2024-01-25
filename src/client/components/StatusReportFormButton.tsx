@@ -44,7 +44,6 @@ const SendStatusReportButton = ({habit, handleClick, isStatusSent}: SendStatusRe
                         message,
                         checkInDate
                     })
-                    console.log("response: ", response)
                 if (response) {
                     toast({
                         title: 'Status Report Sent.',
@@ -69,8 +68,6 @@ const SendStatusReportButton = ({habit, handleClick, isStatusSent}: SendStatusRe
             
         }
         
-        console.log("STATUS_REPORTS: ", data?.statusReports);
-
         return (
             <>
             <Button

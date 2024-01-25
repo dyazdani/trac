@@ -89,8 +89,6 @@ const ToggleButton = ({date, habit, isCheckInDay}: ToggleButtonProps) => {
                     checkInDay: habitData.checkIn.dayOfTheWeek
                 }
             })
-
-            // console.log("currentHabit from updateHabit)(): ,", currentHabit)
         }
     }
 

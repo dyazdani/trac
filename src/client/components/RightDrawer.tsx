@@ -122,7 +122,7 @@ const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
                                             scheduleId: scheduleData.schedules[0].id
                                         }
                                     })
-                                    console.log("NEW HABIT: ", habit)
+                                    .log("NEW HABIT: ", habit)
                                     onClose()
                                     toast({
                                         title: 'Habit created.',

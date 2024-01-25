@@ -29,11 +29,8 @@ const MyHabits = ({toggleBannerDisplayed}: MyHabitsProps) => {
     const { data } = useGetHabitsByUserQuery(currentUser.id);
     habits = data?.habits || [];
 
-    console.log("habitNames: ", habitNames)
-
     // See if habit names in database update, and if so update array of names in local state
     const habitNamesFromDatabase = habits.map(habit => habit.name)
-    console.log("habitNamesFromDatabase: ", habitNamesFromDatabase)
     if (!compareArrays(habitNamesFromDatabase, habitNames)) {
       setHabitNames(habitNamesFromDatabase)
     }
