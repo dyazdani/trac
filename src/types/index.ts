@@ -40,6 +40,7 @@ export interface CreateHabitReqBody {
   name: string
   routineDays: RoutineDays
   checkInDay: DayOfTheWeek
+  scheduleId: string
 }
 
 export interface UpdateHabitReqBody {
@@ -59,6 +60,7 @@ export interface HabitWithDetails {
   routine: Routine
   checkIn: CheckIn
   statusReports: StatusReport[]
+  scheduleId: string | null
 }
 
 

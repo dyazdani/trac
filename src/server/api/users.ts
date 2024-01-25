@@ -95,7 +95,8 @@ usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<voi
             const { 
                 name,
                 routineDays, 
-                checkInDay
+                checkInDay,
+                scheduleId
             }: CreateHabitReqBody = req.body
 
             // Create Habit
@@ -105,6 +106,7 @@ usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<voi
                 data: {
                     name,
                     ownerId,
+                    scheduleId
                 }
             });
 

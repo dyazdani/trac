@@ -116,7 +116,8 @@ export const api = createApi({
           body: {
             name: habitDetails.name, 
             routineDays: habitDetails.routineDays, 
-            checkInDay: habitDetails.checkInDay
+            checkInDay: habitDetails.checkInDay,
+            scheduleId: habitDetails.scheduleId
           },
         }),
         invalidatesTags: ["Habit"],
