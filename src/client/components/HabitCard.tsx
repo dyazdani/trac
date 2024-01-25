@@ -34,8 +34,6 @@ import getFirstCheckInDayDate from "../../utils/getFirstCheckInDayDate.js";
 type HabitProps = {
   habit: HabitWithDetails
   handleClick: () => void
-  addToStatusReportCount: () => void
-  statusReportCount: number
 };
 
 // for comparison with DayOfTheWeek enum on CheckIn model
@@ -52,15 +50,11 @@ const DAY_STRINGS = [
 const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 
-const HabitCard = ({ habit, handleClick, addToStatusReportCount, statusReportCount }: HabitProps) => {
+const HabitCard = ({ habit, handleClick }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
-  const [isStatusReportSent, setIsStatusReportSent] = useState(isMostRecentStatusReportSent(habit))
 
-  if (isMostRecentStatusReportSent(habit) !== isStatusReportSent) {
-    console.log("not  equal")
-    setIsStatusReportSent(isMostRecentStatusReportSent(habit))
-  }
-
+  const isStatusReportSent = isMostRecentStatusReportSent(habit);
+  
   const midnightOfFirstCheckIn = getFirstCheckInDayDate(habit)?.setHours(0, 0, 0, 0)
   const isTodayBeforeFirstCheckInDayDate = midnightOfFirstCheckIn && Date.now() < midnightOfFirstCheckIn
 
@@ -192,14 +186,13 @@ const HabitCard = ({ habit, handleClick, addToStatusReportCount, statusReportCou
             {dateRangeString}
           </CardFooter>
           
-          {!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate && !isTodayBeforeFirstCheckInDayDate &&
+          {!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
             <Box
             mt="15px"
             mb="20px"
           >
             <StatusReportFormButton
               habit={habit}
-              addToStatusReportCount={addToStatusReportCount}
             />
             </Box>
           }

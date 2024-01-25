@@ -10,10 +10,9 @@ import getMostRecentCheckInDayDate from '../../utils/getMostRecentCheckInDayDate
 
 export interface StatusReportFormButtonProps {
     habit: HabitWithDetails
-    addToStatusReportCount: () => void
 }
 
-const StatusReportFormButton = ({habit, addToStatusReportCount}: StatusReportFormButtonProps) => {
+const StatusReportFormButton = ({habit}: StatusReportFormButtonProps) => {
     const currentUser = useAppSelector((state) => state.auth.user);
 
     if (currentUser) {
@@ -94,7 +93,6 @@ const StatusReportFormButton = ({habit, addToStatusReportCount}: StatusReportFor
                         onSubmit={(e) => {
                             e.preventDefault();
                             handleSubmit()
-                            addToStatusReportCount();
                         }}
                         id="status-report-form"
                         spacing="3vw"
