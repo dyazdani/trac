@@ -112,8 +112,6 @@ const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
                                         workflowKey: "check-in-day"
                                     }).unwrap()
 
-                                    console.log(schedules)
-
                                     if (!scheduleError && schedules) {
                                         const { habit } = await createHabit({
                                             id: currentUser.id,
@@ -124,8 +122,6 @@ const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
                                                 scheduleId: schedules[0].id
                                             }
                                         }).unwrap()
-
-                                        console.log("created habit: ", habit)
 
                                         onClose()
 

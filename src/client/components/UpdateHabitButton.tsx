@@ -111,16 +111,12 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
                                                 checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek]
                                             }
                                         }).unwrap()
-    
-                                        console.log("updated habit: ", newHabit)
-    
+        
                                         const { schedules } = await updateSchedule({
                                             scheduleIds,
                                             days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]]
                                         }).unwrap()
-    
-                                        console.log("updated schedule: ", schedules)
-    
+        
                                         onClose();
                                         toast({
                                             title: 'Habit updated.',
