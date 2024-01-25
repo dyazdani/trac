@@ -215,8 +215,9 @@ usersRouter.post("/:id/habits/:habitId/statusReports", requireUser, async (req, 
             message, 
             checkInDate 
         }: statusReportsPostReqBody = req.body
+        
         const formattedMessage = formatStatusReportMessage(message);
-        console.log(formattedMessage, typeof formattedMessage, "THE FORMATTED MESSAGE")
+        
         const statusReportEmail = {
           bcc: emails,
           subject: `Status Report for ${user} 📈`,
