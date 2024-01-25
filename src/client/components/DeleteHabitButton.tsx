@@ -1,5 +1,5 @@
 import { useAppSelector } from "../app/hooks.js";
-import { useDeleteHabitMutation } from "../features/api.js";
+import { useDeleteHabitMutation, useDeleteSchedulesMutation } from "../features/api.js";
 import { HabitWithDetails } from "../../types/index.js";
 
 import { 
@@ -17,23 +17,50 @@ type DeleteHabitButtonProps = {
 }
 
 const DeleteHabitButton = ({ habit, handleClick }: DeleteHabitButtonProps) =>  {
-  const currentUser = useAppSelector(state => state.auth.user);
-  const [deleteHabit, { isLoading }] = useDeleteHabitMutation();
-  const toast = useToast();
+    const currentUser = useAppSelector(state => state.auth.user);
+    const [deleteHabit, { isLoading, data, error}] = useDeleteHabitMutation();
+    const [
+        deleteSchedules, 
+        {
+            isLoading: isDeleteSchedulesLoading,
+            data: deleteSchedulesData,
+            error: deleteSchedulesError
+        }
+    ] = useDeleteSchedulesMutation();
 
-  const handleDeleteHabit = async () => {
-    if (currentUser) {
-        const deletedHabit = await deleteHabit({id: currentUser.id, habitId: habit.id})
-        toast({
-            title: 'Habit deleted.',
-            description: 'Your habit has been successfully deleted',
-            status: 'success',
-            duration: 4000,
-            isClosable: true
-        })
-        
+    const toast = useToast();
+
+    console.log(habit.scheduleId)
+
+    const handleDeleteHabit = async () => {
+        if (currentUser && habit.scheduleId) {
+            try {
+                const { schedules } = await deleteSchedules({
+                    scheduleIds: [habit.scheduleId]
+                }).unwrap()
+    
+                console.log("deleted schedules: ", schedules)
+    
+                const { habit: deletedHabit } = await deleteHabit({
+                    id: currentUser.id, 
+                    habitId: habit.id
+                }).unwrap()
+    
+                console.log("deleted habit: ", deletedHabit)
+    
+                toast({
+                    title: 'Habit deleted.',
+                    description: 'Your habit has been successfully deleted',
+                    status: 'success',
+                    duration: 4000,
+                    isClosable: true
+                })
+            } catch (e) {
+                console.error(e)
+            }
+            
+        }
     }
-  }
     
     return(
         <>
