@@ -105,33 +105,43 @@ const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
                                 checkboxGroupValue &&
                                 !checkboxGroupValue.some(el => typeof el === 'number')
                             ) {
+                                try {
+                                    const { schedules } = await createSchedule({
+                                        habitName: habitNameValue,
+                                        days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]],
+                                        workflowKey: "check-in-day"
+                                    }).unwrap()
 
-                                await createSchedule({
-                                    habitName: habitNameValue,
-                                    days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]],
-                                    workflowKey: "check-in-day"
-                                })
+                                    console.log(schedules)
 
-                                if (!scheduleError && scheduleData) {
-                                    const habit = await createHabit({
-                                        id: currentUser.id,
-                                        habitDetails: {
-                                            name: habitNameValue,
-                                            routineDays: getBooleanRoutineDays(checkboxGroupValue),
-                                            checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek],
-                                            scheduleId: scheduleData.schedules[0].id
-                                        }
-                                    })
-                                    onClose()
-                                    toast({
-                                        title: 'Habit created.',
-                                        description: 'Your new Habit was created and added to your dashboard.',
-                                        status: 'success',
-                                        duration: 9000,
-                                        isClosable: true
-                                    })
-                                    toggleBannerDisplayed();
-                                }   
+                                    if (!scheduleError && schedules) {
+                                        const { habit } = await createHabit({
+                                            id: currentUser.id,
+                                            habitDetails: {
+                                                name: habitNameValue,
+                                                routineDays: getBooleanRoutineDays(checkboxGroupValue),
+                                                checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek],
+                                                scheduleId: schedules[0].id
+                                            }
+                                        }).unwrap()
+
+                                        console.log("created habit: ", habit)
+
+                                        onClose()
+
+                                        toast({
+                                            title: 'Habit created.',
+                                            description: 'Your new Habit was created and added to your dashboard.',
+                                            status: 'success',
+                                            duration: 9000,
+                                            isClosable: true
+                                        })
+                                        
+                                        toggleBannerDisplayed();
+                                    }   
+                                } catch (e) {
+                                    console.error(e)
+                                }
                             }
                         }}
                         id="habitForm"
