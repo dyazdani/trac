@@ -2,6 +2,7 @@ import express from "express";
 import excludePassword from "../../utils/excludePassword.js";
 import prisma from "../../utils/test/prisma.js";
 import requireUser from "../../utils/requireUser.js";
+import formatStatusReportMessage from "../../utils/formatStatusReportMessage.js";
 import { CreateHabitReqBody, UpdateHabitReqBody, statusReportsPostReqBody } from "../../types/index.js";
 import requireAdmin from "../../utils/requireAdmin.js";
 import nodemailer from 'nodemailer';
@@ -216,12 +217,15 @@ usersRouter.post("/:id/habits/:habitId/statusReports", requireUser, async (req, 
             message, 
             checkInDate 
         }: statusReportsPostReqBody = req.body
+        
+        const formattedMessage = formatStatusReportMessage(message);
+        
         const statusReportEmail = {
           bcc: emails,
           subject: `Status Report for ${user} 📈`,
           text: message,
           html: `<h1>${habitName}</h1>
-            <p>${message}</p>`,
+            ${formattedMessage}`,
         };
         
         transporter.sendMail(statusReportEmail);
