@@ -214,12 +214,14 @@ usersRouter.post("/:id/habits/:habitId/statusReports", requireUser, async (req, 
             message, 
             checkInDate 
         }: statusReportsPostReqBody = req.body
+        const formattedMessage = message.split('\n').filter(str => !!str).map(str => '<p>' + str + '</p>').join("");
+        console.log(formattedMessage, typeof formattedMessage, "THE FORMATTED MESSAGE")
         const statusReportEmail = {
           bcc: emails,
           subject: `Status Report for ${user} 📈`,
-          text: message,
+          text: formattedMessage,
           html: `<h1>${habitName}</h1>
-            <p>${message}</p>`,
+            <p>${formattedMessage}</p>`,
         };
         
         transporter.sendMail(statusReportEmail);
