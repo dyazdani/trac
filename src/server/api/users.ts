@@ -2,6 +2,7 @@ import express from "express";
 import excludePassword from "../../utils/excludePassword.js";
 import prisma from "../../utils/test/prisma.js";
 import requireUser from "../../utils/requireUser.js";
+import formatStatusReportMessage from "../../utils/formatStatusReportMessage.js";
 import { CreateHabitReqBody, UpdateHabitReqBody, statusReportsPostReqBody } from "../../types/index.js";
 import requireAdmin from "../../utils/requireAdmin.js";
 import nodemailer from 'nodemailer';
@@ -214,7 +215,7 @@ usersRouter.post("/:id/habits/:habitId/statusReports", requireUser, async (req, 
             message, 
             checkInDate 
         }: statusReportsPostReqBody = req.body
-        const formattedMessage = message.split('\n').filter(str => !!str).map(str => '<p>' + str + '</p>').join("");
+        const formattedMessage = formatStatusReportMessage(message);
         console.log(formattedMessage, typeof formattedMessage, "THE FORMATTED MESSAGE")
         const statusReportEmail = {
           bcc: emails,
