@@ -100,31 +100,38 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
                                     checkboxGroupValue &&
                                     !checkboxGroupValue.some(el => typeof el === 'number')
                                 ) {
-                                    const newHabit = await updateHabit({
-                                        id: currentUser.id,
-                                        habitId: habit.id,
-                                        newHabit: {
-                                            name: habitNameValue,
-                                            datesCompleted: habit.datesCompleted,
-                                            routineDays: getBooleanRoutineDays(checkboxGroupValue as RoutineDaysArrayType),
-                                            checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek]
-                                        }
-                                    });
-
-                                    const updatedSchedules = await updateSchedule({
-                                        scheduleIds,
-                                        days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]]
-                                    });
-
-
-                                    onClose();
-                                    toast({
-                                        title: 'Habit updated.',
-                                        description: 'Your Habit was successfully updated.',
-                                        status: 'success',
-                                        duration: 9000,
-                                        isClosable: true
-                                    });
+                                    try {
+                                        const { habit: newHabit } = await updateHabit({
+                                            id: currentUser.id,
+                                            habitId: habit.id,
+                                            newHabit: {
+                                                name: habitNameValue,
+                                                datesCompleted: habit.datesCompleted,
+                                                routineDays: getBooleanRoutineDays(checkboxGroupValue as RoutineDaysArrayType),
+                                                checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek]
+                                            }
+                                        }).unwrap()
+    
+                                        console.log("updated habit: ", newHabit)
+    
+                                        const { schedules } = await updateSchedule({
+                                            scheduleIds,
+                                            days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]]
+                                        }).unwrap()
+    
+                                        console.log("updated schedule: ", schedules)
+    
+                                        onClose();
+                                        toast({
+                                            title: 'Habit updated.',
+                                            description: 'Your Habit was successfully updated.',
+                                            status: 'success',
+                                            duration: 9000,
+                                            isClosable: true
+                                        });
+                                    } catch (e) {
+                                        console.error(e)
+                                    }
                                 }   
                             }}
                             id="habitForm"
