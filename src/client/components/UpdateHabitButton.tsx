@@ -52,10 +52,6 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
     const inputRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
 
-    console.log("menuValue: ", menuValue);
-    console.log("checkboxGroupValue: ", checkboxGroupValue);
-    console.log("habitNameValue: ", habitNameValue);
-
     const [updateHabit] = useUpdateHabitMutation();
     const [updateSchedule] = useUpdateScheduleMutation();
 
@@ -103,24 +99,24 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
                                     checkboxGroupValue &&
                                     !checkboxGroupValue.some(el => typeof el === 'number')
                                 ) {
-                                    const newHabit = await updateHabit({
-                                        id: currentUser.id,
-                                        habitId: habit.id,
-                                        newHabit: {
-                                            name: habitNameValue,
-                                            datesCompleted: habit.datesCompleted,
-                                            routineDays: getBooleanRoutineDays(checkboxGroupValue as RoutineDaysArrayType),
-                                            checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek]
-                                        }
-                                    });
-
-                                    console.log("newHabit: ", newHabit)
+                                    if (habit.scheduleId) {
+                                        await updateHabit({
+                                            id: currentUser.id,
+                                            habitId: habit.id,
+                                            newHabit: {
+                                                name: habitNameValue,
+                                                datesCompleted: habit.datesCompleted,
+                                                routineDays: getBooleanRoutineDays(checkboxGroupValue as RoutineDaysArrayType),
+                                                checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek],
+                                                scheduleId: habit.scheduleId
+                                            }
+                                        });
+                                    }
+                                    
                                     const updatedSchedules = await updateSchedule({
                                         scheduleIds,
                                         days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]]
                                     });
-
-                                    console.log("updatedSchedules: ", updatedSchedules);
 
                                     onClose();
                                     toast({
