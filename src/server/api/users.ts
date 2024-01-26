@@ -52,7 +52,8 @@ usersRouter.get("/:id/habits", requireUser, async (req, res, next): Promise<void
                     select: {
                         dayOfTheWeek: true
                     }
-                }
+                },
+                statusReports: true
             }
         })
         res.send({ habits})
@@ -78,7 +79,8 @@ usersRouter.get("/:id/habits/:habitId", requireUser, async (req, res, next): Pro
                     select: {
                         dayOfTheWeek: true
                     }
-                }
+                },
+                statusReports: true
             }
         })
         res.send({ habit})

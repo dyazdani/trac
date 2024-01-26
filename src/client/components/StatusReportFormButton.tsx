@@ -8,13 +8,11 @@ import getDefaultStatusReportMessage from '../../utils/getDefaultStatusReportMes
 import getMostRecentCheckInDayDate from '../../utils/getMostRecentCheckInDayDate.js';
 
 
-export interface SendStatusReportButtonProps {
+export interface StatusReportFormButtonProps {
     habit: HabitWithDetails
-    handleClick: () => void
-    isStatusSent: boolean
 }
 
-const SendStatusReportButton = ({habit, handleClick, isStatusSent}: SendStatusReportButtonProps) => {
+const StatusReportFormButton = ({habit}: StatusReportFormButtonProps) => {
     const currentUser = useAppSelector((state) => state.auth.user);
 
     if (currentUser) {
@@ -24,15 +22,11 @@ const SendStatusReportButton = ({habit, handleClick, isStatusSent}: SendStatusRe
         const inputRef = React.useRef<HTMLInputElement>(null);
         const toast = useToast();
 
-        const { data } = useGetStatusReportsByHabitIdQuery({id: currentUser.id, habitId: habit.id})
-
         const [sendStatusReport] = useSendStatusReportMutation();
         
         const checkInDate = getMostRecentCheckInDayDate(habit);
 
-        const handleSubmit = async (e: React.FormEvent<HTMLDivElement>) => {
-            try {
-                e.preventDefault();
+        const handleSubmit = async () => {
                 onClose();
                 if (checkInDate) {
                     const response = await sendStatusReport({
@@ -52,7 +46,6 @@ const SendStatusReportButton = ({habit, handleClick, isStatusSent}: SendStatusRe
                         duration: 9000,
                         isClosable: true
                     })
-                    handleClick();
                 } else {
                     toast({
                         title: 'Sending Failed',
@@ -72,14 +65,13 @@ const SendStatusReportButton = ({habit, handleClick, isStatusSent}: SendStatusRe
             <>
             <Button
             variant={'solid'}
-            isDisabled={isStatusSent}
             colorScheme="yellow"
             aria-label='send-status-report-form'
             fontSize='20px'
             border="2mm ridge rgba(255,215,0, .6)"
             onClick={onOpen}
             >
-                {isStatusSent ? "Status Report Sent": "Send Status Report"}
+                Send Status Report
             </Button>
             <Drawer 
                 placement='right' 
@@ -100,7 +92,10 @@ const SendStatusReportButton = ({habit, handleClick, isStatusSent}: SendStatusRe
                 <DrawerBody>
                     <Stack
                         as="form"
-                        onSubmit={(e) =>{handleSubmit(e)}}
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            handleSubmit()
+                        }}
                         id="status-report-form"
                         spacing="3vw"
                     >
@@ -170,4 +165,4 @@ const SendStatusReportButton = ({habit, handleClick, isStatusSent}: SendStatusRe
     
 }
 
-export default SendStatusReportButton;
+export default StatusReportFormButton;
