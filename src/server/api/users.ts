@@ -301,7 +301,18 @@ usersRouter.post("/:id/milestones", requireUser, async (req, res, next): Promise
                 }
             })
 
-            res.send({ milestone });
+            const habits = await prisma.habit.findMany({
+                where: {
+                    milestoneId: milestone.id
+                }
+            })
+
+            res.send({ 
+                milestone: {
+                    ...milestone,
+                    habits
+                }   
+            });
         } catch (e) {
             next(e);
         }
@@ -309,3 +320,4 @@ usersRouter.post("/:id/milestones", requireUser, async (req, res, next): Promise
 })
 
 export default usersRouter;
+
