@@ -305,7 +305,6 @@ usersRouter.post("/:id/milestones", requireUser, async (req, res, next): Promise
             next(e);
         }
     }
-
 })
 
 export default usersRouter;
