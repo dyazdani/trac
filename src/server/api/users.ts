@@ -291,7 +291,7 @@ usersRouter.post("/:id/milestones", requireUser, async (req, res, next): Promise
                 dueDate
             }: CreateMilestoneReqBody = req.body
 
-            const milestone = prisma.milestone.create({
+            const milestone = await prisma.milestone.create({
                 data: {
                     name,
                     dueDate,
@@ -300,6 +300,7 @@ usersRouter.post("/:id/milestones", requireUser, async (req, res, next): Promise
                     ownerId
                 }
             })
+
             res.send({ milestone });
         } catch (e) {
             next(e);
