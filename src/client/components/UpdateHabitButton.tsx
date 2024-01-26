@@ -58,13 +58,6 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
     const currentUser = useAppSelector((state) => state.auth.user);
 
     if (currentUser) {
-        // TODO: this needs to change because the update mutation will update all schedules the user has instead of schedule associated with a habit
-        const { data } = useGetSchedulesByUserQuery(currentUser.id);
-        let scheduleIds: string[];
-        if (data) {
-            scheduleIds = data.schedules.map(schedule => schedule.id);
-        }
-
         return (
             <>
             <IconButton 
@@ -98,40 +91,43 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
                                     currentUser && 
                                     typeof menuValue === 'string' && 
                                     checkboxGroupValue &&
-                                    !checkboxGroupValue.some(el => typeof el === 'number')
+                                    !checkboxGroupValue.some(el => typeof el === 'number') &&
+                                    habit.scheduleId
                                 ) {
-                                    if (habit.scheduleId) {
-                                        try {
-                                            const { habit: newHabit } = await updateHabit({
-                                                id: currentUser.id,
-                                                habitId: habit.id,
-                                                newHabit: {
-                                                    name: habitNameValue,
-                                                    datesCompleted: habit.datesCompleted,
-                                                    routineDays: getBooleanRoutineDays(checkboxGroupValue as RoutineDaysArrayType),
-                                                    checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek],
-                                                    scheduleId: habit.scheduleId
-                                                }}).unwrap()
-    
-                                            console.log("newHabit: ", newHabit)
+                                    try {
+                                        const { habit: newHabit, routine, checkIn} = await updateHabit({
+                                            id: currentUser.id,
+                                            habitId: habit.id,
+                                            newHabit: {
+                                                name: habitNameValue,
+                                                datesCompleted: habit.datesCompleted,
+                                                routineDays: getBooleanRoutineDays(checkboxGroupValue as RoutineDaysArrayType),
+                                                checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek],
+                                                scheduleId: habit.scheduleId
+                                            }}).unwrap()
+
+                                        console.log(newHabit)  
+                                        console.log(routine) 
+                                        console.log(checkIn)
+
+                                        if (checkIn.dayOfTheWeek !== habit.checkIn.dayOfTheWeek) {
                                             const { schedules } = await updateSchedule({
                                                 scheduleIds: [habit.scheduleId],
                                                 days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]]
                                             }).unwrap()
-    
-                                            console.log("updatedSchedules: ", updatedSchedules);
-    
-                                            onClose();
-                                            toast({
-                                                title: 'Habit updated.',
-                                                description: 'Your Habit was successfully updated.',
-                                                status: 'success',
-                                                duration: 9000,
-                                                isClosable: true
-                                            });
-                                        } catch (e) {
-                                            console.error(e)
+
+                                            console.log("updatedSchedules: ", schedules);
                                         }
+                                        onClose();
+                                        toast({
+                                            title: 'Habit updated.',
+                                            description: 'Your Habit was successfully updated.',
+                                            status: 'success',
+                                            duration: 9000,
+                                            isClosable: true
+                                        });
+                                    } catch (e) {
+                                        console.error(e)
                                     }
                                 }   
                             }}

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
-import { Habit, StatusReport } from '@prisma/client';
+import { CheckIn, Habit, Routine, StatusReport } from '@prisma/client';
 import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails, SendStatusReportMutationArgs } from '../../types/index.js';
 import { DaysOfWeek, Schedule } from '@knocklabs/node';
 import { User as KnockUser } from '@knocklabs/node';
@@ -122,8 +122,7 @@ export const api = createApi({
         }),
         invalidatesTags: ["Habit"],
       }),
-      //TODO: the return type could be switched to HabitWithDetails to include relations
-      updateHabit: builder.mutation<{habit: Habit}, {id: number, habitId: number, newHabit: UpdateHabitReqBody}>({
+      updateHabit: builder.mutation<{habit: Habit, routine: Routine, checkIn: CheckIn}, {id: number, habitId: number, newHabit: UpdateHabitReqBody}>({
         query: ({id, habitId, newHabit}) => ({
           url: `users/${id}/habits`,
           method: "PUT",
