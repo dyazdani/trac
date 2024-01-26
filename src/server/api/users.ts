@@ -304,6 +304,15 @@ usersRouter.post("/:id/milestones", requireUser, async (req, res, next): Promise
             const habits = await prisma.habit.findMany({
                 where: {
                     milestoneId: milestone.id
+                },
+                include: {
+                    routine: true,
+                    checkIn: {
+                        select: {
+                            dayOfTheWeek: true
+                        }
+                    },
+                    statusReports: true
                 }
             })
 
@@ -320,4 +329,5 @@ usersRouter.post("/:id/milestones", requireUser, async (req, res, next): Promise
 })
 
 export default usersRouter;
+
 
