@@ -63,6 +63,26 @@ notificationsRouter.put("/schedules", requireUser, async (req, res, next) => {
     }
 })
 
+
+// DELETE /api/notifications/schedules
+notificationsRouter.delete("/schedules", requireUser, async (req, res, next) => {
+    if (req.user) {
+        try {
+            const { scheduleIds } = req.body;
+            const schedules = await knock.workflows.deleteSchedules({
+                schedule_ids: scheduleIds
+            })
+
+            res.send({
+                message: "successfully deleted",
+                deletedSchedules: schedules
+            })
+        } catch (e) {
+            next(e)
+        }
+    }
+})
+
 // DELETE /api/notifications/users/:user_id
 notificationsRouter.delete("/users/:user_id", requireUser, async (req, res, next) => {
     if (req.user) {

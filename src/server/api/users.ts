@@ -2,6 +2,7 @@ import express from "express";
 import excludePassword from "../../utils/excludePassword.js";
 import prisma from "../../utils/test/prisma.js";
 import requireUser from "../../utils/requireUser.js";
+import formatStatusReportMessage from "../../utils/formatStatusReportMessage.js";
 import { CreateHabitReqBody, UpdateHabitReqBody, statusReportsPostReqBody } from "../../types/index.js";
 import requireAdmin from "../../utils/requireAdmin.js";
 import nodemailer from 'nodemailer';
@@ -97,7 +98,8 @@ usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<voi
             const { 
                 name,
                 routineDays, 
-                checkInDay
+                checkInDay,
+                scheduleId
             }: CreateHabitReqBody = req.body
 
             // Create Habit
@@ -107,6 +109,7 @@ usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<voi
                 data: {
                     name,
                     ownerId,
+                    scheduleId
                 }
             });
 
@@ -145,7 +148,8 @@ usersRouter.put("/:id/habits", requireUser, async (req, res, next) => {
             name, 
             datesCompleted, 
             routineDays, 
-            checkInDay 
+            checkInDay,
+            scheduleId 
         }: UpdateHabitReqBody = req.body
 
         // Update Routine associated with Habit
@@ -175,7 +179,8 @@ usersRouter.put("/:id/habits", requireUser, async (req, res, next) => {
             },
             data: {
                 name,
-                datesCompleted
+                datesCompleted,
+                scheduleId
             }
         })
 
@@ -214,12 +219,15 @@ usersRouter.post("/:id/habits/:habitId/statusReports", requireUser, async (req, 
             message, 
             checkInDate 
         }: statusReportsPostReqBody = req.body
+        
+        const formattedMessage = formatStatusReportMessage(message);
+        
         const statusReportEmail = {
           bcc: emails,
           subject: `Status Report for ${user} 📈`,
           text: message,
           html: `<h1>${habitName}</h1>
-            <p>${message}</p>`,
+            ${formattedMessage}`,
         };
         
         transporter.sendMail(statusReportEmail);
@@ -240,34 +248,6 @@ usersRouter.post("/:id/habits/:habitId/statusReports", requireUser, async (req, 
     }
 })
 
-// GET /api/users/:id/schedules
-usersRouter.get("/:id/schedules", requireUser, async (req, res, next) => {
-    if (req.user) {
-        try {
-            const userId = String(req.params.id)
-            const { entries: schedules } = await knock.users.getSchedules(userId)
-
-            res.send({ schedules })
-        } catch (e) {
-            next(e);
-        }
-     }
-})
-
-// GET /api/users/:id/schedules
-usersRouter.get("/:id/schedules", requireUser, async (req, res, next) => {
-    if (req.user) {
-        try {
-            const userId = String(req.params.id)
-            const { entries: schedules } = await knock.users.getSchedules(userId)
-
-            res.send({ schedules })
-        } catch (e) {
-            next(e);
-        }
-     }
-})
-
 // GET /api/users/:id/habits/:habitId/statusReports
 usersRouter.get("/:id/habits/:habitId/statusReports", requireUser, async (req, res, next): Promise<void> => {
     try {
@@ -286,3 +266,18 @@ usersRouter.get("/:id/habits/:habitId/statusReports", requireUser, async (req, r
         next(e);
     }
 })
+
+// GET /api/users/:id/schedules
+usersRouter.get("/:id/schedules", requireUser, async (req, res, next) => {
+    if (req.user) {
+        try {
+            const userId = String(req.params.id)
+            const { entries: schedules } = await knock.users.getSchedules(userId)
+
+            res.send({ schedules })
+        } catch (e) {
+            next(e);
+        }
+     }
+})
+

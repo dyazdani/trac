@@ -58,6 +58,7 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
     const currentUser = useAppSelector((state) => state.auth.user);
 
     if (currentUser) {
+        // TODO: this needs to change because the update mutation will update all schedules the user has instead of schedule associated with a habit
         const { data } = useGetSchedulesByUserQuery(currentUser.id);
         let scheduleIds: string[];
         if (data) {
@@ -99,31 +100,39 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
                                     checkboxGroupValue &&
                                     !checkboxGroupValue.some(el => typeof el === 'number')
                                 ) {
-                                    const newHabit = await updateHabit({
-                                        id: currentUser.id,
-                                        habitId: habit.id,
-                                        newHabit: {
-                                            name: habitNameValue,
-                                            datesCompleted: habit.datesCompleted,
-                                            routineDays: getBooleanRoutineDays(checkboxGroupValue as RoutineDaysArrayType),
-                                            checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek]
+                                    if (habit.scheduleId) {
+                                        try {
+                                            const { habit: newHabit } = await updateHabit({
+                                                id: currentUser.id,
+                                                habitId: habit.id,
+                                                newHabit: {
+                                                    name: habitNameValue,
+                                                    datesCompleted: habit.datesCompleted,
+                                                    routineDays: getBooleanRoutineDays(checkboxGroupValue as RoutineDaysArrayType),
+                                                    checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek],
+                                                    scheduleId: habit.scheduleId
+                                                }}).unwrap()
+    
+                                            console.log("newHabit: ", newHabit)
+                                            const { schedules } = await updateSchedule({
+                                                scheduleIds: [habit.scheduleId],
+                                                days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]]
+                                            }).unwrap()
+    
+                                            console.log("updatedSchedules: ", updatedSchedules);
+    
+                                            onClose();
+                                            toast({
+                                                title: 'Habit updated.',
+                                                description: 'Your Habit was successfully updated.',
+                                                status: 'success',
+                                                duration: 9000,
+                                                isClosable: true
+                                            });
+                                        } catch (e) {
+                                            console.error(e)
                                         }
-                                    });
-
-                                    const updatedSchedules = await updateSchedule({
-                                        scheduleIds,
-                                        days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]]
-                                    });
-
-
-                                    onClose();
-                                    toast({
-                                        title: 'Habit updated.',
-                                        description: 'Your Habit was successfully updated.',
-                                        status: 'success',
-                                        duration: 9000,
-                                        isClosable: true
-                                    });
+                                    }
                                 }   
                             }}
                             id="habitForm"

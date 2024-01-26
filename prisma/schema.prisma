@@ -27,6 +27,7 @@ model Habit {
   dateUpdated     DateTime    @updatedAt
   name            String      @db.VarChar(60)
   datesCompleted  DateTime[]  
+  scheduleId      String?      @unique
   
   owner           User        @relation("Owner", fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId         Int

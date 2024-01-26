@@ -54,10 +54,12 @@ const StatusReportFormButton = ({habit}: StatusReportFormButtonProps) => {
                         duration: 9000,
                         isClosable: true
                     })
-                }
+                }}
+            } catch (error) {
+                console.error(error)
             }
-        }            
-
+            
+        }
         
         return (
             <>
