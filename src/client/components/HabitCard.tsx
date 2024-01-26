@@ -13,7 +13,8 @@ import {
   Flex,
   Spacer,
   Box,
-  keyframes
+  keyframes,
+  Button
 } from "@chakra-ui/react";
 import { motion } from 'framer-motion';
 import { 
@@ -24,8 +25,11 @@ import {
 import { HabitWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
 import UpdateHabitButton from "./UpdateHabitButton.js";
-import SendStatusReportButton from "./StatusReportFormButton.js";
+import StatusReportFormButton from "./StatusReportFormButton.js";
 import isTodayCheckInDay from "../../utils/isTodayCheckInDay.js";
+import isMostRecentStatusReportSent from "../../utils/isMostRecentStatusReportSent.js";
+import getMostRecentCheckInDayDate from "../../utils/getMostRecentCheckInDayDate.js";
+import getFirstCheckInDayDate from "../../utils/getFirstCheckInDayDate.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -48,7 +52,11 @@ const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 const HabitCard = ({ habit, handleClick }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
-  const [isStatusSent, setIsStatusSent] = useState(false)
+
+  const isStatusReportSent = isMostRecentStatusReportSent(habit);
+  
+  const midnightOfFirstCheckIn = getFirstCheckInDayDate(habit)?.setHours(0, 0, 0, 0)
+  const isTodayBeforeFirstCheckInDayDate = midnightOfFirstCheckIn && Date.now() < midnightOfFirstCheckIn
 
   // Variable for displaying date range at bottom of HabitCard
   let dateRangeString = ""
@@ -96,11 +104,6 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
     setCurrentWeek(nextWeek);
   }
 
-  const statusSent = () => {
-    setIsStatusSent(true)
-  }
-
-  const isCheckIn = isTodayCheckInDay([habit.checkIn]);
 
   const animationKeyframes = keyframes`to { background-position-x: 0% }`;
   const animation = `${animationKeyframes} 1s infinite linear`; 
@@ -109,15 +112,15 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
     <>
       <Card
         as={motion.div}
-        animation={isCheckIn && !isStatusSent ? animation : ""}
+        animation={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? animation : ""}
         w="30vw" 
         maxW="400px"
         minW="320px"
-        bg={isCheckIn && !isStatusSent ? "linear-gradient(-45deg, #ffc0cb 40%, #ffe4e1 50%, #ffc0cb 60%)" : "pink"}
+        bg={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "linear-gradient(-45deg, #ffc0cb 40%, #ffe4e1 50%, #ffc0cb 60%)" : "pink"}
         borderRadius="20px"
-        border={isCheckIn && !isStatusSent ? "2mm ridge rgba(255,215,0, .6)" : ""}
-        backgroundSize={isCheckIn && !isStatusSent ? "300%" : ""}
-        sx={isCheckIn && !isStatusSent ? 
+        border={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "2mm ridge rgba(255,215,0, .6)" : ""}
+        backgroundSize={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "300%" : ""}
+        sx={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? 
           {backgroundPositionX: '100%'} : 
           {}
         }
@@ -183,19 +186,16 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
             {dateRangeString}
           </CardFooter>
           
-          {isCheckIn && 
+          {!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
             <Box
             mt="15px"
             mb="20px"
           >
-            <SendStatusReportButton
+            <StatusReportFormButton
               habit={habit}
-              handleClick={statusSent}
-              isStatusSent={isStatusSent}
             />
             </Box>
           }
-          
         </Flex>
       </Card>
     </>

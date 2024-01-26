@@ -24,7 +24,7 @@ const MyHabits = ({toggleBannerDisplayed}: MyHabitsProps) => {
   const [habitNames, setHabitNames] = useState<string[]>([])
   const currentUser = useAppSelector((state) => state.auth.user);
 
-  let habits;
+  let habits: HabitWithDetails[];
   if (currentUser) {
     const { data } = useGetHabitsByUserQuery(currentUser.id);
     habits = data?.habits || [];
