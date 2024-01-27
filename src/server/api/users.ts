@@ -58,7 +58,7 @@ usersRouter.get("/:id/habits", requireUser, async (req, res, next): Promise<void
         })
         res.send({ habits})
     } catch(e) {
-
+        next(e)
     }
 })
 
@@ -85,7 +85,7 @@ usersRouter.get("/:id/habits/:habitId", requireUser, async (req, res, next): Pro
         })
         res.send({ habit})
     } catch(e) {
-
+        next(e)
     }
 })
 
