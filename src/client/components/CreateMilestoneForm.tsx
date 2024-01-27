@@ -37,6 +37,8 @@ import { DaysOfWeek } from '@knocklabs/node';
 import getBooleanRoutineDays from '../../utils/getBooleanRoutineDays.js';
 import { DayOfTheWeek } from '@prisma/client';
 import { ChevronDownIcon } from '@chakra-ui/icons';
+import { DatePicker } from '@orange_digital/chakra-datepicker';
+import { isNullOrUndefined } from 'util';
 
 
 export interface CreateMilestoneFormProps {
@@ -46,7 +48,7 @@ export interface CreateMilestoneFormProps {
 
 const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMilestoneFormProps) => {
     const [menuValue, setMenuValue] = useState<string | string[]>('Monday')
-    const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>([])
+    const [datePickerValue, setDatePickerValue] = useState<Date | null>(null)
     const [milestoneNameValue, setMilestoneNameValue] = useState("")
 
 
@@ -132,7 +134,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                         <Box>
                             <FormControl isRequired>
                                 <FormLabel
-                                    htmlFor="Milestone Name"
+                                    htmlFor="milestoneName"
                                 >
                                     Name
                                 </FormLabel>
@@ -151,7 +153,17 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                             
                         </Box>
                         <Box>
-                            <FormLabel>Due Date</FormLabel>
+                        <FormControl isRequired>
+                            <FormLabel
+                                htmlFor="dueDate"
+                            >
+                                Due Date</FormLabel>
+                            <DatePicker
+                                initialValue={new Date()}
+                                onDateChange={(e) => setDatePickerValue(e)}
+                            />
+                        </FormControl>
+                            
                         </Box>
                     </Stack>
                 </DrawerBody>
