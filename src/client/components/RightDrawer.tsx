@@ -1,44 +1,12 @@
-import React, { useState } from 'react'
 import {
-    Drawer,
-    DrawerBody,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
     useDisclosure,
     Button,
-    Stack,
-    FormLabel,
-    Box,
-    Input,
-    IconButton,
-    ButtonGroup,
-    Editable,
-    EditablePreview,
-    EditableInput,
-    CheckboxGroup,
-    Checkbox,
-    FormControl,
-    useCheckboxGroup,
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    MenuOptionGroup,
-    MenuItemOption,
-    useToast,
     VStack
   } from '@chakra-ui/react'
-import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
-import { useCreateHabitMutation, useCreateScheduleMutation } from '../features/api.js'
+import { AddIcon } from '@chakra-ui/icons'
 import { useAppSelector } from '../app/hooks.js'
-import getBooleanRoutineDays from '../../utils/getBooleanRoutineDays.js'
-import { RoutineDaysArrayType } from '../../types/index.js'
-import { DayOfTheWeek } from '@prisma/client'
-import { DaysOfWeek } from '@knocklabs/node'
 import CreateHabitForm from './CreateHabitForm.js'
+import CreateMilestoneForm from './CreateMilestoneForm.js'
 
 export interface RightDrawerProps {
     toggleBannerDisplayed: () => void
@@ -47,8 +15,7 @@ export interface RightDrawerProps {
 const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
     // TODO: Set this value to upper case when sending it to database
     const { isOpen, onClose, onOpen} = useDisclosure();
-    const { isOpen: isOpenForMilestone, onClose: onCloseforMilestone, onOpen: onOpenForMilestone} = useDisclosure();
-
+    const { isOpen: isOpenForMilestone, onClose: onCloseForMilestone, onOpen: onOpenForMilestone} = useDisclosure();
 
     const currentUser = useAppSelector((state) => state.auth.user);
 
@@ -71,6 +38,10 @@ const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
                     >
                         Milestone
                     </Button>
+                    <CreateMilestoneForm
+                        onCloseForMilestone={onCloseForMilestone}
+                        isOpenForMilestone={isOpenForMilestone}
+                    />
                     <Button
                     variant='solid'
                     colorScheme='teal'
