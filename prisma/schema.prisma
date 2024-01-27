@@ -19,6 +19,7 @@ model User {
   isAdmin       Boolean     @default(false)
   
   habits        Habit[]     @relation("Owner")
+  milestones    Milestone[] @relation("Owner")
 }
 
 model Habit {
@@ -35,7 +36,11 @@ model Habit {
   routine         Routine?
   checkIn         CheckIn?
 
+  milestone       Milestone?   @relation("Habits", fields: [milestoneId], references: [id], onDelete: Cascade)
+  milestoneId     Int?
+
   statusReports   StatusReport[]  @relation("StatusReports")
+
 }
 
 model Routine {
@@ -82,4 +87,19 @@ model StatusReport {
 
   habit               Habit        @relation("StatusReports", fields: [habitId], references: [id], onDelete: Cascade)
   habitId             Int
+}
+
+model Milestone {
+  id                Int           @id @default(autoincrement())
+  dateCreated       DateTime      @default(now())
+  dateUpdated       DateTime      @updatedAt
+  name              String        @db.VarChar(60)
+  dueDate           DateTime
+  isCompleted       Boolean       
+  isCanceled       Boolean
+
+  owner           User        @relation("Owner", fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId         Int
+
+  habits          Habit[]     @relation("Habits")
 }
