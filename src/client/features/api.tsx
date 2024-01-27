@@ -174,6 +174,10 @@ export const api = createApi({
         }),
         invalidatesTags: ["Milestone"],
       }),
+      getMilestonesByUser: builder.query<{ milestones: MilestoneWithDetails[] }, number>({
+        query: (ownerId) => `/users/${ownerId}/milestones`,
+        providesTags: ["Milestone"]
+      }),
     })
   })
   
@@ -198,7 +202,8 @@ export const api = createApi({
     useGetSchedulesByUserQuery,
     useGetStatusReportsByHabitIdQuery,
     useDeleteSchedulesMutation,
-    useCreateMilestoneMutation
+    useCreateMilestoneMutation,
+    useGetMilestonesByUserQuery
   } = api
 
 
