@@ -97,3 +97,21 @@ export interface CreateMilestoneReqBody {
   name: string
   dueDate: Date
 }
+
+export interface MilestoneWithDetails {
+  id: number
+  dateCreated: Date
+  dateUpdated: Date
+  name: string
+  dueDate: Date
+  isCompleted: boolean
+  isCanceled: boolean
+  ownerId: number
+  habits: HabitWithDetails[]
+}
+
+export interface CreateMilestoneMutationArgs {
+  ownerId: number
+  name: string
+  dueDate: Date
+}
