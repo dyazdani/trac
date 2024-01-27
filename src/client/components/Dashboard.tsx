@@ -8,6 +8,7 @@ import CTABanner from "./CTABanner.js";
 import isTodayCheckInDay from "../../utils/isTodayCheckInDay.js";
 import { useState } from "react";
 import Milestone from "./Milestone.js";
+import MyMilestones from "./MyMilestones.js";
 
 
 const Dashboard = () => {
@@ -41,7 +42,7 @@ const Dashboard = () => {
       >
         <MyHabits toggleBannerDisplayed={toggleBannerDisplayed}/>
       </Box>
-      <Milestone/>
+      <MyMilestones/>
     </>
   );
 };
