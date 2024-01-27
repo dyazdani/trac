@@ -27,6 +27,7 @@ const StatusReportFormButton = ({habit}: StatusReportFormButtonProps) => {
         const checkInDate = getMostRecentCheckInDayDate(habit);
 
         const handleSubmit = async () => {
+            try {
                 onClose();
                 if (checkInDate) {
                     const response = await sendStatusReport({

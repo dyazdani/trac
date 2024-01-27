@@ -3,7 +3,7 @@ import excludePassword from "../../utils/excludePassword.js";
 import prisma from "../../utils/test/prisma.js";
 import requireUser from "../../utils/requireUser.js";
 import formatStatusReportMessage from "../../utils/formatStatusReportMessage.js";
-import { CreateHabitReqBody, UpdateHabitReqBody, statusReportsPostReqBody } from "../../types/index.js";
+import { CreateHabitReqBody, CreateMilestoneReqBody, UpdateHabitReqBody, statusReportsPostReqBody } from "../../types/index.js";
 import requireAdmin from "../../utils/requireAdmin.js";
 import nodemailer from 'nodemailer';
 import { Knock } from "@knocklabs/node";
@@ -99,7 +99,8 @@ usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<voi
                 name,
                 routineDays, 
                 checkInDay,
-                scheduleId
+                scheduleId,
+                milestoneId
             }: CreateHabitReqBody = req.body
 
             // Create Habit
@@ -109,7 +110,8 @@ usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<voi
                 data: {
                     name,
                     ownerId,
-                    scheduleId
+                    scheduleId,
+                    milestoneId
                 }
             });
 
@@ -136,8 +138,6 @@ usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<voi
     }
 
 })
-
-export default usersRouter;
 
 // PUT /api/users/:id/habits
 usersRouter.put("/:id/habits", requireUser, async (req, res, next) => {
@@ -280,4 +280,54 @@ usersRouter.get("/:id/schedules", requireUser, async (req, res, next) => {
         }
      }
 })
+
+// POST /api/users/:id/milestones
+usersRouter.post("/:id/milestones", requireUser, async (req, res, next): Promise<void> => {
+    if (req.user) {
+        try {
+            const ownerId = Number(req.params.id)
+            const { 
+                name,
+                dueDate
+            }: CreateMilestoneReqBody = req.body
+
+            const milestone = await prisma.milestone.create({
+                data: {
+                    name,
+                    dueDate,
+                    isCompleted: false,
+                    isCanceled: false,
+                    ownerId
+                }
+            })
+
+            const habits = await prisma.habit.findMany({
+                where: {
+                    milestoneId: milestone.id
+                },
+                include: {
+                    routine: true,
+                    checkIn: {
+                        select: {
+                            dayOfTheWeek: true
+                        }
+                    },
+                    statusReports: true
+                }
+            })
+
+            res.send({ 
+                milestone: {
+                    ...milestone,
+                    habits
+                }   
+            });
+        } catch (e) {
+            next(e);
+        }
+    }
+})
+
+export default usersRouter;
+
 
