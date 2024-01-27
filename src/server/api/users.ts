@@ -337,7 +337,17 @@ usersRouter.get("/:id/milestones", requireUser, async (req, res, next): Promise<
                 ownerId: ownerId
             },
             include: {
-                habits: true
+                habits: {
+                    include: {
+                        routine: true,
+                        checkIn: {
+                            select: {
+                                dayOfTheWeek: true
+                            }
+                        },
+                        statusReports: true
+                    }
+                }
             }
         })
         res.send({ milestones })
