@@ -17,74 +17,13 @@ import {
 } from "@chakra-ui/react";
 import HabitCard from "./HabitCard.js";
 import { DayOfTheWeek } from "@prisma/client";
+import { MilestoneWithDetails } from "../../types/index.js";
 
-// TODO: This variable will be deleted once the milestones are mapped and passed milestone as prop
-const milestone = {
-    id: 1,
-    name: "Know kung fu",
-    habits: [
-        {
-            id: 1,
-            name: "Habit One",
-            dateCreated: new Date(),
-            dateUpdated: new Date(),
-            datesCompleted: [],
-            ownerId: 5,
-            routine: {
-                id: 1,
-                dateCreated: new Date(),
-                dateUpdated: new Date(),
-                monday: false,
-                tuesday: false,
-                wednesday: false,
-                thursday: false,
-                friday: false,
-                saturday: false,
-                sunday: false,
-                habitId: 1
-            },
-            checkIn: {
-                id: 1,
-                dayOfTheWeek: DayOfTheWeek["SATURDAY"],
-                habitId: 1
-            },
-            statusReports: [],
-            scheduleId: null,
-            milestoneId: 1
-        },
-        {
-            id: 2,
-            name: "Habit Two",
-            dateCreated: new Date(),
-            dateUpdated: new Date(),
-            datesCompleted: [new Date()],
-            ownerId: 5,
-            routine: {
-                id: 1,
-                dateCreated: new Date(),
-                dateUpdated: new Date(),
-                monday: true,
-                tuesday: false,
-                wednesday: true,
-                thursday: false,
-                friday: true,
-                saturday: false,
-                sunday: false,
-                habitId: 2
-            },
-            checkIn: {
-                id: 2,
-                dayOfTheWeek: DayOfTheWeek["MONDAY"],
-                habitId: 2
-            },
-            statusReports: [],
-            scheduleId: null,
-            milestoneId: 1
-        }
-    ]
+export interface MilestoneProps {
+    milestone: MilestoneWithDetails
 }
 
-const Milestone = () => {
+const Milestone = ({milestone}: MilestoneProps) => {
 
     return (
         <Card
@@ -128,7 +67,6 @@ const Milestone = () => {
             >
           <CardBody>
           <Accordion defaultIndex={[0]} allowMultiple>
-            {/* TODO: Map accordion items to milestone.habits array */}
             {milestone.habits.map(habit => {
                 return (
                     <AccordionItem
