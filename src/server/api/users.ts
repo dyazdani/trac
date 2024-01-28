@@ -3,7 +3,7 @@ import excludePassword from "../../utils/excludePassword.js";
 import prisma from "../../utils/test/prisma.js";
 import requireUser from "../../utils/requireUser.js";
 import formatStatusReportMessage from "../../utils/formatStatusReportMessage.js";
-import { CreateHabitReqBody, CreateMilestoneReqBody, UpdateHabitReqBody, statusReportsPostReqBody } from "../../types/index.js";
+import { CreateHabitReqBody, CreateMilestoneReqBody, UpdateHabitReqBody, UpdateMilestoneReqBody, statusReportsPostReqBody } from "../../types/index.js";
 import requireAdmin from "../../utils/requireAdmin.js";
 import nodemailer from 'nodemailer';
 import { Knock } from "@knocklabs/node";
@@ -353,6 +353,57 @@ usersRouter.get("/:id/milestones", requireUser, async (req, res, next): Promise<
         res.send({ milestones })
     } catch(e) {
         next(e)
+    }
+})
+
+// PUT /api/users/:id/milestones/:milestoneId
+usersRouter.put("/:id/milestones/:milestoneId", requireUser, async (req, res, next) => {
+    try {
+        const ownerId = Number(req.params.id)
+        const milestoneId = Number(req.params.milestoneId)
+        const { 
+            name,
+            dueDate,
+            isCompleted,
+            isCanceled
+        }:UpdateMilestoneReqBody = req.body
+
+        const habits = await prisma.habit.findMany({
+            where: {
+                milestoneId
+            },
+            include: {
+                routine: true,
+                checkIn: {
+                    select: {
+                        dayOfTheWeek: true
+                    }
+                },
+                statusReports: true
+            }
+        })
+
+        const milestone = await prisma.milestone.update({
+            where: {
+                ownerId,
+                id: milestoneId
+            },
+            data: {
+                name,
+                dueDate,
+                isCompleted,
+                isCanceled
+            }
+        })
+
+        res.send({ 
+            milestone: {
+                ...milestone,
+                habits
+            }   
+        });
+    } catch (e) {
+        next(e);
     }
 })
 
