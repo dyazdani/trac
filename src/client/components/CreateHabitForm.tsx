@@ -47,7 +47,7 @@ export interface CreateHabitFormProps {
 const CreateHabitForm = ({isOpen, onClose}: CreateHabitFormProps) => {
     const [menuValue, setMenuValue] = useState<string | string[]>('Monday')
     const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>([])
-    const [habitNameValue, setHabitNameValue] = useState("")
+    const [habitNameValue, setHabitNameValue] = useState("New Habit")
 
 
     const [createHabit, {isLoading, data, error}] = useCreateHabitMutation();
