@@ -191,6 +191,13 @@ export const api = createApi({
         }),
         invalidatesTags: ["Milestone"],
       }),
+      deleteMilestone: builder.mutation<{milestone: MilestoneWithDetails}, {ownerId: number, milestoneId: number}>({
+        query: ({ ownerId, milestoneId }) => ({
+          url: `/users/${ownerId}/milestones/${milestoneId}`,
+          method: 'DELETE'
+        }),
+        invalidatesTags: ["Milestone"]
+      }),
     })
   })
   
@@ -217,7 +224,8 @@ export const api = createApi({
     useDeleteSchedulesMutation,
     useCreateMilestoneMutation,
     useGetMilestonesByUserQuery,
-    useUpdateMilestoneMutation
+    useUpdateMilestoneMutation,
+    useDeleteMilestoneMutation
   } = api
 
 
