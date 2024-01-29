@@ -407,6 +407,23 @@ usersRouter.put("/:id/milestones/:milestoneId", requireUser, async (req, res, ne
     }
 })
 
+// DELETE /api/users/:id/milestones/:milestoneId
+usersRouter.delete("/:id/milestones/:milestoneId", requireUser, async (req, res, next): Promise<void> => {
+    const ownerId = Number(req.params.id);
+    const milestoneId = Number(req.params.milestoneId);
+    try {
+        const milestone = await prisma.milestone.delete({
+            where: {
+                ownerId: ownerId,
+                id: milestoneId 
+            }
+        })
+        res.send({ milestone })
+    } catch(e) {
+        next(e)
+    }
+})
+
 export default usersRouter;
 
 
