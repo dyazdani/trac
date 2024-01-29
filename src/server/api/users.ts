@@ -412,13 +412,34 @@ usersRouter.delete("/:id/milestones/:milestoneId", requireUser, async (req, res,
     const ownerId = Number(req.params.id);
     const milestoneId = Number(req.params.milestoneId);
     try {
+        const habits = await prisma.habit.findMany({
+            where: {
+                milestoneId
+            },
+            include: {
+                routine: true,
+                checkIn: {
+                    select: {
+                        dayOfTheWeek: true
+                    }
+                },
+                statusReports: true
+            }
+        })
+
         const milestone = await prisma.milestone.delete({
             where: {
                 ownerId: ownerId,
                 id: milestoneId 
             }
         })
-        res.send({ milestone })
+        
+        res.send({ 
+            milestone: {
+                ...milestone,
+                habits
+            }   
+        });
     } catch(e) {
         next(e)
     }
