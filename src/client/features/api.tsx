@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
 import { CheckIn, Habit, Milestone, Routine, StatusReport } from '@prisma/client';
-import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails, SendStatusReportMutationArgs, MilestoneWithDetails, CreateMilestoneMutationArgs } from '../../types/index.js';
+import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails, SendStatusReportMutationArgs, MilestoneWithDetails, CreateMilestoneMutationArgs, UpdateMilestoneReqBody } from '../../types/index.js';
 import { DaysOfWeek, Schedule } from '@knocklabs/node';
 import { User as KnockUser } from '@knocklabs/node';
 
@@ -178,6 +178,19 @@ export const api = createApi({
         query: (ownerId) => `/users/${ownerId}/milestones`,
         providesTags: ["Milestone"]
       }),
+      updateMilestone: builder.mutation<{milestone: MilestoneWithDetails}, {ownerId: number, milestoneId: number, newMilestone: UpdateMilestoneReqBody}>({
+        query: ({ownerId, milestoneId, newMilestone}) => ({
+          url: `users/${ownerId}/milestones/${milestoneId}`,
+          method: "PUT",
+          body: {
+            name: newMilestone.name,
+            dueDate: newMilestone.dueDate,
+            isCompleted: newMilestone.isCompleted,
+            isCanceled: newMilestone.isCanceled
+          },
+        }),
+        invalidatesTags: ["Milestone"],
+      }),
     })
   })
   
@@ -203,7 +216,8 @@ export const api = createApi({
     useGetStatusReportsByHabitIdQuery,
     useDeleteSchedulesMutation,
     useCreateMilestoneMutation,
-    useGetMilestonesByUserQuery
+    useGetMilestonesByUserQuery,
+    useUpdateMilestoneMutation
   } = api
 
 
