@@ -18,6 +18,7 @@ import {
 import HabitCard from "./HabitCard.js";
 import { DayOfTheWeek } from "@prisma/client";
 import { MilestoneWithDetails } from "../../types/index.js";
+import UpdateMilestoneButton from "./UpdateMilestoneButton.js";
 
 export interface MilestoneProps {
     milestone: MilestoneWithDetails
@@ -49,10 +50,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
             >
              {milestone.name}
             </Heading>
-            <IconButton 
-                aria-label="update-milestone-button" 
-                icon={<EditIcon />} 
-                variant="unstyled"
+            <UpdateMilestoneButton
+                milestone={milestone}
             />
             <IconButton 
                 aria-label="delete-milestone-button" 
