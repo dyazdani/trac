@@ -328,6 +328,34 @@ usersRouter.post("/:id/milestones", requireUser, async (req, res, next): Promise
     }
 })
 
+// GET /api/users/:id/milestones
+usersRouter.get("/:id/milestones", requireUser, async (req, res, next): Promise<void> => {
+    const ownerId = Number(req.params.id)
+    try {
+        const milestones = await prisma.milestone.findMany({
+            where: {
+                ownerId: ownerId
+            },
+            include: {
+                habits: {
+                    include: {
+                        routine: true,
+                        checkIn: {
+                            select: {
+                                dayOfTheWeek: true
+                            }
+                        },
+                        statusReports: true
+                    }
+                }
+            }
+        })
+        res.send({ milestones })
+    } catch(e) {
+        next(e)
+    }
+})
+
 export default usersRouter;
 
 
