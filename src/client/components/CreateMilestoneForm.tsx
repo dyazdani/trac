@@ -19,7 +19,8 @@ import {
   } from '@chakra-ui/react'
 import { useAppSelector } from '../app/hooks.js';
 import { SingleDatepicker } from 'chakra-dayzed-datepicker';
-import { useCreateMilestoneMutation } from '../features/api.js';
+import { useCreateMilestoneMutation, useCreateScheduleMutation } from '../features/api.js';
+import { DaysOfWeek } from '@knocklabs/node';
 
 export interface CreateMilestoneFormProps {
     isOpenForMilestone: boolean
@@ -31,6 +32,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
     const [milestoneNameValue, setMilestoneNameValue] = useState("New Milestone")
 
     const [createMilestone] = useCreateMilestoneMutation();
+    const [createSchedule, { error }] = useCreateScheduleMutation();
 
     const inputRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
@@ -61,6 +63,15 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                         e.preventDefault();
                         if (currentUser && datepickerValue) {
                             try {
+                                console.log(datepickerValue.toISOString())
+                                console.log(currentUser.id)
+                                const { schedules } = await createSchedule({
+                                    milestoneName: milestoneNameValue,
+                                    scheduledAt: "2024-12-22 17:45:00Z",
+                                    workflowKey: "milestone-due"
+                                }).unwrap()
+
+                                if (!error && schedules) {
                                     const { milestone } = await createMilestone({
                                         ownerId: currentUser.id,
                                         name: milestoneNameValue,
@@ -78,6 +89,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                                         duration: 9000,
                                         isClosable: true
                                     })  
+                                }       
                             } catch (e) {
                                 console.error(e)
                             }
