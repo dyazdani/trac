@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "prisma": {
-    "seed": "npx tsx src/server/db/seed/index.ts"
+    "seed": "tsx src/server/db/seed/index.ts"
   },
   "scripts": {
     "dev": "nodemon -w src/server -x tsx src/server/main.ts",
-    "start": "NODE_ENV=production tsx src/server/main.ts",
+    "start": "NODE_ENV=production && npx prisma migrate deploy && tsx src/server/main.ts",
     "build": "vite build",
     "preview": "vite preview",
     "migrate:dev": "dotenv -e .env -- npx prisma migrate dev",
