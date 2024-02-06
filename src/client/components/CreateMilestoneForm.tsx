@@ -28,7 +28,7 @@ export interface CreateMilestoneFormProps {
 
 const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMilestoneFormProps) => {
     const [datepickerValue, setDatepickerValue] = useState<Date | null>(null)
-    const [milestoneNameValue, setMilestoneNameValue] = useState("")
+    const [milestoneNameValue, setMilestoneNameValue] = useState("New Milestone")
 
     const [createMilestone] = useCreateMilestoneMutation();
 
