@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "prisma": {
-    "seed": "tsx src/server/db/seed/index.ts"
+    "seed": "npx tsx src/server/db/seed/index.ts"
   },
   "scripts": {
     "dev": "nodemon -w src/server -x tsx src/server/main.ts",
