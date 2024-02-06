@@ -13,26 +13,39 @@ notificationsRouter.post("/schedules", requireUser, async (req, res, next) => {
         try {
             const userId = String(req.user.id)
             const { 
+                milestoneName,
+                scheduledAt,
                 habitName,
                 days,
                 workflowKey
             }: CreateScheduleReqBody = req.body
 
-           const schedules = await knock.workflows.createSchedules(workflowKey, {
-                recipients: [userId],
-                repeats: [
-                    {
-                        frequency: RepeatFrequency.Weekly,
-                        days,
-                        //TODO: Eventually allow user to set the time of notification?
-                        hours: 5,
-                        minutes: 0
+            let schedules = [];
+            if (milestoneName) {
+                schedules = await knock.workflows.createSchedules(workflowKey, {
+                    recipients: [userId],
+                    scheduled_at: scheduledAt,
+                    data: {
+                        milestone: milestoneName
                     }
-                ],
-                data: {
-                    habit: habitName
-                }
-            })
+                })
+            } else {
+                schedules = await knock.workflows.createSchedules(workflowKey, {
+                    recipients: [userId],
+                    repeats: [
+                        {
+                            frequency: RepeatFrequency.Weekly,
+                            days,
+                            //TODO: Eventually allow user to set the time of notification?
+                            hours: 5,
+                            minutes: 0
+                        }
+                    ],
+                    data: {
+                        habit: habitName,
+                    }
+                })
+            }
 
             res.send({schedules})
         } catch (e) {
