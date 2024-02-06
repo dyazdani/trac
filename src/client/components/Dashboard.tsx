@@ -15,7 +15,7 @@ import AppHeader from "./AppHeader.js";
 import CTABanner from "./CTABanner.js";
 import isTodayCheckInDay from "../../utils/isTodayCheckInDay.js";
 import { useState } from "react";
-\import MyMilestones from "./MyMilestones.js";
+import MyMilestones from "./MyMilestones.js";
 
 
 const Dashboard = () => {
