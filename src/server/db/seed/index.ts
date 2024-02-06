@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { DayOfTheWeek, PrismaClient } from "@prisma/client";
 import { users, habits, routines, checkIns} from './seedData.json';
 const prisma = new PrismaClient();
 
@@ -7,6 +7,11 @@ interface HabitSeedData {
     datesCompleted: string[]
     ownerId: number
 }
+
+const enumCheckIns = checkIns.map(checkIn => ({
+    dayOfTheWeek: DayOfTheWeek[checkIn.dayOfTheWeek as keyof typeof DayOfTheWeek],
+    habitId: checkIn.habitId
+}))
 
 const habitsWithDateObjects = habits.map((habit: HabitSeedData) => {
     return ({
@@ -57,7 +62,7 @@ const load = async () => {
         console.log("Added routine data")
 
         await prisma.checkIn.createMany({
-            data: checkIns
+            data: enumCheckIns
         });
         console.log("Added checkIn data")
 
