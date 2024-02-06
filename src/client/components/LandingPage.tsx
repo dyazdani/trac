@@ -3,7 +3,6 @@ import { Image, Flex, Spacer, Hide } from "@chakra-ui/react";
 
 import RegisterForm from "./RegisterForm.js";
 import LoginForm from "./LoginForm.js";
-import mountainClimber from "../../../images/mountain-climber.jpg";
 
 const LandingPage = () => {
   const [isLoginShowing, setIsLoginShowing] = useState(false);
@@ -22,7 +21,7 @@ const LandingPage = () => {
       <Spacer />
       <Hide breakpoint="(max-width: 600px)">
         <Image
-          src={mountainClimber}
+          src="/images/mountain-climber.jpg"
           alt="mountain climber scaling mountain"
           maxW="50vw"
           maxH="100%"

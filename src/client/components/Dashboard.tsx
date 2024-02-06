@@ -15,9 +15,7 @@ import AppHeader from "./AppHeader.js";
 import CTABanner from "./CTABanner.js";
 import isTodayCheckInDay from "../../utils/isTodayCheckInDay.js";
 import { useState } from "react";
-import todayImg from "../../../images/trac_today_icon.png";
-import checkInDayImg from "../../../images/trac_check_in_day_img.png";
-import MyMilestones from "./MyMilestones.js";
+\import MyMilestones from "./MyMilestones.js";
 
 
 const Dashboard = () => {
@@ -65,11 +63,11 @@ const Dashboard = () => {
               <Heading as='h1' size='2xl' >My Dashboard</Heading>
               <HStack>
                 <HStack spacing={0}>
-                  <Image src={todayImg} alt="purple circle indicating today" p={0} />
+                  <Image src="/images/trac_today_icon.png" alt="purple circle indicating today" p={0} />
                   <Text>= today</Text>
                 </HStack>
                 <HStack spacing={0}>
-                  <Image src={checkInDayImg} alt="yellow diamond indicating check-in day" />
+                  <Image src="images/trac_check_in_day_img.png" alt="yellow diamond indicating check-in day" />
                   <Text>= check-in day</Text>
                 </HStack>
               </HStack>
