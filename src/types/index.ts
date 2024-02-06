@@ -115,3 +115,10 @@ export interface CreateMilestoneMutationArgs {
   name: string
   dueDate: Date
 }
+
+export interface UpdateMilestoneReqBody {
+  name: string
+  dueDate: Date
+  isCompleted: boolean
+  isCanceled: boolean
+}
