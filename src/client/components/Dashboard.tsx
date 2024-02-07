@@ -1,16 +1,13 @@
 import { 
   Box, 
-  Flex, 
   HStack, 
   Heading,
   Image,
-  Spacer,
   Text 
 } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
-import MyHabits from "./MyHabits.js";
 import { useAppSelector } from "../app/hooks.js";
-import { useDeleteSchedulesMutation, useGetHabitsByUserQuery, useGetMilestonesByUserQuery } from "../features/api.js";
+import { useGetHabitsByUserQuery, useGetMilestonesByUserQuery } from "../features/api.js";
 import AppHeader from "./AppHeader.js";
 import CTABanner from "./CTABanner.js";
 import isTodayCheckInDay from "../../utils/isTodayCheckInDay.js";
@@ -20,7 +17,6 @@ import MyMilestones from "./MyMilestones.js";
 
 const Dashboard = () => {
   const currentUser = useAppSelector(state => state.auth.user)
-  const [deleteSchedules] = useDeleteSchedulesMutation();
 
   let isTodayACheckInDay;
   if (currentUser) {
@@ -74,8 +70,6 @@ const Dashboard = () => {
             </Box>
               <Heading as='h2' size='xl' >Milestones</Heading> 
               <MyMilestones milestones={milestonesData?.milestones}/>
-              <Heading as='h2' size='xl' mt="20">Unassigned Habits</Heading> 
-              <MyHabits toggleBannerDisplayed={toggleBannerDisplayed} habits={data?.habits} />
             </Box>
         </Box>
 

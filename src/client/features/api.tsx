@@ -118,10 +118,11 @@ export const api = createApi({
             name: habitDetails.name, 
             routineDays: habitDetails.routineDays, 
             checkInDay: habitDetails.checkInDay,
-            scheduleId: habitDetails.scheduleId
+            scheduleId: habitDetails.scheduleId,
+            milestoneId: habitDetails.milestoneId
           },
         }),
-        invalidatesTags: ["Habit"],
+        invalidatesTags: ["Habit", "Milestone"],
       }),
       updateHabit: builder.mutation<{habit: Habit, routine: Routine, checkIn: CheckIn}, {id: number, habitId: number, newHabit: UpdateHabitReqBody}>({
         query: ({id, habitId, newHabit}) => ({

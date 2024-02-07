@@ -41,7 +41,7 @@ export interface CreateHabitReqBody {
   routineDays: RoutineDays
   checkInDay: DayOfTheWeek
   scheduleId: string
-  milestoneId?: number
+  milestoneId: number
 }
 
 export interface UpdateHabitReqBody {

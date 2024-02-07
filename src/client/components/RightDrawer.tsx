@@ -1,11 +1,11 @@
 import {
     useDisclosure,
     Button,
-    VStack
+    VStack,
+    IconButton
   } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import { useAppSelector } from '../app/hooks.js'
-import CreateHabitForm from './CreateHabitForm.js'
 import CreateMilestoneForm from './CreateMilestoneForm.js'
 
 export interface RightDrawerProps {
@@ -27,35 +27,19 @@ const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
                 bottom="50px"
                 right="50px"
                 >
-                    <Button
+                    <IconButton
                     variant='solid'
                     colorScheme='teal'
-                    aria-label='Create Milestone'
-                    fontSize='1.5vw'
-                    leftIcon={<AddIcon />}
-                    p="1.5vw"
+                    size="lg"
+                    aria-label='create-milestone'
+                    icon={<AddIcon />}
+                    isRound={true}
                     onClick={onOpenForMilestone}
                     >
-                        Milestone
-                    </Button>
+                    </IconButton>
                     <CreateMilestoneForm
                         onCloseForMilestone={onCloseForMilestone}
                         isOpenForMilestone={isOpenForMilestone}
-                    />
-                    <Button
-                    variant='solid'
-                    colorScheme='teal'
-                    aria-label='Create Habit'
-                    fontSize='1.5vw'
-                    leftIcon={<AddIcon />}
-                    p="1.5vw"
-                    onClick={onOpen}
-                    >
-                        Habit
-                    </Button>
-                    <CreateHabitForm
-                        onClose={onClose}
-                        isOpen={isOpen}
                     />
                 </VStack>
             }
