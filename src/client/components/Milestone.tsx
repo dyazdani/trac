@@ -23,6 +23,7 @@ import DeleteMilestoneButton from "./DeleteMilestoneButton.js";
 import CompleteMilestoneButton from "./CompleteMilestoneButton.js";
 import CancelMilestoneButton from "./CancelMilestoneButton.js";
 import { millisecondsToSeconds } from "date-fns";
+import CreateHabitButton from "./CreateHabitButton.js";
 
 export interface MilestoneProps {
     milestone: MilestoneWithDetails
@@ -115,7 +116,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
         </Accordion>
           </CardBody>
           <CardFooter>
-            
+            <CreateHabitButton milestone={milestone}/>
           </CardFooter>
         </Flex>
       </Card>
