@@ -18,15 +18,8 @@ type DeleteHabitButtonProps = {
 
 const DeleteHabitButton = ({ habit, handleClick }: DeleteHabitButtonProps) =>  {
     const currentUser = useAppSelector(state => state.auth.user);
-    const [deleteHabit, { isLoading, data, error}] = useDeleteHabitMutation();
-    const [
-        deleteSchedules, 
-        {
-            isLoading: isDeleteSchedulesLoading,
-            data: deleteSchedulesData,
-            error: deleteSchedulesError
-        }
-    ] = useDeleteSchedulesMutation();
+    const [deleteHabit, { isLoading }] = useDeleteHabitMutation();
+    const [ deleteSchedules ] = useDeleteSchedulesMutation();
 
     const toast = useToast();
 
@@ -51,6 +44,13 @@ const DeleteHabitButton = ({ habit, handleClick }: DeleteHabitButtonProps) =>  {
                 })
             } catch (e) {
                 console.error(e)
+                toast({
+                    title: 'ERROR',
+                    description: 'Unable to delete habit',
+                    status: 'error',
+                    duration: 4000,
+                    isClosable: true
+                })
             }
             
         }
