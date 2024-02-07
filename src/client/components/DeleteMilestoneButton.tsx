@@ -36,7 +36,8 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                 } else {
                     toast({
                         title: 'ERROR',
-                        description: 'Unable to delete milestone. Please try again.',                        status: 'failure',
+                        description: 'Unable to delete milestone. Please try again.',                        
+                        status: 'error',
                         duration: 4000,
                         isClosable: true
                     })
