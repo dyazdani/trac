@@ -63,7 +63,7 @@ const DeleteHabitButton = ({ habit, milestone, handleClick }: DeleteHabitButtonP
                 aria-label="delete-habit-button" 
                 icon={<DeleteIcon />}
                 isLoading={isLoading} 
-                isDisabled={milestone && milestone.isCompleted}
+                isDisabled={milestone && milestone.isCompleted || milestone.isCanceled}
                 variant="unstyled"
                 onClick={(e) => {
                     e.preventDefault();
