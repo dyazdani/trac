@@ -26,14 +26,14 @@ const DeleteHabitButton = ({ habit, handleClick }: DeleteHabitButtonProps) =>  {
     const handleDeleteHabit = async () => {
         if (currentUser && habit.scheduleId) {
             try {
-                const { schedules } = await deleteSchedules({
+                await deleteSchedules({
                     scheduleIds: [habit.scheduleId]
-                }).unwrap()
+                })
         
-                const { habit: deletedHabit } = await deleteHabit({
+                await deleteHabit({
                     id: currentUser.id, 
                     habitId: habit.id
-                }).unwrap()
+                })
         
                 toast({
                     title: 'Habit deleted.',
