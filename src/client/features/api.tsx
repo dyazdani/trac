@@ -136,7 +136,7 @@ export const api = createApi({
             scheduleId: newHabit.scheduleId
           },
         }),
-        invalidatesTags: ["Habit"],
+        invalidatesTags: ["Habit", "Milestone"],
       }),
       deleteHabit: builder.mutation<{habit: Habit}, {id: number, habitId: number}>({
         query: ({ id, habitId }) => ({
