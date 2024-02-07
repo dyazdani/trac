@@ -21,6 +21,7 @@ import { MilestoneWithDetails } from "../../types/index.js";
 import UpdateMilestoneButton from "./UpdateMilestoneButton.js";
 import DeleteMilestoneButton from "./DeleteMilestoneButton.js";
 import CompleteMilestoneButton from "./CompleteMilestoneButton.js";
+import CancelMilestoneButton from "./CancelMilestoneButton.js";
 
 export interface MilestoneProps {
     milestone: MilestoneWithDetails
@@ -56,6 +57,9 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 milestone={milestone}
             />
             <DeleteMilestoneButton
+                milestone={milestone}
+            />
+            <CancelMilestoneButton
                 milestone={milestone}
             />
             <CompleteMilestoneButton
