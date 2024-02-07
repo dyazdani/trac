@@ -143,7 +143,7 @@ export const api = createApi({
           url: `/users/${id}/habits/${habitId}`,
           method: 'DELETE'
         }),
-        invalidatesTags: ["Habit"]
+        invalidatesTags: ["Habit", "Milestone"]
       }),
       sendStatusReport: builder.mutation<{status: "Message Sent", statusReport: StatusReport}, SendStatusReportMutationArgs>({
         query: ({id, habitId, user, habitName, emails, message, checkInDate}) => ({
