@@ -197,7 +197,7 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
             {dateRangeString}
           </CardFooter>
           
-          {milestone && !milestone.isCompleted && !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
+          {milestone && milestone.isCompleted ? "" : (!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
             <Box
             mt="15px"
             mb="20px"
@@ -206,7 +206,7 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
               habit={habit}
             />
             </Box>
-          }
+          )}
         </Flex>
       </Card>
     </>
