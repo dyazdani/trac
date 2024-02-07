@@ -28,7 +28,6 @@ import {
 import { ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
 import { 
     useUpdateHabitMutation,
-    useGetSchedulesByUserQuery, 
     useUpdateScheduleMutation 
 } from "../features/api.js";
 import { DayOfTheWeek } from "@prisma/client";
@@ -128,6 +127,13 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
                                         });
                                     } catch (e) {
                                         console.error(e)
+                                        toast({
+                                            title: 'ERROR',
+                                            description: 'Unable to update habit',
+                                            status: 'error',
+                                            duration: 4000,
+                                            isClosable: true
+                                        })
                                     }
                                 }   
                             }}
