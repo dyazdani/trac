@@ -184,6 +184,7 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
                 return (
                   <ToggleButton
                     key={Date.parse(day.toISOString())} 
+                    milestone={milestone}
                     date={day}
                     habit={habit}
                     isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek}
@@ -196,7 +197,7 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
             {dateRangeString}
           </CardFooter>
           
-          {!milestone && !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
+          {milestone && !milestone.isCompleted && !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
             <Box
             mt="15px"
             mb="20px"
