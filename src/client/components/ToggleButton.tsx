@@ -107,6 +107,7 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
             {isCheckInDay && <DiamondImage/>}
             <FormLabel
                 w="fit-content"
+                color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
             >
                 {dayAbbreviation}
             </FormLabel>

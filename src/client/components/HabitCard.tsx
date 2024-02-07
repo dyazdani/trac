@@ -119,7 +119,9 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
         w="30vw" 
         maxW="400px"
         minW="320px"
-        bg={milestone && milestone.isCompleted || milestone.isCanceled ? `rgba(255,192,203, 0.2)` :
+        bg={
+          milestone && milestone.isCompleted ? `rgba(255,192,203, 0.2)` :
+          milestone && milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
           !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "linear-gradient(-45deg, #ffc0cb 40%, #ffe4e1 50%, #ffc0cb 60%)" : "pink"
         }
         borderRadius="20px"
@@ -167,6 +169,7 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
             <Heading 
                 sx={{ marginRight: "auto" }} 
                 size="md"
+                color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
             >
               {habit.name}
             </Heading>
@@ -193,7 +196,9 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
               })}
             </HStack>
           </CardBody>
-          <CardFooter>
+          <CardFooter
+            color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
+          >
             {dateRangeString}
           </CardFooter>
           
