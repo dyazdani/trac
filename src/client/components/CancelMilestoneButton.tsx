@@ -72,6 +72,7 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
             <IconButton 
                 aria-label="cancel-milestone-button" 
                 icon={<NotAllowedIcon />} 
+                isDisabled={milestone?.isCompleted} 
                 variant="unstyled"
                 onClick={(e) => {
                     e.preventDefault();
