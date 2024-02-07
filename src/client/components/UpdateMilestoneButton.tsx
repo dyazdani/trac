@@ -96,7 +96,6 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
                                                 newMilestone: {
                                                     name: milestoneNameValue,
                                                     dueDate: datepickerValue,
-                                                    //TODO: allow the following two properties to be updated too Issue #250
                                                     isCompleted: milestone.isCompleted,
                                                     isCanceled: milestone.isCanceled
                                                 }
