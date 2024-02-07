@@ -22,7 +22,7 @@ import {
     ArrowLeftIcon,
     ArrowRightIcon
 } from "@chakra-ui/icons";
-import { HabitWithDetails } from "../../types/index.js";
+import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
 import UpdateHabitButton from "./UpdateHabitButton.js";
 import StatusReportFormButton from "./StatusReportFormButton.js";
@@ -33,6 +33,7 @@ import getFirstCheckInDayDate from "../../utils/getFirstCheckInDayDate.js";
 
 type HabitProps = {
   habit: HabitWithDetails
+  milestone: MilestoneWithDetails
   handleClick: () => void
 };
 
@@ -50,7 +51,7 @@ const DAY_STRINGS = [
 const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 
-const HabitCard = ({ habit, handleClick }: HabitProps) => {
+const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
 
   const isStatusReportSent = isMostRecentStatusReportSent(habit);
@@ -112,15 +113,24 @@ const HabitCard = ({ habit, handleClick }: HabitProps) => {
     <>
       <Card
         as={motion.div}
-        animation={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? animation : ""}
+        animation={milestone && milestone.isCompleted ? "" :
+          !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? animation : ""
+        }
         w="30vw" 
         maxW="400px"
         minW="320px"
-        bg={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "linear-gradient(-45deg, #ffc0cb 40%, #ffe4e1 50%, #ffc0cb 60%)" : "pink"}
+        bg={milestone && milestone.isCompleted ? `rgba(255,192,203, 0.2)` :
+          !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "linear-gradient(-45deg, #ffc0cb 40%, #ffe4e1 50%, #ffc0cb 60%)" : "pink"
+        }
         borderRadius="20px"
-        border={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "2mm ridge rgba(255,215,0, .6)" : ""}
-        backgroundSize={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "300%" : ""}
-        sx={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? 
+        border={milestone && milestone.isCompleted ? "" :
+          !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "2mm ridge rgba(255,215,0, .6)" : ""
+        }
+        backgroundSize={milestone && milestone.isCompleted ? "" :
+          !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "300%" : ""
+        }
+        sx={milestone && milestone.isCompleted ? {} :
+          !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? 
           {backgroundPositionX: '100%'} : 
           {}
         }
