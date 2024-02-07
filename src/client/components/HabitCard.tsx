@@ -171,7 +171,7 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
               {habit.name}
             </Heading>
             <UpdateHabitButton habit={habit} handleClick={handleClick}/>
-            <DeleteHabitButton habit={habit} handleClick={handleClick}/>
+            <DeleteHabitButton habit={habit} handleClick={handleClick} milestone={milestone}/>
           </HStack>
         </CardHeader>
         <Flex 
