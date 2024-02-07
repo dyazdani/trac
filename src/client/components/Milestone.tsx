@@ -20,6 +20,7 @@ import { DayOfTheWeek } from "@prisma/client";
 import { MilestoneWithDetails } from "../../types/index.js";
 import UpdateMilestoneButton from "./UpdateMilestoneButton.js";
 import DeleteMilestoneButton from "./DeleteMilestoneButton.js";
+import CompleteMilestoneButton from "./CompleteMilestoneButton.js";
 
 export interface MilestoneProps {
     milestone: MilestoneWithDetails
@@ -34,7 +35,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
         w="30vw" 
         maxW="500px"
         minW="320px"
-        bg="pink"
+        bg={milestone.isCompleted ? `rgba(255,192,203, 0.2)` : `rgb(255,192,203)`}
         borderRadius="20px"
         // border={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "2mm ridge rgba(255,215,0, .6)" : ""}
         // backgroundSize={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "300%" : ""}
@@ -57,7 +58,9 @@ const Milestone = ({milestone}: MilestoneProps) => {
             <DeleteMilestoneButton
                 milestone={milestone}
             />
-
+            <CompleteMilestoneButton
+                milestone={milestone}
+            />
           </HStack>
         </CardHeader>
         <Flex 
@@ -85,6 +88,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                 <AccordionPanel pb={4}>
                                     <HabitCard 
                                         habit={habit}
+                                        milestone={milestone}
                                         handleClick={() => {console.log(habit)}}
                                     />
                                 </AccordionPanel>
