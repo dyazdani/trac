@@ -110,7 +110,8 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                                     name: habitNameValue,
                                                     routineDays: getBooleanRoutineDays(checkboxGroupValue),
                                                     checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek],
-                                                    scheduleId: schedules[0].id
+                                                    scheduleId: schedules[0].id,
+                                                    milestoneId: milestone.id
                                                 }
                                             }).unwrap()
 
@@ -123,6 +124,10 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                                 duration: 9000,
                                                 isClosable: true
                                             })
+
+                                            setMenuValue('Monday');
+                                            setCheckboxGroupValue([]);
+                                            setHabitNameValue('New Habit');
                                         }   
                                     } catch (e) {
                                         console.error(e)
