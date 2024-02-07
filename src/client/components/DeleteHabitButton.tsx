@@ -1,6 +1,6 @@
 import { useAppSelector } from "../app/hooks.js";
 import { useDeleteHabitMutation, useDeleteSchedulesMutation } from "../features/api.js";
-import { HabitWithDetails } from "../../types/index.js";
+import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
 
 import { 
     useToast,
@@ -13,34 +13,28 @@ import {
 
 type DeleteHabitButtonProps = {
     habit: HabitWithDetails
+    milestone: MilestoneWithDetails
     handleClick: () => void
 }
 
-const DeleteHabitButton = ({ habit, handleClick }: DeleteHabitButtonProps) =>  {
+const DeleteHabitButton = ({ habit, milestone, handleClick }: DeleteHabitButtonProps) =>  {
     const currentUser = useAppSelector(state => state.auth.user);
-    const [deleteHabit, { isLoading, data, error}] = useDeleteHabitMutation();
-    const [
-        deleteSchedules, 
-        {
-            isLoading: isDeleteSchedulesLoading,
-            data: deleteSchedulesData,
-            error: deleteSchedulesError
-        }
-    ] = useDeleteSchedulesMutation();
+    const [deleteHabit, { isLoading }] = useDeleteHabitMutation();
+    const [ deleteSchedules ] = useDeleteSchedulesMutation();
 
     const toast = useToast();
 
     const handleDeleteHabit = async () => {
         if (currentUser && habit.scheduleId) {
             try {
-                const { schedules } = await deleteSchedules({
+                await deleteSchedules({
                     scheduleIds: [habit.scheduleId]
-                }).unwrap()
+                })
         
-                const { habit: deletedHabit } = await deleteHabit({
+                await deleteHabit({
                     id: currentUser.id, 
                     habitId: habit.id
-                }).unwrap()
+                })
         
                 toast({
                     title: 'Habit deleted.',
@@ -51,6 +45,13 @@ const DeleteHabitButton = ({ habit, handleClick }: DeleteHabitButtonProps) =>  {
                 })
             } catch (e) {
                 console.error(e)
+                toast({
+                    title: 'ERROR',
+                    description: 'Unable to delete habit',
+                    status: 'error',
+                    duration: 4000,
+                    isClosable: true
+                })
             }
             
         }
@@ -62,6 +63,7 @@ const DeleteHabitButton = ({ habit, handleClick }: DeleteHabitButtonProps) =>  {
                 aria-label="delete-habit-button" 
                 icon={<DeleteIcon />}
                 isLoading={isLoading} 
+                isDisabled={milestone && milestone.isCompleted}
                 variant="unstyled"
                 onClick={(e) => {
                     e.preventDefault();

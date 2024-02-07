@@ -28,23 +28,23 @@ import {
 import { ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
 import { 
     useUpdateHabitMutation,
-    useGetSchedulesByUserQuery, 
     useUpdateScheduleMutation 
 } from "../features/api.js";
 import { DayOfTheWeek } from "@prisma/client";
 import React, { useState } from "react";
 import getBooleanRoutineDays from "../../utils/getBooleanRoutineDays.js";
 import { useAppSelector } from "../app/hooks.js";
-import { HabitWithDetails, RoutineDaysArrayType } from "../../types/index.js";
+import { HabitWithDetails, MilestoneWithDetails, RoutineDaysArrayType } from "../../types/index.js";
 import getRoutineDaysStringArray from "../../utils/getRoutineDaysStringArray.js";
 import { DaysOfWeek } from "@knocklabs/node";
 
 export interface UpdateHabitButtonProps{
     habit: HabitWithDetails
+    milestone: MilestoneWithDetails
     handleClick: () => void
 }
 
-const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
+const UpdateHabitButton = ({habit, milestone, handleClick}: UpdateHabitButtonProps) => {
     const [menuValue, setMenuValue] = useState<string | string[]>(habit.checkIn.dayOfTheWeek)
     const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>(getRoutineDaysStringArray(habit.routine))
     const [habitNameValue, setHabitNameValue] = useState(habit.name)
@@ -63,6 +63,7 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
             <IconButton 
                 aria-label="edit-habit-button" 
                 icon={<EditIcon />} 
+                isDisabled={milestone && milestone.isCompleted}
                 variant="unstyled"
                 onClick={onOpen}
             />
@@ -128,6 +129,13 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
                                         });
                                     } catch (e) {
                                         console.error(e)
+                                        toast({
+                                            title: 'ERROR',
+                                            description: 'Unable to update habit',
+                                            status: 'error',
+                                            duration: 4000,
+                                            isClosable: true
+                                        })
                                     }
                                 }   
                             }}

@@ -63,7 +63,8 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
             <>
                 <IconButton 
                     aria-label="edit-milestone-button" 
-                    icon={<EditIcon />} 
+                    icon={<EditIcon />}
+                    isDisabled={milestone?.isCompleted} 
                     variant="unstyled"
                     onClick={onOpenForUpdateMilestone}
                 />
@@ -96,7 +97,6 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
                                                 newMilestone: {
                                                     name: milestoneNameValue,
                                                     dueDate: datepickerValue,
-                                                    //TODO: allow the following two properties to be updated too Issue #250
                                                     isCompleted: milestone.isCompleted,
                                                     isCanceled: milestone.isCanceled
                                                 }

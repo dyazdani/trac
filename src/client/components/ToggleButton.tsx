@@ -10,18 +10,19 @@ import {
 import getDayOfWeekLabelText from "../../utils/getDayOfWeekLabelText.js";
 import { useGetHabitByIdQuery, useUpdateHabitMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
-import { HabitWithDetails } from "../../types/index.js";
+import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
 import DiamondImage from "./DiamondImage.js";
 import isDateOutOfRange from "../../utils/isDateOutOfRange.js";
 
  export interface ToggleButtonProps {
     date: Date
+    milestone: MilestoneWithDetails
     habit: HabitWithDetails
     isCheckInDay: boolean
  }
 
-const ToggleButton = ({date, habit, isCheckInDay}: ToggleButtonProps) => {
+const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps) => {
     const [flag, setFlag] = useBoolean(!!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date)));
     const currentUser = useAppSelector((state) => state.auth.user)
 
@@ -121,7 +122,7 @@ const ToggleButton = ({date, habit, isCheckInDay}: ToggleButtonProps) => {
                 backgroundColor="white"
                 colorScheme="teal"
                 zIndex="1"   
-                isDisabled={
+                isDisabled={milestone && milestone.isCompleted || 
                     isDateOutOfRange(
                         new Date(habit.dateCreated), 
                         new Date(Date.now()),
