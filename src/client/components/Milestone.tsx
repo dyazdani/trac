@@ -21,6 +21,8 @@ import { MilestoneWithDetails } from "../../types/index.js";
 import UpdateMilestoneButton from "./UpdateMilestoneButton.js";
 import DeleteMilestoneButton from "./DeleteMilestoneButton.js";
 import CompleteMilestoneButton from "./CompleteMilestoneButton.js";
+import CancelMilestoneButton from "./CancelMilestoneButton.js";
+import { millisecondsToSeconds } from "date-fns";
 
 export interface MilestoneProps {
     milestone: MilestoneWithDetails
@@ -35,7 +37,11 @@ const Milestone = ({milestone}: MilestoneProps) => {
         w="30vw" 
         maxW="500px"
         minW="320px"
-        bg={milestone.isCompleted ? `rgba(255,192,203, 0.2)` : `rgb(255,192,203)`}
+        bg={
+            milestone.isCompleted ? "rgba(255,192,203, 0.2)" :
+            milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
+            `rgb(255,192,203)`
+        }
         borderRadius="20px"
         // border={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "2mm ridge rgba(255,215,0, .6)" : ""}
         // backgroundSize={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "300%" : ""}
@@ -49,6 +55,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
             <Heading 
                 sx={{ marginRight: "auto" }} 
                 size="md"
+                color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
             >
              {milestone.name}
             </Heading>
@@ -56,6 +63,9 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 milestone={milestone}
             />
             <DeleteMilestoneButton
+                milestone={milestone}
+            />
+            <CancelMilestoneButton
                 milestone={milestone}
             />
             <CompleteMilestoneButton
@@ -79,7 +89,12 @@ const Milestone = ({milestone}: MilestoneProps) => {
                             <>
                                 <h2>
                                 <AccordionButton>
-                                    <Box as="span" flex='1' textAlign='left'>
+                                    <Box 
+                                        as="span" 
+                                        flex='1' 
+                                        textAlign='left'
+                                        color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
+                                    >
                                         {isExpanded ? "" : habit.name}
                                     </Box>
                                     <AccordionIcon />
@@ -93,9 +108,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                     />
                                 </AccordionPanel>
                             </>
-
-                        )}
-                        
+                        )}    
             </AccordionItem>
                 )
             })}     
@@ -104,7 +117,6 @@ const Milestone = ({milestone}: MilestoneProps) => {
           <CardFooter>
             
           </CardFooter>
-          
         </Flex>
       </Card>
     )

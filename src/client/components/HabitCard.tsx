@@ -113,23 +113,25 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
     <>
       <Card
         as={motion.div}
-        animation={milestone && milestone.isCompleted ? "" :
+        animation={milestone && milestone.isCompleted || milestone.isCanceled ? "" :
           !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? animation : ""
         }
         w="30vw" 
         maxW="400px"
         minW="320px"
-        bg={milestone && milestone.isCompleted ? `rgba(255,192,203, 0.2)` :
+        bg={
+          milestone && milestone.isCompleted ? `rgba(255,192,203, 0.2)` :
+          milestone && milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
           !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "linear-gradient(-45deg, #ffc0cb 40%, #ffe4e1 50%, #ffc0cb 60%)" : "pink"
         }
         borderRadius="20px"
-        border={milestone && milestone.isCompleted ? "" :
+        border={milestone && milestone.isCompleted || milestone.isCanceled ? "" :
           !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "2mm ridge rgba(255,215,0, .6)" : ""
         }
-        backgroundSize={milestone && milestone.isCompleted ? "" :
+        backgroundSize={milestone && milestone.isCompleted || milestone.isCanceled ? "" :
           !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "300%" : ""
         }
-        sx={milestone && milestone.isCompleted ? {} :
+        sx={milestone && milestone.isCompleted || milestone.isCanceled ? {} :
           !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? 
           {backgroundPositionX: '100%'} : 
           {}
@@ -167,6 +169,7 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
             <Heading 
                 sx={{ marginRight: "auto" }} 
                 size="md"
+                color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
             >
               {habit.name}
             </Heading>
@@ -193,11 +196,13 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
               })}
             </HStack>
           </CardBody>
-          <CardFooter>
+          <CardFooter
+            color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
+          >
             {dateRangeString}
           </CardFooter>
           
-          {milestone && milestone.isCompleted ? "" : (!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
+          {milestone && milestone.isCompleted || milestone.isCanceled ? "" : (!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
             <Box
             mt="15px"
             mb="20px"

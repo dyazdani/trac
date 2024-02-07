@@ -2,16 +2,16 @@ import {
     IconButton, 
     useToast 
 } from "@chakra-ui/react";
-import { CheckIcon } from "@chakra-ui/icons";
+import { NotAllowedIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import {  useUpdateMilestoneMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { MilestoneWithDetails } from "../../types/index.js";
 
-export interface CompleteMilestoneButtonProps{
+export interface CancelMilestoneButtonProps{
     milestone: MilestoneWithDetails
 }
 
-const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
+const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
     const [updateMilestone] = useUpdateMilestoneMutation();
     const toast = useToast();
     const currentUser = useAppSelector((state) => state.auth.user);
@@ -25,24 +25,24 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                 newMilestone: {
                     name: milestone.name,
                     dueDate: milestone.dueDate,
-                    isCompleted: !milestone.isCompleted,
-                    isCanceled: milestone.isCanceled
+                    isCompleted: milestone.isCompleted,
+                    isCanceled: !milestone.isCanceled
                 }
             }).unwrap();
     
             if (updatedMilestone) {
-                if (updatedMilestone.isCompleted) {
+                if (updatedMilestone.isCanceled) {
                     toast({
-                        title: 'Milestone completed.',
-                        description: 'Your milestone was marked as complete.',
-                        status: 'success',
+                        title: 'Milestone canceled.',
+                        description: 'Your milestone was canceled.',
+                        status: 'info',
                         duration: 9000,
                         isClosable: true
                     })
                 } else {
                     toast({
-                        title: 'Milestone incomplete.',
-                        description: 'Your milestone was marked as incomplete.',
+                        title: 'Milestone restored.',
+                        description: 'Your milestone was restored.',
                         status: 'info',
                         duration: 9000,
                         isClosable: true
@@ -51,7 +51,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
             } else {
                 toast({
                     title: 'ERROR',
-                    description: 'Unable to mark milestone as complete or incomplete',
+                    description: 'Unable to cancel or restore milestone',
                     status: 'error',
                     duration: 9000,
                     isClosable: true
@@ -61,7 +61,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
             console.error(e)
             toast({
                 title: 'ERROR',
-                description: 'Unable to mark milestone as complete or incomplete',
+                description: 'Unable to cancel or restore milestone',
                 status: 'error',
                 duration: 9000,
                 isClosable: true
@@ -70,11 +70,10 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
     }
         return (
             <IconButton 
-                aria-label="complete-milestone-button" 
-                icon={<CheckIcon />} 
-                isDisabled={milestone?.isCanceled}
-                variant={milestone.isCompleted ? "solid" : "outline"}
-                colorScheme={milestone.isCompleted ? "teal" : ""}
+                aria-label="cancel-milestone-button" 
+                icon={milestone?.isCanceled ? (<PlusSquareIcon />) : (<NotAllowedIcon/>)} 
+                isDisabled={milestone?.isCompleted} 
+                variant="unstyled"
                 onClick={(e) => {
                     e.preventDefault();
                     handleClick();
@@ -84,4 +83,4 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
     }
 }
 
-export default CompleteMilestoneButton;
+export default CancelMilestoneButton;
