@@ -196,7 +196,7 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
             {dateRangeString}
           </CardFooter>
           
-          {!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
+          {!milestone && !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
             <Box
             mt="15px"
             mb="20px"
