@@ -49,7 +49,7 @@ export interface UpdateHabitReqBody {
   datesCompleted: Date[]
   routineDays: RoutineDays
   checkInDay: DayOfTheWeek
-  scheduleId: string
+  scheduleId: string | null
 }
 
 export interface HabitWithDetails {
