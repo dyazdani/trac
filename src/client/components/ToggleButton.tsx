@@ -87,7 +87,8 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
                         saturday,
                         sunday
                     },
-                    checkInDay: habitData.checkIn.dayOfTheWeek
+                    checkInDay: habitData.checkIn.dayOfTheWeek,
+                    scheduleId: habit.scheduleId
                 }
             })
         }
