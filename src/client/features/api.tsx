@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
 import { CheckIn, Habit, Milestone, Routine, StatusReport } from '@prisma/client';
-import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails, SendStatusReportMutationArgs, MilestoneWithDetails, CreateMilestoneMutationArgs, UpdateMilestoneReqBody } from '../../types/index.js';
+import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails, SendStatusReportMutationArgs, MilestoneWithDetails, CreateMilestoneMutationArgs, UpdateMilestoneReqBody, CreateScheduleReqBody } from '../../types/index.js';
 import { DaysOfWeek, Schedule } from '@knocklabs/node';
 import { User as KnockUser } from '@knocklabs/node';
 
@@ -46,7 +46,7 @@ export const api = createApi({
         }),
         invalidatesTags: ["CurrentUser"],
       }),
-      createSchedule: builder.mutation<{schedules: Schedule[]}, {habitName?: string, milestoneName?: string, scheduledAt?: string, days?: DaysOfWeek[], workflowKey: string}>({
+      createSchedule: builder.mutation<{schedules: Schedule[]}, CreateScheduleReqBody>({
         query: ({habitName, milestoneName, scheduledAt, days, workflowKey}) => ({
           url: `/notifications/schedules`,
           method: "POST",
