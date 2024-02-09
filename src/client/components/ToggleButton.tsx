@@ -87,7 +87,6 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
         }
     }
 
-
     return (
         <FormControl
             w="fit-content"
@@ -117,12 +116,13 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
                 backgroundColor="white"
                 colorScheme="teal"
                 zIndex="1"   
-                isDisabled={milestone && milestone.isCompleted || 
+                isDisabled={ 
                     isDateOutOfRange(
                         new Date(habit.dateCreated), 
-                        new Date(Date.now()),
+                        new Date(),
                         date
-                    )
+                    ) || 
+                    milestone && milestone.isCompleted                   
                 }    
             >
                 { flag && 
