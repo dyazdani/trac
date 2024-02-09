@@ -35,21 +35,14 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
         habitData = habit
     }
         
-
-    
-
-    
-
-    // give button purple outline if it has today's date
+    // get boolean for if the date prop is today's date
     const isToday = isDateToday(date);
-    const outlineColor = isToday ? "3px solid purple" : "3px solid black";
+    
+    // give button purple outline if it a check-in day
+    const outlineColor = isCheckInDay ? "3px solid rgb(103, 65, 217)" : "3px solid black";
 
     // extract day of the week abbreviation for label
     const dayAbbreviation = getDayOfWeekLabelText(date);
-
-    // Disable button if it's date is before date when habit was created or is in the future
-    // TODO: Get start date from single habit query here. Then call isDayOutOfRange with dateCreated
-
 
     const handleSubmit = async () => {
         if (currentUser && habitData && !isLoading) {
@@ -105,7 +98,7 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
             }}
             as="form"
         >
-            {isCheckInDay && <DiamondImage/>}
+            {isToday && <DiamondImage/>}
             <FormLabel
                 w="fit-content"
                 color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
