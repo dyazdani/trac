@@ -63,7 +63,7 @@ const Dashboard = () => {
                   <Text>= today</Text>
                 </HStack>
                 <HStack spacing={0}>
-                  <Image src="images/trac_check_in_day_img.png" alt="yellow diamond indicating check-in day" />
+                  <Image src="images/diamond-pink.png" alt="yellow diamond indicating check-in day" maxW="45px" p="10px"/>
                   <Text>= check-in day</Text>
                 </HStack>
               </HStack>
