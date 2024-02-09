@@ -74,7 +74,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                     <VStack
                         as="fieldset"
                     >
-                        <FormControl>
+                        <FormControl
+                            isRequired
+                        >
                             <FormLabel>Email Address</FormLabel>
                             <Input 
                                 type='email' 
@@ -83,7 +85,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                 required
                             />
                         </FormControl>
-                        <FormControl>
+                        <FormControl
+                            isRequired
+                        >
                             <FormLabel>Username</FormLabel>
                             <Input 
                                 type='username' 
@@ -92,7 +96,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                 required
                             />
                         </FormControl>
-                        <FormControl>
+                        <FormControl
+                            isRequired
+                        >
                             <FormLabel>Password</FormLabel>
                                 <InputGroup size="md">
                                     <Input
@@ -115,7 +121,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                     </InputRightElement>
                                 </InputGroup>
                         </FormControl>
-                        <FormControl>
+                        <FormControl
+                            isRequired
+                        >
                             <FormLabel>Confirm Password</FormLabel>
                             <InputGroup size="md">
                                     <Input
