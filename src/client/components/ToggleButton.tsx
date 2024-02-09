@@ -14,6 +14,7 @@ import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
 import DiamondImage from "./DiamondImage.js";
 import isDateOutOfRange from "../../utils/isDateOutOfRange.js";
+import isHabitRoutineDay from "./isHabitRoutineDay.js";
 
  export interface ToggleButtonProps {
     date: Date
@@ -116,7 +117,7 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
                 backgroundColor="white"
                 colorScheme="teal"
                 zIndex="1"   
-                isDisabled={ 
+                isDisabled={ !isHabitRoutineDay(habit, date) ||
                     isDateOutOfRange(
                         new Date(habit.dateCreated), 
                         new Date(),
