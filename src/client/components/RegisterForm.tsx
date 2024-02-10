@@ -15,10 +15,13 @@ import {
     Link,
     InputGroup,
     InputRightElement,
-    IconButton
+    IconButton,
+    FormErrorMessage,
+    FormHelperText
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 import { useRegisterMutation, useIdentifyUserMutation } from "../features/api.js";
+import getPasswordValidation from "../../utils/getPasswordValidation.js";
 
 export interface RegisterFormProps {
     handleLinkClick: () => void
@@ -98,6 +101,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                         </FormControl>
                         <FormControl
                             isRequired
+                            isInvalid={getPasswordValidation(password).isTooWeak}
                         >
                             <FormLabel>Password</FormLabel>
                                 <InputGroup size="md">
@@ -120,6 +124,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                         />
                                     </InputRightElement>
                                 </InputGroup>
+                                <FormHelperText>{getPasswordValidation(password).message}</FormHelperText>
+                                <FormErrorMessage>{getPasswordValidation(password).tooWeakMessage}</FormErrorMessage>
                         </FormControl>
                         <FormControl
                             isRequired
