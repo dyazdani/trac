@@ -1,18 +1,26 @@
-import { passwordStrength } from 'check-password-strength';
+import { passwordStrength, DiversityType } from 'check-password-strength';
 
+const CHARACTER_TYPES: DiversityType[] = [
+    "lowercase",
+    "uppercase",
+    "symbol",
+    "number"
+]
 
 const getPasswordValidation = (password: string) => {
     const strengthCheck = passwordStrength(password);
     
     const isTooWeak = passwordStrength(password).value === "Too weak" || passwordStrength(password).value === "Weak"
     
-    let containsString = ""
-    
-    strengthCheck.contains.forEach((word, i) => {
+    let missingCharactersString = ""
+ 
+    const missingCharacters = CHARACTER_TYPES.filter(type => !strengthCheck.contains.includes(type))
+
+    missingCharacters.forEach((word, i) => {
         if (i === 0) {
-            containsString += word;
+            missingCharactersString += word;
         } else {
-            containsString += `, ${word}`
+            missingCharactersString += `, ${word}`
         }
     })
 
@@ -20,7 +28,7 @@ const getPasswordValidation = (password: string) => {
 
     if (isTooWeak) {
         if (strengthCheck.contains.length < 4) {
-            tooWeakMessage += `Add the following character types to increase strength: ${containsString}. `
+            tooWeakMessage += `Add the following character types to increase strength: ${missingCharactersString}. `
         }
 
         if (strengthCheck.length < 8) {
