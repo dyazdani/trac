@@ -24,25 +24,24 @@ const getPasswordValidation = (password: string) => {
         }
     })
 
-    let tooWeakMessage = "";
+    let characterTypeMessage = "";
+    let lengthMessage = "";
 
     if (isTooWeak) {
         if (strengthCheck.contains.length < 4) {
-            tooWeakMessage += `Add the following character types to increase strength: ${missingCharactersString}. `
+            characterTypeMessage += `Password must include: ${missingCharactersString}. `
         }
 
         if (strengthCheck.length < 8) {
-            tooWeakMessage += "Increase length of password to at least 8 characters."
+            lengthMessage += "Password must be at least 8 characters."
         }
     }
 
-
-
-
     const validation = {
         isTooWeak,
-        message: `Your password strength is: ${strengthCheck.value}.`,
-        tooWeakMessage  
+        message: `Your password is: ${strengthCheck.value}`,
+        characterTypeMessage,
+        lengthMessage 
     }
 
     return validation
