@@ -35,23 +35,35 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
  
     const [register] = useRegisterMutation();
     const [identifyUser] = useIdentifyUserMutation();
 
 
     const handleSubmit = async () => {
-        if (password === confirmPassword) {
-            const user = await register({ email, username, password });
-            console.log(user)
-            if ('data' in user) {
-                const knockUser = await identifyUser({id: String(user.data.user.id), email, username})
-                console.log(knockUser)
+        try {
+            if (getPasswordValidation(password).isTooWeak) {
+                setIsPasswordInvalid(true);
+                return;
             }
-        } else {
-            //TODO: replace this alert with something in the UI
-            alert("Password confirmation does not match");
+            if (password === confirmPassword) {
+                const user = await register({ email, username, password });
+                console.log(user)
+                if ('data' in user) {
+                    const knockUser = await identifyUser({id: String(user.data.user.id), email, username})
+                    console.log(knockUser)
+                }
+                setIsPasswordInvalid(false);
+            } else {
+                //TODO: replace this alert with something in the UI
+                alert("Password confirmation does not match");
+            }
+        } catch (e) {
+            console.error(e);
         }
+        
+        
     };
 
     return (
@@ -101,7 +113,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                         </FormControl>
                         <FormControl
                             isRequired
-                            isInvalid={getPasswordValidation(password).isTooWeak}
+                            isInvalid={isPasswordInvalid}
                         >
                             <FormLabel>Password</FormLabel>
                                 <InputGroup size="md">
@@ -124,8 +136,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                         />
                                     </InputRightElement>
                                 </InputGroup>
-                                <FormHelperText>{getPasswordValidation(password).message}</FormHelperText>
-                                <FormErrorMessage>{getPasswordValidation(password).tooWeakMessage}</FormErrorMessage>
+                                {password.length ? <FormHelperText>{getPasswordValidation(password).message}</FormHelperText> : ""}
+                                <FormErrorMessage>{getPasswordValidation(password).characterTypeMessage}</FormErrorMessage>
+                                <FormErrorMessage>{getPasswordValidation(password).lengthMessage}</FormErrorMessage>
                         </FormControl>
                         <FormControl
                             isRequired
