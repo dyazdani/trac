@@ -210,7 +210,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                 isLoading ||
                                 isKnockLoading ||
                                 isSuccess ||
-                                isKnockSuccess
+                                isKnockSuccess ||
+                                isError ||
+                                isKnockError
                             }
                         >
                             <Text>Sign Up</Text>
