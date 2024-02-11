@@ -47,18 +47,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                 setIsPasswordInvalid(true);
                 return;
             }
-            if (password === confirmPassword) {
-                const user = await register({ email, username, password });
-                console.log(user)
-                if ('data' in user) {
-                    const knockUser = await identifyUser({id: String(user.data.user.id), email, username})
-                    console.log(knockUser)
-                }
-                setIsPasswordInvalid(false);
-            } else {
-                //TODO: replace this alert with something in the UI
-                alert("Password confirmation does not match");
+
+            if (password !== confirmPassword) {
+                return;
             }
+
+            const user = await register({ email, username, password });
+            console.log(user)
+            if ('data' in user) {
+                const knockUser = await identifyUser({id: String(user.data.user.id), email, username})
+                console.log(knockUser)
+            }
+            setIsPasswordInvalid(false);
         } catch (e) {
             console.error(e);
         }
@@ -142,6 +142,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                         </FormControl>
                         <FormControl
                             isRequired
+                            isInvalid={confirmPassword.length ? password !== confirmPassword : false}
                         >
                             <FormLabel>Confirm Password</FormLabel>
                             <InputGroup size="md">
@@ -164,6 +165,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                         />
                                     </InputRightElement>
                                 </InputGroup>
+                                {confirmPassword.length ? <FormErrorMessage>Passwords do not match</FormErrorMessage> : ""}
                         </FormControl>
                         <Button
                             colorScheme="yellow"
