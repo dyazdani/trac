@@ -22,6 +22,9 @@ import {
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 import { useRegisterMutation, useIdentifyUserMutation } from "../features/api.js";
 import getPasswordValidation from "../../utils/getPasswordValidation.js";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library.js";
+import { Prisma } from "@prisma/client";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 export interface RegisterFormProps {
     handleLinkClick: () => void
@@ -37,7 +40,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
  
-    const [register] = useRegisterMutation();
+    const [register, {error, isError, isLoading}] = useRegisterMutation();
     const [identifyUser] = useIdentifyUserMutation();
 
 
@@ -91,6 +94,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                     >
                         <FormControl
                             isRequired
+                            isDisabled={isLoading}
                         >
                             <FormLabel>Email Address</FormLabel>
                             <Input 
@@ -102,6 +106,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                         </FormControl>
                         <FormControl
                             isRequired
+                            isDisabled={isLoading}
                         >
                             <FormLabel>Username</FormLabel>
                             <Input 
@@ -114,6 +119,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                         <FormControl
                             isRequired
                             isInvalid={isPasswordInvalid}
+                            isDisabled={isLoading}
                         >
                             <FormLabel>Password</FormLabel>
                                 <InputGroup size="md">
@@ -143,6 +149,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                         <FormControl
                             isRequired
                             isInvalid={confirmPassword.length ? password !== confirmPassword : false}
+                            isDisabled={isLoading}
                         >
                             <FormLabel>Confirm Password</FormLabel>
                             <InputGroup size="md">
@@ -171,6 +178,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                             colorScheme="yellow"
                             data-testid="submit-button"
                             type="submit"    
+                            isDisabled={isLoading}
                         >
                             <Text>Sign Up</Text>
                         </Button> 
