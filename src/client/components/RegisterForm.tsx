@@ -40,8 +40,16 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
  
-    const [register, {error, isError, isLoading}] = useRegisterMutation();
-    const [identifyUser] = useIdentifyUserMutation();
+    const [register, {error, isError, isLoading, isSuccess}] = useRegisterMutation();
+    const [
+        identifyUser, 
+        {
+            error: knockError, 
+            isError: isKnockError, 
+            isLoading: isKnockLoading, 
+            isSuccess: isKnockSuccess
+        }
+    ] = useIdentifyUserMutation();
 
 
     const handleSubmit = async () => {
@@ -94,7 +102,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                     >
                         <FormControl
                             isRequired
-                            isDisabled={isLoading}
+                            isDisabled={
+                                isLoading ||
+                                isKnockLoading ||
+                                isSuccess ||
+                                isKnockSuccess
+                            }
                         >
                             <FormLabel>Email Address</FormLabel>
                             <Input 
@@ -106,7 +119,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                         </FormControl>
                         <FormControl
                             isRequired
-                            isDisabled={isLoading}
+                            isDisabled={
+                                isLoading ||
+                                isKnockLoading ||
+                                isSuccess ||
+                                isKnockSuccess
+                            }
                         >
                             <FormLabel>Username</FormLabel>
                             <Input 
@@ -119,7 +137,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                         <FormControl
                             isRequired
                             isInvalid={isPasswordInvalid}
-                            isDisabled={isLoading}
+                            isDisabled={
+                                isLoading ||
+                                isKnockLoading ||
+                                isSuccess ||
+                                isKnockSuccess
+                            }
                         >
                             <FormLabel>Password</FormLabel>
                                 <InputGroup size="md">
@@ -149,7 +172,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                         <FormControl
                             isRequired
                             isInvalid={confirmPassword.length ? password !== confirmPassword : false}
-                            isDisabled={isLoading}
+                            isDisabled={
+                                isLoading ||
+                                isKnockLoading ||
+                                isSuccess ||
+                                isKnockSuccess
+                            }
                         >
                             <FormLabel>Confirm Password</FormLabel>
                             <InputGroup size="md">
@@ -178,7 +206,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                             colorScheme="yellow"
                             data-testid="submit-button"
                             type="submit"    
-                            isDisabled={isLoading}
+                            isDisabled={
+                                isLoading ||
+                                isKnockLoading ||
+                                isSuccess ||
+                                isKnockSuccess
+                            }
                         >
                             <Text>Sign Up</Text>
                         </Button> 
