@@ -14,9 +14,10 @@ import {
     Box, 
     Text,
     Button,
-    Spacer
+    Spacer,
 } from "@chakra-ui/react";
 import MessagesMenu from "./MessagesMenu.js";
+import { current } from "@reduxjs/toolkit";
 
 type AppHeaderProps = {
   isBannerDisplayed: boolean | undefined
@@ -51,6 +52,9 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
                 <MessagesMenu />
               </KnockFeedProvider>
             }
+            <Text>{`Welcome back, `}<Text as='b'>{currentUser?.username}</Text>
+            </Text>
+
             <Button
                 type="button"
                 onClick={() => {dispatch(logout())}}
