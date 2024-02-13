@@ -11,25 +11,20 @@ import {
   Heading,
   IconButton,
   Flex,
-  Spacer,
   Box,
   keyframes,
-  Button
 } from "@chakra-ui/react";
 import { motion } from 'framer-motion';
 import { 
-    EditIcon, 
     ArrowLeftIcon,
     ArrowRightIcon
 } from "@chakra-ui/icons";
 import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
-import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
+import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
 import UpdateHabitButton from "./UpdateHabitButton.js";
 import StatusReportFormButton from "./StatusReportFormButton.js";
-import isTodayCheckInDay from "../../utils/isTodayCheckInDay.js";
-import isMostRecentStatusReportSent from "../../utils/isMostRecentStatusReportSent.js";
-import getMostRecentCheckInDayDate from "../../utils/getMostRecentCheckInDayDate.js";
-import getFirstCheckInDayDate from "../../utils/getFirstCheckInDayDate.js";
+import isMostRecentStatusReportSent from "..//utils/isMostRecentStatusReportSent.js";
+import getFirstCheckInDayDate from "..//utils/getFirstCheckInDayDate.js";
 
 type HabitProps = {
   habit: HabitWithDetails
