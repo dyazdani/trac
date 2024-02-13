@@ -6,14 +6,14 @@ import {
     FormControl,
     VStack
  } from "@chakra-ui/react";
- import isDateToday from "../../utils/isDateToday.js";
-import getDayOfWeekLabelText from "../../utils/getDayOfWeekLabelText.js";
+ import isDateToday from "..//utils/isDateToday.js";
+import getDayOfWeekLabelText from "..//utils/getDayOfWeekLabelText.js";
 import { useGetHabitByIdQuery, useUpdateHabitMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
-import areDatesSameDayMonthYear from "../../utils/areDatesSameDayMonthYear.js";
+import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
 import DiamondImage from "./DiamondImage.js";
-import isDateOutOfRange from "../../utils/isDateOutOfRange.js";
+import isDateOutOfRange from "..//utils/isDateOutOfRange.js";
 import isHabitRoutineDay from "./isHabitRoutineDay.js";
 
  export interface ToggleButtonProps {

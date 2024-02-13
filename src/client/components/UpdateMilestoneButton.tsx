@@ -34,10 +34,10 @@ import {
 } from "../features/api.js";
 import { DayOfTheWeek } from "@prisma/client";
 import React, { useState } from "react";
-import getBooleanRoutineDays from "../../utils/getBooleanRoutineDays.js";
+import getBooleanRoutineDays from "..//utils/getBooleanRoutineDays.js";
 import { useAppSelector } from "../app/hooks.js";
 import { HabitWithDetails, MilestoneWithDetails, RoutineDaysArrayType } from "../../types/index.js";
-import getRoutineDaysStringArray from "../../utils/getRoutineDaysStringArray.js";
+import getRoutineDaysStringArray from "..//utils/getRoutineDaysStringArray.js";
 import { DaysOfWeek } from "@knocklabs/node";
 import { SingleDatepicker } from "chakra-dayzed-datepicker";
 

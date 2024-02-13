@@ -10,7 +10,7 @@ import { useAppSelector } from "../app/hooks.js";
 import { useGetHabitsByUserQuery, useGetMilestonesByUserQuery } from "../features/api.js";
 import AppHeader from "./AppHeader.js";
 import CTABanner from "./CTABanner.js";
-import isTodayCheckInDay from "../../utils/isTodayCheckInDay.js";
+import isTodayCheckInDay from "..//utils/isTodayCheckInDay.js";
 import { useState } from "react";
 import MyMilestones from "./MyMilestones.js";
 
