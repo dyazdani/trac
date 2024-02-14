@@ -15,7 +15,8 @@ import {
     EditablePreview,
     EditableInput,
     FormControl,
-    useToast
+    useToast,
+    Input
   } from '@chakra-ui/react'
 import { useAppSelector } from '../app/hooks.js';
 import { SingleDatepicker } from 'chakra-dayzed-datepicker';
@@ -27,7 +28,7 @@ export interface CreateMilestoneFormProps {
 }
 
 const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMilestoneFormProps) => {
-    const [datepickerValue, setDatepickerValue] = useState<Date | null>(null)
+    const [datepickerValue, setDatepickerValue] = useState<Date | undefined>()
     const [milestoneNameValue, setMilestoneNameValue] = useState("New Milestone")
 
     const [createMilestone] = useCreateMilestoneMutation();
@@ -113,8 +114,12 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                         >
                             Due Date</FormLabel>
                         <SingleDatepicker
-                            date={new Date()}
-                            onDateChange={setDatepickerValue}
+                            id="dueDate"
+                            name="date-input"
+                            date={datepickerValue}
+                            onDateChange={(e) => {
+                                setDatepickerValue(e)
+                            }}
                         />
                     </FormControl>
                     </Box>
@@ -126,7 +131,12 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                         variant="outline" 
                         colorScheme='teal' 
                         mr={3} 
-                        onClick={onCloseForMilestone}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onCloseForMilestone();
+                            setDatepickerValue(undefined);
+                            setMilestoneNameValue("New Milestone");
+                        }}
                     >
                         Cancel
                     </Button>
