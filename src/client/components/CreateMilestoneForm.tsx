@@ -15,7 +15,8 @@ import {
     EditablePreview,
     EditableInput,
     FormControl,
-    useToast
+    useToast,
+    Input
   } from '@chakra-ui/react'
 import { useAppSelector } from '../app/hooks.js';
 import { SingleDatepicker } from 'chakra-dayzed-datepicker';
@@ -113,10 +114,21 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                         >
                             Due Date</FormLabel>
                         <SingleDatepicker
+                            id="dueDate"
                             name="date-input"
                             date={datepickerValue}
-                            onDateChange={setDatepickerValue}
+                            onDateChange={(e) => {
+                                setDatepickerValue(e)
+                            }}
                         />
+                       {/* <input
+                        type="date"
+                        value={datepickerValue?.toISOString()}
+                        onChange={(e) => {
+                            e.preventDefault();
+                            setDatepickerValue(new Date(e.target.value))
+                        }}
+                       /> */}
                     </FormControl>
                     </Box>
                 </Stack>
