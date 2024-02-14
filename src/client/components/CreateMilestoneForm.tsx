@@ -121,14 +121,6 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                                 setDatepickerValue(e)
                             }}
                         />
-                       {/* <input
-                        type="date"
-                        value={datepickerValue?.toISOString()}
-                        onChange={(e) => {
-                            e.preventDefault();
-                            setDatepickerValue(new Date(e.target.value))
-                        }}
-                       /> */}
                     </FormControl>
                     </Box>
                 </Stack>
