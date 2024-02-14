@@ -4,6 +4,10 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    // to use environment variables, otherwise they are all undefined
+    'process.env': process.env
+  },
   plugins: [
     react(),
     // to fix bug accessing Vite Node dependencies (was logging TypeError: 'Bst.inherits is not a function')
