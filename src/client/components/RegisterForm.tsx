@@ -136,7 +136,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                         </FormControl>
                         <FormControl
                             isRequired
-                            isInvalid={isPasswordInvalid}
+                            isInvalid={isPasswordInvalid ? getPasswordValidation(password).isTooWeak : false}
                             isDisabled={
                                 isLoading ||
                                 isKnockLoading ||
