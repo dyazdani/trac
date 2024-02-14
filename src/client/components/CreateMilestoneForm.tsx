@@ -27,7 +27,7 @@ export interface CreateMilestoneFormProps {
 }
 
 const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMilestoneFormProps) => {
-    const [datepickerValue, setDatepickerValue] = useState<Date | null>(null)
+    const [datepickerValue, setDatepickerValue] = useState<Date | undefined>()
     const [milestoneNameValue, setMilestoneNameValue] = useState("New Milestone")
 
     const [createMilestone] = useCreateMilestoneMutation();
@@ -113,7 +113,8 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                         >
                             Due Date</FormLabel>
                         <SingleDatepicker
-                            date={new Date()}
+                            name="date-input"
+                            date={datepickerValue}
                             onDateChange={setDatepickerValue}
                         />
                     </FormControl>
@@ -126,7 +127,12 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                         variant="outline" 
                         colorScheme='teal' 
                         mr={3} 
-                        onClick={onCloseForMilestone}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onCloseForMilestone();
+                            setDatepickerValue(undefined);
+                            setMilestoneNameValue("New Milestone");
+                        }}
                     >
                         Cancel
                     </Button>
