@@ -126,6 +126,10 @@ export const api = createApi({
         query: () => '/users',
         providesTags: ['User']
       }),
+      getUserByEmail: builder.query<{user: User}, string>({
+        query: (email) => `/users`,
+        providesTags: ["User"]
+      }),
       getHabitsByUser: builder.query<{ habits: HabitWithDetails[] }, number>({
         query: (id) => `/users/${id}/habits`,
         providesTags: ["Habit"]
@@ -252,7 +256,8 @@ export const api = createApi({
     useGetMilestonesByUserQuery,
     useUpdateMilestoneMutation,
     useDeleteMilestoneMutation,
-    useGetAllUsersQuery
+    useGetAllUsersQuery,
+    useGetUserByEmailQuery
   } = api
 
 
