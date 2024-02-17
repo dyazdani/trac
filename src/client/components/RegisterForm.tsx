@@ -77,24 +77,22 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
             }
             
             if (!isUsersLoading) {
-                console.dir(data)
                 if (data) {
-                    if (data.users.some(element => element.user.email === email)) {
+                    const isUserEmailTaken = data.users.some(element => element.user.email === email);
+                    const isUserUsernameTaken = data.users.some(element => element.user.username === username);
+
+                    if (isUserEmailTaken) {
                         setIsEmailTaken(true);
                     }
-                    if (data.users.some(element => element.user.username === username)) {
+                    if (isUserUsernameTaken) {
                         setIsUsernameTaken(true);
                     }
+
+                    if (isUserEmailTaken || isUserUsernameTaken) {
+                        setIsPasswordInvalid(false);
+                        return
+                    }
                 }
-
-                console.log(isEmailTaken);
-                console.log(isUsernameTaken);
-
-                if (isEmailTaken || isUsernameTaken) {
-                    setIsPasswordInvalid(false);
-                    return
-                }
-
 
                 const response = await register({ email, username, password }).unwrap();
 
