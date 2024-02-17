@@ -49,13 +49,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
       if (!isError && !isLoading && !isUsersLoading) {
         if (data) {
           const isUnregisteredEmail = data.users.every(element => element.user.email !== email)
-
+          console.log(isUnregisteredEmail);
           if (isUnregisteredEmail) {
             setIsEmailInvalid(true);
           }
 
-          console.log(isEmailInvalid)
-          if (isEmailInvalid) {
+          if (isUnregisteredEmail) {
             return
           }
         }
@@ -90,7 +89,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
               <FormLabel>Email Address</FormLabel>
               <Input
                 type="email"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  if (isEmailInvalid) {
+                    setIsEmailInvalid(false);
+                  }
+                  setEmail(e.target.value)
+                }}
                 value={email}
               />
               <FormErrorMessage>An account with that email does not exist</FormErrorMessage>
@@ -129,7 +133,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
               data-testid="submit-button"
               type="submit"
               isLoading={isLoading}
-              isDisabled={isError || isSuccess}
+              isDisabled={isError || isSuccess || isLoading}
             >
               <Text>Log In</Text>
             </Button>
