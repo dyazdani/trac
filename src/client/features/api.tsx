@@ -122,6 +122,10 @@ export const api = createApi({
         }),
         invalidatesTags: ["KnockUser"]
       }),
+      getAllUsers: builder.query<{users: {user: Omit<User, 'password'>}[]}, void>({
+        query: () => '/users',
+        providesTags: ['User']
+      }),
       getHabitsByUser: builder.query<{ habits: HabitWithDetails[] }, number>({
         query: (id) => `/users/${id}/habits`,
         providesTags: ["Habit"]
@@ -130,7 +134,7 @@ export const api = createApi({
         query: ({id, habitId}) => `/users/${id}/habits/${habitId}`,
         providesTags: ["Habit"]
       }),
-            //TODO: the return type could be switched to HabitWithDetails to include relations
+      //TODO: the return type could be switched to HabitWithDetails to include relations
       createHabit: builder.mutation<{habit: Habit}, {id: number, habitDetails: CreateHabitReqBody}>({
         query: ({id, habitDetails}) => ({
           url: `/users/${id}/habits`,
@@ -247,7 +251,8 @@ export const api = createApi({
     useCreateMilestoneMutation,
     useGetMilestonesByUserQuery,
     useUpdateMilestoneMutation,
-    useDeleteMilestoneMutation
+    useDeleteMilestoneMutation,
+    useGetAllUsersQuery
   } = api
 
 
