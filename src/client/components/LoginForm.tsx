@@ -50,17 +50,20 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
           }}
         >
           <VStack as="fieldset">
-            <FormControl>
+            <FormControl
+              isRequired
+            >
               <FormLabel>Email Address</FormLabel>
               <Input
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
-                required
               />
             </FormControl>
 
-            <FormControl>
+            <FormControl
+              isRequired
+            >
               <FormLabel>Password</FormLabel>
               <InputGroup size="md">
                 <Input
@@ -68,7 +71,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
                   type={showPassword ? "text" : "password"}
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
-                  required
                 />
                 <InputRightElement width="2.5rem">
                   <IconButton
