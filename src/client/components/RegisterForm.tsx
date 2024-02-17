@@ -20,16 +20,16 @@ import {
     FormHelperText
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
-import { useRegisterMutation, useIdentifyUserMutation } from "../features/api.js";
+import { 
+    useRegisterMutation, 
+    useIdentifyUserMutation, 
+    useGetAllUsersQuery 
+} from "../features/api.js";
 import getPasswordValidation from "../../utils/getPasswordValidation.js";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library.js";
-import { Prisma } from "@prisma/client";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 export interface RegisterFormProps {
     handleLinkClick: () => void
 }
-
 
 const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
     const [email, setEmail] = useState("");
@@ -39,12 +39,25 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
+    const [isUsernameTaken, setIsUsernameTaken] = useState(false);
+    const [isEmailTaken, setIsEmailTaken] = useState(false);
  
-    const [register, {error, isError, isLoading, isSuccess}] = useRegisterMutation();
+    const { 
+        data, 
+        isLoading: isUsersLoading 
+    } = useGetAllUsersQuery();
+
+    const [
+        register, 
+        {
+            isError, 
+            isLoading, 
+            isSuccess
+        }] = useRegisterMutation();
+        
     const [
         identifyUser, 
         {
-            error: knockError, 
             isError: isKnockError, 
             isLoading: isKnockLoading, 
             isSuccess: isKnockSuccess
@@ -58,23 +71,45 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                 setIsPasswordInvalid(true);
                 return;
             }
-
+    
             if (password !== confirmPassword) {
                 return;
             }
+            
+            if (!isUsersLoading) {
+                console.dir(data)
+                if (data) {
+                    if (data.users.some(element => element.user.email === email)) {
+                        setIsEmailTaken(true);
+                    }
+                    if (data.users.some(element => element.user.username === username)) {
+                        setIsUsernameTaken(true);
+                    }
+                }
 
-            const user = await register({ email, username, password });
-            console.log(user)
-            if ('data' in user) {
-                const knockUser = await identifyUser({id: String(user.data.user.id), email, username})
-                console.log(knockUser)
+                console.log(isEmailTaken);
+                console.log(isUsernameTaken);
+
+                if (isEmailTaken || isUsernameTaken) {
+                    setIsPasswordInvalid(false);
+                    return
+                }
+
+
+                const response = await register({ email, username, password }).unwrap();
+
+                console.log(response)
+
+                if (response.user) {
+                    const knockUser = await identifyUser({id: String(response.user?.id), email, username})
+                    console.log(knockUser)
+                } 
+
+                setIsPasswordInvalid(false);
             }
-            setIsPasswordInvalid(false);
         } catch (e) {
-            console.error(e);
+            console.error(e)
         }
-        
-        
     };
 
     return (
@@ -102,6 +137,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                     >
                         <FormControl
                             isRequired
+                            isInvalid={isEmailTaken}
                             isDisabled={
                                 isLoading ||
                                 isKnockLoading ||
@@ -112,13 +148,20 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                             <FormLabel>Email Address</FormLabel>
                             <Input 
                                 type='email' 
-                                onChange={e => setEmail(e.target.value)}
+                                onChange={(e) => {
+                                    if (isEmailTaken) {
+                                        setIsEmailTaken(false);
+                                    }
+                                    setEmail(e.target.value)
+                                }}
                                 value={email}
                                 required
                             />
+                            <FormErrorMessage>An account with that email already exists</FormErrorMessage>
                         </FormControl>
                         <FormControl
                             isRequired
+                            isInvalid={isUsernameTaken}
                             isDisabled={
                                 isLoading ||
                                 isKnockLoading ||
@@ -129,10 +172,16 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                             <FormLabel>Username</FormLabel>
                             <Input 
                                 type='username' 
-                                onChange={e => setUsername(e.target.value)}
+                                onChange={(e) => {
+                                    if (isUsernameTaken) {
+                                        setIsUsernameTaken(false);
+                                    }
+                                    setUsername(e.target.value)
+                                }}                                
                                 value={username}
                                 required
                             />
+                            <FormErrorMessage>Username already exists</FormErrorMessage>
                         </FormControl>
                         <FormControl
                             isRequired
