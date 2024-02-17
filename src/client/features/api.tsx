@@ -51,7 +51,7 @@ export const api = createApi({
       'Milestone'
     ],
     endpoints: (builder) => ({
-      register: builder.mutation({
+      register: builder.mutation<RegisterMutationResponse, {email: string, username: string, password: string}>({
         query: ({ email, username, password }) => ({
           url: "auth/register",
           method: "POST",
