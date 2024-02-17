@@ -1,5 +1,5 @@
 import { DaysOfWeek } from '@knocklabs/node';
-import {  CheckIn, DayOfTheWeek, Habit, Routine, StatusReport, User } from '@prisma/client';
+import {  CheckIn, DayOfTheWeek, Prisma, Routine, StatusReport, User } from '@prisma/client';
 
 // to make the file a module and avoid the TypeScript error
 export {}
@@ -121,4 +121,10 @@ export interface UpdateMilestoneReqBody {
   dueDate: Date
   isCompleted: boolean
   isCanceled: boolean
+}
+export interface RegisterMutationResponse {
+  error?: Prisma.PrismaClientKnownRequestError | Prisma.PrismaClientValidationError
+  status?: number
+  token?: string,
+  user?: Omit<User, 'password'>,
 }
