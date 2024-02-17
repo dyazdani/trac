@@ -38,7 +38,7 @@ usersRouter.get("/", async (req, res, next): Promise<void> => {
     }
 })
 
-// GET /api/users/:id
+// GET /api/users
 usersRouter.get("/", async (req, res, next): Promise<void> => {
     try {
         const { email } = req.body;
