@@ -29,7 +29,7 @@ const transporter = nodemailer.createTransport({
   });
 
 // GET /api/users
-usersRouter.get("/", requireUser, requireAdmin, async (req, res, next): Promise<void> => {
+usersRouter.get("/", async (req, res, next): Promise<void> => {
     try {
         const users = await prisma.user.findMany();
         res.send({users: users.map(user => ({user: excludePassword(user)}))});
