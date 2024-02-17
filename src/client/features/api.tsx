@@ -57,7 +57,7 @@ export const api = createApi({
           method: "POST",
           body: { email, username, password },
         }),
-        invalidatesTags: ["CurrentUser"],
+        invalidatesTags: ["CurrentUser", "User"],
       }),
       login: builder.mutation({
         query: ({ email, password }) => ({
