@@ -16,9 +16,10 @@ import {
   InputGroup,
   InputRightElement,
   IconButton,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useLoginMutation } from "../features/api.js";
+import { useGetAllUsersQuery, useLoginMutation } from "../features/api.js";
 
 export interface LoginFormProps {
   handleLinkClick: () => void;
@@ -28,13 +29,42 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isEmailInvalid, setIsEmailInvalid] = useState(false);
 
-  const [login, { isLoading, isError, isSuccess}] = useLoginMutation();
+  const [
+    login, 
+    { 
+      isLoading, 
+      isError, 
+      isSuccess
+    }] = useLoginMutation();
+
+    const { 
+      data, 
+      isLoading: isUsersLoading 
+  } = useGetAllUsersQuery();
 
   const handleSubmit = async () => {
-    if (!isError) {
-      const user = await login({ email, password })
+    try {
+      if (!isError && !isLoading && !isUsersLoading) {
+        if (data) {
+          const isUnregisteredEmail = data.users.every(element => element.user.email !== email)
+
+          if (isUnregisteredEmail) {
+            setIsEmailInvalid(true);
+          }
+
+          console.log(isEmailInvalid)
+          if (isEmailInvalid) {
+            return
+          }
+        }
+        const user = await login({ email, password })
+      }
+    } catch (e) {
+      console.error(e);    
     }
+
   };
 
   return (
@@ -55,6 +85,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
             <FormControl
               isRequired
               isDisabled={isSuccess}
+              isInvalid={isEmailInvalid}
             >
               <FormLabel>Email Address</FormLabel>
               <Input
@@ -62,6 +93,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
               />
+              <FormErrorMessage>An account with that email does not exist</FormErrorMessage>
             </FormControl>
 
             <FormControl
