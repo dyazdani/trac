@@ -29,10 +29,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading, isError, isSuccess}] = useLoginMutation();
 
   const handleSubmit = async () => {
-    const user = await login({ email, password })
+    if (!isError) {
+      const user = await login({ email, password })
+    }
   };
 
   return (
@@ -52,6 +54,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
           <VStack as="fieldset">
             <FormControl
               isRequired
+              isDisabled={isSuccess}
             >
               <FormLabel>Email Address</FormLabel>
               <Input
@@ -63,6 +66,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
 
             <FormControl
               isRequired
+              isDisabled={isSuccess}
             >
               <FormLabel>Password</FormLabel>
               <InputGroup size="md">
@@ -93,6 +97,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
               data-testid="submit-button"
               type="submit"
               isLoading={isLoading}
+              isDisabled={isError || isSuccess}
             >
               <Text>Log In</Text>
             </Button>
