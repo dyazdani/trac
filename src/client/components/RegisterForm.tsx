@@ -69,11 +69,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
         try {
             if (getPasswordValidation(password).isTooWeak) {
                 setIsPasswordInvalid(true);
-                return;
-            }
-    
-            if (password !== confirmPassword) {
-                return;
             }
             
             if (!isUsersLoading) {
@@ -88,8 +83,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                         setIsUsernameTaken(true);
                     }
 
-                    if (isUserEmailTaken || isUserUsernameTaken) {
-                        setIsPasswordInvalid(false);
+                    if (isUserEmailTaken || isUserUsernameTaken || password !== confirmPassword || getPasswordValidation(password).isTooWeak) {
                         return
                     }
                 }
