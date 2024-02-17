@@ -15,15 +15,21 @@ import {
     Link,
     InputGroup,
     InputRightElement,
-    IconButton
+    IconButton,
+    FormErrorMessage,
+    FormHelperText
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
-import { useRegisterMutation, useIdentifyUserMutation } from "../features/api.js";
+import { 
+    useRegisterMutation, 
+    useIdentifyUserMutation, 
+    useGetAllUsersQuery 
+} from "../features/api.js";
+import getPasswordValidation from "../../utils/getPasswordValidation.js";
 
 export interface RegisterFormProps {
     handleLinkClick: () => void
 }
-
 
 const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
     const [email, setEmail] = useState("");
@@ -32,22 +38,75 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
+    const [isUsernameTaken, setIsUsernameTaken] = useState(false);
+    const [isEmailTaken, setIsEmailTaken] = useState(false);
  
-    const [register] = useRegisterMutation();
-    const [identifyUser] = useIdentifyUserMutation();
+    const { 
+        data, 
+        isLoading: isUsersLoading 
+    } = useGetAllUsersQuery();
+
+    const [
+        register, 
+        {
+            isError, 
+            isLoading, 
+            isSuccess
+        }] = useRegisterMutation();
+        
+    const [
+        identifyUser, 
+        {
+            isError: isKnockError, 
+            isLoading: isKnockLoading, 
+            isSuccess: isKnockSuccess
+        }
+    ] = useIdentifyUserMutation();
 
 
     const handleSubmit = async () => {
-        if (password === confirmPassword) {
-            const user = await register({ email, username, password });
-            console.log(user)
-            if ('data' in user) {
-                const knockUser = await identifyUser({id: String(user.data.user.id), email, username})
-                console.log(knockUser)
+        try {
+            if (getPasswordValidation(password).isTooWeak) {
+                setIsPasswordInvalid(true);
+                return;
             }
-        } else {
-            //TODO: replace this alert with something in the UI
-            alert("Password confirmation does not match");
+    
+            if (password !== confirmPassword) {
+                return;
+            }
+            
+            if (!isUsersLoading) {
+                if (data) {
+                    const isUserEmailTaken = data.users.some(element => element.user.email === email);
+                    const isUserUsernameTaken = data.users.some(element => element.user.username === username);
+
+                    if (isUserEmailTaken) {
+                        setIsEmailTaken(true);
+                    }
+                    if (isUserUsernameTaken) {
+                        setIsUsernameTaken(true);
+                    }
+
+                    if (isUserEmailTaken || isUserUsernameTaken) {
+                        setIsPasswordInvalid(false);
+                        return
+                    }
+                }
+
+                const response = await register({ email, username, password }).unwrap();
+
+                console.log(response)
+
+                if (response.user) {
+                    const knockUser = await identifyUser({id: String(response.user?.id), email, username})
+                    console.log(knockUser)
+                } 
+
+                setIsPasswordInvalid(false);
+            }
+        } catch (e) {
+            console.error(e)
         }
     };
 
@@ -74,25 +133,64 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                     <VStack
                         as="fieldset"
                     >
-                        <FormControl>
+                        <FormControl
+                            isRequired
+                            isInvalid={isEmailTaken}
+                            isDisabled={
+                                isLoading ||
+                                isKnockLoading ||
+                                isSuccess ||
+                                isKnockSuccess
+                            }
+                        >
                             <FormLabel>Email Address</FormLabel>
                             <Input 
                                 type='email' 
-                                onChange={e => setEmail(e.target.value)}
+                                onChange={(e) => {
+                                    if (isEmailTaken) {
+                                        setIsEmailTaken(false);
+                                    }
+                                    setEmail(e.target.value)
+                                }}
                                 value={email}
                                 required
                             />
+                            <FormErrorMessage>An account with that email already exists</FormErrorMessage>
                         </FormControl>
-                        <FormControl>
+                        <FormControl
+                            isRequired
+                            isInvalid={isUsernameTaken}
+                            isDisabled={
+                                isLoading ||
+                                isKnockLoading ||
+                                isSuccess ||
+                                isKnockSuccess
+                            }
+                        >
                             <FormLabel>Username</FormLabel>
                             <Input 
                                 type='username' 
-                                onChange={e => setUsername(e.target.value)}
+                                onChange={(e) => {
+                                    if (isUsernameTaken) {
+                                        setIsUsernameTaken(false);
+                                    }
+                                    setUsername(e.target.value)
+                                }}                                
                                 value={username}
                                 required
                             />
+                            <FormErrorMessage>Username already exists</FormErrorMessage>
                         </FormControl>
-                        <FormControl>
+                        <FormControl
+                            isRequired
+                            isInvalid={isPasswordInvalid ? getPasswordValidation(password).isTooWeak : false}
+                            isDisabled={
+                                isLoading ||
+                                isKnockLoading ||
+                                isSuccess ||
+                                isKnockSuccess
+                            }
+                        >
                             <FormLabel>Password</FormLabel>
                                 <InputGroup size="md">
                                     <Input
@@ -114,8 +212,20 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                         />
                                     </InputRightElement>
                                 </InputGroup>
+                                {password.length ? <FormHelperText>{getPasswordValidation(password).message}</FormHelperText> : ""}
+                                <FormErrorMessage>{getPasswordValidation(password).characterTypeMessage}</FormErrorMessage>
+                                <FormErrorMessage>{getPasswordValidation(password).lengthMessage}</FormErrorMessage>
                         </FormControl>
-                        <FormControl>
+                        <FormControl
+                            isRequired
+                            isInvalid={confirmPassword.length ? password !== confirmPassword : false}
+                            isDisabled={
+                                isLoading ||
+                                isKnockLoading ||
+                                isSuccess ||
+                                isKnockSuccess
+                            }
+                        >
                             <FormLabel>Confirm Password</FormLabel>
                             <InputGroup size="md">
                                     <Input
@@ -137,11 +247,20 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                         />
                                     </InputRightElement>
                                 </InputGroup>
+                                {confirmPassword.length ? <FormErrorMessage>Passwords do not match</FormErrorMessage> : ""}
                         </FormControl>
                         <Button
                             colorScheme="yellow"
                             data-testid="submit-button"
                             type="submit"    
+                            isDisabled={
+                                isLoading ||
+                                isKnockLoading ||
+                                isSuccess ||
+                                isKnockSuccess ||
+                                isError ||
+                                isKnockError
+                            }
                         >
                             <Text>Sign Up</Text>
                         </Button> 

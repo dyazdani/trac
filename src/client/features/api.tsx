@@ -1,8 +1,29 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { 
+  createApi, 
+  fetchBaseQuery 
+} from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
-import { CheckIn, Habit, Milestone, Routine, StatusReport } from '@prisma/client';
-import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails, SendStatusReportMutationArgs, MilestoneWithDetails, CreateMilestoneMutationArgs, UpdateMilestoneReqBody } from '../../types/index.js';
-import { DaysOfWeek, Schedule } from '@knocklabs/node';
+import { 
+  CheckIn, 
+  Habit, 
+  Routine, 
+  StatusReport, 
+  User
+} from '@prisma/client';
+import { 
+  CreateHabitReqBody, 
+  UpdateHabitReqBody, 
+  HabitWithDetails, 
+  SendStatusReportMutationArgs, 
+  MilestoneWithDetails, 
+  CreateMilestoneMutationArgs, 
+  UpdateMilestoneReqBody, 
+  RegisterMutationResponse
+} from '../../types/index.js';
+import { 
+  DaysOfWeek, 
+  Schedule 
+} from '@knocklabs/node';
 import { User as KnockUser } from '@knocklabs/node';
 
 // Define a service using a base URL and expected endpoints
@@ -30,13 +51,13 @@ export const api = createApi({
       'Milestone'
     ],
     endpoints: (builder) => ({
-      register: builder.mutation({
+      register: builder.mutation<RegisterMutationResponse, {email: string, username: string, password: string}>({
         query: ({ email, username, password }) => ({
           url: "auth/register",
           method: "POST",
           body: { email, username, password },
         }),
-        invalidatesTags: ["CurrentUser"],
+        invalidatesTags: ["CurrentUser", "User"],
       }),
       login: builder.mutation({
         query: ({ email, password }) => ({
@@ -101,6 +122,10 @@ export const api = createApi({
         }),
         invalidatesTags: ["KnockUser"]
       }),
+      getAllUsers: builder.query<{users: {user: Omit<User, 'password'>}[]}, void>({
+        query: () => '/users',
+        providesTags: ['User']
+      }),
       getHabitsByUser: builder.query<{ habits: HabitWithDetails[] }, number>({
         query: (id) => `/users/${id}/habits`,
         providesTags: ["Habit"]
@@ -109,7 +134,7 @@ export const api = createApi({
         query: ({id, habitId}) => `/users/${id}/habits/${habitId}`,
         providesTags: ["Habit"]
       }),
-            //TODO: the return type could be switched to HabitWithDetails to include relations
+      //TODO: the return type could be switched to HabitWithDetails to include relations
       createHabit: builder.mutation<{habit: Habit}, {id: number, habitDetails: CreateHabitReqBody}>({
         query: ({id, habitDetails}) => ({
           url: `/users/${id}/habits`,
@@ -226,7 +251,8 @@ export const api = createApi({
     useCreateMilestoneMutation,
     useGetMilestonesByUserQuery,
     useUpdateMilestoneMutation,
-    useDeleteMilestoneMutation
+    useDeleteMilestoneMutation,
+    useGetAllUsersQuery
   } = api
 
 
