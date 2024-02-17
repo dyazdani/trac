@@ -1,8 +1,29 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { 
+  createApi, 
+  fetchBaseQuery 
+} from '@reduxjs/toolkit/query/react';
 import { RootState } from '../app/store.js';
-import { CheckIn, Habit, Milestone, Routine, StatusReport } from '@prisma/client';
-import { CreateHabitReqBody, UpdateHabitReqBody, HabitWithDetails, SendStatusReportMutationArgs, MilestoneWithDetails, CreateMilestoneMutationArgs, UpdateMilestoneReqBody } from '../../types/index.js';
-import { DaysOfWeek, Schedule } from '@knocklabs/node';
+import { 
+  CheckIn, 
+  Habit, 
+  Routine, 
+  StatusReport, 
+  User
+} from '@prisma/client';
+import { 
+  CreateHabitReqBody, 
+  UpdateHabitReqBody, 
+  HabitWithDetails, 
+  SendStatusReportMutationArgs, 
+  MilestoneWithDetails, 
+  CreateMilestoneMutationArgs, 
+  UpdateMilestoneReqBody, 
+  RegisterMutationResponse
+} from '../../types/index.js';
+import { 
+  DaysOfWeek, 
+  Schedule 
+} from '@knocklabs/node';
 import { User as KnockUser } from '@knocklabs/node';
 
 // Define a service using a base URL and expected endpoints
