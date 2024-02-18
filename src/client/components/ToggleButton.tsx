@@ -8,7 +8,7 @@ import {
  } from "@chakra-ui/react";
  import isDateToday from "..//utils/isDateToday.js";
 import getDayOfWeekLabelText from "..//utils/getDayOfWeekLabelText.js";
-import { useGetHabitByIdQuery, useUpdateHabitMutation } from "../features/api.js";
+import { useUpdateHabitMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
@@ -116,7 +116,10 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
                 outline={outlineColor}
                 backgroundColor="white"
                 colorScheme="teal"
-                zIndex="1"   
+                zIndex="1"
+                _hover={{
+                    background: "white"
+                }}   
                 isDisabled={ !isHabitRoutineDay(habit, date) ||
                     isDateOutOfRange(
                         new Date(habit.dateCreated), 
