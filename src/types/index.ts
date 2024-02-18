@@ -128,3 +128,8 @@ export interface RegisterMutationResponse {
   token?: string,
   user?: Omit<User, 'password'>,
 }
+
+export interface LoginMutationResponse extends RegisterMutationResponse {
+  name: string
+  message: string
+}
