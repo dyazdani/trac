@@ -19,7 +19,7 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useGetAllUsersQuery, useLoginMutation } from "../features/api.js";
+import { useGetAllUsersQuery, useGetUserByEmailQuery, useLoginMutation } from "../features/api.js";
 
 export interface LoginFormProps {
   handleLinkClick: () => void;
@@ -30,6 +30,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isEmailInvalid, setIsEmailInvalid] = useState(false);
+  const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
+  const [isInputAndSubmitDisabled, setIsInputAndSubmitDisabled] = useState(false);
 
   const [
     login, 
@@ -44,26 +46,37 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
       isLoading: isUsersLoading 
   } = useGetAllUsersQuery();
 
+  const { 
+    isLoading: isUserLoading
+  } = useGetUserByEmailQuery(email);
+
   const handleSubmit = async () => {
     try {
-      if (!isError && !isLoading && !isUsersLoading) {
+      if (!isUsersLoading && !isUserLoading) {
         if (data) {
           const isUnregisteredEmail = data.users.every(element => element.user.email !== email)
-          console.log(isUnregisteredEmail);
           if (isUnregisteredEmail) {
             setIsEmailInvalid(true);
           }
 
           if (isUnregisteredEmail) {
-            return
+            return;
           }
         }
-        const user = await login({ email, password })
+
+        const user = await login({ email, password }).unwrap();
+        if (user.name === "IncorrectPassword") {
+          setIsPasswordInvalid(true);
+          return
+        }
+        
+        if (isSuccess || isError || isLoading) {
+          setIsInputAndSubmitDisabled(true);
+        }
       }
     } catch (e) {
       console.error(e);    
     }
-
   };
 
   return (
@@ -83,7 +96,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
           <VStack as="fieldset">
             <FormControl
               isRequired
-              isDisabled={isSuccess}
+              isDisabled={isInputAndSubmitDisabled}
               isInvalid={isEmailInvalid}
             >
               <FormLabel>Email Address</FormLabel>
@@ -102,14 +115,20 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
 
             <FormControl
               isRequired
-              isDisabled={isSuccess}
+              isInvalid={isPasswordInvalid}
+              isDisabled={isInputAndSubmitDisabled}
             >
               <FormLabel>Password</FormLabel>
               <InputGroup size="md">
                 <Input
                   pr="4.5rem"
                   type={showPassword ? "text" : "password"}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    if (isPasswordInvalid) {
+                      setIsPasswordInvalid(false);
+                    }
+                    setPassword(e.target.value)
+                  }}
                   value={password}
                 />
                 <InputRightElement width="2.5rem">
@@ -126,6 +145,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
                   />
                 </InputRightElement>
               </InputGroup>
+              <FormErrorMessage>Incorrect password</FormErrorMessage>
             </FormControl>
 
             <Button
@@ -133,7 +153,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
               data-testid="submit-button"
               type="submit"
               isLoading={isLoading}
-              isDisabled={isError || isSuccess || isLoading}
+              isDisabled={isInputAndSubmitDisabled}
             >
               <Text>Log In</Text>
             </Button>
