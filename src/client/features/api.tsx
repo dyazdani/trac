@@ -18,7 +18,8 @@ import {
   MilestoneWithDetails, 
   CreateMilestoneMutationArgs, 
   UpdateMilestoneReqBody, 
-  RegisterMutationResponse
+  RegisterMutationResponse,
+  LoginMutationResponse
 } from '../../types/index.js';
 import { 
   DaysOfWeek, 
@@ -59,7 +60,7 @@ export const api = createApi({
         }),
         invalidatesTags: ["CurrentUser", "User"],
       }),
-      login: builder.mutation({
+      login: builder.mutation<LoginMutationResponse, {email: string, password: string}>({
         query: ({ email, password }) => ({
           url: "auth/login",
           method: "POST",
