@@ -70,7 +70,13 @@ const StatusReportFormButton = ({habit}: StatusReportFormButtonProps) => {
             aria-label='send-status-report-form'
             fontSize='20px'
             border="2mm ridge rgba(255,215,0, .6)"
-            onClick={onOpen}
+            onClick={(e) => {
+                e.preventDefault();
+                if (!message) {
+                    setMessage(getDefaultStatusReportMessage(habit, currentUser.username))
+                }
+                onOpen();
+            }}
             >
                 Send Status Report
             </Button>
@@ -144,7 +150,11 @@ const StatusReportFormButton = ({habit}: StatusReportFormButtonProps) => {
                             variant="outline" 
                             colorScheme='teal' 
                             mr={3} 
-                            onClick={onClose}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                onClose();
+                                setMessage("");
+                            }}
                         >
                             Cancel
                         </Button>
