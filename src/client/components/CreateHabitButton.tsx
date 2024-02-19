@@ -211,6 +211,10 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                         </MenuList>
                                     </Menu>
                                 </Box>
+                                <Checkbox
+                                    isChecked
+                                    isDisabled
+                                >I agree to have trac email me a weekly reminder on my Check-In Day (unsubscribing from these emails not available at this time).</Checkbox>
                             </Stack>
                         </DrawerBody>
                         <DrawerFooter>

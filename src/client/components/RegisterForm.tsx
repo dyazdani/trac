@@ -17,7 +17,8 @@ import {
     InputRightElement,
     IconButton,
     FormErrorMessage,
-    FormHelperText
+    FormHelperText,
+    Checkbox
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 import { 
@@ -238,6 +239,17 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                     </InputRightElement>
                                 </InputGroup>
                                 {confirmPassword.length ? <FormErrorMessage>Passwords do not match</FormErrorMessage> : ""}
+                        </FormControl>
+                        <FormControl
+                            isRequired
+                            isDisabled={
+                                isLoading ||
+                                isKnockLoading ||
+                                isSuccess ||
+                                isKnockSuccess
+                            }
+                        >
+                            <Checkbox>I give trac permission to email me notifications</Checkbox>
                         </FormControl>
                         <Button
                             colorScheme="yellow"
