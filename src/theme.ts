@@ -4,6 +4,10 @@ import { extendTheme } from "@chakra-ui/react";
 
 //2. Theme object containing custom styling
 const themes = {
+    fonts: {
+        body: "Gabarito, sans-serif",
+        heading: "Gabarito, sans-serif",
+    },
     "colors": {
         "yellow": {
         "50": "#FEF8E6",

@@ -15,6 +15,7 @@ import {
     Text,
     Button,
     Spacer,
+    Heading,
 } from "@chakra-ui/react";
 import MessagesMenu from "./MessagesMenu.js";
 import { current } from "@reduxjs/toolkit";
@@ -39,7 +40,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
         zIndex={100}
         >
         <HStack>
-          <Text fontSize='2xl'>trac</Text>
+          <Heading>trac</Heading>
             <Spacer/>
             {process.env.KNOCK_FEED_CHANNEL_ID && 
             process.env.KNOCK_PUBLIC_API_KEY && 
