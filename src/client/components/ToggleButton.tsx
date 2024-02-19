@@ -42,6 +42,9 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
     // give button purple outline if it a check-in day
     const outlineColor = isCheckInDay ? "3px solid rgb(103, 65, 217)" : "3px solid black";
 
+    // background color changes when Habit is completed or canceled
+    const backgroundColor = milestone.isCompleted ? "rgba(249, 209, 98, 0.1)" : milestone.isCanceled ? "rgba(212, 211, 212, 1)" : "rgb(249, 209, 98)"
+
     // extract day of the week abbreviation for label
     const dayAbbreviation = getDayOfWeekLabelText(date);
 
@@ -98,7 +101,7 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
             }}
             as="form"
         >
-            {isToday && <DiamondImage/>}
+            {isToday && !milestone.isCanceled && !milestone.isCompleted && <DiamondImage/>}
             <FormLabel
                 w="fit-content"
                 color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
@@ -111,16 +114,18 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
                 h="15px"
                 minW="10px"
                 px="0"
-                border="2px solid white"
+                border={`2px solid ${backgroundColor}`}
                 borderRadius="50%"
                 outline={outlineColor}
-                backgroundColor="white"
-                colorScheme="teal"
+                backgroundColor={backgroundColor}
+                colorScheme="blue"
                 zIndex="1"
                 _hover={{
-                    background: "white"
+                    background: "none"
                 }}   
-                isDisabled={ !isHabitRoutineDay(habit, date) ||
+                isDisabled={ 
+                    !isHabitRoutineDay(habit, date) || 
+                    milestone.isCanceled ||
                     isDateOutOfRange(
                         new Date(habit.dateCreated), 
                         new Date(),
@@ -138,7 +143,7 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
                         top="53%"
                         left= "51%"
                         transform="translate(-52%, -52%)"
-                        backgroundColor="teal"
+                        backgroundColor="#4F62B0"
                         borderRadius="50%"
                     /> 
                 }
