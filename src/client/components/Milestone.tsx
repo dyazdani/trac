@@ -39,9 +39,9 @@ const Milestone = ({milestone}: MilestoneProps) => {
         maxW="500px"
         minW="320px"
         bg={
-            milestone.isCompleted ? "rgba(255,192,203, 0.2)" :
+            milestone.isCompleted ? "rgba(249, 199, 64, 0.4)" :
             milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
-            `rgb(255,192,203)`
+            `rgb(247, 197, 59)`
         }
         borderRadius="20px"
         // border={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "2mm ridge rgba(255,215,0, .6)" : ""}
@@ -86,6 +86,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 return (
                     <AccordionItem
                         key={habit.id}
+                        borderTop="1px solid black" 
+                        borderBottom="1px solid black"
                         w="450px"
                     >
                         {({ isExpanded }) => (

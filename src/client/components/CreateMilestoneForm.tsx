@@ -47,6 +47,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
             closeOnOverlayClick={false}
             size="sm"
             initialFocusRef={inputRef}
+            colorScheme='yellow'
         >
             <DrawerOverlay />
             <DrawerContent>
@@ -129,7 +130,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                 <ButtonGroup>
                     <Button 
                         variant="outline" 
-                        colorScheme='teal' 
+                        colorScheme='yellow' 
                         mr={3} 
                         onClick={(e) => {
                             e.preventDefault();
@@ -142,7 +143,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                     </Button>
                     <Button 
                         mr={3}  
-                        colorScheme='teal' 
+                        colorScheme='yellow' 
                         type="submit"
                         form="milestoneForm"
                     >

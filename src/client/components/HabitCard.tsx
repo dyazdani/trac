@@ -115,9 +115,9 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
         maxW="400px"
         minW="320px"
         bg={
-          milestone && milestone.isCompleted ? `rgba(255,192,203, 0.2)` :
+          milestone && milestone.isCompleted ? `rgba(249, 209, 98, 0.1)` :
           milestone && milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
-          !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "linear-gradient(-45deg, #ffc0cb 40%, #ffe4e1 50%, #ffc0cb 60%)" : "pink"
+          !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "linear-gradient(-45deg, #F9D162 40%, #FBE29D 50%, #F9D162 60%)" : "rgb(249, 209, 98)"
         }
         borderRadius="20px"
         border={milestone && milestone.isCompleted || milestone.isCanceled ? "" :

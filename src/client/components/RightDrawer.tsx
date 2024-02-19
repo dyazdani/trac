@@ -29,7 +29,7 @@ const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
                 >
                     <IconButton
                     variant='solid'
-                    colorScheme='teal'
+                    colorScheme='yellow'
                     size="lg"
                     aria-label='create-milestone'
                     icon={<AddIcon />}

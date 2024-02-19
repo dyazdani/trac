@@ -59,6 +59,8 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
         }
     ] = useCreateScheduleMutation();
 
+    const iconButtonBackgroundColor = milestone.isCompleted ? "rgba(249, 209, 98, 0.1)" : milestone.isCanceled ? "rgba(212, 211, 212, 1)" : "rgb(249, 209, 98)"
+
     if (currentUser) {
         return (
             <>
@@ -66,8 +68,11 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                 aria-label="add-habit-button" 
                 icon={<AddIcon />} 
                 isDisabled={milestone && milestone.isCompleted || milestone.isCanceled}
-                variant="outline"
+                variant="solid"
+                border="1px solid black"
                 onClick={onOpen}
+                backgroundColor={iconButtonBackgroundColor}
+                _hover={{background: "none"}}
             />
                 <Drawer 
                     placement='right' 
@@ -190,6 +195,8 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                         <MenuButton 
                                             as={Button} 
                                             rightIcon={<ChevronDownIcon />}
+                                            colorScheme="blue"
+                                            variant="outline"
                                         >{menuValue}</MenuButton>
                                         <MenuList>
                                             <MenuOptionGroup 
@@ -221,7 +228,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                             <ButtonGroup>
                                 <Button 
                                     variant="outline" 
-                                    colorScheme='teal' 
+                                    colorScheme='yellow' 
                                     mr={3} 
                                     onClick={onClose}
                                 >
@@ -229,7 +236,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                 </Button>
                                 <Button 
                                     mr={3}  
-                                    colorScheme='teal' 
+                                    colorScheme='yellow' 
                                     type="submit"
                                     form="habitForm"
                                 >
