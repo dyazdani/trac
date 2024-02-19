@@ -120,8 +120,8 @@ authRouter.post("/login", async (req, res, next) => {
             user: excludePassword(user),
           });
         } else {
-          res.status(401);
-          next({
+          res
+          .send({
             name: "IncorrectPassword",
             message: "The password you entered is incorrect",
           });

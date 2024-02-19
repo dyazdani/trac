@@ -148,7 +148,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                     setEmail(e.target.value)
                                 }}
                                 value={email}
-                                required
                             />
                             <FormErrorMessage>An account with that email already exists</FormErrorMessage>
                         </FormControl>
@@ -172,7 +171,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                     setUsername(e.target.value)
                                 }}                                
                                 value={username}
-                                required
                             />
                             <FormErrorMessage>Username already exists</FormErrorMessage>
                         </FormControl>
@@ -193,7 +191,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                         type={showPassword ? "text" : "password"}
                                         onChange={e => setPassword(e.target.value)}
                                         value={password}
-                                        required
                                     />
                                     <InputRightElement width="2.5rem">
                                         <IconButton 
@@ -228,7 +225,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                                         type={showConfirmPassword ? "text" : "password"}
                                         onChange={e => setConfirmPassword(e.target.value)}
                                         value={confirmPassword}
-                                        required
                                     />
                                     <InputRightElement width="2.5rem">
                                         <IconButton 

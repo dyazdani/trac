@@ -38,6 +38,23 @@ usersRouter.get("/", async (req, res, next): Promise<void> => {
     }
 })
 
+// GET /api/users
+usersRouter.get("/", async (req, res, next): Promise<void> => {
+    try {
+        const { email } = req.body;
+
+        const user = await prisma.user.findUniqueOrThrow({
+            where: {
+                email: email,
+            },
+        }); 
+
+        res.send({user});
+    } catch (e) {
+        next(e);
+    }
+})
+
 // GET /api/users/:id/habits
 usersRouter.get("/:id/habits", requireUser, async (req, res, next): Promise<void> => {
     const ownerId = Number(req.params.id)

@@ -18,7 +18,8 @@ import {
   MilestoneWithDetails, 
   CreateMilestoneMutationArgs, 
   UpdateMilestoneReqBody, 
-  RegisterMutationResponse
+  RegisterMutationResponse,
+  LoginMutationResponse
 } from '../../types/index.js';
 import { 
   DaysOfWeek, 
@@ -59,7 +60,7 @@ export const api = createApi({
         }),
         invalidatesTags: ["CurrentUser", "User"],
       }),
-      login: builder.mutation({
+      login: builder.mutation<LoginMutationResponse, {email: string, password: string}>({
         query: ({ email, password }) => ({
           url: "auth/login",
           method: "POST",
@@ -125,6 +126,10 @@ export const api = createApi({
       getAllUsers: builder.query<{users: {user: Omit<User, 'password'>}[]}, void>({
         query: () => '/users',
         providesTags: ['User']
+      }),
+      getUserByEmail: builder.query<{user: User}, string>({
+        query: (email) => `/users`,
+        providesTags: ["User"]
       }),
       getHabitsByUser: builder.query<{ habits: HabitWithDetails[] }, number>({
         query: (id) => `/users/${id}/habits`,
@@ -252,7 +257,8 @@ export const api = createApi({
     useGetMilestonesByUserQuery,
     useUpdateMilestoneMutation,
     useDeleteMilestoneMutation,
-    useGetAllUsersQuery
+    useGetAllUsersQuery,
+    useGetUserByEmailQuery
   } = api
 
 
