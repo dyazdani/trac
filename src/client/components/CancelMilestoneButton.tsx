@@ -1,8 +1,8 @@
 import { 
-    IconButton, 
+    MenuItem, 
     useToast 
 } from "@chakra-ui/react";
-import { NotAllowedIcon, PlusSquareIcon } from "@chakra-ui/icons";
+import { ArrowUpIcon, NotAllowedIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import {  useUpdateMilestoneMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { MilestoneWithDetails } from "../../types/index.js";
@@ -69,15 +69,14 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
         }
     }
         return (
-            <IconButton 
-                aria-label="cancel-milestone-button" 
-                icon={milestone?.isCanceled ? (<PlusSquareIcon />) : (<NotAllowedIcon/>)} 
-                variant="unstyled"
+            <MenuItem 
+                aria-label={milestone.isCanceled ? "Restore Goal" : "Cancel Goal"} 
+                icon={milestone.isCanceled ? (<ArrowUpIcon />) : (<NotAllowedIcon/>)} 
                 onClick={(e) => {
                     e.preventDefault();
                     handleClick();
                 }}
-            />           
+            >{milestone.isCanceled ? "Restore Goal" : "Cancel Goal"}</MenuItem>           
         )
     }
 }
