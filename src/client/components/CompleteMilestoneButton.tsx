@@ -1,4 +1,5 @@
 import { 
+    Button,
     IconButton, 
     useToast 
 } from "@chakra-ui/react";
@@ -69,17 +70,16 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
         }
     }
         return (
-            <IconButton 
-                aria-label="complete-milestone-button" 
-                icon={<CheckIcon />} 
-                isDisabled={milestone?.isCanceled}
-                variant={milestone.isCompleted ? "solid" : "outline"}
-                colorScheme={milestone.isCompleted ? "teal" : ""}
+            <Button 
+                aria-label="complete goal" 
+                leftIcon={milestone.isCompleted ? <CheckIcon /> : undefined} 
+                variant="solid"
+                colorScheme="green"
                 onClick={(e) => {
                     e.preventDefault();
                     handleClick();
                 }}
-            />           
+            >{milestone.isCompleted ? "Goal Completed!" : "Complete Goal"}</Button>           
         )
     }
 }

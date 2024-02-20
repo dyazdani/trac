@@ -1,5 +1,6 @@
 import { 
     IconButton, 
+    MenuItem, 
     useToast 
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
@@ -47,16 +48,15 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
             }
         }
 
-    return (
-            <IconButton 
-                aria-label="delete-milestone-button" 
-                icon={<DeleteIcon />} 
-                variant="unstyled"
-                onClick={ (e) => {
+        return (
+            <MenuItem
+                aria-label="Delete Goal" 
+                icon={<DeleteIcon/>}
+                onClick={(e) => {
                     e.preventDefault();
                     handleDeleteMilestone();
                 }}
-            />
+            >Delete Goal</MenuItem>
         )
     }
 }

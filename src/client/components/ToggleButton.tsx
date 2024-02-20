@@ -119,7 +119,7 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
                 outline={outlineColor}
                 backgroundColor={backgroundColor}
                 colorScheme="blue"
-                zIndex="1"
+                // zIndex="1"
                 _hover={{
                     background: "none"
                 }}   

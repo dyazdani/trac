@@ -1,4 +1,4 @@
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon, HamburgerIcon, NotAllowedIcon } from "@chakra-ui/icons";
 import { 
     Accordion,
     AccordionButton,
@@ -13,7 +13,11 @@ import {
     Flex, 
     HStack, 
     Heading, 
-    IconButton
+    IconButton,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList
 } from "@chakra-ui/react";
 import HabitCard from "./HabitCard.js";
 import { DayOfTheWeek } from "@prisma/client";
@@ -50,15 +54,27 @@ const Milestone = ({milestone}: MilestoneProps) => {
             >
              {milestone.name}
             </Heading>
-            <UpdateMilestoneButton
-                milestone={milestone}
-            />
-            <DeleteMilestoneButton
-                milestone={milestone}
-            />
-            <CancelMilestoneButton
-                milestone={milestone}
-            />
+            <Menu
+                isLazy
+            >
+                {({ isOpen }) => 
+                    <>
+                        <MenuButton
+                            as={IconButton}
+                            aria-label="Goal options"
+                            icon={<HamburgerIcon/>}
+                            variant={isOpen ? "solid" : "outline"}
+                            colorScheme="blue"
+                            isActive={isOpen}
+                        />
+                        <MenuList>
+                            <UpdateMilestoneButton milestone={milestone}/>
+                            <DeleteMilestoneButton milestone={milestone}/>
+                            <CancelMilestoneButton milestone={milestone}/>
+                        </MenuList>
+                    </>
+                }
+            </Menu>
             <CompleteMilestoneButton
                 milestone={milestone}
             />
@@ -98,7 +114,6 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                     <HabitCard 
                                         habit={habit}
                                         milestone={milestone}
-                                        handleClick={() => {console.log(habit)}}
                                     />
                                 </AccordionPanel>
                             </>

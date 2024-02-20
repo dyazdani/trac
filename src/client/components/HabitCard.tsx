@@ -13,11 +13,18 @@ import {
   Flex,
   Box,
   keyframes,
+  MenuButton,
+  Menu,
+  MenuList,
+  MenuItem
 } from "@chakra-ui/react";
 import { motion } from 'framer-motion';
 import { 
     ArrowLeftIcon,
-    ArrowRightIcon
+    ArrowRightIcon,
+    HamburgerIcon,
+    EditIcon,
+    DeleteIcon
 } from "@chakra-ui/icons";
 import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
@@ -29,7 +36,6 @@ import getFirstCheckInDayDate from "..//utils/getFirstCheckInDayDate.js";
 type HabitProps = {
   habit: HabitWithDetails
   milestone: MilestoneWithDetails
-  handleClick: () => void
 };
 
 // for comparison with DayOfTheWeek enum on CheckIn model
@@ -46,7 +52,7 @@ const DAY_STRINGS = [
 const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 
-const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
+const HabitCard = ({ habit, milestone }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
 
   const isStatusReportSent = isMostRecentStatusReportSent(habit);
@@ -131,43 +137,61 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
         }
       >
         <IconButton 
-            aria-label="habit-navigate-left" 
-            icon={<ArrowLeftIcon />} 
-            pos="absolute" 
-            top="40%" 
-            left="0"
-            size="lg"
-            variant="unstyled"
-            isDisabled={currentWeek.some(day => {
-              return areDatesSameDayMonthYear(day, new Date(habit.dateCreated))
-            })}
-            onClick={handleLeftArrowClick}
+          aria-label="habit-navigate-left" 
+          icon={<ArrowLeftIcon />} 
+          pos="absolute" 
+          top="40%" 
+          left="0"
+          size="lg"
+          variant="unstyled"
+          isDisabled={currentWeek.some(day => {
+            return areDatesSameDayMonthYear(day, new Date(habit.dateCreated))
+          })}
+          onClick={handleLeftArrowClick}
         />
         <IconButton 
-            aria-label="habit-navigate-right" 
-            icon={<ArrowRightIcon />} 
-            pos="absolute" 
-            top="40%" 
-            right="0"
-            size="lg"
-            variant="unstyled"
-            colorScheme="teal"
-            isDisabled={currentWeek.some(day => {
-              return areDatesSameDayMonthYear(day, new Date(Date.now()))
-            })}
-            onClick={handleRightArrowClick}
+          aria-label="habit-navigate-right" 
+          icon={<ArrowRightIcon />} 
+          pos="absolute" 
+          top="40%" 
+          right="0"
+          size="lg"
+          variant="unstyled"
+          colorScheme="teal"
+          isDisabled={currentWeek.some(day => {
+            return areDatesSameDayMonthYear(day, new Date(Date.now()))
+          })}
+          onClick={handleRightArrowClick}
         />
         <CardHeader>
           <HStack justify={"end"}>
             <Heading 
-                sx={{ marginRight: "auto" }} 
-                size="md"
-                color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
+              sx={{ marginRight: "auto" }} 
+              size="md"
+              color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
             >
               {habit.name}
             </Heading>
-            <UpdateHabitButton habit={habit} handleClick={handleClick} milestone={milestone}/>
-            <DeleteHabitButton habit={habit} handleClick={handleClick} milestone={milestone}/>
+            <Menu
+              isLazy
+            >
+              {({ isOpen}) => (
+                <>
+                  <MenuButton
+                    as={IconButton}
+                    aria-label="Goal options"
+                    icon={<HamburgerIcon/>}
+                    variant={isOpen ? "solid" : "outline"}
+                    colorScheme="blue"
+                    isActive={isOpen}
+                  />
+                  <MenuList>
+                    <UpdateHabitButton habit={habit}/>
+                    <DeleteHabitButton habit={habit}/>
+                  </MenuList>
+                </>
+              )}
+            </Menu>
           </HStack>
         </CardHeader>
         <Flex 
