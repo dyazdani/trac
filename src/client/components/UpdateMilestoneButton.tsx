@@ -18,6 +18,7 @@ import {
     IconButton, 
     Menu, 
     MenuButton, 
+    MenuItem, 
     MenuItemOption, 
     MenuList, 
     MenuOptionGroup, 
@@ -41,11 +42,11 @@ import getRoutineDaysStringArray from "..//utils/getRoutineDaysStringArray.js";
 import { DaysOfWeek } from "@knocklabs/node";
 import { SingleDatepicker } from "chakra-dayzed-datepicker";
 
-export interface UpdateMilestoneButtonProps{
+export interface UpdateMilestoneMenuItemProps{
     milestone: MilestoneWithDetails
 }
 
-const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
+const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
     const [datepickerValue, setDatepickerValue] = useState<Date | null>(milestone.dueDate)
     const [milestoneNameValue, setMilestoneNameValue] = useState(milestone.name)
     const { isOpen: isOpenForUpdateMilestone, onClose: onCloseForUpdateMilestone, onOpen: onOpenForUpdateMilestone} = useDisclosure();
@@ -61,12 +62,12 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
     if (currentUser) {
         return (
             <>
-                <IconButton 
-                    aria-label="edit-milestone-button" 
-                    icon={<EditIcon />}
-                    variant="unstyled"
+                <MenuItem
+                    aria-label="Edit Goal" 
+                    icon={<EditIcon/>}
                     onClick={onOpenForUpdateMilestone}
-                />
+                    closeOnSelect={false}
+                >Edit Goal</MenuItem>
                 <Drawer 
                     placement='right' 
                     onClose={onCloseForUpdateMilestone} 
@@ -158,7 +159,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
                         <ButtonGroup>
                             <Button 
                                 variant="outline" 
-                                colorScheme='teal' 
+                                colorScheme='yellow' 
                                 mr={3} 
                                 onClick={onCloseForUpdateMilestone}
                             >
@@ -166,7 +167,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
                             </Button>
                             <Button 
                                 mr={3}  
-                                colorScheme='teal' 
+                                colorScheme='yellow' 
                                 type="submit"
                                 form="updateMilestoneForm"
                             >

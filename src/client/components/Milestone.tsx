@@ -57,7 +57,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
             <Menu
                 isLazy
             >
-                {({ isOpen}) => 
+                {({ isOpen }) => 
                     <>
                         <MenuButton
                             as={IconButton}
@@ -68,9 +68,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                             isActive={isOpen}
                         />
                         <MenuList>
-                            <MenuItem icon={<EditIcon/>}>
-                            Edit Goal
-                            </MenuItem>
+                            <UpdateMilestoneButton milestone={milestone}/>
                             <MenuItem icon={<DeleteIcon/>}>
                             Delete Goal
                             </MenuItem>
