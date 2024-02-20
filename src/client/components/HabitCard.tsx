@@ -36,7 +36,6 @@ import getFirstCheckInDayDate from "..//utils/getFirstCheckInDayDate.js";
 type HabitProps = {
   habit: HabitWithDetails
   milestone: MilestoneWithDetails
-  handleClick: () => void
 };
 
 // for comparison with DayOfTheWeek enum on CheckIn model
@@ -53,7 +52,7 @@ const DAY_STRINGS = [
 const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 
-const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
+const HabitCard = ({ habit, milestone }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
 
   const isStatusReportSent = isMostRecentStatusReportSent(habit);
@@ -187,9 +186,7 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
                     isActive={isOpen}
                   />
                   <MenuList>
-                    <MenuItem icon={<EditIcon/>}>
-                    Edit Habit
-                    </MenuItem>
+                    <UpdateHabitButton habit={habit} />
                     <MenuItem icon={<DeleteIcon/>}>
                     Delete Habit
                     </MenuItem>

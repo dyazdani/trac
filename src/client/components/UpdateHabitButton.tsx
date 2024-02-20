@@ -15,9 +15,9 @@ import {
     EditablePreview, 
     FormControl, 
     FormLabel, 
-    IconButton, 
     Menu, 
     MenuButton, 
+    MenuItem, 
     MenuItemOption, 
     MenuList, 
     MenuOptionGroup, 
@@ -25,7 +25,10 @@ import {
     useDisclosure, 
     useToast 
 } from "@chakra-ui/react";
-import { ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
+import { 
+    ChevronDownIcon, 
+    EditIcon 
+} from "@chakra-ui/icons";
 import { 
     useUpdateHabitMutation,
     useUpdateScheduleMutation 
@@ -34,17 +37,18 @@ import { DayOfTheWeek } from "@prisma/client";
 import React, { useState } from "react";
 import getBooleanRoutineDays from "..//utils/getBooleanRoutineDays.js";
 import { useAppSelector } from "../app/hooks.js";
-import { HabitWithDetails, MilestoneWithDetails, RoutineDaysArrayType } from "../../types/index.js";
+import { 
+    HabitWithDetails, 
+    RoutineDaysArrayType 
+} from "../../types/index.js";
 import getRoutineDaysStringArray from "..//utils/getRoutineDaysStringArray.js";
 import { DaysOfWeek } from "@knocklabs/node";
 
 export interface UpdateHabitButtonProps{
     habit: HabitWithDetails
-    milestone: MilestoneWithDetails
-    handleClick: () => void
 }
 
-const UpdateHabitButton = ({habit, milestone, handleClick}: UpdateHabitButtonProps) => {
+const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
     const [menuValue, setMenuValue] = useState<string | string[]>(habit.checkIn.dayOfTheWeek)
     const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>(getRoutineDaysStringArray(habit.routine))
     const [habitNameValue, setHabitNameValue] = useState(habit.name)
@@ -60,12 +64,12 @@ const UpdateHabitButton = ({habit, milestone, handleClick}: UpdateHabitButtonPro
     if (currentUser) {
         return (
             <>
-            <IconButton 
-                aria-label="edit-habit-button" 
+            <MenuItem
+                aria-label="Edit Habit" 
                 icon={<EditIcon />} 
-                variant="unstyled"
                 onClick={onOpen}
-            />
+                closeOnSelect={false}
+            >Edit Habit</MenuItem>
                 <Drawer 
                     placement='right' 
                     onClose={onClose} 

@@ -114,7 +114,6 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                     <HabitCard 
                                         habit={habit}
                                         milestone={milestone}
-                                        handleClick={() => {console.log(habit)}}
                                     />
                                 </AccordionPanel>
                             </>
