@@ -1,4 +1,4 @@
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon, HamburgerIcon, NotAllowedIcon } from "@chakra-ui/icons";
 import { 
     Accordion,
     AccordionButton,
@@ -13,7 +13,11 @@ import {
     Flex, 
     HStack, 
     Heading, 
-    IconButton
+    IconButton,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList
 } from "@chakra-ui/react";
 import HabitCard from "./HabitCard.js";
 import { DayOfTheWeek } from "@prisma/client";
@@ -50,15 +54,26 @@ const Milestone = ({milestone}: MilestoneProps) => {
             >
              {milestone.name}
             </Heading>
-            <UpdateMilestoneButton
-                milestone={milestone}
-            />
-            <DeleteMilestoneButton
-                milestone={milestone}
-            />
-            <CancelMilestoneButton
-                milestone={milestone}
-            />
+            <Menu>
+                <MenuButton
+                    as={IconButton}
+                    aria-label="Goal options"
+                    icon={<HamburgerIcon/>}
+                    variant="outline"
+                    colorScheme="blue"
+                />
+                <MenuList>
+                    <MenuItem icon={<EditIcon/>}>
+                    Edit Goal
+                    </MenuItem>
+                    <MenuItem icon={<DeleteIcon/>}>
+                    Delete Goal
+                    </MenuItem>
+                    <MenuItem icon={<NotAllowedIcon/>}>
+                    Cancel Goal
+                    </MenuItem>
+                </MenuList>
+            </Menu>
             <CompleteMilestoneButton
                 milestone={milestone}
             />
