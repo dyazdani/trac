@@ -63,7 +63,6 @@ const UpdateHabitButton = ({habit, milestone, handleClick}: UpdateHabitButtonPro
             <IconButton 
                 aria-label="edit-habit-button" 
                 icon={<EditIcon />} 
-                isDisabled={milestone && milestone.isCompleted || milestone.isCanceled}
                 variant="unstyled"
                 onClick={onOpen}
             />
