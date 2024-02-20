@@ -64,7 +64,6 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
                 <IconButton 
                     aria-label="edit-milestone-button" 
                     icon={<EditIcon />}
-                    isDisabled={milestone?.isCompleted || milestone?.isCanceled} 
                     variant="unstyled"
                     onClick={onOpenForUpdateMilestone}
                 />
