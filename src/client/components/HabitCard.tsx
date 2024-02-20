@@ -13,11 +13,18 @@ import {
   Flex,
   Box,
   keyframes,
+  MenuButton,
+  Menu,
+  MenuList,
+  MenuItem
 } from "@chakra-ui/react";
 import { motion } from 'framer-motion';
 import { 
     ArrowLeftIcon,
-    ArrowRightIcon
+    ArrowRightIcon,
+    HamburgerIcon,
+    EditIcon,
+    DeleteIcon
 } from "@chakra-ui/icons";
 import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
@@ -166,8 +173,25 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
             >
               {habit.name}
             </Heading>
-            <UpdateHabitButton habit={habit} handleClick={handleClick} milestone={milestone}/>
-            <DeleteHabitButton habit={habit} handleClick={handleClick} milestone={milestone}/>
+            <Menu
+              isLazy
+            >
+                <MenuButton
+                    as={IconButton}
+                    aria-label="Habit options"
+                    icon={<HamburgerIcon/>}
+                    variant="outline"
+                    colorScheme="black"
+                />
+                <MenuList>
+                    <MenuItem icon={<EditIcon/>}>
+                    Edit Habit
+                    </MenuItem>
+                    <MenuItem icon={<DeleteIcon/>}>
+                    Delete Habit
+                    </MenuItem>
+                </MenuList>
+            </Menu>
           </HStack>
         </CardHeader>
         <Flex 

@@ -60,7 +60,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                     aria-label="Goal options"
                     icon={<HamburgerIcon/>}
                     variant="outline"
-                    colorScheme="blue"
+                    colorScheme="black"
                 />
                 <MenuList>
                     <MenuItem icon={<EditIcon/>}>
