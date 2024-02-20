@@ -33,23 +33,13 @@ const Milestone = ({milestone}: MilestoneProps) => {
 
     return (
         <Card
-        // as={motion.div}
-        // animation={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? animation : ""}
-        w="30vw" 
-        maxW="500px"
-        minW="320px"
+        w="500px"
         bg={
             milestone.isCompleted ? "rgba(249, 199, 64, 0.4)" :
             milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
             `rgb(247, 197, 59)`
         }
         borderRadius="20px"
-        // border={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "2mm ridge rgba(255,215,0, .6)" : ""}
-        // backgroundSize={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "300%" : ""}
-        // sx={!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? 
-        //   {backgroundPositionX: '100%'} : 
-        //   {}
-        // }
       >
         <CardHeader>
           <HStack justify={"end"}>
@@ -79,7 +69,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
             align={"center"}
             >
           <CardBody>
-          <Accordion defaultIndex={[0]} allowMultiple>
+          <Accordion defaultIndex={[0]} allowMultiple >
             {[...milestone.habits].sort((a, b) =>  
                     a.name.localeCompare(b.name, "en", {ignorePunctuation: true}))
             .map(habit => {
@@ -88,7 +78,6 @@ const Milestone = ({milestone}: MilestoneProps) => {
                         key={habit.id}
                         borderTop="1px solid black" 
                         borderBottom="1px solid black"
-                        w="450px"
                     >
                         {({ isExpanded }) => (
                             <>
