@@ -138,59 +138,64 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
         }
       >
         <IconButton 
-            aria-label="habit-navigate-left" 
-            icon={<ArrowLeftIcon />} 
-            pos="absolute" 
-            top="40%" 
-            left="0"
-            size="lg"
-            variant="unstyled"
-            isDisabled={currentWeek.some(day => {
-              return areDatesSameDayMonthYear(day, new Date(habit.dateCreated))
-            })}
-            onClick={handleLeftArrowClick}
+          aria-label="habit-navigate-left" 
+          icon={<ArrowLeftIcon />} 
+          pos="absolute" 
+          top="40%" 
+          left="0"
+          size="lg"
+          variant="unstyled"
+          isDisabled={currentWeek.some(day => {
+            return areDatesSameDayMonthYear(day, new Date(habit.dateCreated))
+          })}
+          onClick={handleLeftArrowClick}
         />
         <IconButton 
-            aria-label="habit-navigate-right" 
-            icon={<ArrowRightIcon />} 
-            pos="absolute" 
-            top="40%" 
-            right="0"
-            size="lg"
-            variant="unstyled"
-            colorScheme="teal"
-            isDisabled={currentWeek.some(day => {
-              return areDatesSameDayMonthYear(day, new Date(Date.now()))
-            })}
-            onClick={handleRightArrowClick}
+          aria-label="habit-navigate-right" 
+          icon={<ArrowRightIcon />} 
+          pos="absolute" 
+          top="40%" 
+          right="0"
+          size="lg"
+          variant="unstyled"
+          colorScheme="teal"
+          isDisabled={currentWeek.some(day => {
+            return areDatesSameDayMonthYear(day, new Date(Date.now()))
+          })}
+          onClick={handleRightArrowClick}
         />
         <CardHeader>
           <HStack justify={"end"}>
             <Heading 
-                sx={{ marginRight: "auto" }} 
-                size="md"
-                color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
+              sx={{ marginRight: "auto" }} 
+              size="md"
+              color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
             >
               {habit.name}
             </Heading>
             <Menu
               isLazy
             >
-                <MenuButton
+              {({ isOpen}) => (
+                <>
+                  <MenuButton
                     as={IconButton}
-                    aria-label="Habit options"
+                    aria-label="Goal options"
                     icon={<HamburgerIcon/>}
-                    variant="outline"
-                    colorScheme="black"
-                />
-                <MenuList>
+                    variant={isOpen ? "solid" : "outline"}
+                    colorScheme="blue"
+                    isActive={isOpen}
+                  />
+                  <MenuList>
                     <MenuItem icon={<EditIcon/>}>
                     Edit Habit
                     </MenuItem>
                     <MenuItem icon={<DeleteIcon/>}>
                     Delete Habit
                     </MenuItem>
-                </MenuList>
+                  </MenuList>
+                </>
+              )}
             </Menu>
           </HStack>
         </CardHeader>

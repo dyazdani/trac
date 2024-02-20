@@ -54,25 +54,32 @@ const Milestone = ({milestone}: MilestoneProps) => {
             >
              {milestone.name}
             </Heading>
-            <Menu>
-                <MenuButton
-                    as={IconButton}
-                    aria-label="Goal options"
-                    icon={<HamburgerIcon/>}
-                    variant="outline"
-                    colorScheme="black"
-                />
-                <MenuList>
-                    <MenuItem icon={<EditIcon/>}>
-                    Edit Goal
-                    </MenuItem>
-                    <MenuItem icon={<DeleteIcon/>}>
-                    Delete Goal
-                    </MenuItem>
-                    <MenuItem icon={<NotAllowedIcon/>}>
-                    Cancel Goal
-                    </MenuItem>
-                </MenuList>
+            <Menu
+                isLazy
+            >
+                {({ isOpen}) => 
+                    <>
+                        <MenuButton
+                            as={IconButton}
+                            aria-label="Goal options"
+                            icon={<HamburgerIcon/>}
+                            variant={isOpen ? "solid" : "outline"}
+                            colorScheme="blue"
+                            isActive={isOpen}
+                        />
+                        <MenuList>
+                            <MenuItem icon={<EditIcon/>}>
+                            Edit Goal
+                            </MenuItem>
+                            <MenuItem icon={<DeleteIcon/>}>
+                            Delete Goal
+                            </MenuItem>
+                            <MenuItem icon={<NotAllowedIcon/>}>
+                            Cancel Goal
+                            </MenuItem>
+                        </MenuList>
+                    </>
+                }
             </Menu>
             <CompleteMilestoneButton
                 milestone={milestone}
