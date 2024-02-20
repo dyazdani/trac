@@ -69,9 +69,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                         />
                         <MenuList>
                             <UpdateMilestoneButton milestone={milestone}/>
-                            <MenuItem icon={<DeleteIcon/>}>
-                            Delete Goal
-                            </MenuItem>
+                            <DeleteMilestoneButton milestone={milestone}/>
                             <MenuItem icon={<NotAllowedIcon/>}>
                             Cancel Goal
                             </MenuItem>
