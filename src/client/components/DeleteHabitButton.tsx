@@ -4,7 +4,7 @@ import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
 
 import { 
     useToast,
-    IconButton 
+    MenuItem 
 } from "@chakra-ui/react";
 
 import { 
@@ -13,11 +13,9 @@ import {
 
 type DeleteHabitButtonProps = {
     habit: HabitWithDetails
-    milestone: MilestoneWithDetails
-    handleClick: () => void
 }
 
-const DeleteHabitButton = ({ habit, milestone, handleClick }: DeleteHabitButtonProps) =>  {
+const DeleteHabitButton = ({ habit}: DeleteHabitButtonProps) =>  {
     const currentUser = useAppSelector(state => state.auth.user);
     const [deleteHabit, { isLoading }] = useDeleteHabitMutation();
     const [ deleteSchedules ] = useDeleteSchedulesMutation();
@@ -58,19 +56,14 @@ const DeleteHabitButton = ({ habit, milestone, handleClick }: DeleteHabitButtonP
     }
     
     return(
-        <>
-            <IconButton 
-                aria-label="delete-habit-button" 
-                icon={<DeleteIcon />}
-                isLoading={isLoading} 
-                variant="unstyled"
-                onClick={(e) => {
-                    e.preventDefault();
-                    handleDeleteHabit();
-                    handleClick();
-                }}
-            />
-        </>
+        <MenuItem 
+            aria-label="Delete Habit" 
+            icon={<DeleteIcon />}
+            onClick={(e) => {
+                e.preventDefault();
+                handleDeleteHabit();
+            }}
+        >Delete Habit</MenuItem>
     );
 }
 

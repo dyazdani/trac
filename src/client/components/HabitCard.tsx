@@ -186,10 +186,8 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     isActive={isOpen}
                   />
                   <MenuList>
-                    <UpdateHabitButton habit={habit} />
-                    <MenuItem icon={<DeleteIcon/>}>
-                    Delete Habit
-                    </MenuItem>
+                    <UpdateHabitButton habit={habit}/>
+                    <DeleteHabitButton habit={habit}/>
                   </MenuList>
                 </>
               )}
