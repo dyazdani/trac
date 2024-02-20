@@ -111,9 +111,7 @@ const HabitCard = ({ habit, milestone, handleClick }: HabitProps) => {
         animation={milestone && milestone.isCompleted || milestone.isCanceled ? "" :
           !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? animation : ""
         }
-        w="30vw" 
-        maxW="400px"
-        minW="320px"
+        w="400px" 
         bg={
           milestone && milestone.isCompleted ? `rgba(249, 209, 98, 0.1)` :
           milestone && milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
