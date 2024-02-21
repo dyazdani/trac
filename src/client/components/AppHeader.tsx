@@ -18,16 +18,19 @@ import {
     Heading,
 } from "@chakra-ui/react";
 import MessagesMenu from "./MessagesMenu.js";
-import { current } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router";
 
 type AppHeaderProps = {
   isBannerDisplayed: boolean | undefined
 };
 
 const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
-  const dispatch = useAppDispatch()
-  const currentUser = useAppSelector(state => state.auth.user);
-  
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const localStorageUser = localStorage.getItem("user")
+  const appSelectorUser = useAppSelector(state => state.auth.user)
+  const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+
   return (
     <>
       <Box 
@@ -58,7 +61,11 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
 
             <Button
                 type="button"
-                onClick={() => {dispatch(logout())}}
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(logout());
+                  navigate("/");
+                }}
             >
                 Logout
             </Button>

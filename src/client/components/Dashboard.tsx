@@ -16,9 +16,11 @@ import MyMilestones from "./MyMilestones.js";
 
 
 const Dashboard = () => {
-  const currentUser = useAppSelector(state => state.auth.user)
+  const localStorageUser = localStorage.getItem("user")
+  const appSelectorUser = useAppSelector(state => state.auth.user)
+  const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
 
-  let isTodayACheckInDay;
+  let doesAHabitHaveCheckInToday;
   if (currentUser) {
     const { data } = useGetHabitsByUserQuery(currentUser.id);
     const { data: milestonesData } = useGetMilestonesByUserQuery(currentUser.id)
@@ -26,10 +28,10 @@ const Dashboard = () => {
     const checkIns = data?.habits.map(habit => habit.checkIn)
 
     if (checkIns) {
-      isTodayACheckInDay = isTodayCheckInDay(checkIns)
+      doesAHabitHaveCheckInToday = checkIns.some(checkIn => isTodayCheckInDay(checkIn))
     }
 
-    const [isBannerDisplayed, setIsBannerDisplayed] = useState(isTodayACheckInDay)
+    const [isBannerDisplayed, setIsBannerDisplayed] = useState(doesAHabitHaveCheckInToday)
 
     const toggleBannerDisplayed = () => {
       setIsBannerDisplayed(!isBannerDisplayed);
