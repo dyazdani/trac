@@ -14,8 +14,10 @@ export interface CancelMilestoneButtonProps{
 const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
     const [updateMilestone] = useUpdateMilestoneMutation();
     const toast = useToast();
-    const currentUser = useAppSelector((state) => state.auth.user);
-
+    const localStorageUser = localStorage.getItem("user")
+    const appSelectorUser = useAppSelector(state => state.auth.user)
+    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    
     if (currentUser) {
     const handleClick = async () => {
         try {

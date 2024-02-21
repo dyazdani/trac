@@ -27,12 +27,14 @@ import {
     useGetAllUsersQuery 
 } from "../features/api.js";
 import getPasswordValidation from "../../utils/getPasswordValidation.js";
+import { useNavigate } from "react-router";
 
 export interface RegisterFormProps {
     handleLinkClick: () => void
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -99,6 +101,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                 } 
 
                 setIsPasswordInvalid(false);
+                navigate("/goals");
             }
         } catch (e) {
             console.error(e)

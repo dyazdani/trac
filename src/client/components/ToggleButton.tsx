@@ -25,8 +25,10 @@ import isHabitRoutineDay from "./isHabitRoutineDay.js";
 
 const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps) => {
     const [flag, setFlag] = useBoolean(!!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date)));
-    const currentUser = useAppSelector((state) => state.auth.user)
-
+    const localStorageUser = localStorage.getItem("user")
+    const appSelectorUser = useAppSelector(state => state.auth.user)
+    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    
     const [updateHabit, {data, isLoading, error}] = useUpdateHabitMutation();
     
     // variable for current habit details to be sent with update mutation

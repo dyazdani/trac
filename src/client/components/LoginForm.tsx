@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useGetAllUsersQuery, useGetUserByEmailQuery, useLoginMutation } from "../features/api.js";
+import { useNavigate } from "react-router";
 
 export interface LoginFormProps {
   handleLinkClick: () => void;
@@ -32,6 +33,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
   const [isEmailInvalid, setIsEmailInvalid] = useState(false);
   const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
   const [isInputAndSubmitDisabled, setIsInputAndSubmitDisabled] = useState(false);
+
+  const navigate = useNavigate();
 
   const [
     login, 
@@ -73,6 +76,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
         if (isSuccess || isError || isLoading) {
           setIsInputAndSubmitDisabled(true);
         }
+
+        navigate("/goals")
       }
     } catch (e) {
       console.error(e);    

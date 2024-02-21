@@ -13,8 +13,10 @@ export interface StatusReportFormButtonProps {
 }
 
 const StatusReportFormButton = ({habit}: StatusReportFormButtonProps) => {
-    const currentUser = useAppSelector((state) => state.auth.user);
-
+    const localStorageUser = localStorage.getItem("user")
+    const appSelectorUser = useAppSelector(state => state.auth.user)
+    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    
     if (currentUser) {
         const [emails, setEmails] = useState<string[]>([])
         const [message, setMessage] = useState(getDefaultStatusReportMessage(habit, currentUser.username))

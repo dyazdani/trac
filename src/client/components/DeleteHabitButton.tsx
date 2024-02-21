@@ -16,7 +16,9 @@ type DeleteHabitButtonProps = {
 }
 
 const DeleteHabitButton = ({ habit}: DeleteHabitButtonProps) =>  {
-    const currentUser = useAppSelector(state => state.auth.user);
+    const localStorageUser = localStorage.getItem("user")
+    const appSelectorUser = useAppSelector(state => state.auth.user)
+    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     const [deleteHabit, { isLoading }] = useDeleteHabitMutation();
     const [ deleteSchedules ] = useDeleteSchedulesMutation();
 

@@ -4,7 +4,7 @@ import { api } from './api.js'
 import { User } from '@prisma/client'
 
 interface AuthState {
-  user: User | null
+  user: Omit<User, 'password'> | null
   token: string | null
 }
 
@@ -20,20 +20,34 @@ const authSlice = createSlice({
     logout: (state) => {
       state.token = null
       state.user = null
+
+      localStorage.clear();
     }
   },
   extraReducers: (builder) => {
     builder.addMatcher(
       api.endpoints.register.matchFulfilled,
       (state, { payload }) => {
-        state.token = payload.token;
-        state.user = payload.user;
+        const {token, user} = payload;
+        if (token && user) {
+          state.token = token;
+          state.user = user;
+  
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user))
+        }
       }
     );
     builder.addMatcher(
       api.endpoints.login.matchFulfilled, (state, { payload }) => {
-        state.token = payload.token;
-        state.user = payload.user;
+        const {token, user} = payload;
+        if (token && user) {
+          state.token = token;
+          state.user = user;
+  
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user))
+        }
       }
     );
   }
