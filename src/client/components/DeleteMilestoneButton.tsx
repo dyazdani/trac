@@ -15,8 +15,10 @@ export interface DeleteMilestoneButtonProps{
 const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
     const [deleteMilestone] = useDeleteMilestoneMutation();
     const toast = useToast();
-    const currentUser = useAppSelector((state) => state.auth.user);
-
+    const localStorageUser = localStorage.getItem("user")
+    const appSelectorUser = useAppSelector(state => state.auth.user)
+    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    
     if (currentUser) {
         const handleDeleteMilestone = async () => {
             try {

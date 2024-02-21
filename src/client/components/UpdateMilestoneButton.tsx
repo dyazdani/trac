@@ -57,8 +57,10 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
     const toast = useToast();
 
 
-    const currentUser = useAppSelector((state) => state.auth.user);
-
+    const localStorageUser = localStorage.getItem("user")
+    const appSelectorUser = useAppSelector(state => state.auth.user)
+    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    
     if (currentUser) {
         return (
             <>

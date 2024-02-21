@@ -17,8 +17,10 @@ const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
     const { isOpen, onClose, onOpen} = useDisclosure();
     const { isOpen: isOpenForMilestone, onClose: onCloseForMilestone, onOpen: onOpenForMilestone} = useDisclosure();
 
-    const currentUser = useAppSelector((state) => state.auth.user);
-
+    const localStorageUser = localStorage.getItem("user")
+    const appSelectorUser = useAppSelector(state => state.auth.user)
+    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    
     return (
         <>
             {currentUser && 
