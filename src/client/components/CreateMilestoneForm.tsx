@@ -120,6 +120,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                             id="dueDate"
                             name="date-input"
                             date={datepickerValue}
+                            minDate={new Date()}
                             onDateChange={(e) => {
                                 setDatepickerValue(e)
                             }}
