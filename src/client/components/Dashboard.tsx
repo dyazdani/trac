@@ -42,10 +42,6 @@ const Dashboard = () => {
         {isBannerDisplayed && <CTABanner isBannerDisplayed={isBannerDisplayed} toggleBannerDisplayed={toggleBannerDisplayed}/>}
         <AppHeader isBannerDisplayed={isBannerDisplayed}/>
         <RightDrawer toggleBannerDisplayed={toggleBannerDisplayed}/>
-        <Box
-        as="div" 
-        w="100vw"
-        >
           <Box
             w="100vw"
             h="100%"
@@ -58,23 +54,10 @@ const Dashboard = () => {
               marginTop={10}
               mb="20"
             >
-              <Heading as='h1' size='2xl' >My Dashboard</Heading>
-              <HStack>
-                <HStack spacing={0}>
-                  <Image src="/images/trac_today_icon.png" alt="purple circle indicating today" p={0} />
-                  <Text>= Check-In Day</Text>
-                </HStack>
-                <HStack spacing={0}>
-                  <Image src="images/diamond-pink.png" alt="yellow diamond indicating check-in day" maxW="45px" p="10px"/>
-                  <Text>= Today</Text>
-                </HStack>
-              </HStack>
-            </Box>
-              <Heading as='h2' size='xl' >Milestones</Heading> 
+              <Heading as='h1'>My Goals</Heading>
               <MyMilestones milestones={milestonesData?.milestones}/>
             </Box>
-        </Box>
-
+          </Box>
       </>
     )
 };
