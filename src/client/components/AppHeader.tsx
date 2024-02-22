@@ -16,6 +16,7 @@ import {
     Button,
     Spacer,
     Heading,
+    VStack,
 } from "@chakra-ui/react";
 import MessagesMenu from "./MessagesMenu.js";
 import { useNavigate } from "react-router";
@@ -32,46 +33,53 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
   const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
 
   return (
-    <>
-      <Box 
-        bg="#b9eefe" 
-        w="100%" 
-        p={4}
-        minHeight="70px"
-        position={"sticky"}
-        top={isBannerDisplayed ? "54px" : "0px"}
-        zIndex={100}
-        >
-        <HStack>
-          <Heading>trac</Heading>
-            <Spacer/>
-            {process.env.KNOCK_FEED_CHANNEL_ID && 
-            process.env.KNOCK_PUBLIC_API_KEY && 
-            currentUser &&
-              <KnockFeedProvider
-                apiKey={process.env.KNOCK_PUBLIC_API_KEY}
-                feedId={process.env.KNOCK_FEED_CHANNEL_ID}
-                userId={currentUser?.id.toString()}
-              >
-                <MessagesMenu />
-              </KnockFeedProvider>
-            }
-            <Text>{`Welcome back, `}<Text as='b'>{currentUser?.username}</Text>
-            </Text>
-
-            <Button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  dispatch(logout());
-                  navigate("/");
-                }}
-            >
-                Logout
-            </Button>
-        </HStack>
-      </Box>
-    </>
+    <Box 
+      bg="#b9eefe" 
+      w="100%" 
+      p={4}
+      minHeight="70px"
+      position={"sticky"}
+      top={isBannerDisplayed ? "54px" : "0px"}
+      zIndex={100}
+    >
+      <HStack>
+        <Heading>trac</Heading>
+        <Spacer/>
+        <Box
+          ml="1vw"
+          mr="1vw"
+        > 
+          <Text>{`Welcome back, `}<Text as='b'>{currentUser?.username}</Text>
+          </Text>
+        </Box>
+        {
+          process.env.KNOCK_FEED_CHANNEL_ID && 
+          process.env.KNOCK_PUBLIC_API_KEY && 
+          currentUser &&
+          <KnockFeedProvider
+            apiKey={process.env.KNOCK_PUBLIC_API_KEY}
+            feedId={process.env.KNOCK_FEED_CHANNEL_ID}
+            userId={currentUser?.id.toString()}
+          >
+            <MessagesMenu />
+          </KnockFeedProvider>
+        }
+      
+        <Button
+            type="button"
+            ml="1vw"
+            mr="1vw"
+            variant="solid"
+            colorScheme="blue"
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(logout());
+              navigate("/");
+            }}
+        >Logout 
+        </Button>
+      </HStack>
+    </Box>
   );
 };
 

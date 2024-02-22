@@ -1,4 +1,4 @@
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { 
     Accordion,
     AccordionButton,
@@ -6,6 +6,7 @@ import {
     AccordionItem,
     AccordionPanel,
     Box,
+    Button,
     Card, 
     CardBody, 
     CardFooter, 
@@ -58,13 +59,13 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 {({ isOpen }) => 
                     <>
                         <MenuButton
-                            as={IconButton}
-                            aria-label="Goal options"
-                            icon={<HamburgerIcon/>}
+                            as={Button}
+                            aria-label="Open Goal options menu"
+                            rightIcon={isOpen ? <CloseIcon/> :<HamburgerIcon/>}
                             variant={isOpen ? "solid" : "outline"}
                             colorScheme="blue"
                             isActive={isOpen}
-                        />
+                        >Menu</MenuButton>
                         <MenuList>
                             <UpdateMilestoneButton milestone={milestone}/>
                             <DeleteMilestoneButton milestone={milestone}/>

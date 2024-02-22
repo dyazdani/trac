@@ -73,9 +73,9 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
     }
         return (
             <Button 
-                aria-label="complete goal" 
+                aria-label="Complete goal" 
                 leftIcon={milestone.isCompleted ? <CheckIcon /> : undefined} 
-                variant="solid"
+                variant={milestone.isCompleted ? "outline" : "solid"}
                 colorScheme="green"
                 onClick={(e) => {
                     e.preventDefault();
