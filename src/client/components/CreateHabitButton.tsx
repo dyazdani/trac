@@ -61,21 +61,21 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
         }
     ] = useCreateScheduleMutation();
 
-    const iconButtonBackgroundColor = milestone.isCompleted ? "rgba(249, 209, 98, 0.1)" : milestone.isCanceled ? "rgba(212, 211, 212, 1)" : "rgb(249, 209, 98)"
+    const iconButtonBackgroundColor = milestone.isCompleted ? "rgba(249, 209, 98, 0.1)" : milestone.isCanceled ? "rgba(212, 211, 212, 1)" : ""
 
     if (currentUser) {
         return (
             <>
-            <IconButton 
-                aria-label="add-habit-button" 
-                icon={<AddIcon />} 
+            <Button 
+                aria-label="Add Habit" 
+                leftIcon={<AddIcon />} 
                 isDisabled={milestone && milestone.isCompleted || milestone.isCanceled}
                 variant="solid"
                 border="1px solid black"
                 onClick={onOpen}
                 backgroundColor={iconButtonBackgroundColor}
-                _hover={{background: "none"}}
-            />
+                colorScheme="yellow"
+            >Add Habit</Button>
                 <Drawer 
                     placement='right' 
                     onClose={onClose} 
