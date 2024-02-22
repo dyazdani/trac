@@ -1,8 +1,7 @@
 import {
     useDisclosure,
-    Button,
     VStack,
-    IconButton
+    Button
   } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import { useAppSelector } from '../app/hooks.js'
@@ -29,16 +28,15 @@ const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
                 bottom="50px"
                 right="50px"
                 >
-                    <IconButton
+                    <Button
                     variant='solid'
                     colorScheme='yellow'
                     size="lg"
                     aria-label='create-milestone'
-                    icon={<AddIcon />}
-                    isRound={true}
+                    leftIcon={<AddIcon />}
                     onClick={onOpenForMilestone}
-                    >
-                    </IconButton>
+                    >Add Goal
+                    </Button>
                     <CreateMilestoneForm
                         onCloseForMilestone={onCloseForMilestone}
                         isOpenForMilestone={isOpenForMilestone}
