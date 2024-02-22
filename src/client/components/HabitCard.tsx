@@ -16,11 +16,13 @@ import {
   MenuButton,
   Menu,
   MenuList,
+  Button,
 } from "@chakra-ui/react";
 import { motion } from 'framer-motion';
 import { 
     ArrowLeftIcon,
     ArrowRightIcon,
+    CloseIcon,
     HamburgerIcon,
 } from "@chakra-ui/icons";
 import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
@@ -176,13 +178,13 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               {({ isOpen}) => (
                 <>
                   <MenuButton
-                    as={IconButton}
-                    aria-label="Goal options"
-                    icon={<HamburgerIcon/>}
+                    as={Button}
+                    aria-label="Open Habit options menu"
+                    rightIcon={isOpen ? <CloseIcon/> :<HamburgerIcon/>}
                     variant={isOpen ? "solid" : "outline"}
                     colorScheme="blue"
                     isActive={isOpen}
-                  />
+                  >Menu</MenuButton>
                   <MenuList>
                     <UpdateHabitButton habit={habit}/>
                     <DeleteHabitButton habit={habit}/>
