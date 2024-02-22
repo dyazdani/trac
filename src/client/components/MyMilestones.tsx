@@ -14,8 +14,7 @@ const MyMilestones = ({ milestones }: MyMilestonesProps) => {
             spacing="20"
         >
             {milestones && 
-                [...milestones].sort((a, b) =>  
-                    a.name.localeCompare(b.name, "en", {ignorePunctuation: true}))
+                [...milestones].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
                 .map(milestone => (
                     <Milestone
                         key={milestone.id}

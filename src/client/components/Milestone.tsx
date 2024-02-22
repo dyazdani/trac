@@ -84,9 +84,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
             >
           <CardBody>
           <Accordion defaultIndex={[0]} allowMultiple >
-            {[...milestone.habits].sort((a, b) =>  
-                    a.name.localeCompare(b.name, "en", {ignorePunctuation: true}))
-            .map(habit => {
+            {[...milestone.habits].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
+                .map(habit => {
                 return (
                     <AccordionItem
                         key={habit.id}
