@@ -1,13 +1,13 @@
 import { 
   Box, 
-  HStack, 
   Heading,
-  Image,
-  Text 
 } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
 import { useAppSelector } from "../app/hooks.js";
-import { useGetHabitsByUserQuery, useGetMilestonesByUserQuery } from "../features/api.js";
+import { 
+  useGetHabitsByUserQuery, 
+  useGetMilestonesByUserQuery 
+} from "../features/api.js";
 import AppHeader from "./AppHeader.js";
 import CTABanner from "./CTABanner.js";
 import isTodayCheckInDay from "..//utils/isTodayCheckInDay.js";
@@ -45,18 +45,14 @@ const Dashboard = () => {
           <Box
             w="100vw"
             h="100%"
-            pl={10}
             display="flex"
             flexDirection="column"
-            paddingBottom="50px"
+            paddingBottom="10vh"
+            pt="5vh"
+            alignItems="center"
           >
-            <Box
-              marginTop={10}
-              mb="20"
-            >
               <Heading as='h1'>My Goals</Heading>
               <MyMilestones milestones={milestonesData?.milestones}/>
-            </Box>
           </Box>
       </>
     )

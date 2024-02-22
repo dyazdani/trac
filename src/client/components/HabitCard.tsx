@@ -16,15 +16,12 @@ import {
   MenuButton,
   Menu,
   MenuList,
-  MenuItem
 } from "@chakra-ui/react";
 import { motion } from 'framer-motion';
 import { 
     ArrowLeftIcon,
     ArrowRightIcon,
     HamburgerIcon,
-    EditIcon,
-    DeleteIcon
 } from "@chakra-ui/icons";
 import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
@@ -117,7 +114,8 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
         animation={milestone && milestone.isCompleted || milestone.isCanceled ? "" :
           !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? animation : ""
         }
-        w="400px" 
+        w="40vw" 
+        minW="345px"
         bg={
           milestone && milestone.isCompleted ? `rgba(249, 209, 98, 0.1)` :
           milestone && milestone.isCanceled ? "rgba(212, 211, 212, 1)" :

@@ -1,4 +1,4 @@
-import { DeleteIcon, EditIcon, HamburgerIcon, NotAllowedIcon } from "@chakra-ui/icons";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import { 
     Accordion,
     AccordionButton,
@@ -16,17 +16,14 @@ import {
     IconButton,
     Menu,
     MenuButton,
-    MenuItem,
     MenuList
 } from "@chakra-ui/react";
 import HabitCard from "./HabitCard.js";
-import { DayOfTheWeek } from "@prisma/client";
 import { MilestoneWithDetails } from "../../types/index.js";
 import UpdateMilestoneButton from "./UpdateMilestoneButton.js";
 import DeleteMilestoneButton from "./DeleteMilestoneButton.js";
 import CompleteMilestoneButton from "./CompleteMilestoneButton.js";
 import CancelMilestoneButton from "./CancelMilestoneButton.js";
-import { millisecondsToSeconds } from "date-fns";
 import CreateHabitButton from "./CreateHabitButton.js";
 
 export interface MilestoneProps {
@@ -37,7 +34,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
 
     return (
         <Card
-        w="500px"
+        w="50vw"
+        minW="450px"
         bg={
             milestone.isCompleted ? "rgba(249, 199, 64, 0.4)" :
             milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
