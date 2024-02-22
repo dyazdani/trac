@@ -112,6 +112,7 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
             <Checkbox
                 isChecked={isChecked}
                 size="lg"
+                borderColor="black"
                 colorScheme="green"
                 onChange={(e) => {
                     e.preventDefault();
