@@ -1,22 +1,24 @@
 import { 
-    Button,
-    Box,
-    useBoolean,
-    FormLabel,
-    FormControl,
+     Text,
+    Checkbox,
     VStack,
-    Checkbox
+    HStack,
+    Spacer
  } from "@chakra-ui/react";
  import isDateToday from "..//utils/isDateToday.js";
 import getDayOfWeekLabelText from "..//utils/getDayOfWeekLabelText.js";
 import { useUpdateHabitMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
-import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
+import { 
+    HabitWithDetails,
+     MilestoneWithDetails 
+    } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
 import DiamondImage from "./DiamondImage.js";
 import isDateOutOfRange from "..//utils/isDateOutOfRange.js";
 import isHabitRoutineDay from "./isHabitRoutineDay.js";
 import { useState } from "react";
+import { MinusIcon } from "@chakra-ui/icons";
 
  export interface ToggleButtonProps {
     date: Date
@@ -92,8 +94,21 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
     }
 
     return (
-        <>
+        <VStack>
             {/* {isToday && !milestone.isCanceled && !milestone.isCompleted && <DiamondImage/>} */}
+            <HStack>
+                {date.getDay() !== 0 ? 
+                    <>
+                        <Spacer/>
+                        <Spacer/>
+                        <Spacer/>
+                    </> : 
+                    ""
+                }
+                <Text>{dayAbbreviation}</Text>
+            </HStack>
+            <HStack>
+            {date.getDay() !== 0 ? <MinusIcon />: ""}
             <Checkbox
                 isChecked={isChecked}
                 size="lg"
@@ -113,8 +128,9 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
                     ) || 
                     milestone && milestone.isCompleted                   
                 }    
-            >{dayAbbreviation}</Checkbox>
-        </>
+            />
+            </HStack>
+        </VStack>
     )
 }
 
