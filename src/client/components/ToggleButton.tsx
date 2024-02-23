@@ -1,12 +1,4 @@
-import { 
-     Text,
-    Checkbox,
-    VStack,
-    HStack,
-    Spacer
- } from "@chakra-ui/react";
- import isDateToday from "..//utils/isDateToday.js";
-import getDayOfWeekLabelText from "..//utils/getDayOfWeekLabelText.js";
+import { Checkbox } from "@chakra-ui/react";
 import { useUpdateHabitMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { 
@@ -14,26 +6,23 @@ import {
      MilestoneWithDetails 
     } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
-import DiamondImage from "./DiamondImage.js";
-import isDateOutOfRange from "..//utils/isDateOutOfRange.js";
 import isHabitRoutineDay from "./isHabitRoutineDay.js";
 import { useState } from "react";
-import { MinusIcon } from "@chakra-ui/icons";
 
  export interface ToggleButtonProps {
     date: Date
     milestone: MilestoneWithDetails
     habit: HabitWithDetails
-    isCheckInDay: boolean
+    isOutOfRange: boolean
  }
 
-const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps) => {
+const ToggleButton = ({date, milestone, habit, isOutOfRange}: ToggleButtonProps) => {
     const [isChecked, setIsChecked] = useState(!!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date)));
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
-    const [updateHabit, {data, isLoading, error}] = useUpdateHabitMutation();
+    const [updateHabit, {isLoading}] = useUpdateHabitMutation();
     
     // variable for current habit details to be sent with update mutation
     let habitData: HabitWithDetails;
@@ -41,16 +30,6 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
     if (currentUser) {
         habitData = habit
     }
-        
-    // get boolean for if the date prop is today's date
-    const isToday = isDateToday(date);
-    
-
-    // background color changes when Habit is completed or canceled
-    const backgroundColor = milestone.isCompleted ? "rgba(249, 209, 98, 0.1)" : milestone.isCanceled ? "rgba(212, 211, 212, 1)" : "rgb(249, 209, 98)"
-
-    // extract day of the week abbreviation for label
-    const dayAbbreviation = getDayOfWeekLabelText(date);
 
     const handleSubmit = async () => {
         if (currentUser && habitData && !isLoading) {
@@ -94,44 +73,27 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
     }
 
     return (
-        <VStack>
-            {/* {isToday && !milestone.isCanceled && !milestone.isCompleted && <DiamondImage/>} */}
-            <HStack>
-                {date.getDay() !== 0 ? 
-                    <>
-                        <Spacer/>
-                        <Spacer/>
-                        <Spacer/>
-                    </> : 
-                    ""
-                }
-                <Text>{dayAbbreviation}</Text>
-            </HStack>
-            <HStack>
-            {date.getDay() !== 0 ? <MinusIcon />: ""}
-            <Checkbox
-                isChecked={isChecked}
-                size="lg"
-                borderColor="#3a3c3c"
-                colorScheme="green"
-                onChange={(e) => {
-                    e.preventDefault();
-                    handleSubmit();
-                    setIsChecked(!isChecked);
-                }}
-                isDisabled={ 
-                    !isHabitRoutineDay(habit, date) || 
-                    milestone.isCanceled ||
-                    isDateOutOfRange(
-                        new Date(habit.dateCreated), 
-                        new Date(),
-                        date
-                    ) || 
-                    milestone && milestone.isCompleted                   
-                }    
-            />
-            </HStack>
-        </VStack>
+        <Checkbox
+            isChecked={isChecked}
+            size="lg"
+            colorScheme="green"
+            borderColor="#3a3c3c"
+            _checked={{
+                "& .chakra-checkbox__control": { borderColor: "#3a3c3c" }
+            }}
+            onChange={(e) => {
+                e.preventDefault();
+                handleSubmit();
+                setIsChecked(!isChecked);
+            }}
+            isDisabled={ 
+                milestone.isCanceled ||
+                isOutOfRange || 
+                milestone && milestone.isCompleted                   
+            }    
+            display={!isHabitRoutineDay(habit, date) ? "none" : ""}
+        />
+        
     )
 }
 

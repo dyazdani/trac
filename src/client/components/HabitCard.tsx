@@ -1,7 +1,6 @@
 import {useState} from "react";
 import ToggleButton from "./ToggleButton.js";
 import DeleteHabitButton from "./DeleteHabitButton.js";
-
 import {
   HStack,
   Card,
@@ -17,11 +16,15 @@ import {
   Menu,
   MenuList,
   Button,
+  Grid,
+  GridItem,
+  Tooltip,
 } from "@chakra-ui/react";
 import { motion } from 'framer-motion';
 import { 
     ArrowLeftIcon,
     ArrowRightIcon,
+    ChevronUpIcon,
     CloseIcon,
     HamburgerIcon,
 } from "@chakra-ui/icons";
@@ -31,6 +34,10 @@ import UpdateHabitButton from "./UpdateHabitButton.js";
 import StatusReportFormButton from "./StatusReportFormButton.js";
 import isMostRecentStatusReportSent from "..//utils/isMostRecentStatusReportSent.js";
 import getFirstCheckInDayDate from "..//utils/getFirstCheckInDayDate.js";
+import isDateToday from "../utils/isDateToday.js";
+import getDayOfWeekLabelText from "../utils/getDayOfWeekLabelText.js";
+import isHabitRoutineDay from "./isHabitRoutineDay.js";
+import isDateOutOfRange from "../utils/isDateOutOfRange.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -79,7 +86,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
     }
     setCurrentWeek(firstWeek);
   } else {
-
     dateRangeString = `${currentWeek[0].toDateString().slice(4)} - ${currentWeek[6].toDateString().slice(4)}`
   }
 
@@ -136,33 +142,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
           {}
         }
       >
-        <IconButton 
-          aria-label="habit-navigate-left" 
-          icon={<ArrowLeftIcon />} 
-          pos="absolute" 
-          top="40%" 
-          left="0"
-          size="lg"
-          variant="unstyled"
-          isDisabled={currentWeek.some(day => {
-            return areDatesSameDayMonthYear(day, new Date(habit.dateCreated))
-          })}
-          onClick={handleLeftArrowClick}
-        />
-        <IconButton 
-          aria-label="habit-navigate-right" 
-          icon={<ArrowRightIcon />} 
-          pos="absolute" 
-          top="40%" 
-          right="0"
-          size="lg"
-          variant="unstyled"
-          colorScheme="teal"
-          isDisabled={currentWeek.some(day => {
-            return areDatesSameDayMonthYear(day, new Date(Date.now()))
-          })}
-          onClick={handleRightArrowClick}
-        />
         <CardHeader>
           <HStack justify={"end"}>
             <Heading 
@@ -199,24 +178,162 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             align={"center"}
             >
           <CardBody>
-            <HStack>
-              {currentWeek.map(day => {
+            <Grid 
+              templateColumns="repeat(17, 1fr)" 
+              templateRows="repeat(6, 1fr)" 
+              p="1vw"
+              boxShadow="2xl"
+              rounded="lg"
+            >
+              <GridItem
+                padding={".2vw"}
+                colStart={1}
+                colSpan={1}
+                rowSpan={1}
+                rowStart={3}
+              >
+                <IconButton 
+                  aria-label="see-previous-week" 
+                  icon={<ArrowLeftIcon />}
+                  size="sm"
+                  variant="unstyled"
+                  isDisabled={currentWeek.some(day => {
+                    return areDatesSameDayMonthYear(day, new Date(habit.dateCreated))
+                  })}
+                  onClick={handleLeftArrowClick}
+                />
+              </GridItem>
+              <GridItem
+                padding={".2vw"}
+                colStart={17}
+                colSpan={1}
+                rowSpan={1}
+                rowStart={3}
+              >
+                <IconButton 
+                  aria-label="see-next-week" 
+                  icon={<ArrowRightIcon />} 
+                  size="sm"
+                  variant="unstyled"
+                  isDisabled={currentWeek.some(day => {
+                    return areDatesSameDayMonthYear(day, new Date(Date.now()))
+                  })}
+                  onClick={handleRightArrowClick}
+                />
+                    
+              </GridItem>
+              {currentWeek.map((day, i) => {
+                // get boolean for if the date prop is today's date
+                const isToday = isDateToday(day);
+
+                // extract day of the week abbreviation for label
+                const dayAbbreviation = getDayOfWeekLabelText(day);
+
+                // Determine if day Check-In Day
+                const isCheckInDay = DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek
+
+                // Determine if day is out of range
+                const isOutOfRange = isDateOutOfRange(new Date(habit.dateCreated), new Date(), day)
+
+                  
                 return (
-                  <ToggleButton
-                    key={Date.parse(day.toISOString())} 
-                    milestone={milestone}
-                    date={day}
-                    habit={habit}
-                    isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek}
-                  />
+                  <>
+                    {
+                      isToday ? 
+                      <GridItem colStart={(i * 2) + 1} textAlign="center" key={`today-${Date.parse(day.toISOString())}`}rowStart={1} colSpan={5} rowSpan={1}>Today</GridItem>
+                      : ""
+                    }
+                    <GridItem
+                      padding={".2vw"}
+                      borderTop={isToday ? "2px solid #3a3c3c" : {}}
+                      borderLeft={isToday ? "2px solid #3a3c3c" : {}}
+                      borderRight={isToday ? "2px solid #3a3c3c" : {}}
+                      borderTopRadius={isToday ? 10 : {}}
+                      colStart={(i * 2) + 3}
+                      colSpan={1} 
+                      rowStart={2}
+                      textAlign="center"
+                      key={`day-label-${Date.parse(day.toISOString())}`}
+                    >
+                      {dayAbbreviation}
+                    </GridItem>
+                    <GridItem
+                      padding={".2vw"} 
+                      colStart={(i * 2) + 3}
+                      colSpan={1} 
+                      rowStart={3}
+                      textAlign="center"
+                      key={`date-label-${Date.parse(day.toISOString())}`}
+                      borderLeft={isToday ? "2px solid #3a3c3c" : {}}
+                      borderRight={isToday ? "2px solid #3a3c3c" : {}}
+                      borderBottom={isToday && !isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
+                      borderBottomRadius={isToday && !isHabitRoutineDay(habit, day)? 10 : {}}
+                      color="gray"
+                    >
+                      {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
+                    </GridItem>
+                    <Tooltip
+                      isDisabled={!isOutOfRange}
+                      label="Cannot complete dates before Habit start or after today"
+                      placement="bottom"
+                    >
+                      <GridItem
+                        padding={".2vw"}
+                        borderBottom={isToday && isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
+                        borderLeft={isToday && isHabitRoutineDay(habit, day)? "2px solid #3a3c3c" : {}}
+                        borderRight={isToday && isHabitRoutineDay(habit, day)? "2px solid #3a3c3c" : {}}
+                        borderBottomRadius={isToday && isHabitRoutineDay(habit, day)? 10 : {}}
+                        colStart={(i * 2) + 3}
+                        colSpan={1} 
+                        rowStart={4}
+                        textAlign="center"
+                        key={`checkbox-${Date.parse(day.toISOString())}`}
+                      >
+                        <ToggleButton
+                        milestone={milestone}
+                        date={day}
+                        habit={habit}
+                        isOutOfRange={isOutOfRange}
+                      />
+                      </GridItem>
+                    </Tooltip>
+                    
+                    {
+                      isCheckInDay ?
+                      <>
+                        <GridItem
+                          padding={".2vw"}
+                          colStart={(i * 2) + 3}
+                          colSpan={1} 
+                          rowStart={isHabitRoutineDay(habit, day) ? 5 : 4}
+                          textAlign="center"
+                          key={`check-in-pointer-${Date.parse(day.toISOString())}`}
+                        >
+                          <ChevronUpIcon/>
+                        </GridItem>
+                        <GridItem
+                          padding={".2vw"}
+                          colStart={(i * 2) + 1}
+                          colSpan={5} 
+                          rowStart={isHabitRoutineDay(habit, day) ? 6 : 5}
+                          textAlign="center"
+                          key={`check-in-label-${Date.parse(day.toISOString())}`}
+                        >
+                          <Box>
+                            Check-In Day
+                          </Box>
+                        </GridItem>
+                       </>
+                      : ""
+                     }
+                  </>
                 )
               })}
-            </HStack>
+            </Grid>
           </CardBody>
           <CardFooter
             color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
           >
-            {dateRangeString}
           </CardFooter>
           
           {milestone && milestone.isCompleted || milestone.isCanceled ? "" : (!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
