@@ -94,7 +94,7 @@ const ToggleButton = ({date, milestone, habit}: ToggleButtonProps) => {
                 "& .chakra-checkbox__control": { borderColor: "#3a3c3c" }
             }}
             _disabled={{
-                "& .chakra-checkbox__control": { borderColor: "#3a3c3c" }
+                "& .chakra-checkbox__control": { borderColor: "gray" }
             }}
             onChange={(e) => {
                 e.preventDefault();
