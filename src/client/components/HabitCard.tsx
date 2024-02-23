@@ -276,7 +276,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       borderRight={isToday ? "2px solid #3a3c3c" : {}}
                       borderBottom={isToday && !isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
                       borderBottomRadius={isToday && !isHabitRoutineDay(habit, day)? 10 : {}}
-
+                      color="gray"
                     >
                       {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
                     </GridItem>
