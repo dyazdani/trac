@@ -88,8 +88,14 @@ const ToggleButton = ({date, milestone, habit}: ToggleButtonProps) => {
         <Checkbox
             isChecked={isChecked}
             size="lg"
-            borderColor="#3a3c3c"
             colorScheme="green"
+            borderColor="#3a3c3c"
+            _checked={{
+                "& .chakra-checkbox__control": { borderColor: "#3a3c3c" }
+            }}
+            _disabled={{
+                "& .chakra-checkbox__control": { borderColor: "#3a3c3c" }
+            }}
             onChange={(e) => {
                 e.preventDefault();
                 handleSubmit();
