@@ -1,7 +1,6 @@
 import {useState} from "react";
 import ToggleButton from "./ToggleButton.js";
 import DeleteHabitButton from "./DeleteHabitButton.js";
-
 import {
   HStack,
   Card,
@@ -17,7 +16,6 @@ import {
   Menu,
   MenuList,
   Button,
-  VStack,
   Grid,
   GridItem,
 } from "@chakra-ui/react";
@@ -37,7 +35,6 @@ import isMostRecentStatusReportSent from "..//utils/isMostRecentStatusReportSent
 import getFirstCheckInDayDate from "..//utils/getFirstCheckInDayDate.js";
 import isDateToday from "../utils/isDateToday.js";
 import getDayOfWeekLabelText from "../utils/getDayOfWeekLabelText.js";
-import isTodayCheckInDay from "../utils/isTodayCheckInDay.js";
 import isHabitRoutineDay from "./isHabitRoutineDay.js";
 
 type HabitProps = {
@@ -180,16 +177,11 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             >
           <CardBody>
             <Grid 
-              // minW="470px"
               templateColumns="repeat(17, 1fr)" 
               templateRows="repeat(6, 1fr)" 
-              // bgColor="#FBDE8D"
               p="1vw"
               boxShadow="2xl"
               rounded="lg"
-              // border=".5px solid #3a3c3c"
-              // alignItems="center"
-              // justifyItems="center"
             >
               <GridItem
                 padding={".2vw"}
@@ -197,12 +189,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                 colSpan={1}
                 rowSpan={1}
                 rowStart={3}
-                // display="flex"
               >
                 <IconButton 
                   aria-label="see-previous-week" 
-                  // margin="auto"
-                  // pos="relative"
                   icon={<ArrowLeftIcon />}
                   size="sm"
                   variant="unstyled"
@@ -218,13 +207,10 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                 colSpan={1}
                 rowSpan={1}
                 rowStart={3}
-                // display="flex"
               >
                 <IconButton 
                   aria-label="see-next-week" 
                   icon={<ArrowRightIcon />} 
-                  // pos="relative"
-                  // margin="auto" 
                   size="sm"
                   variant="unstyled"
                   isDisabled={currentWeek.some(day => {
