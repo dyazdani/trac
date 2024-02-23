@@ -1,4 +1,7 @@
-import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { 
+    CloseIcon, 
+    HamburgerIcon 
+} from "@chakra-ui/icons";
 import { 
     Accordion,
     AccordionButton,
@@ -14,7 +17,6 @@ import {
     Flex, 
     HStack, 
     Heading, 
-    IconButton,
     Menu,
     MenuButton,
     MenuList
@@ -84,42 +86,47 @@ const Milestone = ({milestone}: MilestoneProps) => {
             align={"center"}
             >
           <CardBody>
-          <Accordion defaultIndex={[0]} allowMultiple >
-            {[...milestone.habits].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
-                .map(habit => {
-                return (
-                    <AccordionItem
-                        key={habit.id}
-                        borderTop="1px solid black" 
-                        borderBottom="1px solid black"
-                    >
-                        {({ isExpanded }) => (
-                            <>
-                                <h2>
-                                <AccordionButton>
-                                    <Box 
-                                        as="span" 
-                                        flex='1' 
-                                        textAlign='left'
-                                        color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
-                                    >
-                                        {isExpanded ? "" : habit.name}
-                                    </Box>
-                                    <AccordionIcon />
-                                </AccordionButton>
-                                </h2>
-                                <AccordionPanel pb={4}>
-                                    <HabitCard 
-                                        habit={habit}
-                                        milestone={milestone}
-                                    />
-                                </AccordionPanel>
-                            </>
-                        )}    
-            </AccordionItem>
-                )
-            })}     
-        </Accordion>
+            <Heading 
+                as="h3"
+                size="lg"
+                mb=".5vw"
+            >Habits</Heading>
+            <Accordion defaultIndex={[0]} allowMultiple >
+                {[...milestone.habits].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
+                    .map(habit => {
+                    return (
+                        <AccordionItem
+                            key={habit.id}
+                            borderTop="1px solid black" 
+                            borderBottom="1px solid black"
+                        >
+                            {({ isExpanded }) => (
+                                <>
+                                    <h2>
+                                    <AccordionButton>
+                                        <Box 
+                                            as="span" 
+                                            flex='1' 
+                                            textAlign='left'
+                                            color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
+                                        >
+                                            {isExpanded ? "" : habit.name}
+                                        </Box>
+                                        <AccordionIcon />
+                                    </AccordionButton>
+                                    </h2>
+                                    <AccordionPanel pb={4}>
+                                        <HabitCard 
+                                            habit={habit}
+                                            milestone={milestone}
+                                        />
+                                    </AccordionPanel>
+                                </>
+                            )}    
+                </AccordionItem>
+                    )
+                })}     
+            </Accordion>
           </CardBody>
           <CardFooter>
             <CreateHabitButton milestone={milestone}/>
