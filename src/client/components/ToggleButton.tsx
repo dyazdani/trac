@@ -7,7 +7,6 @@ import {
     Grid
  } from "@chakra-ui/react";
  import isDateToday from "..//utils/isDateToday.js";
-import getDayOfWeekLabelText from "..//utils/getDayOfWeekLabelText.js";
 import { useUpdateHabitMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { 
@@ -45,9 +44,6 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
         
     // get boolean for if the date prop is today's date
     const isToday = isDateToday(date);
-     
-    // extract day of the week abbreviation for label
-    const dayAbbreviation = getDayOfWeekLabelText(date);
 
     const handleSubmit = async () => {
         if (currentUser && habitData && !isLoading) {

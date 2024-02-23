@@ -35,6 +35,7 @@ import StatusReportFormButton from "./StatusReportFormButton.js";
 import isMostRecentStatusReportSent from "..//utils/isMostRecentStatusReportSent.js";
 import getFirstCheckInDayDate from "..//utils/getFirstCheckInDayDate.js";
 import isDateToday from "../utils/isDateToday.js";
+import getDayOfWeekLabelText from "../utils/getDayOfWeekLabelText.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -83,11 +84,8 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
     }
     setCurrentWeek(firstWeek);
   } else {
-
     dateRangeString = `${currentWeek[0].toDateString().slice(4)} - ${currentWeek[6].toDateString().slice(4)}`
   }
-
-
 
   // Function for left arrow button that displays previous week
   const handleLeftArrowClick = () => {
@@ -213,6 +211,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               {currentWeek.map((day, i) => {
                 // get boolean for if the date prop is today's date
                 const isToday = isDateToday(day);
+
+                // extract day of the week abbreviation for label
+                const dayAbbreviation = getDayOfWeekLabelText(day);
                   
                   return (
                     <>
@@ -224,11 +225,17 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       <GridItem
                         colStart={(i * 2) + 1}
                         colSpan={1} 
+                        rowStart={2}
+                        textAlign="center"
+                        key={`day-label-${Date.parse(day.toISOString())}`}
+                      >{dayAbbreviation}</GridItem>
+                      <GridItem
+                        colStart={(i * 2) + 1}
+                        colSpan={1} 
                         rowStart={4}
-                        key={Date.parse(day.toISOString())} 
+                        key={`checkbox-${Date.parse(day.toISOString())}`}
                       >
                         <ToggleButton
-                        key={`checkbox-${Date.parse(day.toISOString())}`}
                         milestone={milestone}
                         date={day}
                         habit={habit}
