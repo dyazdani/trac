@@ -82,8 +82,9 @@ const ToggleButton = ({date, milestone, habit}: ToggleButtonProps) => {
         }
     }
 
-    return (
+    const isOutOfRange = isDateOutOfRange(new Date(habit.dateCreated), new Date(), date)
 
+    return (
         <Checkbox
             isChecked={isChecked}
             size="lg"
@@ -95,15 +96,16 @@ const ToggleButton = ({date, milestone, habit}: ToggleButtonProps) => {
                 setIsChecked(!isChecked);
             }}
             isDisabled={ 
-                !isHabitRoutineDay(habit, date) || 
+                // !isHabitRoutineDay(habit, date) || 
                 milestone.isCanceled ||
-                isDateOutOfRange(
-                    new Date(habit.dateCreated), 
-                    new Date(),
-                    date
-                ) || 
+                // isDateOutOfRange(
+                //     new Date(habit.dateCreated), 
+                //     new Date(),
+                //     date
+                // ) || 
                 milestone && milestone.isCompleted                   
             }    
+            display={isOutOfRange ? "none" : ""}
         />
 
         // <VStack>

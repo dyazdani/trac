@@ -321,33 +321,13 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                             Check-In Day
                           </Box>
                         </GridItem>
-                        
                        </>
                       : ""
                      }
                   </>
-                  
                 )
               })}
             </Grid>
-            
-            
-            {/* <VStack>
-              <HStack>
-                {currentWeek.map(day => {
-                  return (
-                    <ToggleButton
-                      key={Date.parse(day.toISOString())} 
-                      milestone={milestone}
-                      date={day}
-                      habit={habit}
-                      isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek}
-                    />
-                  )
-                })}
-              </HStack>
-            </VStack> */}
-            
           </CardBody>
           <CardFooter
             color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
