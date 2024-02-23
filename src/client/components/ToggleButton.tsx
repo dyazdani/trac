@@ -1,4 +1,4 @@
-import {  Checkbox } from "@chakra-ui/react";
+import { Checkbox } from "@chakra-ui/react";
 import { useUpdateHabitMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { 
@@ -6,7 +6,6 @@ import {
      MilestoneWithDetails 
     } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
-import isDateOutOfRange from "..//utils/isDateOutOfRange.js";
 import isHabitRoutineDay from "./isHabitRoutineDay.js";
 import { useState } from "react";
 
@@ -14,15 +13,16 @@ import { useState } from "react";
     date: Date
     milestone: MilestoneWithDetails
     habit: HabitWithDetails
+    isOutOfRange: boolean
  }
 
-const ToggleButton = ({date, milestone, habit}: ToggleButtonProps) => {
+const ToggleButton = ({date, milestone, habit, isOutOfRange}: ToggleButtonProps) => {
     const [isChecked, setIsChecked] = useState(!!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date)));
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
-    const [updateHabit, {data, isLoading, error}] = useUpdateHabitMutation();
+    const [updateHabit, {isLoading}] = useUpdateHabitMutation();
     
     // variable for current habit details to be sent with update mutation
     let habitData: HabitWithDetails;
@@ -72,8 +72,6 @@ const ToggleButton = ({date, milestone, habit}: ToggleButtonProps) => {
         }
     }
 
-    const isOutOfRange = isDateOutOfRange(new Date(habit.dateCreated), new Date(), date)
-
     return (
         <Checkbox
             isChecked={isChecked}
@@ -95,6 +93,7 @@ const ToggleButton = ({date, milestone, habit}: ToggleButtonProps) => {
             }    
             display={!isHabitRoutineDay(habit, date) ? "none" : ""}
         />
+        
     )
 }
 

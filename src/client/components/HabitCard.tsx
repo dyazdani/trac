@@ -18,6 +18,7 @@ import {
   Button,
   Grid,
   GridItem,
+  Tooltip,
 } from "@chakra-ui/react";
 import { motion } from 'framer-motion';
 import { 
@@ -36,6 +37,7 @@ import getFirstCheckInDayDate from "..//utils/getFirstCheckInDayDate.js";
 import isDateToday from "../utils/isDateToday.js";
 import getDayOfWeekLabelText from "../utils/getDayOfWeekLabelText.js";
 import isHabitRoutineDay from "./isHabitRoutineDay.js";
+import isDateOutOfRange from "../utils/isDateOutOfRange.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -229,6 +231,10 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
 
                 // Determine if day Check-In Day
                 const isCheckInDay = DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek
+
+                // Determine if day is out of range
+                const isOutOfRange = isDateOutOfRange(new Date(habit.dateCreated), new Date(), day)
+
                   
                 return (
                   <>
@@ -266,24 +272,32 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     >
                       {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
                     </GridItem>
-                    <GridItem
-                      padding={".2vw"}
-                      borderBottom={isToday && isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
-                      borderLeft={isToday && isHabitRoutineDay(habit, day)? "2px solid #3a3c3c" : {}}
-                      borderRight={isToday && isHabitRoutineDay(habit, day)? "2px solid #3a3c3c" : {}}
-                      borderBottomRadius={isToday && isHabitRoutineDay(habit, day)? 10 : {}}
-                      colStart={(i * 2) + 3}
-                      colSpan={1} 
-                      rowStart={4}
-                      textAlign="center"
-                      key={`checkbox-${Date.parse(day.toISOString())}`}
+                    <Tooltip
+                      isDisabled={!isOutOfRange}
+                      label="Cannot complete dates before Habit start or after today"
+                      placement="bottom"
                     >
-                      <ToggleButton
-                      milestone={milestone}
-                      date={day}
-                      habit={habit}
-                    />
-                    </GridItem>
+                      <GridItem
+                        padding={".2vw"}
+                        borderBottom={isToday && isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
+                        borderLeft={isToday && isHabitRoutineDay(habit, day)? "2px solid #3a3c3c" : {}}
+                        borderRight={isToday && isHabitRoutineDay(habit, day)? "2px solid #3a3c3c" : {}}
+                        borderBottomRadius={isToday && isHabitRoutineDay(habit, day)? 10 : {}}
+                        colStart={(i * 2) + 3}
+                        colSpan={1} 
+                        rowStart={4}
+                        textAlign="center"
+                        key={`checkbox-${Date.parse(day.toISOString())}`}
+                      >
+                        <ToggleButton
+                        milestone={milestone}
+                        date={day}
+                        habit={habit}
+                        isOutOfRange={isOutOfRange}
+                      />
+                      </GridItem>
+                    </Tooltip>
+                    
                     {
                       isCheckInDay ?
                       <>
