@@ -142,33 +142,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
           {}
         }
       >
-        <IconButton 
-          aria-label="habit-navigate-left" 
-          icon={<ArrowLeftIcon />} 
-          pos="absolute" 
-          top="40%" 
-          left="0"
-          size="lg"
-          variant="unstyled"
-          isDisabled={currentWeek.some(day => {
-            return areDatesSameDayMonthYear(day, new Date(habit.dateCreated))
-          })}
-          onClick={handleLeftArrowClick}
-        />
-        <IconButton 
-          aria-label="habit-navigate-right" 
-          icon={<ArrowRightIcon />} 
-          pos="absolute" 
-          top="40%" 
-          right="0"
-          size="lg"
-          variant="unstyled"
-          colorScheme="teal"
-          isDisabled={currentWeek.some(day => {
-            return areDatesSameDayMonthYear(day, new Date(Date.now()))
-          })}
-          onClick={handleRightArrowClick}
-        />
         <CardHeader>
           <HStack justify={"end"}>
             <Heading 
@@ -206,10 +179,58 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             >
           <CardBody>
             <Grid 
-              templateColumns="repeat(13, 1fr)" 
+              // minW="470px"
+              templateColumns="repeat(17, 1fr)" 
               templateRows="repeat(6, 1fr)" 
-              gap="1"
+              bgColor="#FBDE8D"
+              p="1vw"
+              borderRadius="5px"
+              // alignItems="center"
+              // justifyItems="center"
             >
+              <GridItem
+                padding={".2vw"}
+                colStart={1}
+                colSpan={1}
+                rowSpan={1}
+                rowStart={3}
+                // display="flex"
+              >
+                <IconButton 
+                  aria-label="see-previous-week" 
+                  // margin="auto"
+                  // pos="relative"
+                  icon={<ArrowLeftIcon />}
+                  size="sm"
+                  variant="unstyled"
+                  isDisabled={currentWeek.some(day => {
+                    return areDatesSameDayMonthYear(day, new Date(habit.dateCreated))
+                  })}
+                  onClick={handleLeftArrowClick}
+                />
+              </GridItem>
+              <GridItem
+                padding={".2vw"}
+                colStart={17}
+                colSpan={1}
+                rowSpan={1}
+                rowStart={3}
+                // display="flex"
+              >
+                <IconButton 
+                  aria-label="see-next-week" 
+                  icon={<ArrowRightIcon />} 
+                  // pos="relative"
+                  // margin="auto" 
+                  size="sm"
+                  variant="unstyled"
+                  isDisabled={currentWeek.some(day => {
+                    return areDatesSameDayMonthYear(day, new Date(Date.now()))
+                  })}
+                  onClick={handleRightArrowClick}
+                />
+                    
+              </GridItem>
               {currentWeek.map((day, i) => {
                 // get boolean for if the date prop is today's date
                 const isToday = isDateToday(day);
@@ -224,11 +245,18 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                   <>
                     {
                       isToday ? 
-                      <GridItem colStart={(i * 2)} textAlign="center" key={`today-${Date.parse(day.toISOString())}`}rowStart={1} colSpan={3} rowSpan={1}>Today</GridItem>
+                      <GridItem colStart={(i * 2) + 1} textAlign="center" key={`today-${Date.parse(day.toISOString())}`}rowStart={1} colSpan={5} rowSpan={1}>Today</GridItem>
                       : ""
                     }
                     <GridItem
-                      colStart={(i * 2) + 1}
+                      padding={".2vw"}
+                      borderTop={isToday ? "2px solid #3a3c3c" : {}}
+                      borderLeft={isToday ? "2px solid #3a3c3c" : {}}
+                      borderRight={isToday ? "2px solid #3a3c3c" : {}}
+                      borderTopRadius={isToday ? 10 : {}}
+                      // borderLeftRadius={isToday && "10px"}
+                      // borderRightRadius={isToday && "10px"}
+                      colStart={(i * 2) + 3}
                       colSpan={1} 
                       rowStart={2}
                       textAlign="center"
@@ -237,16 +265,24 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       {dayAbbreviation}
                     </GridItem>
                     <GridItem
-                      colStart={(i * 2) + 1}
+                      padding={".2vw"} 
+                      colStart={(i * 2) + 3}
                       colSpan={1} 
                       rowStart={3}
                       textAlign="center"
                       key={`date-label-${Date.parse(day.toISOString())}`}
+                      borderLeft={isToday ? "2px solid #3a3c3c" : {}}
+                      borderRight={isToday ? "2px solid #3a3c3c" : {}}
                     >
                       {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
                     </GridItem>
                     <GridItem
-                      colStart={(i * 2) + 1}
+                      padding={".2vw"}
+                      borderBottom={isToday ? "2px solid #3a3c3c" : {}}
+                      borderLeft={isToday ? "2px solid #3a3c3c" : {}}
+                      borderRight={isToday ? "2px solid #3a3c3c" : {}}
+                      borderBottomRadius={isToday ? 10 : {}}
+                      colStart={(i * 2) + 3}
                       colSpan={1} 
                       rowStart={4}
                       textAlign="center"
@@ -262,7 +298,8 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       isCheckInDay ?
                       <>
                         <GridItem
-                          colStart={(i * 2) + 1}
+                          padding={".2vw"}
+                          colStart={(i * 2) + 3}
                           colSpan={1} 
                           rowStart={5}
                           textAlign="center"
@@ -271,8 +308,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           <ChevronUpIcon/>
                         </GridItem>
                         <GridItem
-                          colStart={(i * 2)}
-                          colSpan={3} 
+                          padding={".2vw"}
+                          colStart={(i * 2) + 1}
+                          colSpan={5} 
                           rowStart={6}
                           textAlign="center"
                           key={`check-in-label-${Date.parse(day.toISOString())}`}
