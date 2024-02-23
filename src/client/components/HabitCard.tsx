@@ -17,6 +17,9 @@ import {
   Menu,
   MenuList,
   Button,
+  VStack,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 import { motion } from 'framer-motion';
 import { 
@@ -31,6 +34,7 @@ import UpdateHabitButton from "./UpdateHabitButton.js";
 import StatusReportFormButton from "./StatusReportFormButton.js";
 import isMostRecentStatusReportSent from "..//utils/isMostRecentStatusReportSent.js";
 import getFirstCheckInDayDate from "..//utils/getFirstCheckInDayDate.js";
+import isDateToday from "../utils/isDateToday.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -82,6 +86,8 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
 
     dateRangeString = `${currentWeek[0].toDateString().slice(4)} - ${currentWeek[6].toDateString().slice(4)}`
   }
+
+
 
   // Function for left arrow button that displays previous week
   const handleLeftArrowClick = () => {
@@ -199,24 +205,63 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             align={"center"}
             >
           <CardBody>
-            <HStack>
-              {currentWeek.map(day => {
-                return (
-                  <ToggleButton
-                    key={Date.parse(day.toISOString())} 
-                    milestone={milestone}
-                    date={day}
-                    habit={habit}
-                    isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek}
-                  />
-                )
-              })}
-            </HStack>
+            <Grid 
+              templateColumns="repeat(13, 1fr)" 
+              templateRows="repeat(6, 1fr)" 
+              gap="1"
+            >
+              {currentWeek.map((day, i) => {
+                // get boolean for if the date prop is today's date
+                const isToday = isDateToday(day);
+                  
+                  return (
+                    <>
+                      {
+                        isToday ? 
+                        <GridItem colStart={(i * 2)} textAlign="center" key={`today-${Date.parse(day.toISOString())}`}rowStart={1} colSpan={3} rowSpan={1}>Today</GridItem>
+                        : ""
+                      }
+                      <GridItem
+                        colStart={(i * 2) + 1}
+                        colSpan={1} 
+                        rowStart={4}
+                        key={Date.parse(day.toISOString())} 
+                      >
+                        <ToggleButton
+                        key={`checkbox-${Date.parse(day.toISOString())}`}
+                        milestone={milestone}
+                        date={day}
+                        habit={habit}
+                        isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek}
+                      />
+                      </GridItem>
+                    </>
+                    
+                  )
+                })}
+            </Grid>
+            
+            
+            {/* <VStack>
+              <HStack>
+                {currentWeek.map(day => {
+                  return (
+                    <ToggleButton
+                      key={Date.parse(day.toISOString())} 
+                      milestone={milestone}
+                      date={day}
+                      habit={habit}
+                      isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek}
+                    />
+                  )
+                })}
+              </HStack>
+            </VStack> */}
+            
           </CardBody>
           <CardFooter
             color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
           >
-            {dateRangeString}
           </CardFooter>
           
           {milestone && milestone.isCompleted || milestone.isCanceled ? "" : (!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
