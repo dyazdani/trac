@@ -25,6 +25,7 @@ import { motion } from 'framer-motion';
 import { 
     ArrowLeftIcon,
     ArrowRightIcon,
+    ChevronUpIcon,
     CloseIcon,
     HamburgerIcon,
 } from "@chakra-ui/icons";
@@ -36,6 +37,7 @@ import isMostRecentStatusReportSent from "..//utils/isMostRecentStatusReportSent
 import getFirstCheckInDayDate from "..//utils/getFirstCheckInDayDate.js";
 import isDateToday from "../utils/isDateToday.js";
 import getDayOfWeekLabelText from "../utils/getDayOfWeekLabelText.js";
+import isTodayCheckInDay from "../utils/isTodayCheckInDay.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -214,50 +216,79 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
 
                 // extract day of the week abbreviation for label
                 const dayAbbreviation = getDayOfWeekLabelText(day);
+
+                // Determine if day Check-In Day
+                const isCheckInDay = DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek
                   
-                  return (
-                    <>
-                      {
-                        isToday ? 
-                        <GridItem colStart={(i * 2)} textAlign="center" key={`today-${Date.parse(day.toISOString())}`}rowStart={1} colSpan={3} rowSpan={1}>Today</GridItem>
-                        : ""
-                      }
-                      <GridItem
-                        colStart={(i * 2) + 1}
-                        colSpan={1} 
-                        rowStart={2}
-                        textAlign="center"
-                        key={`day-label-${Date.parse(day.toISOString())}`}
-                      >
-                        {dayAbbreviation}
-                      </GridItem>
-                      <GridItem
-                        colStart={(i * 2) + 1}
-                        colSpan={1} 
-                        rowStart={3}
-                        textAlign="center"
-                        key={`date-label-${Date.parse(day.toISOString())}`}
-                      >
-                        {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
-                      </GridItem>
-                      <GridItem
-                        colStart={(i * 2) + 1}
-                        colSpan={1} 
-                        rowStart={4}
-                        textAlign="center"
-                        key={`checkbox-${Date.parse(day.toISOString())}`}
-                      >
-                        <ToggleButton
-                        milestone={milestone}
-                        date={day}
-                        habit={habit}
-                        isCheckInDay={DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek}
-                      />
-                      </GridItem>
-                    </>
-                    
-                  )
-                })}
+                return (
+                  <>
+                    {
+                      isToday ? 
+                      <GridItem colStart={(i * 2)} textAlign="center" key={`today-${Date.parse(day.toISOString())}`}rowStart={1} colSpan={3} rowSpan={1}>Today</GridItem>
+                      : ""
+                    }
+                    <GridItem
+                      colStart={(i * 2) + 1}
+                      colSpan={1} 
+                      rowStart={2}
+                      textAlign="center"
+                      key={`day-label-${Date.parse(day.toISOString())}`}
+                    >
+                      {dayAbbreviation}
+                    </GridItem>
+                    <GridItem
+                      colStart={(i * 2) + 1}
+                      colSpan={1} 
+                      rowStart={3}
+                      textAlign="center"
+                      key={`date-label-${Date.parse(day.toISOString())}`}
+                    >
+                      {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
+                    </GridItem>
+                    <GridItem
+                      colStart={(i * 2) + 1}
+                      colSpan={1} 
+                      rowStart={4}
+                      textAlign="center"
+                      key={`checkbox-${Date.parse(day.toISOString())}`}
+                    >
+                      <ToggleButton
+                      milestone={milestone}
+                      date={day}
+                      habit={habit}
+                    />
+                    </GridItem>
+                    {
+                      isCheckInDay ?
+                      <>
+                        <GridItem
+                          colStart={(i * 2) + 1}
+                          colSpan={1} 
+                          rowStart={5}
+                          textAlign="center"
+                          key={`check-in-pointer-${Date.parse(day.toISOString())}`}
+                        >
+                          <ChevronUpIcon/>
+                        </GridItem>
+                        <GridItem
+                          colStart={(i * 2)}
+                          colSpan={3} 
+                          rowStart={6}
+                          textAlign="center"
+                          key={`check-in-label-${Date.parse(day.toISOString())}`}
+                        >
+                          <Box>
+                            Check-In Day
+                          </Box>
+                        </GridItem>
+                        
+                       </>
+                      : ""
+                     }
+                  </>
+                  
+                )
+              })}
             </Grid>
             
             

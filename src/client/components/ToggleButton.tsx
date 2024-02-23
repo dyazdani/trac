@@ -24,10 +24,9 @@ import { ChevronUpIcon, MinusIcon } from "@chakra-ui/icons";
     date: Date
     milestone: MilestoneWithDetails
     habit: HabitWithDetails
-    isCheckInDay: boolean
  }
 
-const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps) => {
+const ToggleButton = ({date, milestone, habit}: ToggleButtonProps) => {
     const [isChecked, setIsChecked] = useState(!!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date)));
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
@@ -41,9 +40,6 @@ const ToggleButton = ({date, milestone, habit, isCheckInDay}: ToggleButtonProps)
     if (currentUser) {
         habitData = habit
     }
-        
-    // get boolean for if the date prop is today's date
-    const isToday = isDateToday(date);
 
     const handleSubmit = async () => {
         if (currentUser && habitData && !isLoading) {
