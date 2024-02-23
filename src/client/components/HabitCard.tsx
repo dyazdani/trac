@@ -228,11 +228,23 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         rowStart={2}
                         textAlign="center"
                         key={`day-label-${Date.parse(day.toISOString())}`}
-                      >{dayAbbreviation}</GridItem>
+                      >
+                        {dayAbbreviation}
+                      </GridItem>
+                      <GridItem
+                        colStart={(i * 2) + 1}
+                        colSpan={1} 
+                        rowStart={3}
+                        textAlign="center"
+                        key={`date-label-${Date.parse(day.toISOString())}`}
+                      >
+                        {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
+                      </GridItem>
                       <GridItem
                         colStart={(i * 2) + 1}
                         colSpan={1} 
                         rowStart={4}
+                        textAlign="center"
                         key={`checkbox-${Date.parse(day.toISOString())}`}
                       >
                         <ToggleButton
