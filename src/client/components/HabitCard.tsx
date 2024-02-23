@@ -182,9 +182,11 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               // minW="470px"
               templateColumns="repeat(17, 1fr)" 
               templateRows="repeat(6, 1fr)" 
-              bgColor="#FBDE8D"
+              // bgColor="#FBDE8D"
               p="1vw"
-              borderRadius="5px"
+              boxShadow="2xl"
+              rounded="lg"
+              // border=".5px solid #3a3c3c"
               // alignItems="center"
               // justifyItems="center"
             >
