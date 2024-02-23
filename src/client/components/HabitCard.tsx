@@ -38,6 +38,7 @@ import getFirstCheckInDayDate from "..//utils/getFirstCheckInDayDate.js";
 import isDateToday from "../utils/isDateToday.js";
 import getDayOfWeekLabelText from "../utils/getDayOfWeekLabelText.js";
 import isTodayCheckInDay from "../utils/isTodayCheckInDay.js";
+import isHabitRoutineDay from "./isHabitRoutineDay.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -256,8 +257,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       borderLeft={isToday ? "2px solid #3a3c3c" : {}}
                       borderRight={isToday ? "2px solid #3a3c3c" : {}}
                       borderTopRadius={isToday ? 10 : {}}
-                      // borderLeftRadius={isToday && "10px"}
-                      // borderRightRadius={isToday && "10px"}
                       colStart={(i * 2) + 3}
                       colSpan={1} 
                       rowStart={2}
@@ -275,15 +274,18 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       key={`date-label-${Date.parse(day.toISOString())}`}
                       borderLeft={isToday ? "2px solid #3a3c3c" : {}}
                       borderRight={isToday ? "2px solid #3a3c3c" : {}}
+                      borderBottom={isToday && !isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
+                      borderBottomRadius={isToday && !isHabitRoutineDay(habit, day)? 10 : {}}
+
                     >
                       {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
                     </GridItem>
                     <GridItem
                       padding={".2vw"}
-                      borderBottom={isToday ? "2px solid #3a3c3c" : {}}
-                      borderLeft={isToday ? "2px solid #3a3c3c" : {}}
-                      borderRight={isToday ? "2px solid #3a3c3c" : {}}
-                      borderBottomRadius={isToday ? 10 : {}}
+                      borderBottom={isToday && isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
+                      borderLeft={isToday && isHabitRoutineDay(habit, day)? "2px solid #3a3c3c" : {}}
+                      borderRight={isToday && isHabitRoutineDay(habit, day)? "2px solid #3a3c3c" : {}}
+                      borderBottomRadius={isToday && isHabitRoutineDay(habit, day)? 10 : {}}
                       colStart={(i * 2) + 3}
                       colSpan={1} 
                       rowStart={4}
@@ -303,7 +305,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           padding={".2vw"}
                           colStart={(i * 2) + 3}
                           colSpan={1} 
-                          rowStart={5}
+                          rowStart={isHabitRoutineDay(habit, day) ? 5 : 4}
                           textAlign="center"
                           key={`check-in-pointer-${Date.parse(day.toISOString())}`}
                         >
@@ -313,7 +315,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           padding={".2vw"}
                           colStart={(i * 2) + 1}
                           colSpan={5} 
-                          rowStart={6}
+                          rowStart={isHabitRoutineDay(habit, day) ? 6 : 5}
                           textAlign="center"
                           key={`check-in-label-${Date.parse(day.toISOString())}`}
                         >
