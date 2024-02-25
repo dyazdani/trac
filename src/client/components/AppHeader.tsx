@@ -11,8 +11,11 @@ import {
     Button,
     Spacer,
     Heading,
-    Image
+    Image,
+    Link as ChakraLink, 
+    LinkProps
 } from "@chakra-ui/react";
+import { Link as ReactRouterLink } from 'react-router-dom'
 import MessagesMenu from "./MessagesMenu.js";
 import { useNavigate } from "react-router";
 import { ChevronRightIcon } from "@chakra-ui/icons";
@@ -58,7 +61,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
         <Spacer/>
         <Spacer/>
         <Spacer/>
-        
+
 
         {
           currentUser ? 
@@ -69,7 +72,12 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             <Text>{`Welcome back, `}<Text as='b'>{currentUser?.username}</Text>
             </Text>
           </Box> : 
-          ""
+          <ChakraLink
+            as={ReactRouterLink}
+            to="/login"
+          >
+            Log In
+          </ChakraLink>
         }
 
         {
