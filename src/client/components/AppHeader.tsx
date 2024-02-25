@@ -3,12 +3,7 @@ import {
   useAppSelector 
 } from "../app/hooks.js";
 import { logout } from "../features/authSlice.js";
-import {
-  KnockFeedProvider
-} from "@knocklabs/react-notification-feed";
-
-import { useCreateScheduleMutation } from "../features/api.js";
-
+import { KnockFeedProvider } from "@knocklabs/react-notification-feed";
 import { 
     HStack, 
     Box, 
@@ -16,7 +11,6 @@ import {
     Button,
     Spacer,
     Heading,
-    VStack,
     Image
 } from "@chakra-ui/react";
 import MessagesMenu from "./MessagesMenu.js";
@@ -39,7 +33,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
       bg="#b9eefe" 
       w="100vw"
       maxWidth="100%" 
-      p="1vw"
+      p="1rem"
       minHeight="70px"
       position={"sticky"}
       // TODO: Uncomment the following lines when done with testing
@@ -50,6 +44,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
       zIndex={100}
     >
       <HStack>
+        <Spacer/>
         <Heading>trac</Heading>
         <Image
           src="/images/trac_logo.png"
@@ -57,6 +52,13 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
           h="2.5rem"
         />
         <Spacer/>
+        <Spacer/>
+        <Spacer/>
+        <Spacer/>
+        <Spacer/>
+        <Spacer/>
+        <Spacer/>
+        
 
         {
           currentUser ? 
@@ -104,11 +106,16 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             rightIcon={<ChevronRightIcon/>}
             colorScheme="orange"
             color="#000000"
+            ml="1vw"
+            mr="1vw"
+            variant="solid"
+            type="button"
+            minW="fit-content"
           >
             Get Started
           </Button>
         }
-        
+        <Spacer/>
       </HStack>
     </Box>
   );
