@@ -55,11 +55,11 @@ const LandingPage = () => {
                     w="100vw"
                     maxW="100%"
                     mt="2vw"
-                    p="5vw"
+                    p="4vw"
                     bgColor="#eaf7fa"
                 >
                 <Flex
-
+                    justifyContent="center"
                 >
                     <Card
                         boxShadow="2xl"
@@ -74,7 +74,8 @@ const LandingPage = () => {
                         />
                     </Card>
                     <Spacer
-                        minW="5vw"
+                        minW="4vw"
+                        maxW="10vw"
                     />
                     <Card
                         p="2vw"
