@@ -12,21 +12,19 @@ import {
   Heading,
   Text,
   Button,
-  Link,
+  Link as ChakraLink,
   InputGroup,
   InputRightElement,
   IconButton,
   FormErrorMessage,
 } from "@chakra-ui/react";
+import { Link as ReactRouterLink } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useGetAllUsersQuery, useGetUserByEmailQuery, useLoginMutation } from "../features/api.js";
 import { useNavigate } from "react-router";
 
-export interface LoginFormProps {
-  handleLinkClick: () => void;
-}
 
-const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
+const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -168,13 +166,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleLinkClick }) => {
       <CardFooter>
         <Text>
           Don't have an account?{" "}
-          <Link
+          <ChakraLink
             data-testid="signup-link"
-            onClick={handleLinkClick}
             color="teal"
+            as={ReactRouterLink}
+            to="/register"
           >
             Sign Up.
-          </Link>
+          </ChakraLink>
         </Text>
       </CardFooter>
     </Card>

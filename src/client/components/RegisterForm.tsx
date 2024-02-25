@@ -12,7 +12,7 @@ import {
     Heading,
     Text,
     Button,
-    Link,
+    Link as ChakraLink,
     InputGroup,
     InputRightElement,
     IconButton,
@@ -20,7 +20,11 @@ import {
     FormHelperText,
     Checkbox
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
+import { Link as ReactRouterLink } from "react-router-dom";
+import { 
+    ViewIcon, 
+    ViewOffIcon 
+} from "@chakra-ui/icons"
 import { 
     useRegisterMutation, 
     useIdentifyUserMutation, 
@@ -29,11 +33,7 @@ import {
 import getPasswordValidation from "../../utils/getPasswordValidation.js";
 import { useNavigate } from "react-router";
 
-export interface RegisterFormProps {
-    handleLinkClick: () => void
-}
-
-const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
+const RegisterForm = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
@@ -274,7 +274,15 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
             </CardBody>
             <CardFooter>
                 <Text> 
-                    Already registered? <Link data-testid="login-link" onClick={handleLinkClick} color="teal">Log in.</Link>
+                    Already registered?{" "} 
+                    <ChakraLink 
+                        data-testid="login-link"
+                        color="teal" 
+                        as={ReactRouterLink}
+                        to="/login"
+                    >
+                        Log in.
+                    </ChakraLink>
                 </Text>
             </CardFooter>
         </Card>
