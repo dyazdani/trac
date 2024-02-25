@@ -121,7 +121,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             onClick={(e) => {
               e.preventDefault();
               navigate("/register");
-          }}
+            }}
           >
             Get Started
           </Button>
