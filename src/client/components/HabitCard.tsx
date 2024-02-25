@@ -36,7 +36,7 @@ import isMostRecentStatusReportSent from "..//utils/isMostRecentStatusReportSent
 import getFirstCheckInDayDate from "..//utils/getFirstCheckInDayDate.js";
 import isDateToday from "../utils/isDateToday.js";
 import getDayOfWeekLabelText from "../utils/getDayOfWeekLabelText.js";
-import isHabitRoutineDay from "./isHabitRoutineDay.js";
+import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
 import isDateOutOfRange from "../utils/isDateOutOfRange.js";
 
 type HabitProps = {

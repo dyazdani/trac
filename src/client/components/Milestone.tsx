@@ -19,7 +19,9 @@ import {
     Heading, 
     Menu,
     MenuButton,
-    MenuList
+    MenuList,
+    Spacer,
+    Text
 } from "@chakra-ui/react";
 import HabitCard from "./HabitCard.js";
 import { MilestoneWithDetails } from "../../types/index.js";
@@ -28,6 +30,7 @@ import DeleteMilestoneButton from "./DeleteMilestoneButton.js";
 import CompleteMilestoneButton from "./CompleteMilestoneButton.js";
 import CancelMilestoneButton from "./CancelMilestoneButton.js";
 import CreateHabitButton from "./CreateHabitButton.js";
+import areDatesSameDayMonthYear from "../utils/areDatesSameDayMonthYear.js";
 
 export interface MilestoneProps {
     milestone: MilestoneWithDetails
@@ -47,15 +50,22 @@ const Milestone = ({milestone}: MilestoneProps) => {
         borderRadius="20px"
       >
         <CardHeader>
-          <HStack justify={"end"}>
+          <HStack>
             <Heading 
-                sx={{ marginRight: "auto" }} 
                 size="xl"
                 color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
                 as="h2"
             >
              {milestone.name}
             </Heading>
+            {
+                areDatesSameDayMonthYear(new Date(), new Date(milestone.dueDate)) ? 
+                <Text fontSize="lg">DUE TODAY!</Text> : 
+                new Date().getTime() > new Date(milestone.dueDate).setHours(23, 59, 59, 999) ?
+                <Text color="red" fontSize="lg">OVERDUE!</Text> : 
+                <Text fontSize="lg">Due {new Date(milestone.dueDate).toLocaleDateString()}</Text>
+            }
+            <Spacer/>
             <Menu
                 isLazy
                 closeOnSelect={false}
