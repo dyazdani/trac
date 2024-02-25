@@ -51,7 +51,7 @@ const Dashboard = () => {
             pt="5vh"
             alignItems="center"
           >
-              <Heading as='h1'>My Goals</Heading>
+              <Heading as='h1' size="2xl">My Goals</Heading>
               <MyMilestones milestones={milestonesData?.milestones}/>
           </Box>
       </>
