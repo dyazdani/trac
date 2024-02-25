@@ -35,11 +35,16 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
   return (
     <Box 
       bg="#b9eefe" 
-      w="100%" 
-      p={4}
+      w="100vw"
+      maxWidth="100%" 
+      p="1vw"
       minHeight="70px"
       position={"sticky"}
-      top={isBannerDisplayed ? "54px" : "0px"}
+      // TODO: Uncomment the following lines when done with testing
+      top={
+        // isBannerDisplayed ? 
+        // "54px" : 
+        "0px"}
       zIndex={100}
     >
       <HStack>
