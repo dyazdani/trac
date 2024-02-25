@@ -25,32 +25,49 @@ const LandingPage = () => {
                 h="100vh                                                                                                                                            0vh)"
                 w="100vw"
                 maxWidth="100%"
-                p="1vw"
-                alignItems="center"
             >
-                <Heading
-                    as="h1"
-                    size="2xl"
-                    mt="5vw"
+                <Box
+                    w="100vw"
+                    maxWidth="100%"
+                    bgImage="url('/images/trac_landing_page_bg_image.jpg')"
+                    bgPosition="center"
+                    bgRepeat="no-repeat"
+                    bgSize="cover" 
                 >
-                    Your secret, goal-achieving weapon
-                </Heading>
-                <Heading
-                    as="h2"
-                    size="lg"
-                    mt="2vw"
-                >
-                    Track your habits. Share your progress. Crush your goals.
-                </Heading>
-                <Button
-                    rightIcon={<ChevronRightIcon/>}
-                    colorScheme="blue"
-                    mt="7vw"
-                >
-                    Get Started
-                </Button>
-
+                    <Heading
+                        as="h1"
+                        size="2xl"
+                        mt="4vw"
+                        textAlign="center"
+                    >
+                        Your secret, goal-achieving weapon
+                    </Heading>
+                    <Heading
+                        as="h2"
+                        size="lg"
+                        mt="2vw"
+                        textAlign="center"
+                    >
+                        Track your habits. Share your progress. Crush your goals.
+                    </Heading>
+                    <Flex
+                        direction="column"
+                        w="100vw"
+                        alignItems="center"
+                    >
+                        <Button
+                            rightIcon={<ChevronRightIcon/>}
+                            colorScheme="blue"
+                            mt="10vw"
+                            mb="3vw"
+                        >
+                            Get Started
+                        </Button> 
+                    </Flex>
+                    
+                </Box>
             </VStack>
+                {/* <Heading as="h3" size="md" >Create goals and</Heading> */}
                 <Box
                     w="100vw"
                     maxW="100%"
