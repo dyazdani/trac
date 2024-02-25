@@ -39,7 +39,7 @@ const LandingPage = () => {
                 >
                     <Heading
                         as="h1"
-                        size="2xl"
+                        size="3xl"
                         mt="4vw"
                         textAlign="center"
                     >
