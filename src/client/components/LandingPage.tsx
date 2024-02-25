@@ -99,6 +99,7 @@ const LandingPage = () => {
                 </Heading>
                 <Flex
                     justifyContent="center"
+                    alignItems="center"
                 >
                     <Card
                         boxShadow="2xl"
@@ -173,6 +174,7 @@ const LandingPage = () => {
 
                 <Flex
                     justifyContent="center"
+                    alignItems="center"
                 >
                     <Card
                         p="2vw"
