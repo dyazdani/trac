@@ -148,6 +148,8 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             </Heading>
             <Menu
               isLazy
+              closeOnSelect={false}
+              closeOnBlur={false}
             >
               {({ isOpen}) => (
                 <>
