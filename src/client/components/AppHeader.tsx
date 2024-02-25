@@ -21,6 +21,7 @@ import {
 } from "@chakra-ui/react";
 import MessagesMenu from "./MessagesMenu.js";
 import { useNavigate } from "react-router";
+import { ChevronRightIcon } from "@chakra-ui/icons";
 
 type AppHeaderProps = {
   isBannerDisplayed: boolean | undefined
@@ -56,13 +57,19 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
           h="2.5rem"
         />
         <Spacer/>
-        <Box
-          ml="1vw"
-          mr="1vw"
-        > 
-          <Text>{`Welcome back, `}<Text as='b'>{currentUser?.username}</Text>
-          </Text>
-        </Box>
+
+        {
+          currentUser ? 
+          <Box
+            ml="1vw"
+            mr="1vw"
+          > 
+            <Text>{`Welcome back, `}<Text as='b'>{currentUser?.username}</Text>
+            </Text>
+          </Box> : 
+          ""
+        }
+
         {
           process.env.KNOCK_FEED_CHANNEL_ID && 
           process.env.KNOCK_PUBLIC_API_KEY && 
@@ -76,7 +83,9 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
           </KnockFeedProvider>
         }
       
-        <Button
+        {
+          currentUser ?
+          <Button
             type="button"
             ml="1vw"
             mr="1vw"
@@ -88,8 +97,18 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
               dispatch(logout());
               navigate("/");
             }}
-        >Logout 
-        </Button>
+          >
+            Logout 
+          </Button> :
+          <Button
+            rightIcon={<ChevronRightIcon/>}
+            colorScheme="orange"
+            color="#000000"
+          >
+            Get Started
+          </Button>
+        }
+        
       </HStack>
     </Box>
   );
