@@ -10,14 +10,17 @@ import {
     Flex,
     List,
     ListItem,
-    ListIcon,
-    Icon,
-    Text
+    ListIcon
 } from "@chakra-ui/react";
 import AppHeader from "./AppHeader.js";
-import { ChevronRightIcon, CheckCircleIcon } from "@chakra-ui/icons";
+import { 
+    ChevronRightIcon, 
+    CheckCircleIcon 
+} from "@chakra-ui/icons";
+import { useNavigate } from "react-router";
 
 const LandingPage = () => {
+    const navigate = useNavigate();
     return (
         <>
             <AppHeader isBannerDisplayed/>
@@ -61,6 +64,11 @@ const LandingPage = () => {
                             color="#000000"
                             mt="10vw"
                             mb="3vw"
+                            type="button"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                navigate('/register');
+                            }}
                         >
                             Get Started
                         </Button> 

@@ -13,7 +13,6 @@ import {
     Heading,
     Image,
     Link as ChakraLink, 
-    LinkProps
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from 'react-router-dom'
 import MessagesMenu from "./MessagesMenu.js";
@@ -119,6 +118,10 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             variant="solid"
             type="button"
             minW="fit-content"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/register");
+          }}
           >
             Get Started
           </Button>
