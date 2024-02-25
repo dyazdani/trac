@@ -29,7 +29,7 @@ const LandingPage = () => {
                 <Box
                     w="100vw"
                     maxWidth="100%"
-                    bgImage="url('/images/trac_landing_page_bg_image.jpg')"
+                    bgImage="url('/images/landing_page_bg_image.jpg')"
                     bgPosition="center"
                     bgRepeat="no-repeat"
                     bgSize="cover" 
@@ -52,12 +52,12 @@ const LandingPage = () => {
                     </Heading>
                     <Flex
                         direction="column"
-                        w="100vw"
+                        w="100%"
                         alignItems="center"
                     >
                         <Button
                             rightIcon={<ChevronRightIcon/>}
-                            colorScheme="blue"
+                            colorScheme="orange"
                             mt="10vw"
                             mb="3vw"
                         >
