@@ -70,7 +70,6 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                 aria-label="Edit Habit" 
                 icon={<EditIcon />} 
                 onClick={onOpen}
-                closeOnSelect={false}
             >Edit Habit</MenuItem>
                 <Drawer 
                     placement='right' 
