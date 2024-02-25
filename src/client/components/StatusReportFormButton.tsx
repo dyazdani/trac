@@ -162,7 +162,8 @@ const StatusReportFormButton = ({habit}: StatusReportFormButtonProps) => {
                         </Button>
                         <Button 
                             mr={3}  
-                            colorScheme='teal' 
+                            colorScheme='orange'
+                            color="#000000" 
                             type="submit"
                             form="status-report-form"
                         >

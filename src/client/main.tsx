@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ChakraProvider } from '@chakra-ui/react'
+import { Box, ChakraProvider } from '@chakra-ui/react'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from "react-redux";
 import theme from "../theme.js";
@@ -13,7 +13,12 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <BrowserRouter>
       <ChakraProvider theme={theme} >
         <Provider store={store}>
-          <App />
+          <Box
+            maxHeight="100%"
+            maxWidth="100%"
+          >
+            <App />
+            </Box>
         </Provider>
       </ChakraProvider>
     </BrowserRouter>

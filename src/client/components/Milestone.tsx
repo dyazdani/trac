@@ -50,8 +50,9 @@ const Milestone = ({milestone}: MilestoneProps) => {
           <HStack justify={"end"}>
             <Heading 
                 sx={{ marginRight: "auto" }} 
-                size="md"
+                size="xl"
                 color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
+                as="h2"
             >
              {milestone.name}
             </Heading>

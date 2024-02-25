@@ -3,12 +3,7 @@ import {
   useAppSelector 
 } from "../app/hooks.js";
 import { logout } from "../features/authSlice.js";
-import {
-  KnockFeedProvider
-} from "@knocklabs/react-notification-feed";
-
-import { useCreateScheduleMutation } from "../features/api.js";
-
+import { KnockFeedProvider } from "@knocklabs/react-notification-feed";
 import { 
     HStack, 
     Box, 
@@ -16,10 +11,13 @@ import {
     Button,
     Spacer,
     Heading,
-    VStack,
+    Image,
+    Link as ChakraLink, 
 } from "@chakra-ui/react";
+import { Link as ReactRouterLink } from 'react-router-dom'
 import MessagesMenu from "./MessagesMenu.js";
 import { useNavigate } from "react-router";
+import { ChevronRightIcon } from "@chakra-ui/icons";
 
 type AppHeaderProps = {
   isBannerDisplayed: boolean | undefined
@@ -35,23 +33,52 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
   return (
     <Box 
       bg="#b9eefe" 
-      w="100%" 
-      p={4}
+      w="100vw"
+      maxWidth="100%" 
+      p="1rem"
       minHeight="70px"
       position={"sticky"}
-      top={isBannerDisplayed ? "54px" : "0px"}
+      // TODO: Uncomment the following lines when done with testing
+      top={
+        // isBannerDisplayed ? 
+        // "54px" : 
+        "0px"}
       zIndex={100}
     >
       <HStack>
-        <Heading>trac</Heading>
         <Spacer/>
-        <Box
-          ml="1vw"
-          mr="1vw"
-        > 
-          <Text>{`Welcome back, `}<Text as='b'>{currentUser?.username}</Text>
-          </Text>
-        </Box>
+        <Heading>trac</Heading>
+        <Image
+          src="/images/trac_logo.png"
+          alt="trac mountain logo"
+          h="2.5rem"
+        />
+        <Spacer/>
+        <Spacer/>
+        <Spacer/>
+        <Spacer/>
+        <Spacer/>
+        <Spacer/>
+        <Spacer/>
+
+
+        {
+          currentUser ? 
+          <Box
+            ml="1vw"
+            mr="1vw"
+          > 
+            <Text>{`Welcome back, `}<Text as='b'>{currentUser?.username}</Text>
+            </Text>
+          </Box> : 
+          <ChakraLink
+            as={ReactRouterLink}
+            to="/login"
+          >
+            Log In
+          </ChakraLink>
+        }
+
         {
           process.env.KNOCK_FEED_CHANNEL_ID && 
           process.env.KNOCK_PUBLIC_API_KEY && 
@@ -65,19 +92,41 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
           </KnockFeedProvider>
         }
       
-        <Button
+        {
+          currentUser ?
+          <Button
             type="button"
             ml="1vw"
             mr="1vw"
             variant="solid"
-            colorScheme="blue"
+            color="#000000"
+            colorScheme="orange"
             onClick={(e) => {
               e.preventDefault();
               dispatch(logout());
               navigate("/");
             }}
-        >Logout 
-        </Button>
+          >
+            Logout 
+          </Button> :
+          <Button
+            rightIcon={<ChevronRightIcon/>}
+            colorScheme="orange"
+            color="#000000"
+            ml="1vw"
+            mr="1vw"
+            variant="solid"
+            type="button"
+            minW="fit-content"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/register");
+            }}
+          >
+            Get Started
+          </Button>
+        }
+        <Spacer/>
       </HStack>
     </Box>
   );
