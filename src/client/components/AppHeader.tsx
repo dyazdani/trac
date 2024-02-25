@@ -17,6 +17,7 @@ import {
     Spacer,
     Heading,
     VStack,
+    Image
 } from "@chakra-ui/react";
 import MessagesMenu from "./MessagesMenu.js";
 import { useNavigate } from "react-router";
@@ -49,6 +50,11 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
     >
       <HStack>
         <Heading>trac</Heading>
+        <Image
+          src="/images/trac_logo.png"
+          alt="trac mountain logo"
+          h="2.5rem"
+        />
         <Spacer/>
         <Box
           ml="1vw"
@@ -75,7 +81,8 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             ml="1vw"
             mr="1vw"
             variant="solid"
-            colorScheme="blue"
+            color="#000000"
+            colorScheme="orange"
             onClick={(e) => {
               e.preventDefault();
               dispatch(logout());

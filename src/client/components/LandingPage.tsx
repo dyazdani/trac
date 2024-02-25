@@ -58,6 +58,7 @@ const LandingPage = () => {
                         <Button
                             rightIcon={<ChevronRightIcon/>}
                             colorScheme="orange"
+                            color="#000000"
                             mt="10vw"
                             mb="3vw"
                         >
