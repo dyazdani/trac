@@ -6,7 +6,7 @@ import {
      MilestoneWithDetails 
     } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
-import isHabitRoutineDay from "./isHabitRoutineDay.js";
+import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
 import { useState } from "react";
 
  export interface ToggleButtonProps {
