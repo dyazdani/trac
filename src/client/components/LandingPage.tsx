@@ -40,7 +40,7 @@ const LandingPage = () => {
                     size="lg"
                     mt="2vw"
                 >
-                    Track you habits. Share your progress. Crush your goals.
+                    Track your habits. Share your progress. Crush your goals.
                 </Heading>
                 <Button
                     rightIcon={<ChevronRightIcon/>}
