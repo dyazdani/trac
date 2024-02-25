@@ -68,7 +68,6 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                     aria-label="Edit Goal" 
                     icon={<EditIcon/>}
                     onClick={onOpenForUpdateMilestone}
-                    closeOnSelect={false}
                 >Edit Goal</MenuItem>
                 <Drawer 
                     placement='right' 
