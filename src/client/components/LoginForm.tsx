@@ -174,7 +174,7 @@ const LoginForm = () => {
               data-testid="submit-button"
               type="submit"
               isLoading={isLoading}
-              isDisabled={isInputAndSubmitDisabled || isPasswordInvalid || isEmailInvalid || isEmailUnregistered}
+              isDisabled={isInputAndSubmitDisabled || isPasswordInvalid || isEmailInvalid || isEmailUnregistered || password.length === 0}
             >
               <Text>Log In</Text>
             </Button>
