@@ -29,8 +29,8 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isEmailInvalid, setIsEmailInvalid] = useState(true);
-  const [isEmailUnregistered, setIsEmailUnregistered] = useState(true)
+  const [isEmailInvalid, setIsEmailInvalid] = useState(false);
+  const [isEmailUnregistered, setIsEmailUnregistered] = useState(false)
   const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
   const [isInputAndSubmitDisabled, setIsInputAndSubmitDisabled] = useState(false);
 

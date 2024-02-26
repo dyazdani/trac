@@ -44,7 +44,7 @@ const RegisterForm = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
     const [isUsernameTaken, setIsUsernameTaken] = useState(false);
-    const [isEmailInvalid, setIsEmailInvalid] = useState(true)
+    const [isEmailInvalid, setIsEmailInvalid] = useState(false)
     const [isEmailTaken, setIsEmailTaken] = useState(false);
     const [isInputAndSubmitDisabled, setIsInputAndSubmitDisabled] = useState(false)
  
