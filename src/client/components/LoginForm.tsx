@@ -23,12 +23,13 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useGetAllUsersQuery, useGetUserByEmailQuery, useLoginMutation } from "../features/api.js";
 import { useNavigate } from "react-router";
 
+const validEmailRegex = new RegExp(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/);
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isEmailInvalid, setIsEmailInvalid] = useState(false);
+  const [isEmailInvalid, setIsEmailInvalid] = useState(true);
   const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
   const [isInputAndSubmitDisabled, setIsInputAndSubmitDisabled] = useState(false);
 
@@ -43,7 +44,7 @@ const LoginForm = () => {
     }] = useLoginMutation();
 
     const { 
-      data, 
+      data,
       isLoading: isUsersLoading 
   } = useGetAllUsersQuery();
 
@@ -106,14 +107,13 @@ const LoginForm = () => {
               <Input
                 type="email"
                 onChange={(e) => {
-                  if (isEmailInvalid) {
-                    setIsEmailInvalid(false);
-                  }
-                  setEmail(e.target.value)
+                  e.preventDefault();
+                  setEmail(e.target.value);
+                  setIsEmailInvalid(!validEmailRegex.test(e.target.value));
                 }}
                 value={email}
               />
-              <FormErrorMessage>An account with that email does not exist</FormErrorMessage>
+              <FormErrorMessage>Must enter valid email.</FormErrorMessage>
             </FormControl>
 
             <FormControl
@@ -156,7 +156,7 @@ const LoginForm = () => {
               data-testid="submit-button"
               type="submit"
               isLoading={isLoading}
-              isDisabled={isInputAndSubmitDisabled}
+              isDisabled={isInputAndSubmitDisabled || isPasswordInvalid || isEmailInvalid}
             >
               <Text>Log In</Text>
             </Button>
