@@ -14,10 +14,17 @@ import { useState } from "react";
     milestone: MilestoneWithDetails
     habit: HabitWithDetails
     isOutOfRange: boolean
+    toggleIsTodayComplete: () => void
  }
 
-const ToggleButton = ({date, milestone, habit, isOutOfRange}: ToggleButtonProps) => {
-    const [isChecked, setIsChecked] = useState(!!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date)));
+const ToggleButton = ({
+        date, 
+        milestone, 
+        habit, 
+        isOutOfRange, 
+        toggleIsTodayComplete
+    }: ToggleButtonProps) => {
+    const [isCompleted, setIsCompleted] = useState(!!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date)));
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
@@ -44,7 +51,7 @@ const ToggleButton = ({date, milestone, habit, isOutOfRange}: ToggleButtonProps)
             } = habitData.routine
 
             // determine whether to add or subtract this button's date
-            const newDatesCompleted = isChecked ? 
+            const newDatesCompleted = isCompleted ? 
             habitData.datesCompleted.filter((el) => {
                 return !areDatesSameDayMonthYear(new Date(el), date);
             }) : 
@@ -74,7 +81,7 @@ const ToggleButton = ({date, milestone, habit, isOutOfRange}: ToggleButtonProps)
 
     return (
         <Checkbox
-            isChecked={isChecked}
+            isChecked={isCompleted}
             size="lg"
             colorScheme="green"
             borderColor="#3a3c3c"
@@ -84,7 +91,8 @@ const ToggleButton = ({date, milestone, habit, isOutOfRange}: ToggleButtonProps)
             onChange={(e) => {
                 e.preventDefault();
                 handleSubmit();
-                setIsChecked(!isChecked);
+                setIsCompleted(!isCompleted);
+                toggleIsTodayComplete();
             }}
             isDisabled={ 
                 milestone.isCanceled ||
