@@ -79,17 +79,13 @@ const RegisterForm = () => {
             
             if (!isUsersLoading) {
                 if (data) {
-                    const isUserEmailTaken = data.users.some(element => element.user.email === email);
                     const isUserUsernameTaken = data.users.some(element => element.user.username === username);
 
-                    if (isUserEmailTaken) {
-                        setIsEmailTaken(true);
-                    }
                     if (isUserUsernameTaken) {
                         setIsUsernameTaken(true);
                     }
 
-                    if (isUserEmailTaken || isUserUsernameTaken || password !== confirmPassword || getPasswordValidation(password).isTooWeak) {
+                    if (isUserUsernameTaken || password !== confirmPassword || getPasswordValidation(password).isTooWeak) {
                         return
                     }
                 }
@@ -189,14 +185,23 @@ const RegisterForm = () => {
                             <Input 
                                 type='username' 
                                 onChange={(e) => {
-                                    if (isUsernameTaken) {
+                                    e.preventDefault();
+                                    setUsername(e.target.value);
+                                    if (!isUsersLoading && data) {
+                                        console.log("Got to line 191")
+                                      const isUsernameFree = data.users.every(element => element.user.username !== e.target.value)
+                                      if (isUsernameFree) {
+                                        console.log("Username not taken")
                                         setIsUsernameTaken(false);
+                                      } else {
+                                        console.log("Username taken")
+                                        setIsUsernameTaken(true);
+                                      }
                                     }
-                                    setUsername(e.target.value)
                                 }}                                
                                 value={username}
                             />
-                            <FormErrorMessage>Username already exists</FormErrorMessage>
+                            <FormErrorMessage>Username already exists.</FormErrorMessage>
                         </FormControl>
                         <FormControl
                             isRequired
@@ -267,7 +272,8 @@ const RegisterForm = () => {
                             isDisabled={
                                 isInputAndSubmitDisabled ||
                                 isEmailInvalid ||
-                                isEmailTaken
+                                isEmailTaken ||
+                                isUsernameTaken
                             }
                         >
                             <Text>Sign Up</Text>
