@@ -29,7 +29,10 @@ import {
     CloseIcon,
     HamburgerIcon,
 } from "@chakra-ui/icons";
-import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
+import { 
+  HabitWithDetails, 
+  MilestoneWithDetails 
+} from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
 import UpdateHabitButton from "./UpdateHabitButton.js";
 import StatusReportFormButton from "./StatusReportFormButton.js";
@@ -63,10 +66,8 @@ const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 const HabitCard = ({ habit, milestone }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
-  const [isTodayComplete, setIsTodayComplete] = useState(habit.datesCompleted.some(date => areDatesSameDayMonthYear(new Date(date), new Date())));
 
-  console.log(isTodayComplete)
-  console.log(`${habit.name}: `, habit.datesCompleted)
+  const isCompleted = habit.datesCompleted.some(date => areDatesSameDayMonthYear(new Date(date), new Date()))
 
   const localStorageUser = localStorage.getItem("user")
   const appSelectorUser = useAppSelector(state => state.auth.user)
@@ -98,7 +99,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
         } = habitData.routine
 
         // determine whether to add or subtract today's date
-        const newDatesCompleted = isTodayComplete ? 
+        const newDatesCompleted = isCompleted ? 
         habitData.datesCompleted.filter((el) => {
             return !areDatesSameDayMonthYear(new Date(el), today);
         }) : 
@@ -125,10 +126,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
         })
     }
   } 
-
-  const toggleIsTodayComplete = () => {
-    setIsTodayComplete(!isTodayComplete);
-  }
   
   const isStatusReportSent = isMostRecentStatusReportSent(habit);
   
@@ -360,7 +357,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         date={day}
                         habit={habit}
                         isOutOfRange={isOutOfRange}
-                        toggleIsTodayComplete={toggleIsTodayComplete}
                       />
                       </GridItem>
                     </Tooltip>
@@ -406,14 +402,13 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                 <Button
                   colorScheme="green"
                   isLoading={isLoading}
-                  variant={isTodayComplete ? "outline" : "solid"}
-                  leftIcon={isTodayComplete ? <CheckIcon/> : undefined}
+                  variant={isCompleted ? "outline" : "solid"}
+                  leftIcon={isCompleted ? <CheckIcon/> : undefined}
                   onClick={() => {
                     handleClick();
-                    setIsTodayComplete(!isTodayComplete);
                   }}
                 >
-                  {isTodayComplete ? `"${habit.name}" Completed Today!` : `Complete "${habit.name}" Today`}
+                  {isCompleted ? `"${habit.name}" Completed Today!` : `Complete "${habit.name}" Today`}
                 </Button> :
                 ""
               }

@@ -7,14 +7,12 @@ import {
     } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
 import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
-import { useState } from "react";
 
  export interface ToggleButtonProps {
     date: Date
     milestone: MilestoneWithDetails
     habit: HabitWithDetails
     isOutOfRange: boolean
-    toggleIsTodayComplete: () => void
  }
 
 const ToggleButton = ({
@@ -22,14 +20,14 @@ const ToggleButton = ({
         milestone, 
         habit, 
         isOutOfRange, 
-        toggleIsTodayComplete
     }: ToggleButtonProps) => {
-    const [isCompleted, setIsCompleted] = useState(!!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date)));
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
     const [updateHabit, {isLoading}] = useUpdateHabitMutation();
+
+    const isCompleted = !!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date))
     
     // variable for current habit details to be sent with update mutation
     let habitData: HabitWithDetails;
@@ -91,8 +89,6 @@ const ToggleButton = ({
             onChange={(e) => {
                 e.preventDefault();
                 handleSubmit();
-                setIsCompleted(!isCompleted);
-                toggleIsTodayComplete();
             }}
             isDisabled={ 
                 milestone.isCanceled ||
