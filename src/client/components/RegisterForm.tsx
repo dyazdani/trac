@@ -32,6 +32,7 @@ import {
 } from "../features/api.js";
 import getPasswordValidation from "../../utils/getPasswordValidation.js";
 import { useNavigate } from "react-router";
+import { validEmailRegex } from "./LoginForm.js";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
@@ -43,6 +44,7 @@ const RegisterForm = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
     const [isUsernameTaken, setIsUsernameTaken] = useState(false);
+    const [isEmailInvalid, setIsEmailInvalid] = useState(true)
     const [isEmailTaken, setIsEmailTaken] = useState(false);
     const [isInputAndSubmitDisabled, setIsInputAndSubmitDisabled] = useState(false)
  
@@ -146,21 +148,37 @@ const RegisterForm = () => {
                     >
                         <FormControl
                             isRequired
-                            isInvalid={isEmailTaken}
                             isDisabled={isInputAndSubmitDisabled}
+                            isInvalid={isEmailInvalid || isEmailTaken}
                         >
                             <FormLabel>Email Address</FormLabel>
                             <Input 
                                 type='email' 
                                 onChange={(e) => {
-                                    if (isEmailTaken) {
+                                    e.preventDefault();
+                                    setEmail(e.target.value);
+                                    setIsEmailInvalid(!validEmailRegex.test(e.target.value));
+                                    if (!isUsersLoading && data) {
+                                      const isUnregisteredEmail = data.users.every(element => element.user.email !== e.target.value)
+                                      if (isUnregisteredEmail) {
                                         setIsEmailTaken(false);
+                                      } else {
+                                        setIsEmailTaken(true);
+                                      }
                                     }
-                                    setEmail(e.target.value)
-                                }}
+                                  }}
                                 value={email}
                             />
-                            <FormErrorMessage>An account with that email already exists</FormErrorMessage>
+                            {
+                                isEmailInvalid ? 
+                                <FormErrorMessage>Must enter valid email.</FormErrorMessage> :
+                                ""
+                            }
+                            {
+                                !isEmailInvalid && isEmailTaken ? 
+                                <FormErrorMessage>An account with this email already exists.</FormErrorMessage> :
+                                ""
+                            }
                         </FormControl>
                         <FormControl
                             isRequired

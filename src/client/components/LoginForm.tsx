@@ -23,7 +23,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useGetAllUsersQuery, useGetUserByEmailQuery, useLoginMutation } from "../features/api.js";
 import { useNavigate } from "react-router";
 
-const validEmailRegex = new RegExp(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/);
+export const validEmailRegex = new RegExp(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/);
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
