@@ -44,6 +44,7 @@ const RegisterForm = () => {
     const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
     const [isUsernameTaken, setIsUsernameTaken] = useState(false);
     const [isEmailTaken, setIsEmailTaken] = useState(false);
+    const [isInputAndSubmitDisabled, setIsInputAndSubmitDisabled] = useState(false)
  
     const { 
         data, 
@@ -100,6 +101,18 @@ const RegisterForm = () => {
                     console.log(knockUser)
                 } 
 
+                if (
+                    isSuccess || 
+                    isError || 
+                    isLoading ||
+                    isKnockSuccess ||
+                    isKnockError ||
+                    isKnockLoading
+                    ) {
+                    setIsInputAndSubmitDisabled(true);
+                  }
+          
+
                 setIsPasswordInvalid(false);
                 navigate("/goals");
             }
@@ -134,12 +147,7 @@ const RegisterForm = () => {
                         <FormControl
                             isRequired
                             isInvalid={isEmailTaken}
-                            isDisabled={
-                                isLoading ||
-                                isKnockLoading ||
-                                isSuccess ||
-                                isKnockSuccess
-                            }
+                            isDisabled={isInputAndSubmitDisabled}
                         >
                             <FormLabel>Email Address</FormLabel>
                             <Input 
@@ -157,12 +165,7 @@ const RegisterForm = () => {
                         <FormControl
                             isRequired
                             isInvalid={isUsernameTaken}
-                            isDisabled={
-                                isLoading ||
-                                isKnockLoading ||
-                                isSuccess ||
-                                isKnockSuccess
-                            }
+                            isDisabled={isInputAndSubmitDisabled}
                         >
                             <FormLabel>Username</FormLabel>
                             <Input 
@@ -180,12 +183,7 @@ const RegisterForm = () => {
                         <FormControl
                             isRequired
                             isInvalid={isPasswordInvalid ? getPasswordValidation(password).isTooWeak : false}
-                            isDisabled={
-                                isLoading ||
-                                isKnockLoading ||
-                                isSuccess ||
-                                isKnockSuccess
-                            }
+                            isDisabled={isInputAndSubmitDisabled}
                         >
                             <FormLabel>Password</FormLabel>
                                 <InputGroup size="md">
@@ -214,12 +212,7 @@ const RegisterForm = () => {
                         <FormControl
                             isRequired
                             isInvalid={confirmPassword.length ? password !== confirmPassword : false}
-                            isDisabled={
-                                isLoading ||
-                                isKnockLoading ||
-                                isSuccess ||
-                                isKnockSuccess
-                            }
+                            isDisabled={isInputAndSubmitDisabled}
                         >
                             <FormLabel>Confirm Password</FormLabel>
                             <InputGroup size="md">
@@ -245,12 +238,7 @@ const RegisterForm = () => {
                         </FormControl>
                         <FormControl
                             isRequired
-                            isDisabled={
-                                isLoading ||
-                                isKnockLoading ||
-                                isSuccess ||
-                                isKnockSuccess
-                            }
+                            isDisabled={isInputAndSubmitDisabled}
                         >
                             <Checkbox>I give trac permission to email me notifications</Checkbox>
                         </FormControl>
@@ -259,12 +247,7 @@ const RegisterForm = () => {
                             data-testid="submit-button"
                             type="submit"    
                             isDisabled={
-                                isLoading ||
-                                isKnockLoading ||
-                                isSuccess ||
-                                isKnockSuccess ||
-                                isError ||
-                                isKnockError
+                                isInputAndSubmitDisabled
                             }
                         >
                             <Text>Sign Up</Text>
