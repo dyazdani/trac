@@ -7,7 +7,6 @@ import {
     } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
 import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
-import { useState } from "react";
 
  export interface ToggleButtonProps {
     date: Date
@@ -16,13 +15,19 @@ import { useState } from "react";
     isOutOfRange: boolean
  }
 
-const ToggleButton = ({date, milestone, habit, isOutOfRange}: ToggleButtonProps) => {
-    const [isChecked, setIsChecked] = useState(!!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date)));
+const ToggleButton = ({
+        date, 
+        milestone, 
+        habit, 
+        isOutOfRange, 
+    }: ToggleButtonProps) => {
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
     const [updateHabit, {isLoading}] = useUpdateHabitMutation();
+
+    const isCompleted = !!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date))
     
     // variable for current habit details to be sent with update mutation
     let habitData: HabitWithDetails;
@@ -44,7 +49,7 @@ const ToggleButton = ({date, milestone, habit, isOutOfRange}: ToggleButtonProps)
             } = habitData.routine
 
             // determine whether to add or subtract this button's date
-            const newDatesCompleted = isChecked ? 
+            const newDatesCompleted = isCompleted ? 
             habitData.datesCompleted.filter((el) => {
                 return !areDatesSameDayMonthYear(new Date(el), date);
             }) : 
@@ -74,7 +79,7 @@ const ToggleButton = ({date, milestone, habit, isOutOfRange}: ToggleButtonProps)
 
     return (
         <Checkbox
-            isChecked={isChecked}
+            isChecked={isCompleted}
             size="lg"
             colorScheme="green"
             borderColor="#3a3c3c"
@@ -84,7 +89,6 @@ const ToggleButton = ({date, milestone, habit, isOutOfRange}: ToggleButtonProps)
             onChange={(e) => {
                 e.preventDefault();
                 handleSubmit();
-                setIsChecked(!isChecked);
             }}
             isDisabled={ 
                 milestone.isCanceled ||

@@ -24,11 +24,15 @@ import { motion } from 'framer-motion';
 import { 
     ArrowLeftIcon,
     ArrowRightIcon,
+    CheckIcon,
     ChevronUpIcon,
     CloseIcon,
     HamburgerIcon,
 } from "@chakra-ui/icons";
-import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
+import { 
+  HabitWithDetails, 
+  MilestoneWithDetails 
+} from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
 import UpdateHabitButton from "./UpdateHabitButton.js";
 import StatusReportFormButton from "./StatusReportFormButton.js";
@@ -38,6 +42,8 @@ import isDateToday from "../utils/isDateToday.js";
 import getDayOfWeekLabelText from "../utils/getDayOfWeekLabelText.js";
 import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
 import isDateOutOfRange from "../utils/isDateOutOfRange.js";
+import { useUpdateHabitMutation } from "../features/api.js";
+import { useAppSelector } from "../app/hooks.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -61,6 +67,66 @@ const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 const HabitCard = ({ habit, milestone }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
 
+  const isCompleted = habit.datesCompleted.some(date => areDatesSameDayMonthYear(new Date(date), new Date()))
+
+  const localStorageUser = localStorage.getItem("user")
+  const appSelectorUser = useAppSelector(state => state.auth.user)
+  const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+
+  const [updateHabit, { isLoading }] = useUpdateHabitMutation();
+
+  const today = new Date()
+  
+  // handling click for "Complete Today" button
+
+  // variable for current habit details to be sent with update mutation
+  let habitData: HabitWithDetails;
+
+  if (currentUser) {
+      habitData = habit
+  }
+
+  const handleClick = async () => {
+    if (currentUser && habitData && !isLoading) {
+        const {
+            monday,
+            tuesday,
+            wednesday,
+            thursday,
+            friday,
+            saturday,
+            sunday
+        } = habitData.routine
+
+        // determine whether to add or subtract today's date
+        const newDatesCompleted = isCompleted ? 
+        habitData.datesCompleted.filter((el) => {
+            return !areDatesSameDayMonthYear(new Date(el), today);
+        }) : 
+        [...habitData.datesCompleted, today]
+
+        const currentHabit = await updateHabit({
+            id: currentUser?.id,
+            habitId: habit.id,
+            newHabit: {
+                name: habitData.name,
+                datesCompleted: newDatesCompleted,
+                routineDays: {
+                    monday,
+                    tuesday,
+                    wednesday,
+                    thursday,
+                    friday,
+                    saturday,
+                    sunday
+                },
+                checkInDay: habitData.checkIn.dayOfTheWeek,
+                scheduleId: habit.scheduleId
+            }
+        })
+    }
+  } 
+  
   const isStatusReportSent = isMostRecentStatusReportSent(habit);
   
   const midnightOfFirstCheckIn = getFirstCheckInDayDate(habit)?.setHours(0, 0, 0, 0)
@@ -331,6 +397,22 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
           <CardFooter
             color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
           >
+              {
+                isHabitRoutineDay(habit, today) ? 
+                <Button
+                  colorScheme="green"
+                  isLoading={isLoading}
+                  variant={isCompleted ? "outline" : "solid"}
+                  leftIcon={isCompleted ? <CheckIcon/> : undefined}
+                  onClick={() => {
+                    handleClick();
+                  }}
+                >
+                  {isCompleted ? `"${habit.name}" Completed Today!` : `Complete "${habit.name}" Today`}
+                </Button> :
+                ""
+              }
+            
           </CardFooter>
           
           {milestone && milestone.isCompleted || milestone.isCanceled ? "" : (!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
