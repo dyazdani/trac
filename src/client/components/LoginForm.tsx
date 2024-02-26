@@ -23,12 +23,14 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useGetAllUsersQuery, useGetUserByEmailQuery, useLoginMutation } from "../features/api.js";
 import { useNavigate } from "react-router";
 
+export const validEmailRegex = new RegExp(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/);
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isEmailInvalid, setIsEmailInvalid] = useState(false);
+  const [isEmailUnregistered, setIsEmailUnregistered] = useState(false)
   const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
   const [isInputAndSubmitDisabled, setIsInputAndSubmitDisabled] = useState(false);
 
@@ -43,7 +45,7 @@ const LoginForm = () => {
     }] = useLoginMutation();
 
     const { 
-      data, 
+      data,
       isLoading: isUsersLoading 
   } = useGetAllUsersQuery();
 
@@ -100,20 +102,36 @@ const LoginForm = () => {
             <FormControl
               isRequired
               isDisabled={isInputAndSubmitDisabled}
-              isInvalid={isEmailInvalid}
+              isInvalid={isEmailInvalid || isEmailUnregistered}
             >
               <FormLabel>Email Address</FormLabel>
               <Input
                 type="email"
                 onChange={(e) => {
-                  if (isEmailInvalid) {
-                    setIsEmailInvalid(false);
+                  e.preventDefault();
+                  setEmail(e.target.value);
+                  setIsEmailInvalid(!validEmailRegex.test(e.target.value));
+                  if (!isUsersLoading && data) {
+                    const isUnregisteredEmail = data.users.every(element => element.user.email !== e.target.value)
+                    if (isUnregisteredEmail) {
+                      setIsEmailUnregistered(true);
+                    } else {
+                      setIsEmailUnregistered(false);
+                    }
                   }
-                  setEmail(e.target.value)
                 }}
                 value={email}
               />
-              <FormErrorMessage>An account with that email does not exist</FormErrorMessage>
+              {
+                isEmailInvalid ? 
+                <FormErrorMessage>Must enter valid email.</FormErrorMessage> :
+                ""
+              }
+              {
+                !isEmailInvalid && isEmailUnregistered ? 
+                <FormErrorMessage>An account with this email does not exist.</FormErrorMessage> :
+                ""
+              }
             </FormControl>
 
             <FormControl
@@ -156,7 +174,7 @@ const LoginForm = () => {
               data-testid="submit-button"
               type="submit"
               isLoading={isLoading}
-              isDisabled={isInputAndSubmitDisabled}
+              isDisabled={isInputAndSubmitDisabled || isPasswordInvalid || isEmailInvalid || isEmailUnregistered || password.length === 0}
             >
               <Text>Log In</Text>
             </Button>

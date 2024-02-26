@@ -39,7 +39,7 @@ const getPasswordValidation = (password: string) => {
 
     const validation = {
         isTooWeak,
-        message: `Your password is: ${strengthCheck.value}`,
+        message: `Your password strength is: ${strengthCheck.value}`,
         characterTypeMessage,
         lengthMessage 
     }
