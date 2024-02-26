@@ -78,14 +78,8 @@ const RegisterForm = () => {
             }
             
             if (!isUsersLoading) {
-                if (data) {
-                    const isUserUsernameTaken = data.users.some(element => element.user.username === username);
-
-                    if (isUserUsernameTaken) {
-                        setIsUsernameTaken(true);
-                    }
-
-                    if (isUserUsernameTaken || password !== confirmPassword || getPasswordValidation(password).isTooWeak) {
+          
+                    if (password !== confirmPassword) {
                         return
                     }
                 }
@@ -113,7 +107,6 @@ const RegisterForm = () => {
 
                 setIsPasswordInvalid(false);
                 navigate("/goals");
-            }
         } catch (e) {
             console.error(e)
         }
@@ -205,7 +198,7 @@ const RegisterForm = () => {
                         </FormControl>
                         <FormControl
                             isRequired
-                            isInvalid={isPasswordInvalid ? getPasswordValidation(password).isTooWeak : false}
+                            isInvalid={password.length && isPasswordInvalid ? getPasswordValidation(password).isTooWeak : false}
                             isDisabled={isInputAndSubmitDisabled}
                         >
                             <FormLabel>Password</FormLabel>
@@ -213,7 +206,11 @@ const RegisterForm = () => {
                                     <Input
                                         pr="4.5rem" 
                                         type={showPassword ? "text" : "password"}
-                                        onChange={e => setPassword(e.target.value)}
+                                        onChange={e => {
+                                            e.preventDefault();
+                                            setPassword(e.target.value)
+                                            setIsPasswordInvalid(getPasswordValidation(e.target.value).isTooWeak)
+                                        }}
                                         value={password}
                                     />
                                     <InputRightElement width="2.5rem">
@@ -273,7 +270,8 @@ const RegisterForm = () => {
                                 isInputAndSubmitDisabled ||
                                 isEmailInvalid ||
                                 isEmailTaken ||
-                                isUsernameTaken
+                                isUsernameTaken ||
+                                isPasswordInvalid
                             }
                         >
                             <Text>Sign Up</Text>
