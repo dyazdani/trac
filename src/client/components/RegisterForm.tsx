@@ -265,7 +265,9 @@ const RegisterForm = () => {
                             data-testid="submit-button"
                             type="submit"    
                             isDisabled={
-                                isInputAndSubmitDisabled
+                                isInputAndSubmitDisabled ||
+                                isEmailInvalid ||
+                                isEmailTaken
                             }
                         >
                             <Text>Sign Up</Text>
