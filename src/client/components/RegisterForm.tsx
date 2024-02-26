@@ -44,9 +44,10 @@ const RegisterForm = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
     const [isUsernameTaken, setIsUsernameTaken] = useState(false);
-    const [isEmailInvalid, setIsEmailInvalid] = useState(false)
+    const [isEmailInvalid, setIsEmailInvalid] = useState(false);
     const [isEmailTaken, setIsEmailTaken] = useState(false);
-    const [isInputAndSubmitDisabled, setIsInputAndSubmitDisabled] = useState(false)
+    const [isInputAndSubmitDisabled, setIsInputAndSubmitDisabled] = useState(false);
+    const [isPermissionCheckboxChecked, setIsPermissionCheckboxChecked] = useState(false)
  
     const { 
         data, 
@@ -73,39 +74,26 @@ const RegisterForm = () => {
 
     const handleSubmit = async () => {
         try {
-            if (getPasswordValidation(password).isTooWeak) {
-                setIsPasswordInvalid(true);
+            const response = await register({ email, username, password }).unwrap();
+
+            console.log(response)
+
+            if (response.user) {
+                const knockUser = await identifyUser({id: String(response.user?.id), email, username})
+                console.log(knockUser)
+            } 
+
+            if (
+                isSuccess || 
+                isError || 
+                isLoading ||
+                isKnockSuccess ||
+                isKnockError ||
+                isKnockLoading
+                ) {
+                setIsInputAndSubmitDisabled(true);
             }
-            
-            if (!isUsersLoading) {
           
-                    if (password !== confirmPassword) {
-                        return
-                    }
-                }
-
-                const response = await register({ email, username, password }).unwrap();
-
-                console.log(response)
-
-                if (response.user) {
-                    const knockUser = await identifyUser({id: String(response.user?.id), email, username})
-                    console.log(knockUser)
-                } 
-
-                if (
-                    isSuccess || 
-                    isError || 
-                    isLoading ||
-                    isKnockSuccess ||
-                    isKnockError ||
-                    isKnockLoading
-                    ) {
-                    setIsInputAndSubmitDisabled(true);
-                  }
-          
-
-                setIsPasswordInvalid(false);
                 navigate("/goals");
         } catch (e) {
             console.error(e)
@@ -254,13 +242,20 @@ const RegisterForm = () => {
                                         />
                                     </InputRightElement>
                                 </InputGroup>
-                                {confirmPassword.length ? <FormErrorMessage>Passwords do not match</FormErrorMessage> : ""}
+                                {confirmPassword.length ? <FormErrorMessage>Passwords do not match.</FormErrorMessage> : ""}
                         </FormControl>
                         <FormControl
                             isRequired
                             isDisabled={isInputAndSubmitDisabled}
                         >
-                            <Checkbox>I give trac permission to email me notifications</Checkbox>
+                            <Checkbox
+                                onChange={(e) => {
+                                    e.preventDefault();
+                                    setIsPermissionCheckboxChecked(!isPermissionCheckboxChecked);
+                                }}
+                            >
+                                I give trac permission to email me notifications.
+                            </Checkbox>
                         </FormControl>
                         <Button
                             colorScheme="yellow"
@@ -268,10 +263,16 @@ const RegisterForm = () => {
                             type="submit"    
                             isDisabled={
                                 isInputAndSubmitDisabled ||
+                                !email.length ||
                                 isEmailInvalid ||
                                 isEmailTaken ||
+                                !username.length ||
                                 isUsernameTaken ||
-                                isPasswordInvalid
+                                !password.length ||
+                                isPasswordInvalid ||
+                                !confirmPassword.length ||
+                                password !== confirmPassword ||
+                                !isPermissionCheckboxChecked
                             }
                         >
                             <Text>Sign Up</Text>
