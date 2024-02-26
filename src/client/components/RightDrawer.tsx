@@ -9,9 +9,10 @@ import CreateMilestoneForm from './CreateMilestoneForm.js'
 
 export interface RightDrawerProps {
     toggleBannerDisplayed: () => void
+    isMilestonesEmpty: boolean
 }
 
-const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
+const RightDrawer = ({ toggleBannerDisplayed, isMilestonesEmpty }: RightDrawerProps) => {
     // TODO: Set this value to upper case when sending it to database
     const { isOpen, onClose, onOpen} = useDisclosure();
     const { isOpen: isOpenForMilestone, onClose: onCloseForMilestone, onOpen: onOpenForMilestone} = useDisclosure();
@@ -24,18 +25,20 @@ const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
         <>
             {currentUser && 
                 <VStack
-                position="fixed"
-                bottom="50px"
-                right="50px"
+                    position={isMilestonesEmpty ? undefined : "fixed"}
+                    bottom={isMilestonesEmpty ? "" : "50px"}
+                    right={isMilestonesEmpty ? "" : "50px"}
+                    mt={isMilestonesEmpty ? "5vh" : ""}
                 >
                     <Button
-                    variant='solid'
-                    colorScheme='yellow'
-                    size="lg"
-                    aria-label='create-milestone'
-                    leftIcon={<AddIcon />}
-                    onClick={onOpenForMilestone}
-                    >Add Goal
+                        variant='solid'
+                        colorScheme='yellow'
+                        size="lg"
+                        aria-label='create-milestone'
+                        leftIcon={<AddIcon />}
+                        onClick={onOpenForMilestone}
+                    >
+                        {isMilestonesEmpty ? "Add your first Goal" : "Add Goal"}
                     </Button>
                     <CreateMilestoneForm
                         onCloseForMilestone={onCloseForMilestone}
