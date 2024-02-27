@@ -75,7 +75,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                 onClick={onOpen}
                 backgroundColor={iconButtonBackgroundColor}
                 colorScheme="yellow"
-            >Add Habit</Button>
+            >{!milestone.habits.length ? `Add first Habit for "${milestone.name}"` : "Add Habit"}</Button>
                 <Drawer 
                     placement='right' 
                     onClose={onClose} 

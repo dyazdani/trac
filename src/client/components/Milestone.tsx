@@ -99,11 +99,23 @@ const Milestone = ({milestone}: MilestoneProps) => {
             align={"center"}
             >
           <CardBody>
-            <Heading 
-                as="h3"
-                size="lg"
-                mb=".5vw"
-            >Habits</Heading>
+            {
+                milestone.habits.length ?
+                <Heading 
+                    as="h3"
+                    size="lg"
+                    mb=".5vw"
+                >
+                    Habits
+                </Heading> : 
+                ""
+            }
+            
+            {
+                !milestone.habits.length ?
+                <Text fontSize="xl">You currently have no Habits for this Goal.</Text> : 
+                ""
+              }
             <Accordion defaultIndex={[0]} allowMultiple >
                 {[...milestone.habits].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
                     .map(habit => {

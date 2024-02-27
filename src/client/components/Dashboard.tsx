@@ -1,6 +1,7 @@
 import { 
   Box, 
   Heading,
+  Text
 } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
 import { useAppSelector } from "../app/hooks.js";
@@ -25,6 +26,8 @@ const Dashboard = () => {
     const { data } = useGetHabitsByUserQuery(currentUser.id);
     const { data: milestonesData } = useGetMilestonesByUserQuery(currentUser.id)
 
+    const isMilestonesEmpty = !milestonesData?.milestones.length
+
     const checkIns = data?.habits.map(habit => habit.checkIn)
 
     if (checkIns) {
@@ -41,7 +44,6 @@ const Dashboard = () => {
       <>
         {isBannerDisplayed && <CTABanner isBannerDisplayed={isBannerDisplayed} toggleBannerDisplayed={toggleBannerDisplayed}/>}
         <AppHeader isBannerDisplayed={isBannerDisplayed}/>
-        <RightDrawer toggleBannerDisplayed={toggleBannerDisplayed}/>
           <Box
             w="100vw"
             h="100%"
@@ -52,11 +54,17 @@ const Dashboard = () => {
             alignItems="center"
           >
               <Heading as='h1' size="2xl">My Goals</Heading>
+              {
+                !milestonesData?.milestones.length ?
+                <Text fontSize="xl" mt="20vh">You currently have no Goals.</Text> : 
+                ""
+              }
+              <RightDrawer toggleBannerDisplayed={toggleBannerDisplayed} isMilestonesEmpty={isMilestonesEmpty}/>
               <MyMilestones milestones={milestonesData?.milestones}/>
           </Box>
       </>
     )
-};
+  };
 };
 
 export default Dashboard;
