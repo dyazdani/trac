@@ -45,6 +45,8 @@ import isDateOutOfRange from "../utils/isDateOutOfRange.js";
 import { useUpdateHabitMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import getPreviousWeek from "../utils/getPreviousWeek.js";
+import getNextWeek from "../utils/getNextWeek.js";
+
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -159,12 +161,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
 
     // Function for right arrow button that displays previous week
   const handleRightArrowClick = () => {
-    const nextWeek: Date[] = [];
-
-    for (let i = 0; i < currentWeek.length; i++) {
-      const newDate = new Date();
-      nextWeek.push(new Date(newDate.setTime(currentWeek[i].getTime() + SEVEN_DAYS_IN_MILLISECONDS)))
-    }
+    const nextWeek = getNextWeek(currentWeek);
     setCurrentWeek(nextWeek);
   }
 
