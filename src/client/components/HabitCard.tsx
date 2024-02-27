@@ -44,6 +44,7 @@ import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
 import isDateOutOfRange from "../utils/isDateOutOfRange.js";
 import { useUpdateHabitMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
+import getPreviousWeek from "../utils/getPreviousWeek.js";
 
 type HabitProps = {
   habit: HabitWithDetails
@@ -61,7 +62,7 @@ const DAY_STRINGS = [
   "SATURDAY"
 ]
 
-const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
+export const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 
 const HabitCard = ({ habit, milestone }: HabitProps) => {
@@ -152,12 +153,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
 
   // Function for left arrow button that displays previous week
   const handleLeftArrowClick = () => {
-    const previousWeek: Date[] = [];
-
-    for (let i = 0; i < currentWeek.length; i++) {
-      const newDate = new Date();
-      previousWeek.push(new Date(newDate.setTime(currentWeek[i].getTime() - SEVEN_DAYS_IN_MILLISECONDS)))
-    }
+    const previousWeek = getPreviousWeek(currentWeek);
     setCurrentWeek(previousWeek);
   }
 
