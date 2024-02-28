@@ -123,7 +123,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
                         <AccordionItem
                             key={habit.id}
                             borderTop="1px solid black" 
-                            borderBottom="1px solid black"
+                            borderBottom="1px solid black"                 
+                            minWidth="42vw"
                         >
                             {({ isExpanded }) => (
                                 <>
