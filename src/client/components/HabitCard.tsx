@@ -46,6 +46,7 @@ import { useUpdateHabitMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import getPreviousWeek from "../utils/getPreviousWeek.js";
 import getNextWeek from "../utils/getNextWeek.js";
+import React from "react";
 
 
 type HabitProps = {
@@ -294,10 +295,11 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
 
                   
                 return (
-                  <>
+                  <React.Fragment key={`${day}`}>
                     {
                       isToday ? 
-                      <GridItem colStart={(i * 2) + 1} textAlign="center" key={`today-${Date.parse(day.toISOString())}`}rowStart={1} colSpan={5} rowSpan={1}>Today</GridItem>
+                      <GridItem colStart={(i * 2) + 1} textAlign="center" 
+                      rowStart={1} colSpan={5} rowSpan={1}>Today</GridItem>
                       : ""
                     }
                     <GridItem
@@ -310,7 +312,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       colSpan={1} 
                       rowStart={2}
                       textAlign="center"
-                      key={`day-label-${Date.parse(day.toISOString())}`}
                     >
                       {dayAbbreviation}
                     </GridItem>
@@ -320,7 +321,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       colSpan={1} 
                       rowStart={3}
                       textAlign="center"
-                      key={`date-label-${Date.parse(day.toISOString())}`}
                       borderLeft={isToday ? "2px solid #3a3c3c" : {}}
                       borderRight={isToday ? "2px solid #3a3c3c" : {}}
                       borderBottom={isToday && !isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
@@ -344,13 +344,13 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         colSpan={1} 
                         rowStart={4}
                         textAlign="center"
-                        key={`checkbox-${Date.parse(day.toISOString())}`}
                       >
                         <ToggleButton
                         milestone={milestone}
                         date={day}
                         habit={habit}
                         isOutOfRange={isOutOfRange}
+
                       />
                       </GridItem>
                     </Tooltip>
@@ -364,7 +364,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           colSpan={1} 
                           rowStart={isHabitRoutineDay(habit, day) ? 5 : 4}
                           textAlign="center"
-                          key={`check-in-pointer-${Date.parse(day.toISOString())}`}
                         >
                           <ChevronUpIcon/>
                         </GridItem>
@@ -374,7 +373,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           colSpan={5} 
                           rowStart={isHabitRoutineDay(habit, day) ? 6 : 5}
                           textAlign="center"
-                          key={`check-in-label-${Date.parse(day.toISOString())}`}
                         >
                           <Box>
                             Check-In Day
@@ -383,7 +381,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                        </>
                       : ""
                      }
-                  </>
+                  </React.Fragment>
                 )
               })}
             </Grid>
