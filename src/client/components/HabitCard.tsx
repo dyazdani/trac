@@ -133,21 +133,22 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
   const isTodayBeforeFirstCheckInDayDate = midnightOfFirstCheckIn && Date.now() < midnightOfFirstCheckIn
 
   if (!currentWeek.length) {
-    let firstWeek = [];
-    const firstDay = new Date(habit.dateCreated)
+    let thisWeek: Date[] = [];
+    const firstDay = new Date()
 
     // Get number associated with current day of the week
     const firstDayNumber = firstDay.getDay()
 
     // Push Sunday before firstDay's date to firstWeek array
-    firstWeek.push(new Date(firstDay.setDate(firstDay.getDate() - firstDayNumber)))
+    thisWeek.push(new Date(firstDay.setDate(firstDay.getDate() - firstDayNumber)))
 
     // Push the rest of dates in that week to firstWeek array
     for (let i = 1; i < 7; i++) {
-      const newDate = new Date();
-      firstWeek.push(new Date(newDate.setDate(firstWeek[i - 1].getDate() + 1)))
+      const previousDay = new Date(thisWeek[i - 1]);
+      const previousDayOfTheMonth = thisWeek[i - 1].getDate()
+      thisWeek.push(new Date(previousDay.setDate(previousDayOfTheMonth + 1)))
     }
-    setCurrentWeek(firstWeek);
+    setCurrentWeek(thisWeek);
   } 
 
   // Function for left arrow button that displays previous week
