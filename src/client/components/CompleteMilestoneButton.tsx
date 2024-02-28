@@ -36,16 +36,16 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
             if (updatedMilestone) {
                 if (updatedMilestone.isCompleted) {
                     toast({
-                        title: 'Milestone completed.',
-                        description: 'Your milestone was marked as complete.',
+                        title: 'Goal completed.',
+                        description: 'Your Goal was marked as complete.',
                         status: 'success',
                         duration: 9000,
                         isClosable: true
                     })
                 } else {
                     toast({
-                        title: 'Milestone incomplete.',
-                        description: 'Your milestone was marked as incomplete.',
+                        title: 'Goal incomplete.',
+                        description: 'Your Goal was marked as incomplete.',
                         status: 'info',
                         duration: 9000,
                         isClosable: true

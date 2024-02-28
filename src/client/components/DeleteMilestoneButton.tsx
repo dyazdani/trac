@@ -30,8 +30,8 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                 if (milestone) {
                     console.log(deletedMilestone);
                     toast({
-                        title: 'Milestone deleted.',
-                        description: 'Your milestone has been successfully deleted',
+                        title: 'Goal deleted.',
+                        description: 'Your Goal has been successfully deleted',
                         status: 'success',
                         duration: 4000,
                         isClosable: true
@@ -39,7 +39,7 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                 } else {
                     toast({
                         title: 'ERROR',
-                        description: 'Unable to delete milestone. Please try again.',                        
+                        description: 'Unable to delete Goal. Please try again.',                        
                         status: 'error',
                         duration: 4000,
                         isClosable: true

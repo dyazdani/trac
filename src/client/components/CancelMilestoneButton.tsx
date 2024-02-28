@@ -35,16 +35,16 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
             if (updatedMilestone) {
                 if (updatedMilestone.isCanceled) {
                     toast({
-                        title: 'Milestone canceled.',
-                        description: 'Your milestone was canceled.',
+                        title: 'Goal canceled.',
+                        description: 'Your Goal was canceled.',
                         status: 'info',
                         duration: 9000,
                         isClosable: true
                     })
                 } else {
                     toast({
-                        title: 'Milestone restored.',
-                        description: 'Your milestone was restored.',
+                        title: 'Goal restored.',
+                        description: 'Your Goal was restored.',
                         status: 'info',
                         duration: 9000,
                         isClosable: true
@@ -53,7 +53,7 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
             } else {
                 toast({
                     title: 'ERROR',
-                    description: 'Unable to cancel or restore milestone',
+                    description: 'Unable to cancel or restore Goal',
                     status: 'error',
                     duration: 9000,
                     isClosable: true
@@ -63,7 +63,7 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
             console.error(e)
             toast({
                 title: 'ERROR',
-                description: 'Unable to cancel or restore milestone',
+                description: 'Unable to cancel or restore Goal',
                 status: 'error',
                 duration: 9000,
                 isClosable: true

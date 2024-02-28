@@ -76,8 +76,8 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                                     onCloseForMilestone()
 
                                     toast({
-                                        title: 'Milestone created.',
-                                        description: 'Your new Milestone was created and added to your dashboard.',
+                                        title: 'Goal created.',
+                                        description: 'Your new Goal was created and added to your dashboard.',
                                         status: 'success',
                                         duration: 9000,
                                         isClosable: true

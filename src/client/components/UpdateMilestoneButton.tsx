@@ -108,8 +108,8 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                                             onCloseForUpdateMilestone()
 
                                             toast({
-                                                title: 'Milestone updated.',
-                                                description: 'Your new Milestone was updated.',
+                                                title: 'Goal updated.',
+                                                description: 'Your new Goal was updated.',
                                                 status: 'success',
                                                 duration: 9000,
                                                 isClosable: true
