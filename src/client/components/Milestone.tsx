@@ -129,7 +129,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
                             key={habit.id}
                             bgColor="rgba(255, 255, 255, .2)"
                             border="none"
-                            minWidth="42vw"
+                            width="42vw"
+                            minWidth="450px"
                             mb=".5vw"
                         >
                             {({ isExpanded }) => (
