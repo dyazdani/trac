@@ -41,7 +41,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
     return (
         <Card
         w="50vw"
-        minW="450px"
+        minW="570px"
         bg={
             milestone.isCompleted ? "rgba(249, 199, 64, 0.4)" :
             milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
@@ -50,7 +50,11 @@ const Milestone = ({milestone}: MilestoneProps) => {
         borderRadius="20px"
       >
         <CardHeader>
-          <HStack>
+          <Flex
+            justifyContent="space-between"
+            alignItems="center"
+            gap="1vw"
+          >
             <Heading 
                 size="xl"
                 color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
@@ -79,6 +83,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                             rightIcon={isOpen ? <CloseIcon/> :<HamburgerIcon/>}
                             variant={isOpen ? "solid" : "outline"}
                             colorScheme="blue"
+                            flexShrink="0"
                             isActive={isOpen}
                         >Menu</MenuButton>
                         <MenuList>
@@ -92,7 +97,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
             <CompleteMilestoneButton
                 milestone={milestone}
             />
-          </HStack>
+          </Flex>
         </CardHeader>
         <Flex 
             direction={"column"} 

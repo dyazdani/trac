@@ -77,6 +77,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                 leftIcon={milestone.isCompleted ? <CheckIcon /> : undefined} 
                 variant={milestone.isCompleted ? "outline" : "solid"}
                 colorScheme="green"
+                flexShrink="0"
                 onClick={(e) => {
                     e.preventDefault();
                     handleClick();
