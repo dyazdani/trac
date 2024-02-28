@@ -135,7 +135,7 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                         console.error(e)
                                         toast({
                                             title: 'ERROR',
-                                            description: 'Unable to update habit',
+                                            description: 'Unable to update Habit',
                                             status: 'error',
                                             duration: 4000,
                                             isClosable: true

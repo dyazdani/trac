@@ -34,7 +34,7 @@ const RightDrawer = ({ toggleBannerDisplayed, isMilestonesEmpty }: RightDrawerPr
                         variant='solid'
                         colorScheme='yellow'
                         size="lg"
-                        aria-label='create-milestone'
+                        aria-label='create-goal'
                         leftIcon={<AddIcon />}
                         onClick={onOpenForMilestone}
                     >
