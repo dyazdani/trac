@@ -59,17 +59,36 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 size="xl"
                 color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
                 as="h2"
+                textAlign="center"
             >
              {milestone.name}
             </Heading>
             {
                 areDatesSameDayMonthYear(new Date(), new Date(milestone.dueDate)) ? 
-                <Text fontSize="lg">DUE TODAY!</Text> : 
+                <Text 
+                    textAlign="center" 
+                    fontSize="lg"
+                >
+                    DUE TODAY!
+                </Text> : 
                 new Date().getTime() > new Date(milestone.dueDate).setHours(23, 59, 59, 999) ?
-                <Text color="red" fontSize="lg">OVERDUE!</Text> : 
-                <Text fontSize="lg">Due {new Date(milestone.dueDate).toLocaleDateString()}</Text>
+                <Text 
+                    color="red" 
+                    textAlign="center"
+                    fontSize="lg"
+                >
+                    OVERDUE!
+                </Text> : 
+                <Text 
+                    textAlign="center"
+                    fontSize="lg"
+                >
+                    Due {new Date(milestone.dueDate).toLocaleDateString()}
+                </Text>
             }
-            <Spacer/>
+            {/* <Spacer
+                minWidth="40px"
+            /> */}
             <Menu
                 isLazy
                 closeOnSelect={false}
