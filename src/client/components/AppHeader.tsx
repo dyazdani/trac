@@ -68,7 +68,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             ml="1vw"
             mr="1vw"
           > 
-            <Text>{`Welcome back, `}<Text as='b'>{currentUser?.username}</Text>
+            <Text>Hi, <Text as='b'>{currentUser?.username}</Text>!
             </Text>
           </Box> : 
           <ChakraLink
