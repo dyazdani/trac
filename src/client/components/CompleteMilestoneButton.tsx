@@ -54,7 +54,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
             } else {
                 toast({
                     title: 'ERROR',
-                    description: 'Unable to mark milestone as complete or incomplete',
+                    description: 'Unable to mark Goal as complete or incomplete',
                     status: 'error',
                     duration: 9000,
                     isClosable: true
@@ -64,7 +64,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
             console.error(e)
             toast({
                 title: 'ERROR',
-                description: 'Unable to mark milestone as complete or incomplete',
+                description: 'Unable to mark Goal as complete or incomplete',
                 status: 'error',
                 duration: 9000,
                 isClosable: true
