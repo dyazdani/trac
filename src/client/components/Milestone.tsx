@@ -38,10 +38,11 @@ export interface MilestoneProps {
 
 const Milestone = ({milestone}: MilestoneProps) => {
 
+
     return (
         <Card
         w="50vw"
-        minW="450px"
+        minW="570px"
         bg={
             milestone.isCompleted ? "rgba(249, 199, 64, 0.4)" :
             milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
@@ -50,22 +51,45 @@ const Milestone = ({milestone}: MilestoneProps) => {
         borderRadius="20px"
       >
         <CardHeader>
-          <HStack>
+          <Flex
+            justifyContent="space-between"
+            alignItems="center"
+            gap="1vw"
+          >
             <Heading 
                 size="xl"
                 color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
                 as="h2"
+                textAlign="center"
             >
              {milestone.name}
             </Heading>
             {
                 areDatesSameDayMonthYear(new Date(), new Date(milestone.dueDate)) ? 
-                <Text fontSize="lg">DUE TODAY!</Text> : 
+                <Text 
+                    textAlign="center" 
+                    fontSize="lg"
+                >
+                    DUE TODAY!
+                </Text> : 
                 new Date().getTime() > new Date(milestone.dueDate).setHours(23, 59, 59, 999) ?
-                <Text color="red" fontSize="lg">OVERDUE!</Text> : 
-                <Text fontSize="lg">Due {new Date(milestone.dueDate).toLocaleDateString()}</Text>
+                <Text 
+                    color="red" 
+                    textAlign="center"
+                    fontSize="lg"
+                >
+                    OVERDUE!
+                </Text> : 
+                <Text 
+                    textAlign="center"
+                    fontSize="lg"
+                >
+                    Due {new Date(milestone.dueDate).toLocaleDateString()}
+                </Text>
             }
-            <Spacer/>
+            <Spacer
+                minWidth="20px"
+            />
             <Menu
                 isLazy
                 closeOnSelect={false}
@@ -79,6 +103,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                             rightIcon={isOpen ? <CloseIcon/> :<HamburgerIcon/>}
                             variant={isOpen ? "solid" : "outline"}
                             colorScheme="blue"
+                            flexShrink="0"
                             isActive={isOpen}
                         >Menu</MenuButton>
                         <MenuList>
@@ -92,7 +117,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
             <CompleteMilestoneButton
                 milestone={milestone}
             />
-          </HStack>
+          </Flex>
         </CardHeader>
         <Flex 
             direction={"column"} 
@@ -116,14 +141,17 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 <Text fontSize="xl">You currently have no Habits for this Goal.</Text> : 
                 ""
               }
-            <Accordion defaultIndex={[0]} allowMultiple >
+            <Accordion defaultIndex={0} allowMultiple >
                 {[...milestone.habits].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
                     .map(habit => {
                     return (
                         <AccordionItem
                             key={habit.id}
-                            borderTop="1px solid black" 
-                            borderBottom="1px solid black"
+                            bgColor={"rgba(255, 255, 255, .2)"}
+                            border="none"
+                            width="42vw"
+                            minWidth="450px"
+                            mb=".5vw"
                         >
                             {({ isExpanded }) => (
                                 <>
