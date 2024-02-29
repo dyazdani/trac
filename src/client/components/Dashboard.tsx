@@ -59,7 +59,7 @@ const Dashboard = () => {
         {isBannerDisplayed && <CTABanner isBannerDisplayed={isBannerDisplayed} toggleBannerDisplayed={toggleBannerDisplayed}/>}
         <AppHeader isBannerDisplayed={isBannerDisplayed}/>
           <Box
-            w="100vw"
+            w="100%"
             h="100%"
             display="flex"
             flexDirection="column"
@@ -67,14 +67,14 @@ const Dashboard = () => {
             pt="5vh"
             alignItems="center"
           >
-              <Heading as='h1' size="2xl">My Goals</Heading>
-              {
-                !milestonesData?.milestones.length ?
-                <Text fontSize="xl" mt="20vh">You currently have no Goals.</Text> : 
-                ""
-              }
-              <RightDrawer toggleBannerDisplayed={toggleBannerDisplayed} isMilestonesEmpty={isMilestonesEmpty}/>
-              <MyMilestones milestones={milestonesData?.milestones}/>
+            <Heading as='h1' size="2xl">My Goals</Heading>
+            {
+              !milestonesData?.milestones.length ?
+              <Text fontSize="xl" mt="20vh">You currently have no Goals.</Text> : 
+              ""
+            }
+            <RightDrawer toggleBannerDisplayed={toggleBannerDisplayed} isMilestonesEmpty={isMilestonesEmpty}/>
+            <MyMilestones milestones={milestonesData?.milestones}/>
           </Box>
       </>
     )
