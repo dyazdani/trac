@@ -1,7 +1,25 @@
 import React, { useState } from 'react';
-import { useGetStatusReportsByHabitIdQuery, useSendStatusReportMutation } from '../features/api.js';
-import { Button, ButtonGroup } from '@chakra-ui/button';
-import { Box, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Editable, EditableInput, EditablePreview, FormControl, FormLabel, Input, Stack, Textarea, useDisclosure, useToast } from '@chakra-ui/react';
+import { useSendStatusReportMutation } from '../features/api.js';
+import { 
+    Button, 
+    ButtonGroup 
+} from '@chakra-ui/button';
+import { 
+    Box, 
+    Drawer, 
+    DrawerBody, 
+    DrawerContent, 
+    DrawerFooter, 
+    DrawerHeader, 
+    DrawerOverlay, 
+    FormControl, 
+    FormLabel,
+    Input, 
+    Stack, 
+    Textarea, 
+    useDisclosure, 
+    useToast 
+} from '@chakra-ui/react';
 import { useAppSelector } from '../app/hooks.js';
 import { HabitWithDetails } from '../../types/index.js';
 import getDefaultStatusReportMessage from '..//utils/getDefaultStatusReportMessage.js';

@@ -167,6 +167,8 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                                 ref={inputRef}
                                                 onChange={(e) => {setHabitNameValue(e.target.value)}}
                                                 value={habitNameValue}
+                                                paddingLeft="16px"
+                                                paddingRight="16px"    
                                             />
                                         </Editable>
                                     </FormControl>

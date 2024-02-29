@@ -106,6 +106,8 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                                     ref={inputRef}
                                     onChange={(e) => {setMilestoneNameValue(e.target.value)}}
                                     value={milestoneNameValue}
+                                    paddingLeft="16px"
+                                    paddingRight="16px"
                                 />
                             </Editable>
                         </FormControl>  
