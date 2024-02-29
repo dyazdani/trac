@@ -20,13 +20,14 @@ const LoginPage = () => {
                     textAlign="center" 
                     backgroundColor="yellow.500"
                     padding="1vw"
+
                 >
                     Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
                 </Heading>
             </Show>
             <Flex 
                 alignItems="center" 
-                w="100vw" 
+                w="100%" 
                 h="100vh" 
                 bg="#b9eefe"
             >
