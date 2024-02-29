@@ -12,7 +12,7 @@ const LoginPage = () => {
     return (
         <>
             <Show 
-                breakpoint="(max-width: 768px)"
+                below="md"
             >
                 <Heading 
                     as="h1" 
@@ -20,17 +20,18 @@ const LoginPage = () => {
                     textAlign="center" 
                     backgroundColor="yellow.500"
                     padding="1vw"
+
                 >
                     Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
                 </Heading>
             </Show>
             <Flex 
                 alignItems="center" 
-                w="100vw" 
+                w="100%" 
                 h="100vh" 
                 bg="#b9eefe"
             >
-                <Spacer/>
+                <Spacer minWidth="3vw"/>
                 <Hide breakpoint="(max-width: 600px)">
                     <Image
                         src="/images/mountain-climber.jpg"

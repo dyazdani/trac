@@ -8,13 +8,14 @@ import {
 } from "@chakra-ui/react";
 
 import RegisterForm from "./RegisterForm.js";
+import LandscapeRegisterForm from "./LandscapeRegisterForm.js";
 
 
 const RegisterPage = () => {
   return (
     <>
       <Show 
-        breakpoint="(max-width: 768px)"
+        below="md"
       >
         <Heading 
           as="h1" 
@@ -28,11 +29,11 @@ const RegisterPage = () => {
     </Show>
     <Flex 
       alignItems="center" 
-      w="100vw" 
+      w="100%" 
       h="100vh" 
       bg="#b9eefe"
     >
-      <Spacer />
+      <Spacer minWidth="3vw"/>
       <Hide breakpoint="(max-width: 600px)">
         <Image
           src="/images/mountain-climber.jpg"
@@ -50,7 +51,12 @@ const RegisterPage = () => {
         <Spacer/>
         <Spacer/>
       </Hide>
-      <RegisterForm/>
+      <Hide breakpoint="(min-height: 640px)">
+        <LandscapeRegisterForm/>
+      </Hide>
+      <Hide breakpoint="(max-height: 639px)">
+        <RegisterForm/>
+      </Hide>
       <Hide breakpoint="(max-width: 600px)">
         <Spacer/>
       </Hide>
