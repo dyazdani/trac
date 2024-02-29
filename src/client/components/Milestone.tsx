@@ -87,6 +87,9 @@ const Milestone = ({milestone}: MilestoneProps) => {
                     Due {new Date(milestone.dueDate).toLocaleDateString()}
                 </Text>
             }
+            <Spacer
+                minWidth="20px"
+            />
             <Menu
                 isLazy
                 closeOnSelect={false}
