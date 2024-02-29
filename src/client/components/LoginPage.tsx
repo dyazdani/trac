@@ -28,7 +28,7 @@ const LoginPage = () => {
             <Flex 
                 alignItems="center" 
                 w="100%" 
-                h="100vh" 
+                h="100%" 
                 bg="#b9eefe"
             >
                 <Spacer/>
