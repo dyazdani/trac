@@ -107,6 +107,7 @@ const RegisterForm = () => {
             size="md" 
             m="4"
             data-testid="register-form"
+            
         >
             <CardHeader>
                 <Heading>trac</Heading>
@@ -169,7 +170,6 @@ const RegisterForm = () => {
                                     e.preventDefault();
                                     setUsername(e.target.value);
                                     if (!isUsersLoading && data) {
-                                        console.log("Got to line 191")
                                       const isUsernameFree = data.users.every(element => element.user.username !== e.target.value)
                                       if (isUsernameFree) {
                                         console.log("Username not taken")
