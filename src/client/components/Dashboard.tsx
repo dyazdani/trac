@@ -1,6 +1,7 @@
 import { 
   Box, 
   Heading,
+  Show,
   Text
 } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
@@ -42,6 +43,19 @@ const Dashboard = () => {
 
     return (
       <>
+        <Show 
+          breakpoint="(max-width: 768px)"
+        >
+          <Heading 
+            as="h1" 
+            size="lg" 
+            textAlign="center" 
+            backgroundColor="yellow.500"
+            padding="1vw"
+          >
+            Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
+          </Heading>
+        </Show>
         {isBannerDisplayed && <CTABanner isBannerDisplayed={isBannerDisplayed} toggleBannerDisplayed={toggleBannerDisplayed}/>}
         <AppHeader isBannerDisplayed={isBannerDisplayed}/>
           <Box

@@ -2,7 +2,9 @@ import {
   Image, 
   Flex, 
   Spacer, 
-  Hide 
+  Hide, 
+  Heading,
+  Show
 } from "@chakra-ui/react";
 
 import RegisterForm from "./RegisterForm.js";
@@ -10,6 +12,20 @@ import RegisterForm from "./RegisterForm.js";
 
 const RegisterPage = () => {
   return (
+    <>
+      <Show 
+        breakpoint="(max-width: 768px)"
+      >
+        <Heading 
+          as="h1" 
+          size="lg" 
+          textAlign="center" 
+          backgroundColor="yellow.500"
+          padding="1vw"
+        >
+          Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
+      </Heading>
+    </Show>
     <Flex 
       alignItems="center" 
       w="100vw" 
@@ -40,6 +56,7 @@ const RegisterPage = () => {
       </Hide>
       <Spacer/>
     </Flex>
+    </>
   );
 };
 
