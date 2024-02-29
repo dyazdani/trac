@@ -56,7 +56,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
             <DrawerHeader 
                 borderBottomWidth='1px'
             >
-                Create a Milestone
+                Create a Goal
             </DrawerHeader>
             <DrawerBody>
                 <Stack
@@ -98,7 +98,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                                 Name
                             </FormLabel>
                             <Editable
-                                defaultValue='New Milestone'
+                                defaultValue='New Goal'
                             >
                                 <EditablePreview />
                                 <EditableInput 

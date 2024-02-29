@@ -83,7 +83,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                     <DrawerHeader 
                         borderBottomWidth='1px'
                     >
-                        Edit a Milestone
+                        Edit a Goal
                     </DrawerHeader>
                     <DrawerBody>
                         <Stack
@@ -109,7 +109,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
 
                                             toast({
                                                 title: 'Goal updated.',
-                                                description: 'Your new Goal was updated.',
+                                                description: 'Your Goal was updated.',
                                                 status: 'success',
                                                 duration: 9000,
                                                 isClosable: true
