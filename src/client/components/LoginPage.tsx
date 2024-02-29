@@ -28,10 +28,10 @@ const LoginPage = () => {
             <Flex 
                 alignItems="center" 
                 w="100%" 
-                h="100%" 
+                h="100vh" 
                 bg="#b9eefe"
             >
-                <Spacer/>
+                <Spacer minWidth="3vw"/>
                 <Hide breakpoint="(max-width: 600px)">
                     <Image
                         src="/images/mountain-climber.jpg"
