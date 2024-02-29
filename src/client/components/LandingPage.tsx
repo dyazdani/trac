@@ -38,7 +38,7 @@ const LandingPage = () => {
                     Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
                 </Heading>
             </Show>
-            <AppHeader isBannerDisplayed/>
+            <AppHeader isBannerDisplayed={false}/>
             <VStack
                 h="100vh"                                                                                                                                          
                 w="100vw"
