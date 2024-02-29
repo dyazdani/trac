@@ -12,7 +12,7 @@ const LoginPage = () => {
     return (
         <>
             <Show 
-                breakpoint="(max-width: 768px)"
+                below="md"
             >
                 <Heading 
                     as="h1" 
