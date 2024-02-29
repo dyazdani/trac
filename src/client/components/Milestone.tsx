@@ -141,7 +141,9 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 <Text fontSize="xl">You currently have no Habits for this Goal.</Text> : 
                 ""
               }
-            <Accordion defaultIndex={[0]} allowMultiple >
+            <Accordion
+                allowMultiple
+            >
                 {[...milestone.habits].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
                     .map(habit => {
                     return (
