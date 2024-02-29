@@ -25,9 +25,9 @@ const Dashboard = () => {
   let doesAHabitHaveCheckInToday;
   if (currentUser) {
     const { data } = useGetHabitsByUserQuery(currentUser.id);
-    const { data: milestonesData } = useGetMilestonesByUserQuery(currentUser.id)
+    const { data: milestonesData, isLoading } = useGetMilestonesByUserQuery(currentUser.id)
 
-    const isMilestonesEmpty = !milestonesData?.milestones.length
+    const isMilestonesEmpty = !isLoading && !milestonesData?.milestones.length
 
     const checkIns = data?.habits.map(habit => habit.checkIn)
 
@@ -69,7 +69,7 @@ const Dashboard = () => {
           >
             <Heading as='h1' size="2xl">My Goals</Heading>
             {
-              !milestonesData?.milestones.length ?
+              !isLoading && !milestonesData?.milestones.length ?
               <Text fontSize="xl" mt="20vh">You currently have no Goals.</Text> : 
               ""
             }
