@@ -28,7 +28,15 @@ const LandingPage = () => {
             <Show 
                 breakpoint="(max-width: 768px)"
             >
-                <Heading as="h1" size="lg" textAlign="center" backgroundColor="yellow.500">Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.</Heading>
+                <Heading 
+                    as="h1" 
+                    size="lg" 
+                    textAlign="center" 
+                    backgroundColor="yellow.500"
+                    padding="1vw"
+                >
+                    Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
+                </Heading>
             </Show>
             <AppHeader isBannerDisplayed/>
             <VStack
