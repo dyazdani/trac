@@ -28,7 +28,7 @@ const RegisterPage = () => {
     </Show>
     <Flex 
       alignItems="center" 
-      w="100vw" 
+      w="100%" 
       h="100vh" 
       bg="#b9eefe"
     >
