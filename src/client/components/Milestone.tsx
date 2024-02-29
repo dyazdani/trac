@@ -38,6 +38,7 @@ export interface MilestoneProps {
 
 const Milestone = ({milestone}: MilestoneProps) => {
 
+
     return (
         <Card
         w="50vw"
@@ -86,9 +87,6 @@ const Milestone = ({milestone}: MilestoneProps) => {
                     Due {new Date(milestone.dueDate).toLocaleDateString()}
                 </Text>
             }
-            {/* <Spacer
-                minWidth="40px"
-            /> */}
             <Menu
                 isLazy
                 closeOnSelect={false}
@@ -140,13 +138,13 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 <Text fontSize="xl">You currently have no Habits for this Goal.</Text> : 
                 ""
               }
-            <Accordion defaultIndex={[0]} allowMultiple >
+            <Accordion defaultIndex={0} allowMultiple >
                 {[...milestone.habits].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
                     .map(habit => {
                     return (
                         <AccordionItem
                             key={habit.id}
-                            bgColor="rgba(255, 255, 255, .2)"
+                            bgColor={"rgba(255, 255, 255, .2)"}
                             border="none"
                             width="42vw"
                             minWidth="450px"
