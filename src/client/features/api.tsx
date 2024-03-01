@@ -68,12 +68,13 @@ export const api = createApi({
         }),
         invalidatesTags: ["CurrentUser"],
       }),
-      createSchedule: builder.mutation<{schedules: Schedule[]}, {habitName: string, days: DaysOfWeek[], workflowKey: string}>({
-        query: ({habitName, days, workflowKey}) => ({
+      createSchedule: builder.mutation<{schedules: Schedule[]}, {habitName: string, milestoneName: string, days: DaysOfWeek[], workflowKey: string}>({
+        query: ({habitName, milestoneName, days, workflowKey}) => ({
           url: `/notifications/schedules`,
           method: "POST",
           body: {
             habitName,
+            milestoneName,
             days,
             workflowKey
           },
