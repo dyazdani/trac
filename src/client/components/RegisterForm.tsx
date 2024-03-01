@@ -107,7 +107,7 @@ const RegisterForm = () => {
             size="md" 
             m="4"
             data-testid="register-form"
-            
+            bgColor="blue.50"
         >
             <CardHeader>
                 <Heading>trac</Heading>

@@ -13,6 +13,7 @@ import {
 import AppHeader from "../components/AppHeader.js";
 import { logout } from "../features/authSlice.js";
 import RegisterPage from "../components/RegisterPage.js";
+import Reg from "./Reg.js";
 
 const Register = () => {
     const dispatch = useAppDispatch();
@@ -22,7 +23,8 @@ const Register = () => {
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
   
 
-    return currentUser ?
+    return (
+        currentUser ?
         <Box
             bgColor="orange.50"
             width="100vw"
@@ -81,8 +83,8 @@ const Register = () => {
             </VStack>
         </Box>
          :
-        <RegisterPage/>
-    
+        <Reg/>
+    )
 }
 
 export default Register;
