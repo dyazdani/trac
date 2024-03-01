@@ -18,7 +18,8 @@ import {
     IconButton,
     FormErrorMessage,
     FormHelperText,
-    Checkbox
+    Checkbox,
+    Image
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { 
@@ -110,8 +111,11 @@ const RegisterForm = () => {
             bgColor="blue.50"
         >
             <CardHeader>
-                <Heading>trac</Heading>
-                <Text>Stay on trac by signing up.</Text>
+                <Image
+                    src="/images/trac-logo-with-text.png"
+                    alt="trac logo"
+                />
+                <Text>Sign up to keep on Trac.</Text>
             </CardHeader>
             <CardBody>
                 <Box
@@ -254,7 +258,7 @@ const RegisterForm = () => {
                                     setIsPermissionCheckboxChecked(!isPermissionCheckboxChecked);
                                 }}
                             >
-                                I give trac permission to email me notifications.
+                                I give <Text as="b">Trac</Text> permission to email me notifications.
                             </Checkbox>
                         </FormControl>
                         <Button
