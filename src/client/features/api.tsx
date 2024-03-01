@@ -132,7 +132,7 @@ export const api = createApi({
         query: (email) => `/users`,
         providesTags: ["User"]
       }),
-      getHabitsByUser: builder.query<{ habits: HabitWithDetails[] }, number>({
+      getHabitsByUser: builder.query<{ habits: HabitWithDetails[] }, number | undefined>({
         query: (id) => `/users/${id}/habits`,
         providesTags: ["Habit"]
       }),
@@ -206,7 +206,7 @@ export const api = createApi({
         }),
         invalidatesTags: ["Milestone"],
       }),
-      getMilestonesByUser: builder.query<{ milestones: MilestoneWithDetails[] }, number>({
+      getMilestonesByUser: builder.query<{ milestones: MilestoneWithDetails[] }, number | undefined>({
         query: (ownerId) => `/users/${ownerId}/milestones`,
         providesTags: ["Milestone"]
       }),
