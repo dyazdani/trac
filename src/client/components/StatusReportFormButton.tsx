@@ -21,23 +21,24 @@ import {
     useToast 
 } from '@chakra-ui/react';
 import { useAppSelector } from '../app/hooks.js';
-import { HabitWithDetails } from '../../types/index.js';
+import { HabitWithDetails, MilestoneWithDetails } from '../../types/index.js';
 import getDefaultStatusReportMessage from '..//utils/getDefaultStatusReportMessage.js';
 import getMostRecentCheckInDayDate from '..//utils/getMostRecentCheckInDayDate.js';
 
 
 export interface StatusReportFormButtonProps {
     habit: HabitWithDetails
+    milestone: MilestoneWithDetails
 }
 
-const StatusReportFormButton = ({habit}: StatusReportFormButtonProps) => {
+const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps) => {
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
     if (currentUser) {
         const [emails, setEmails] = useState<string[]>([])
-        const [message, setMessage] = useState(getDefaultStatusReportMessage(habit, currentUser.username))
+        const [message, setMessage] = useState(getDefaultStatusReportMessage(habit, milestone, currentUser.username))
         const { isOpen, onOpen, onClose } = useDisclosure()
         const inputRef = React.useRef<HTMLInputElement>(null);
         const toast = useToast();
@@ -93,7 +94,7 @@ const StatusReportFormButton = ({habit}: StatusReportFormButtonProps) => {
             onClick={(e) => {
                 e.preventDefault();
                 if (!message) {
-                    setMessage(getDefaultStatusReportMessage(habit, currentUser.username))
+                    setMessage(getDefaultStatusReportMessage(habit, milestone, currentUser.username))
                 }
                 onOpen();
             }}
@@ -135,7 +136,7 @@ const StatusReportFormButton = ({habit}: StatusReportFormButtonProps) => {
                                         Send Status Report To:
                                     </FormLabel>
                                     <Input
-                                        placeholder="Add emails, e.g., jack@hill.com, jill@hill.com"
+                                        placeholder="e.g., jack@hill.com, jill@hill.com"
                                         isRequired
                                         type="email"
                                         id="emails" 
@@ -151,11 +152,12 @@ const StatusReportFormButton = ({habit}: StatusReportFormButtonProps) => {
                                     <FormLabel
                                         htmlFor='status-report-message'
                                     >
-                                        Email Body:
+                                        Status Report Email Body:
                                     </FormLabel>
                                     <Textarea
                                         isRequired
                                         size="lg"
+                                        placeholder={`For example: \n\nDear Friends, \n\nThis past week I completed my Habit called "Fetching Pail of Water" 5/7 times. \n\n Cheers,\n Jill`}
                                         value={message}
                                         onChange={(e) => {setMessage(e.target.value)}}
                                         minHeight="20rem"

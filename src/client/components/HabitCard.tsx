@@ -414,6 +414,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
           >
             <StatusReportFormButton
               habit={habit}
+              milestone={milestone}
             />
             </Box>
           )}
