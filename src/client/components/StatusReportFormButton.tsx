@@ -157,6 +157,7 @@ const StatusReportFormButton = ({habit}: StatusReportFormButtonProps) => {
                                     size="lg"
                                     value={message}
                                     onChange={(e) => {setMessage(e.target.value)}}
+                                    height="65vh"
                                 >
 
                                 </Textarea>
