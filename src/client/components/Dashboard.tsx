@@ -16,13 +16,15 @@ import isTodayCheckInDay from "..//utils/isTodayCheckInDay.js";
 import { useState } from "react";
 import MyMilestones from "./MyMilestones.js";
 import { Navigate } from "react-router-dom";
-import { User } from "@prisma/client";
-
 export interface DashboardProps {
-  currentUser: Omit<User, 'password'> | null 
+  isAuthenticated: boolean
 }
 
-const Dashboard = ({currentUser}: DashboardProps) => {
+const Dashboard = ({isAuthenticated}: DashboardProps) => {
+  const localStorageUser = localStorage.getItem("user")
+  const appSelectorUser = useAppSelector(state => state.auth.user)
+  const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+  
   let currentUserId;
   if (currentUser) {
     currentUserId = currentUser.id
@@ -47,8 +49,7 @@ const Dashboard = ({currentUser}: DashboardProps) => {
   }
 
   return (
-    <div>
-    {currentUser ? (
+    isAuthenticated || currentUser ? 
     <>
       <Show 
         below="md"
@@ -83,9 +84,8 @@ const Dashboard = ({currentUser}: DashboardProps) => {
           <RightDrawer toggleBannerDisplayed={toggleBannerDisplayed} isMilestonesEmpty={isMilestonesEmpty}/>
           <MyMilestones milestones={milestonesData?.milestones}/>
         </Box>
-    </>) :
-    (<Navigate to="/login" replace />)}
-    </div>
+    </> :
+    <Navigate to="/login" replace />
   )
 };
 

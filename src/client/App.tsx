@@ -18,8 +18,8 @@ const App: React.FC = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomePage/>}/>
-        <Route path="goals" element={<Dashboard currentUser={currentUser}/>}/>
+        <Route path="/" element={<HomePage isAuthenticated={!!currentUser}/>}/>
+        <Route path="goals" element={<Dashboard isAuthenticated={!!currentUser}/>}/>
         <Route path="register" element={<Register/>}/>
         <Route path="login" element={<Login/>}/>
       </Routes>
