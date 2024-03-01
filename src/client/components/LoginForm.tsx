@@ -136,16 +136,22 @@ const LoginForm = () => {
                 }}
                 value={email}
               />
-              {
-                isEmailInvalid ? 
-                <FormErrorMessage>Must enter valid email.</FormErrorMessage> :
-                ""
-              }
-              {
-                !isEmailInvalid && isEmailUnregistered ? 
-                <FormErrorMessage>An account with this email does not exist.</FormErrorMessage> :
-                ""
-              }
+              <Box
+                height="1em"
+                marginTop=".3em"
+              >
+                {
+                  isEmailInvalid ? 
+                  <FormErrorMessage mt="0">Must enter valid email.</FormErrorMessage> :
+                  ""
+                }
+                {
+                  !isEmailInvalid && isEmailUnregistered ? 
+                  <FormErrorMessage mt="0">An account with this email does not exist.</FormErrorMessage> :
+                  ""
+                }
+              </Box>
+              
             </FormControl>
 
             <FormControl
