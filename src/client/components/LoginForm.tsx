@@ -17,6 +17,7 @@ import {
   InputRightElement,
   IconButton,
   FormErrorMessage,
+  Image
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -85,10 +86,20 @@ const LoginForm = () => {
   };
 
   return (
-    <Card variant="elevated" align="center" size="md" m="4">
+    <Card 
+      variant="elevated" 
+      align="center" 
+      size="md" 
+      m="4"
+      bgColor="blue.50"
+      maxHeight="90%"
+    >
       <CardHeader>
-        <Heading>trac</Heading>
-        <Text>Stay on trac by logging in.</Text>
+        <Image
+          src="/images/trac-logo-with-text.png"
+          alt="trac logo"
+        />
+        <Text>Log in to stay on Trac.</Text>
       </CardHeader>
       <CardBody>
         <Box
@@ -98,7 +109,10 @@ const LoginForm = () => {
             handleSubmit();
           }}
         >
-          <VStack as="fieldset">
+          <VStack 
+            as="fieldset"
+            gap="1vw"
+          >
             <FormControl
               isRequired
               isDisabled={isInputAndSubmitDisabled}
@@ -122,16 +136,22 @@ const LoginForm = () => {
                 }}
                 value={email}
               />
-              {
-                isEmailInvalid ? 
-                <FormErrorMessage>Must enter valid email.</FormErrorMessage> :
-                ""
-              }
-              {
-                !isEmailInvalid && isEmailUnregistered ? 
-                <FormErrorMessage>An account with this email does not exist.</FormErrorMessage> :
-                ""
-              }
+              <Box
+                height="1em"
+                marginTop=".3em"
+              >
+                {
+                  isEmailInvalid ? 
+                  <FormErrorMessage mt="0">Must enter valid email.</FormErrorMessage> :
+                  ""
+                }
+                {
+                  !isEmailInvalid && isEmailUnregistered ? 
+                  <FormErrorMessage mt="0">An account with this email does not exist.</FormErrorMessage> :
+                  ""
+                }
+              </Box>
+              
             </FormControl>
 
             <FormControl
@@ -171,6 +191,7 @@ const LoginForm = () => {
 
             <Button
               colorScheme="yellow"
+              marginTop="2vh"
               data-testid="submit-button"
               type="submit"
               isLoading={isLoading}
