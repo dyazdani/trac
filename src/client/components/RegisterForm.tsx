@@ -106,6 +106,7 @@ const RegisterForm = () => {
             variant="elevated"
             align="center"
             size="md" 
+            width="50vw"
             m="4vw"
             bgColor="blue.50"
             data-testid="landscape-register-form"
@@ -156,16 +157,21 @@ const RegisterForm = () => {
                                         }}
                                         value={email}
                                     />
+                                    <Box
+                                        height="1em"
+                                        marginTop=".3em"
+                                    >
                                     {
                                         isEmailInvalid ? 
-                                        <FormErrorMessage>Must enter valid email.</FormErrorMessage> :
+                                        <FormErrorMessage marginTop="0">Must enter valid email.</FormErrorMessage> :
                                         ""
                                     }
                                     {
                                         !isEmailInvalid && isEmailTaken ? 
-                                        <FormErrorMessage>An account with this email already exists.</FormErrorMessage> :
+                                        <FormErrorMessage marginTop="0">An account with this email already exists.</FormErrorMessage> :
                                         ""
                                     }
+                                    </Box>
                                 </FormControl>
                                 <FormControl
                                     isRequired
@@ -191,13 +197,17 @@ const RegisterForm = () => {
                                         }}                                
                                         value={username}
                                     />
-                                    <FormErrorMessage>Username already exists.</FormErrorMessage>
+                                    <Box
+                                        height="1em"
+                                        marginTop=".3em"
+                                    >
+                                        <FormErrorMessage marginTop="0">Username already exists.</FormErrorMessage>
+                                    </Box>
                                 </FormControl>
                                 </Flex>
                                 <Flex
                                     alignItems="center"
                                     width="100%"
-
                                     gap="1vw"
                                 >
                                 <FormControl
@@ -229,9 +239,16 @@ const RegisterForm = () => {
                                                 />
                                             </InputRightElement>
                                         </InputGroup>
-                                        {password.length ? <FormHelperText>{getPasswordValidation(password).message}</FormHelperText> : ""}
-                                        <FormErrorMessage>{getPasswordValidation(password).characterTypeMessage}</FormErrorMessage>
-                                        <FormErrorMessage>{getPasswordValidation(password).lengthMessage}</FormErrorMessage>
+                                        <Flex
+                                            height="5em"
+                                            direction="column"
+                                            width="263px"
+                                            mt=".3em"
+                                        >
+                                            {password.length ? <FormHelperText mt="0">{getPasswordValidation(password).message}</FormHelperText> : ""}
+                                            <FormErrorMessage>{getPasswordValidation(password).characterTypeMessage}</FormErrorMessage>
+                                            <FormErrorMessage>{getPasswordValidation(password).lengthMessage}</FormErrorMessage>
+                                        </Flex>
                                 </FormControl>
                                 <FormControl
                                     isRequired
@@ -258,12 +275,18 @@ const RegisterForm = () => {
                                             />
                                         </InputRightElement>
                                     </InputGroup>
-                                    {confirmPassword.length ? <FormErrorMessage>Passwords do not match.</FormErrorMessage> : ""}
+                                        <Box
+                                            height="5em"
+                                            mt=".3em"
+                                        >
+                                            {confirmPassword.length ? <FormErrorMessage mt="0">Passwords do not match.</FormErrorMessage> : ""}
+                                        </Box>
                                 </FormControl>
                             </Flex>
                         <FormControl
                             isRequired
                             isDisabled={isInputAndSubmitDisabled}
+                            mt="1em"
                         >
                             <Checkbox
                                 onChange={(e) => {
@@ -275,7 +298,7 @@ const RegisterForm = () => {
                             </Checkbox>
                         </FormControl>
                         <Button
-                            marginTop="2vh"
+                            marginTop="3vh"
                             colorScheme="yellow"
                             data-testid="submit-button"
                             type="submit"    
