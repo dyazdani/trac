@@ -109,88 +109,87 @@ const StatusReportFormButton = ({habit}: StatusReportFormButtonProps) => {
                 size="md"
                 initialFocusRef={inputRef}
             >
-                <DrawerOverlay />
-                <DrawerContent>
-                <DrawerHeader 
-                    borderBottomWidth='1px'
-                >
-                    Send a Status Report
-                </DrawerHeader>
-                <DrawerBody>
-                    <Stack
-                        as="form"
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            handleSubmit()
-                        }}
-                        id="status-report-form"
-                        spacing="3vw"
-                    >
-                        <Box>
-                            <FormControl isRequired>
-                                <FormLabel
-                                    htmlFor="emails"
-                                >
-                                    Send Status Report To:
-                                </FormLabel>
-                                <Input
-                                    placeholder="Add emails, e.g., jack@hill.com, jill@hill.com"
-                                    isRequired
-                                    type="email"
-                                    id="emails" 
-                                    ref={inputRef}
-                                    multiple
-                                    onChange={(e) => {setEmails(e.target.value.split(","))}}
-                                    value={emails}
-                                    />
-                            </FormControl>
-                        </Box>
-                        <Box>
-                            <FormControl isRequired>
-                                <FormLabel
-                                    htmlFor='status-report-message'
-                                >
-                                    Email Body:
-                                </FormLabel>
-                                <Textarea
-                                    isRequired
-                                    size="lg"
-                                    value={message}
-                                    onChange={(e) => {setMessage(e.target.value)}}
-                                    height="65vh"
-                                >
 
-                                </Textarea>
-                            </FormControl>
-                        </Box>
-                    </Stack>
-                </DrawerBody>
-                <DrawerFooter>
-                    <ButtonGroup>
-                        <Button 
-                            variant="outline" 
-                            colorScheme='teal' 
-                            mr={3} 
-                            onClick={(e) => {
+                    <DrawerOverlay />
+                    <DrawerContent>
+                    <DrawerHeader 
+                        borderBottomWidth='1px'
+                    >
+                        Send a Status Report
+                    </DrawerHeader>
+                    <DrawerBody>
+                        <Stack
+                            as="form"
+                            onSubmit={(e) => {
                                 e.preventDefault();
-                                onClose();
-                                setMessage("");
+                                handleSubmit()
                             }}
+                            id="status-report-form"
+                            spacing="3vw"
                         >
-                            Cancel
-                        </Button>
-                        <Button 
-                            mr={3}  
-                            colorScheme='orange'
-                            color="#000000" 
-                            type="submit"
-                            form="status-report-form"
-                        >
-                            Send
-                        </Button>
-                    </ButtonGroup>
-                </DrawerFooter>
-                </DrawerContent>
+                            <Box>
+                                <FormControl isRequired>
+                                    <FormLabel
+                                        htmlFor="emails"
+                                    >
+                                        Send Status Report To:
+                                    </FormLabel>
+                                    <Input
+                                        placeholder="Add emails, e.g., jack@hill.com, jill@hill.com"
+                                        isRequired
+                                        type="email"
+                                        id="emails" 
+                                        ref={inputRef}
+                                        multiple
+                                        onChange={(e) => {setEmails(e.target.value.split(","))}}
+                                        value={emails}
+                                        />
+                                </FormControl>
+                            </Box>
+                            <Box>
+                                <FormControl isRequired>
+                                    <FormLabel
+                                        htmlFor='status-report-message'
+                                    >
+                                        Email Body:
+                                    </FormLabel>
+                                    <Textarea
+                                        isRequired
+                                        size="lg"
+                                        value={message}
+                                        onChange={(e) => {setMessage(e.target.value)}}
+                                        minHeight="20rem"
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Stack>
+                    </DrawerBody>
+                    <DrawerFooter>
+                        <ButtonGroup>
+                            <Button 
+                                variant="outline" 
+                                colorScheme='teal' 
+                                mr={3} 
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    onClose();
+                                    setMessage("");
+                                }}
+                            >
+                                Cancel
+                            </Button>
+                            <Button 
+                                mr={3}  
+                                colorScheme='orange'
+                                color="#000000" 
+                                type="submit"
+                                form="status-report-form"
+                            >
+                                Send
+                            </Button>
+                        </ButtonGroup>
+                    </DrawerFooter>
+                    </DrawerContent>
             </Drawer>
             </>
         )
