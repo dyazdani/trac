@@ -4,9 +4,9 @@ import {
   Routes 
 } from 'react-router-dom'
 import Dashboard from './components/Dashboard.js';
-import RegisterPage from './components/RegisterPage.js';
 import HomePage from './components/HomePage.js';
-import Login from './utils/Login.js';
+import Register from './components/Register.js';
+import Login from './components/Login.js';
 
 const App: React.FC = () => {
 
@@ -15,7 +15,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<HomePage/>}/>
           <Route path="/goals" element={<Dashboard/>}/>
-          <Route path="/register" element={<RegisterPage/>}/>
+          <Route path="/register" element={<Register/>}/>
           <Route path="/login" element={<Login/>}/>
         </Routes>
       </>

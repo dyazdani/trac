@@ -3,7 +3,6 @@ import {
     useAppDispatch, 
     useAppSelector 
 } from "../app/hooks.js";
-import LoginPage from "../components/LoginPage.js";
 import { 
     Box, 
     Button, 
@@ -13,8 +12,9 @@ import {
 } from "@chakra-ui/react";
 import AppHeader from "../components/AppHeader.js";
 import { logout } from "../features/authSlice.js";
+import RegisterPage from "../components/RegisterPage.js";
 
-const Login = () => {
+const Register = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const localStorageUser = localStorage.getItem("user")
@@ -39,7 +39,7 @@ const Login = () => {
                     as="h2"
                     size="xl"
                 >
-                    You are already logged in.
+                    You are already logged into a registered account.
                 </Heading>
                 <Flex
                     width="100%"
@@ -81,8 +81,8 @@ const Login = () => {
             </VStack>
         </Box>
          :
-        <LoginPage/>
+        <RegisterPage/>
     
 }
 
-export default Login;
+export default Register;
