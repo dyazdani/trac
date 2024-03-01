@@ -22,7 +22,8 @@ const Login = () => {
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
   
 
-    return currentUser ?
+    return (
+        currentUser ?
         <Box
             bgColor="orange.50"
             width="100vw"
@@ -82,7 +83,7 @@ const Login = () => {
         </Box>
          :
         <LoginPage/>
-    
+    )
 }
 
 export default Login;

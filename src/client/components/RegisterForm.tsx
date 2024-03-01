@@ -116,7 +116,7 @@ const RegisterForm = () => {
                     src="/images/trac-logo-with-text.png"
                     alt="trac logo"
                 />
-                <Text>Sign up to keep on Trac.</Text>            </CardHeader>
+                <Text>Sign up to stay on Trac.</Text>            </CardHeader>
             <CardBody>
                 <Box
                     as="form"
