@@ -32,7 +32,6 @@ import LandscapeRegisterForm from "./RegisterForm.js";
             textAlign="center" 
             backgroundColor="yellow.500"
             padding="1vw"
-
           >
             Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
           </Heading>

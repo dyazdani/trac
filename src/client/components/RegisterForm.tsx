@@ -106,7 +106,6 @@ const RegisterForm = () => {
             variant="elevated"
             align="center"
             size="md" 
-            width="50vw"
             m="4vw"
             bgColor="blue.50"
             data-testid="landscape-register-form"
