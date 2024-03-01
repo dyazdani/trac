@@ -106,6 +106,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                     try {
                                         const { schedules } = await createSchedule({
                                             habitName: habitNameValue,
+                                            milestoneName: milestone.name,
                                             days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]],
                                             workflowKey: "check-in-day"
                                         }).unwrap()
@@ -123,6 +124,8 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                             }).unwrap()
 
                                             onClose()
+
+                                            console.log(schedules)
 
                                             toast({
                                                 title: 'Habit added.',
