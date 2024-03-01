@@ -104,7 +104,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             onClick={(e) => {
               e.preventDefault();
               dispatch(logout());
-              navigate("/");
+              navigate("/login");
             }}
           >
             Logout 
