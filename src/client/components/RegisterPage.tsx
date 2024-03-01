@@ -11,7 +11,7 @@ import LandscapeRegisterForm from "./RegisterForm.js";
     return (
       <>
         <Hide below="md">
-          <Show breakpoint="(max-height: 540px)">
+          <Show breakpoint="(max-height: 680px)">
             <Heading 
               as="h1" 
               size="md" 

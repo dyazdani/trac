@@ -12,7 +12,7 @@ const LoginPage = () => {
     return (
         <>  
             <Hide below="md">
-                <Show breakpoint="(max-height: 540px)">
+                <Show breakpoint="(max-height: 565px)">
                     <Heading 
                     as="h1" 
                     size="md" 
