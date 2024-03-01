@@ -27,6 +27,7 @@
     "@knocklabs/react-notification-feed": "^0.8.15",
     "@prisma/client": "^5.7.1",
     "@reduxjs/toolkit": "^2.0.1",
+    "@sendgrid/mail": "^8.1.1",
     "@testing-library/jest-dom": "^6.1.6",
     "@testing-library/react": "^14.1.2",
     "@tinymce/tinymce-react": "^4.3.2",
