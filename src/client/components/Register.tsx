@@ -13,7 +13,6 @@ import {
 import AppHeader from "../components/AppHeader.js";
 import { logout } from "../features/authSlice.js";
 import RegisterPage from "../components/RegisterPage.js";
-import Reg from "./Reg.js";
 
 const Register = () => {
     const dispatch = useAppDispatch();
@@ -83,7 +82,7 @@ const Register = () => {
             </VStack>
         </Box>
          :
-        <Reg/>
+        <RegisterPage/>
     )
 }
 
