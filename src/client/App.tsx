@@ -5,8 +5,8 @@ import {
 } from 'react-router-dom'
 import Dashboard from './components/Dashboard.js';
 import RegisterPage from './components/RegisterPage.js';
-import LoginPage from './components/LoginPage.js';
 import HomePage from './components/HomePage.js';
+import Login from './utils/Login.js';
 
 const App: React.FC = () => {
 
@@ -16,7 +16,7 @@ const App: React.FC = () => {
           <Route path="/" element={<HomePage/>}/>
           <Route path="/goals" element={<Dashboard/>}/>
           <Route path="/register" element={<RegisterPage/>}/>
-          <Route path="/login" element={<LoginPage/>}/>
+          <Route path="/login" element={<Login/>}/>
         </Routes>
       </>
     );
