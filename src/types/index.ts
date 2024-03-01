@@ -68,9 +68,8 @@ export interface HabitWithDetails {
 
 
 export interface CreateScheduleReqBody {
-  //TODO: userId will be deleted from this once req.user.id is being used instead in final version of branch
-  userId: string
   habitName: string
+  milestoneName: string
   days: DaysOfWeek[]
   workflowKey: string
 }
