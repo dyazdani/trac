@@ -29,7 +29,7 @@ const LoginPage = () => {
             >
                 <Heading 
                     as="h1" 
-                    size="lg" 
+                    size="md" 
                     textAlign="center" 
                     backgroundColor="yellow.500"
                     padding="1vw"
