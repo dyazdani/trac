@@ -126,7 +126,7 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                         onClose();
                                         toast({
                                             title: 'Habit updated.',
-                                            description: 'Your Habit was successfully updated.',
+                                            description: `Your Habit "${newHabit.name}" was successfully updated.`,
                                             status: 'success',
                                             duration: 9000,
                                             isClosable: true
@@ -135,7 +135,7 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                         console.error(e)
                                         toast({
                                             title: 'ERROR',
-                                            description: 'Unable to update Habit',
+                                            description: `Unable to update Habit "${habit.name}"`,
                                             status: 'error',
                                             duration: 4000,
                                             isClosable: true

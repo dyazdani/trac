@@ -51,7 +51,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
             try {
                 onClose();
                 if (checkInDate) {
-                    const response = await sendStatusReport({
+                    const { statusReport } = await sendStatusReport({
                         id: currentUser?.id,
                         habitId: habit.id,
                         user: currentUser?.username,
@@ -59,11 +59,12 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                         emails,
                         message,
                         checkInDate
-                    })
-                if (response) {
+                    }).unwrap()
+                    console.log("statusReport: ", statusReport)
+                if (statusReport) {
                     toast({
                         title: 'Status Report Sent.',
-                        description: `Your Status Report for ${habit.name} was sent.`,
+                        description: `Your Status Report for "${habit.name}" was sent.`,
                         status: 'success',
                         duration: 9000,
                         isClosable: true
@@ -71,7 +72,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                 } else {
                     toast({
                         title: 'Sending Failed',
-                        description: `Your Status Report for ${habit.name} failed to send. Please try again.`,
+                        description: `Your Status Report for "${habit.name}" failed to send.`,
                         status: 'error',
                         duration: 9000,
                         isClosable: true

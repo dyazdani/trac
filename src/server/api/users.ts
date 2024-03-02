@@ -231,8 +231,8 @@ usersRouter.post("/:id/habits/:habitId/statusReports", requireUser, async (req, 
             ${formattedMessage}`,
         };
 
-        if (process.env.USERNAME && process.env.PASSWORD) {
-            const transporter = getNodemailerTransporter(process.env.USERNAME, process.env.PASSWORD);
+        if (process.env.EMAIL_USERNAME && process.env.EMAIL_PASSWORD) {
+            const transporter = getNodemailerTransporter(process.env.EMAIL_USERNAME, process.env.EMAIL_PASSWORD);
 
             transporter.verify(function (error, success) {
                 if (error) {

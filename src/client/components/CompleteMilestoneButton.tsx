@@ -37,7 +37,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                 if (updatedMilestone.isCompleted) {
                     toast({
                         title: 'Goal completed.',
-                        description: 'Your Goal was marked as complete.',
+                        description: `Your Goal "${updatedMilestone.name}" was marked as complete.`,
                         status: 'success',
                         duration: 9000,
                         isClosable: true
@@ -45,7 +45,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                 } else {
                     toast({
                         title: 'Goal incomplete.',
-                        description: 'Your Goal was marked as incomplete.',
+                        description: `Your Goal "${updatedMilestone.name}" was marked as incomplete.`,
                         status: 'info',
                         duration: 9000,
                         isClosable: true
@@ -54,7 +54,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
             } else {
                 toast({
                     title: 'ERROR',
-                    description: 'Unable to mark Goal as complete or incomplete',
+                    description: `Unable to mark Goal "${milestone.name}" as complete or incomplete`,
                     status: 'error',
                     duration: 9000,
                     isClosable: true
@@ -64,7 +64,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
             console.error(e)
             toast({
                 title: 'ERROR',
-                description: 'Unable to mark Goal as complete or incomplete',
+                description: `Unable to mark Goal "${milestone.name}" as complete or incomplete`,
                 status: 'error',
                 duration: 9000,
                 isClosable: true

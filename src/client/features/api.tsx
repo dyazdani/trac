@@ -189,7 +189,7 @@ export const api = createApi({
             checkInDate
           },
         }),
-        invalidatesTags: ["StatusReport", "Habit"],
+        invalidatesTags: ["StatusReport", "Habit", "Milestone"],
       }),
       getStatusReportsByHabitId: builder.query<{statusReports: StatusReport[]}, {id: number, habitId: number}>({
         query: ({id, habitId}) => `/users/${id}/habits/${habitId}/statusReports`,
