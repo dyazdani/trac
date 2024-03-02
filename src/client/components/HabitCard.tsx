@@ -293,7 +293,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                 const isCheckInDay = DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek
 
                 // Determine if day is out of range
-                const isOutOfRange = isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day)
+                const isOutOfRange = isDateOutOfRange(new Date(habit.dateCreated), new Date(), day)
 
                   
                 return (
@@ -368,7 +368,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           rowStart={isHabitRoutineDay(habit, day) ? 5 : 4}
                           textAlign="center"
                         >
-                          <ChevronUpIcon/>
+                          <ChevronUpIcon color={isOutOfRange ? "gray" : "#3a3c3c"}/>
                         </GridItem>
                         <GridItem
                           padding={".2vw"}
@@ -377,7 +377,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           rowStart={isHabitRoutineDay(habit, day) ? 6 : 5}
                           textAlign="center"
                         >
-                          <Box>
+                          <Box
+                            color={isOutOfRange ? "gray" : "#3a3c3c"}
+                          >
                             Check-In Day
                           </Box>
                         </GridItem>
