@@ -63,7 +63,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                 if (response) {
                     toast({
                         title: 'Status Report Sent.',
-                        description: `Your Status Report for ${habit.name} was sent.`,
+                        description: `Your Status Report for "${habit.name}" was sent.`,
                         status: 'success',
                         duration: 9000,
                         isClosable: true
@@ -71,7 +71,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                 } else {
                     toast({
                         title: 'Sending Failed',
-                        description: `Your Status Report for ${habit.name} failed to send. Please try again.`,
+                        description: `Your Status Report for "${habit.name}" failed to send.`,
                         status: 'error',
                         duration: 9000,
                         isClosable: true

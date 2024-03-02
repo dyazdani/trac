@@ -129,7 +129,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
 
                                             toast({
                                                 title: 'Habit added.',
-                                                description: `Your new Habit was created and added to ${milestone.name}.`,
+                                                description: `Your new Habit "${habit.name}" was created and added to ${milestone.name}.`,
                                                 status: 'success',
                                                 duration: 9000,
                                                 isClosable: true

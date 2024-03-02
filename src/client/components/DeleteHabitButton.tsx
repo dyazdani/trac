@@ -38,7 +38,7 @@ const DeleteHabitButton = ({ habit}: DeleteHabitButtonProps) =>  {
         
                 toast({
                     title: 'Habit deleted.',
-                    description: 'Your Habit has been successfully deleted',
+                    description: `Your Habit "${habit.name}" has been successfully deleted`,
                     status: 'success',
                     duration: 4000,
                     isClosable: true
@@ -47,7 +47,7 @@ const DeleteHabitButton = ({ habit}: DeleteHabitButtonProps) =>  {
                 console.error(e)
                 toast({
                     title: 'ERROR',
-                    description: 'Unable to delete Habit',
+                    description: `Unable to delete Habit "${habit.name}"`,
                     status: 'error',
                     duration: 4000,
                     isClosable: true
