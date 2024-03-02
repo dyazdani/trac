@@ -8,6 +8,8 @@ import HomePage from './components/HomePage.js';
 import Register from './components/Register.js';
 import Login from './components/Login.js';
 import { useAppSelector } from './app/hooks.js';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { Link, Text } from '@chakra-ui/react';
 
 const App: React.FC = () => {
   const localStorageUser = localStorage.getItem("user")

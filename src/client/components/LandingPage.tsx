@@ -12,12 +12,14 @@ import {
     ListIcon,
     Text,
     Highlight,
-    Show
+    Show,
+    Link
 } from "@chakra-ui/react";
 import AppHeader from "./AppHeader.js";
 import { 
     ChevronRightIcon, 
-    CheckCircleIcon 
+    CheckCircleIcon, 
+    ExternalLinkIcon
 } from "@chakra-ui/icons";
 import { useNavigate } from "react-router";
 
@@ -259,9 +261,15 @@ const LandingPage = () => {
                     <Image
                         src="/images/trac_logo.png"
                         alt="trac mountain logo"
-                    />
+                    /> 
                 </VStack>
-            </VStack>     
+                <Text fontSize="sm" justifyContent="center" position="relative" bottom="1.5em" left="0px">
+            <Link color="blue.500" href="https://thenounproject.com/icon/mountain-120042/" isExternal>Mountain<ExternalLinkIcon mr=".5em" boxSize=".9em" /></Link>
+            by <Link color="blue.500" href="https://thenounproject.com/bravo/" isExternal>Juan Pablo Bravo<ExternalLinkIcon mr=".3em" boxSize="1em"/></Link> 
+            is licensed under <Link color="blue.500" href="https://creativecommons.org/licenses/by/2.0/" isExternal>CC BY 2.0<ExternalLinkIcon mr=".5em" boxSize="1em"/></Link>
+          </Text>
+            </VStack>  
+             
         </>   
     )
 }
