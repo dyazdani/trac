@@ -18,6 +18,10 @@ const getStatusReport = (habit: HabitWithDetails) => {
         
         currentDateObject = new Date(currentDateObject.getTime() + ONE_DAY_IN_MILLISECONDS)
     }
+    
+    if (isHabitRoutineDay(habit, currentDateObject)) {
+        statusReport.push({[currentDateObject.toDateString()]: habit.datesCompleted.find((date: Date) => areDatesSameDayMonthYear(new Date(date), currentDateObject)) ? "Completed" : "Not Completed"});
+    }
 
     return statusReport;
 }
