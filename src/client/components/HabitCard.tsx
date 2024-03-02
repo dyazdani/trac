@@ -276,7 +276,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                   size="sm"
                   variant="unstyled"
                   isDisabled={currentWeek.some(day => {
-                    return areDatesSameDayMonthYear(day, new Date(Date.now()))
+                    return areDatesSameDayMonthYear(day, new Date(milestone.dueDate))
                   })}
                   onClick={handleRightArrowClick}
                 />
