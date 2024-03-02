@@ -293,7 +293,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                 const isCheckInDay = DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek
 
                 // Determine if day is out of range
-                const isOutOfRange = isDateOutOfRange(new Date(habit.dateCreated), new Date(), day)
+                const isOutOfRange = isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day)
 
                   
                 return (
@@ -314,6 +314,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       colSpan={1} 
                       rowStart={2}
                       textAlign="center"
+                      color={isOutOfRange ? "gray" : "#3a3c3c"}
                     >
                       {dayAbbreviation}
                     </GridItem>
@@ -327,7 +328,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       borderRight={isToday ? "2px solid #3a3c3c" : {}}
                       borderBottom={isToday && !isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
                       borderBottomRadius={isToday && !isHabitRoutineDay(habit, day)? 10 : {}}
-                      color="gray"
+                      color={isOutOfRange ? "gray" : "#3a3c3c"}
                     >
                       {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
                     </GridItem>
