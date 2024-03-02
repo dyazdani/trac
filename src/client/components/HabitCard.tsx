@@ -359,7 +359,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     </Tooltip>
                     
                     {
-                      isCheckInDay ?
+                      isCheckInDay && !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ?
                       <>
                         <GridItem
                           padding={".2vw"}
