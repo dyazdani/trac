@@ -332,7 +332,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     >
                       {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
                     </GridItem>
-                    <Tooltip
+                    {!isOutOfRange ? 
+                    (
+                      <Tooltip
                       isDisabled={!isOutOfRange}
                       label="Cannot complete dates before Habit start or after today"
                       placement="bottom"
@@ -357,6 +359,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       />
                       </GridItem>
                     </Tooltip>
+                    ) : ""
+                  }
+                    
                     
                     {
                       isCheckInDay && !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ?
