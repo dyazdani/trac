@@ -18,12 +18,13 @@ import { Link as ReactRouterLink } from 'react-router-dom'
 import MessagesMenu from "./MessagesMenu.js";
 import { useNavigate } from "react-router";
 import { ChevronRightIcon } from "@chakra-ui/icons";
+import { resetIsBannerDisplayed } from "../features/bannerSlice.js";
 
-type AppHeaderProps = {
-  isBannerDisplayed: boolean | undefined
-};
 
-const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
+
+const AppHeader = () => {
+  const isBannerDisplayed = useAppSelector(state => state.banner.isBannerDisplayed)
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const localStorageUser = localStorage.getItem("user")
@@ -38,10 +39,9 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
       p="1rem"
       minHeight="70px"
       position={"sticky"}
-      // TODO: Uncomment the following lines when done with testing
       top={
-        // isBannerDisplayed ? 
-        // "54px" : 
+        isBannerDisplayed ? 
+        "54px" : 
         "0px"}
       zIndex={100}
     >
@@ -103,6 +103,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             colorScheme="orange"
             onClick={(e) => {
               e.preventDefault();
+              dispatch(resetIsBannerDisplayed())
               dispatch(logout());
               navigate("/login");
             }}

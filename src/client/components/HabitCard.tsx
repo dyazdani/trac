@@ -76,8 +76,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
   const appSelectorUser = useAppSelector(state => state.auth.user)
   const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
 
-  console.log(currentUser)
-
   const [updateHabit, { isLoading }] = useUpdateHabitMutation();
 
   const today = new Date()
