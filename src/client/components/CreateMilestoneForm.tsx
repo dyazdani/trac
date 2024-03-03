@@ -126,6 +126,9 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                             onDateChange={(e) => {
                                 setDatepickerValue(e)
                             }}
+                            configs={{
+                                dateFormat: "MM-dd-yyyy"   
+                            }}
                         />
                     </FormControl>
                     </Box>
