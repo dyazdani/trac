@@ -18,7 +18,6 @@ import {
   Button,
   Grid,
   GridItem,
-  Tooltip,
 } from "@chakra-ui/react";
 import { motion } from 'framer-motion';
 import { 
@@ -276,7 +275,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                   size="sm"
                   variant="unstyled"
                   isDisabled={currentWeek.some(day => {
-                    return areDatesSameDayMonthYear(day, new Date(Date.now()))
+                    return areDatesSameDayMonthYear(day, new Date(milestone.dueDate))
                   })}
                   onClick={handleRightArrowClick}
                 />
@@ -314,6 +313,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       colSpan={1} 
                       rowStart={2}
                       textAlign="center"
+                      color={isOutOfRange ? "gray" : "#3a3c3c"}
                     >
                       {dayAbbreviation}
                     </GridItem>
@@ -327,15 +327,12 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       borderRight={isToday ? "2px solid #3a3c3c" : {}}
                       borderBottom={isToday && !isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
                       borderBottomRadius={isToday && !isHabitRoutineDay(habit, day)? 10 : {}}
-                      color="gray"
+                      color={isOutOfRange ? "gray" : "#3a3c3c"}
                     >
                       {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
                     </GridItem>
-                    <Tooltip
-                      isDisabled={!isOutOfRange}
-                      label="Cannot complete dates before Habit start or after today"
-                      placement="bottom"
-                    >
+                    {!isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ? 
+                    (
                       <GridItem
                         padding={".2vw"}
                         borderBottom={isToday && isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
@@ -355,10 +352,12 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
 
                       />
                       </GridItem>
-                    </Tooltip>
+                    ) : ""
+                  }
+                    
                     
                     {
-                      isCheckInDay ?
+                      isCheckInDay && !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ?
                       <>
                         <GridItem
                           padding={".2vw"}
@@ -367,7 +366,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           rowStart={isHabitRoutineDay(habit, day) ? 5 : 4}
                           textAlign="center"
                         >
-                          <ChevronUpIcon/>
+                          <ChevronUpIcon color={isOutOfRange ? "gray" : "#3a3c3c"}/>
                         </GridItem>
                         <GridItem
                           padding={".2vw"}
@@ -376,7 +375,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           rowStart={isHabitRoutineDay(habit, day) ? 6 : 5}
                           textAlign="center"
                         >
-                          <Box>
+                          <Box
+                            color={isOutOfRange ? "gray" : "#3a3c3c"}
+                          >
                             Check-In Day
                           </Box>
                         </GridItem>
