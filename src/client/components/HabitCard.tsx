@@ -331,8 +331,8 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     >
                       {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
                     </GridItem>
-                    {!isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ? 
-                    (
+                    
+                    
                       <GridItem
                         padding={".2vw"}
                         borderBottom={isToday && isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
@@ -344,16 +344,18 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         rowStart={4}
                         textAlign="center"
                       >
+                        {!isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ? 
                         <ToggleButton
                         milestone={milestone}
                         date={day}
                         habit={habit}
                         isOutOfRange={isOutOfRange}
 
-                      />
+                      /> : ""
+                        }
                       </GridItem>
-                    ) : ""
-                  }
+                    
+                  
                     
                     
                     {
