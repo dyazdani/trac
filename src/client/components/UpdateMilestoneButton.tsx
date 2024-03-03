@@ -47,7 +47,7 @@ export interface UpdateMilestoneMenuItemProps{
 }
 
 const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
-    const [datepickerValue, setDatepickerValue] = useState<Date | null>(milestone.dueDate)
+    const [datepickerValue, setDatepickerValue] = useState<Date | undefined>(new Date(milestone.dueDate))
     const [milestoneNameValue, setMilestoneNameValue] = useState(milestone.name)
     const { isOpen: isOpenForUpdateMilestone, onClose: onCloseForUpdateMilestone, onOpen: onOpenForUpdateMilestone} = useDisclosure();
 
@@ -150,10 +150,15 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                                     htmlFor="dueDate"
                                 >
                                     Due Date</FormLabel>
-                                <SingleDatepicker
-                                    date={new Date()}
-                                    onDateChange={setDatepickerValue}
-                                />
+                                    <SingleDatepicker
+                            id="dueDate"
+                            name="date-input"
+                            date={datepickerValue}
+                            minDate={new Date()}
+                            onDateChange={(e) => {
+                                setDatepickerValue(e)
+                            }}
+                        />
                             </FormControl>
                             </Box>
                         </Stack>
