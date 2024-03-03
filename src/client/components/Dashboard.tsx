@@ -27,6 +27,25 @@ export interface DashboardProps {
 }
 
 const Dashboard = ({isAuthenticated}: DashboardProps) => {
+  const dispatch = useDispatch()
+
+  let isThereACheckInToday = false;
+  const result = doesAHabitHaveACheckInToday();
+
+  if (result instanceof Error) {
+    console.error(result)
+  } else {
+    isThereACheckInToday = result
+  }
+
+  const localStorageIsBannerDisplayed = localStorage.getItem("isBannerDisplayed")
+  const appSelectorIsBannerDisplayed = useAppSelector(state => state.banner.isBannerDisplayed)
+  const isBannerDisplayed: boolean | null = localStorageIsBannerDisplayed ? JSON.parse(localStorageIsBannerDisplayed) : appSelectorIsBannerDisplayed
+
+  if (isBannerDisplayed === null && isThereACheckInToday) {
+    dispatch(setIsBannerDisplayed(true))
+  }
+
 
   const localStorageUser = localStorage.getItem("user")
   const appSelectorUser = useAppSelector(state => state.auth.user)
@@ -58,8 +77,8 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
           Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
         </Heading>
       </Show>
-      <CTABanner/>
-      <AppHeader/>
+      <CTABanner isBannerDisplayed={isBannerDisplayed}/>
+      <AppHeader isBannerDisplayed={isBannerDisplayed}/>
         <Box
           w="100%"
           h="100%"

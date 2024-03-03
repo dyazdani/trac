@@ -20,10 +20,11 @@ import { useNavigate } from "react-router";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { resetIsBannerDisplayed } from "../features/bannerSlice.js";
 
+export interface AppHeaderProps {
+  isBannerDisplayed: boolean | null
+}
 
-
-const AppHeader = () => {
-  const isBannerDisplayed = useAppSelector(state => state.banner.isBannerDisplayed)
+const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

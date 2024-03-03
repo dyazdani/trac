@@ -18,7 +18,6 @@ const doesAHabitHaveACheckInToday = () => {
             doesAHabitHaveACheckInToday = checkIns.some(checkIn => isTodayCheckInDay(checkIn))
         }
 
-        console.log(`doesAHabiteHaveACheckInTOday: ${doesAHabitHaveACheckInToday}`)
         if (typeof doesAHabitHaveACheckInToday === "undefined") {
             return new Error("doesAHabitHaveACheckInToday was undefined.")
         } else {

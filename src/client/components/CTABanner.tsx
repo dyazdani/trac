@@ -10,37 +10,12 @@ import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 import { useDispatch } from "react-redux";
 import doesAHabitHaveACheckInToday from "../utils/doesAHabitHaveACheckInToday.js";
 
+export interface CTABannerProps {
+    isBannerDisplayed: boolean | null
+}
 
-
-const CTABanner = () => {
-    const dispatch = useDispatch()
-
-    let isThereACheckInToday = false;
-    const result = doesAHabitHaveACheckInToday();
-
-    if (result instanceof Error) {
-    console.error(result)
-    } else {
-    isThereACheckInToday = result
-    console.log(`isThereACheckInToday: ${isThereACheckInToday}`)
-    }
-
-    const localStorageIsBannerDisplayed = localStorage.getItem("isBannerDisplayed")
-    console.log(`localStorageIsBannerDisplayed: ${localStorageIsBannerDisplayed}`)
-
-    const appSelectorIsBannerDisplayed = useAppSelector(state => state.banner.isBannerDisplayed)
-    console.log(`appSelectorIsBannerDisplayed: ${appSelectorIsBannerDisplayed}`)
-
-    const isBannerDisplayed: boolean | null = localStorageIsBannerDisplayed ? JSON.parse(localStorageIsBannerDisplayed) : appSelectorIsBannerDisplayed
-    console.log(`isBannerDisplayed: ${isBannerDisplayed}`)
-
-
-    if (isBannerDisplayed === null && isThereACheckInToday) {
-    dispatch(setIsBannerDisplayed(true))
-    console.log(`state.isBannerDisplayed set to true`)
-    }
-
-
+const CTABanner = ({ isBannerDisplayed }: CTABannerProps) => {
+    const dispatch = useDispatch();
     return (
         <Box
             position="sticky"
