@@ -159,7 +159,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                                         }}
                                         name="date-input"
                                         date={datepickerValue}
-                                        minDate={new Date()}
+                                        // minDate={new Date()}
                                         onDateChange={(e) => {
                                             setDatepickerValue(e)
                                         }}

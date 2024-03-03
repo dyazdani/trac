@@ -8,6 +8,7 @@ import {
     AccordionIcon,
     AccordionItem,
     AccordionPanel,
+    Badge,
     Box,
     Button,
     Card, 
@@ -70,15 +71,14 @@ const Milestone = ({milestone}: MilestoneProps) => {
                     textAlign="center" 
                     fontSize="lg"
                 >
-                    DUE TODAY!
+                    Due {new Date(milestone.dueDate).toLocaleDateString()} <Badge colorScheme="yellow" variant="solid">TODAY!</Badge>
                 </Text> : 
                 new Date().getTime() > new Date(milestone.dueDate).setHours(23, 59, 59, 999) ?
-                <Text 
-                    color="red" 
+                <Text  
                     textAlign="center"
                     fontSize="lg"
                 >
-                    OVERDUE!
+                    Due {new Date(milestone.dueDate).toLocaleDateString()} <Badge colorScheme="red" variant="solid">OVERDUE!</Badge>
                 </Text> : 
                 <Text 
                     textAlign="center"
