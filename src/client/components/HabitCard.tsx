@@ -332,7 +332,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     >
                       {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
                     </GridItem>
-                    {!isOutOfRange ? 
+                    {!isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ? 
                     (
                       <Tooltip
                       isDisabled={!isOutOfRange}
