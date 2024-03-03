@@ -43,6 +43,9 @@ import {
 } from "../../types/index.js";
 import getRoutineDaysStringArray from "..//utils/getRoutineDaysStringArray.js";
 import { DaysOfWeek } from "@knocklabs/node";
+import isTodayCheckInDay from "../utils/isTodayCheckInDay.js";
+import { useDispatch } from "react-redux";
+import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 
 export interface UpdateHabitButtonProps{
     habit: HabitWithDetails
@@ -55,6 +58,8 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const inputRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
+
+    const dispatch = useDispatch();
 
     const [updateHabit] = useUpdateHabitMutation();
     const [updateSchedule] = useUpdateScheduleMutation();
@@ -131,6 +136,12 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                             duration: 9000,
                                             isClosable: true
                                         });
+
+                                        if (isTodayCheckInDay(checkIn)) {
+                                            dispatch(setIsBannerDisplayed(true))
+                                        } else {
+                                            dispatch(setIsBannerDisplayed(false))
+                                        }
                                     } catch (e) {
                                         console.error(e)
                                         toast({

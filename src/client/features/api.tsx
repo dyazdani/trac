@@ -138,7 +138,7 @@ export const api = createApi({
       }),
       getHabitById: builder.query<{ habit: HabitWithDetails }, {id: number, habitId: number}>({
         query: ({id, habitId}) => `/users/${id}/habits/${habitId}`,
-        providesTags: ["Habit"]
+        providesTags: ["Habit", "CheckIn"]
       }),
       //TODO: the return type could be switched to HabitWithDetails to include relations
       createHabit: builder.mutation<{habit: Habit}, {id: number, habitDetails: CreateHabitReqBody}>({
@@ -153,7 +153,7 @@ export const api = createApi({
             milestoneId: habitDetails.milestoneId
           },
         }),
-        invalidatesTags: ["Habit", "Milestone"],
+        invalidatesTags: ["Habit", "Milestone", "CheckIn"],
       }),
       updateHabit: builder.mutation<{habit: Habit, routine: Routine, checkIn: CheckIn}, {id: number, habitId: number, newHabit: UpdateHabitReqBody}>({
         query: ({id, habitId, newHabit}) => ({
@@ -168,14 +168,14 @@ export const api = createApi({
             scheduleId: newHabit.scheduleId
           },
         }),
-        invalidatesTags: ["Habit", "Milestone"],
+        invalidatesTags: ["Habit", "Milestone", "CheckIn"],
       }),
       deleteHabit: builder.mutation<{habit: Habit}, {id: number, habitId: number}>({
         query: ({ id, habitId }) => ({
           url: `/users/${id}/habits/${habitId}`,
           method: 'DELETE'
         }),
-        invalidatesTags: ["Habit", "Milestone"]
+        invalidatesTags: ["Habit", "Milestone", "CheckIn"]
       }),
       sendStatusReport: builder.mutation<{status: "Message Sent", statusReport: StatusReport}, SendStatusReportMutationArgs>({
         query: ({id, habitId, user, habitName, emails, message, checkInDate}) => ({
