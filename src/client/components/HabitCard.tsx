@@ -139,7 +139,11 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
 
   if (!currentWeek.length) {
     let thisWeek: Date[] = [];
-    const firstDay = new Date()
+    let firstDay = new Date()
+
+    while (firstDay.setHours(0, 0, 0, 0) > new Date(milestone.dueDate).setHours(0, 0, 0, 0)) {
+      firstDay = new Date(firstDay.setDate(firstDay.getDate() - 1))
+    }
 
     // Get number associated with current day of the week
     const firstDayNumber = firstDay.getDay()
@@ -388,22 +392,21 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
           <CardFooter
             color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
           >
-              {
-                isHabitRoutineDay(habit, today) ? 
-                <Button
-                  colorScheme="green"
-                  isLoading={isLoading}
-                  variant={isCompleted ? "outline" : "solid"}
-                  leftIcon={isCompleted ? <CheckIcon/> : undefined}
-                  onClick={() => {
-                    handleClick();
-                  }}
-                >
-                  {isCompleted ? `"${habit.name}" Completed Today!` : `Complete "${habit.name}" Today`}
-                </Button> :
-                ""
-              }
-            
+            {
+              isHabitRoutineDay(habit, today) && !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), today) ? 
+              <Button
+                colorScheme="green"
+                isLoading={isLoading}
+                variant={isCompleted ? "outline" : "solid"}
+                leftIcon={isCompleted ? <CheckIcon/> : undefined}
+                onClick={() => {
+                  handleClick();
+                }}
+              >
+                {isCompleted ? `"${habit.name}" Completed Today!` : `Complete "${habit.name}" Today`}
+              </Button> :
+              ""
+            }
           </CardFooter>
           
           {milestone && milestone.isCompleted || milestone.isCanceled ? "" : (!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
@@ -415,7 +418,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               habit={habit}
               milestone={milestone}
             />
-            </Box>
+          </Box>
           )}
         </Flex>
       </Card>
