@@ -18,7 +18,6 @@ import {
   Button,
   Grid,
   GridItem,
-  Tooltip,
 } from "@chakra-ui/react";
 import { motion } from 'framer-motion';
 import { 
@@ -334,11 +333,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     </GridItem>
                     {!isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ? 
                     (
-                      <Tooltip
-                      isDisabled={!isOutOfRange}
-                      label="Cannot complete dates before Habit start or after today"
-                      placement="bottom"
-                    >
                       <GridItem
                         padding={".2vw"}
                         borderBottom={isToday && isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
@@ -358,7 +352,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
 
                       />
                       </GridItem>
-                    </Tooltip>
                     ) : ""
                   }
                     
