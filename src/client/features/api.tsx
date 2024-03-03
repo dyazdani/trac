@@ -221,14 +221,14 @@ export const api = createApi({
             isCanceled: newMilestone.isCanceled
           },
         }),
-        invalidatesTags: ["Milestone"],
+        invalidatesTags: ["Milestone", "Habit"],
       }),
       deleteMilestone: builder.mutation<{milestone: MilestoneWithDetails}, {ownerId: number, milestoneId: number}>({
         query: ({ ownerId, milestoneId }) => ({
           url: `/users/${ownerId}/milestones/${milestoneId}`,
           method: 'DELETE'
         }),
-        invalidatesTags: ["Milestone"]
+        invalidatesTags: ["Milestone", "Habit"]
       }),
     })
   })
