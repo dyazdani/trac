@@ -44,11 +44,12 @@ const Milestone = ({milestone}: MilestoneProps) => {
         <Card
         w="50vw"
         minW="570px"
-        bg={
-            milestone.isCompleted ? "rgba(249, 199, 64, 0.4)" :
-            milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
-            `rgb(247, 197, 59)`
-        }
+        bg="blue.100"
+        // bg={
+        //     milestone.isCompleted ? "rgba(249, 199, 64, 0.4)" :
+        //     milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
+        //     `rgb(247, 197, 59)`
+        // }
         borderRadius="20px"
       >
         <CardHeader>
