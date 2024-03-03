@@ -313,7 +313,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       colSpan={1} 
                       rowStart={2}
                       textAlign="center"
-                      color={isOutOfRange ? "gray" : "#3a3c3c"}
+                      color={isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) || isOutOfRange ? "gray" : "#3a3c3c"}
                     >
                       {dayAbbreviation}
                     </GridItem>
@@ -327,37 +327,31 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       borderRight={isToday ? "2px solid #3a3c3c" : {}}
                       borderBottom={isToday && !isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
                       borderBottomRadius={isToday && !isHabitRoutineDay(habit, day)? 10 : {}}
-                      color={isOutOfRange ? "gray" : "#3a3c3c"}
+                      color={isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) || isOutOfRange ? "gray" : "#3a3c3c"}
                     >
                       {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
                     </GridItem>
-                    
-                    
-                      <GridItem
-                        padding={".2vw"}
-                        borderBottom={isToday && isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
-                        borderLeft={isToday && isHabitRoutineDay(habit, day)? "2px solid #3a3c3c" : {}}
-                        borderRight={isToday && isHabitRoutineDay(habit, day)? "2px solid #3a3c3c" : {}}
-                        borderBottomRadius={isToday && isHabitRoutineDay(habit, day)? 10 : {}}
-                        colStart={(i * 2) + 3}
-                        colSpan={1} 
-                        rowStart={4}
-                        textAlign="center"
-                      >
-                        {!isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ? 
-                        <ToggleButton
-                        milestone={milestone}
-                        date={day}
-                        habit={habit}
-                        isOutOfRange={isOutOfRange}
+                    <GridItem
+                      padding={".2vw"}
+                      borderBottom={isToday && isHabitRoutineDay(habit, day) ? "2px solid #3a3c3c" : {}}
+                      borderLeft={isToday && isHabitRoutineDay(habit, day)? "2px solid #3a3c3c" : {}}
+                      borderRight={isToday && isHabitRoutineDay(habit, day)? "2px solid #3a3c3c" : {}}
+                      borderBottomRadius={isToday && isHabitRoutineDay(habit, day)? 10 : {}}
+                      colStart={(i * 2) + 3}
+                      colSpan={1} 
+                      rowStart={4}
+                      textAlign="center"
+                    >
+                      {!isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ? 
+                      <ToggleButton
+                      milestone={milestone}
+                      date={day}
+                      habit={habit}
+                      isOutOfRange={isOutOfRange}
 
-                      /> : ""
-                        }
-                      </GridItem>
-                    
-                  
-                    
-                    
+                    /> : ""
+                      }
+                    </GridItem>
                     {
                       isCheckInDay && !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ?
                       <>
