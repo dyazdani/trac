@@ -76,6 +76,7 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
           paddingBottom="10vh"
           pt="5vh"
           alignItems="center"
+          bg="blue.50"
         >
           <Heading as='h1' size="2xl">My Goals</Heading>
           {
