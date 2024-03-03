@@ -145,20 +145,25 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                                 </FormControl>  
                             </Box>
                             <Box>
-                            <FormControl isRequired>
+                            <FormControl 
+                                isRequired
+                            >
                                 <FormLabel
                                     htmlFor="dueDate"
                                 >
                                     Due Date</FormLabel>
                                     <SingleDatepicker
-                            id="dueDate"
-                            name="date-input"
-                            date={datepickerValue}
-                            minDate={new Date()}
-                            onDateChange={(e) => {
-                                setDatepickerValue(e)
-                            }}
-                        />
+                                        id="dueDate"
+                                        configs={{
+                                            dateFormat: "MM-dd-yyyy"   
+                                        }}
+                                        name="date-input"
+                                        date={datepickerValue}
+                                        minDate={new Date()}
+                                        onDateChange={(e) => {
+                                            setDatepickerValue(e)
+                                        }}
+                                    />
                             </FormControl>
                             </Box>
                         </Stack>
