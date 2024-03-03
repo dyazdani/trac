@@ -1,12 +1,45 @@
+import { 
+    Box, 
+    CloseButton, 
+    HStack, 
+    Spacer, 
+    Text 
+} from "@chakra-ui/react";
+import { useAppSelector } from "../app/hooks.js";
+import { setIsBannerDisplayed } from "../features/bannerSlice.js";
+import { useDispatch } from "react-redux";
+import doesAHabitHaveACheckInToday from "../utils/doesAHabitHaveACheckInToday.js";
 
-import { Box, CloseButton, HStack, Spacer, Text } from "@chakra-ui/react";
 
-export interface CTABannerProps {
-    isBannerDisplayed: boolean
-    toggleBannerDisplayed: () => void
-}
 
-const CTABanner = ({isBannerDisplayed, toggleBannerDisplayed}: CTABannerProps) => {
+const CTABanner = () => {
+    const dispatch = useDispatch()
+
+    let isThereACheckInToday = false;
+    const result = doesAHabitHaveACheckInToday();
+
+    if (result instanceof Error) {
+    console.error(result)
+    } else {
+    isThereACheckInToday = result
+    console.log(`isThereACheckInToday: ${isThereACheckInToday}`)
+    }
+
+    const localStorageIsBannerDisplayed = localStorage.getItem("isBannerDisplayed")
+    console.log(`localStorageIsBannerDisplayed: ${localStorageIsBannerDisplayed}`)
+
+    const appSelectorIsBannerDisplayed = useAppSelector(state => state.banner.isBannerDisplayed)
+    console.log(`appSelectorIsBannerDisplayed: ${appSelectorIsBannerDisplayed}`)
+
+    const isBannerDisplayed: boolean | null = localStorageIsBannerDisplayed ? JSON.parse(localStorageIsBannerDisplayed) : appSelectorIsBannerDisplayed
+    console.log(`isBannerDisplayed: ${isBannerDisplayed}`)
+
+
+    if (isBannerDisplayed === null && isThereACheckInToday) {
+    dispatch(setIsBannerDisplayed(true))
+    console.log(`state.isBannerDisplayed set to true`)
+    }
+
 
     return (
         <Box
@@ -26,14 +59,14 @@ const CTABanner = ({isBannerDisplayed, toggleBannerDisplayed}: CTABannerProps) =
                 textAlign="center"
                 p="5px"
             >
-                ** Today is a Check-In Day for one or more of your Habits. Click the "Send Status Report" next to your Habit to update folks on your progress.**
+                ** Today is a Check-In Day for one or more of your Habits. Click "Send Status Report" to update folks on your progress.**
             </Text>
             <Spacer/>
                 <CloseButton
                     colorScheme="teal"
                     onClick={(e) => {
                         e.preventDefault();
-                        toggleBannerDisplayed()    
+                        dispatch(setIsBannerDisplayed(false));  
                     }}
                 />
             </HStack>

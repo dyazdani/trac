@@ -18,37 +18,29 @@ import { useState } from "react";
 import MyMilestones from "./MyMilestones.js";
 import { Navigate } from "react-router-dom";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
+import doesAHabitHaveACheckInToday from "../utils/doesAHabitHaveACheckInToday.js";
+import { User } from "@prisma/client";
+import { useDispatch } from "react-redux";
+import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 export interface DashboardProps {
   isAuthenticated: boolean
 }
 
 const Dashboard = ({isAuthenticated}: DashboardProps) => {
+
   const localStorageUser = localStorage.getItem("user")
   const appSelectorUser = useAppSelector(state => state.auth.user)
-  const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+  const currentUser: Omit<User, 'password'> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
   
-  let currentUserId;
+  let currentUserId: number | undefined;
   if (currentUser) {
     currentUserId = currentUser.id
   }
 
-  let doesAHabitHaveCheckInToday;
-  const { data } = useGetHabitsByUserQuery(currentUserId);
   const { data: milestonesData, isLoading } = useGetMilestonesByUserQuery(currentUserId)
 
   const isMilestonesEmpty = !isLoading && !milestonesData?.milestones.length
 
-  const checkIns = data?.habits.map(habit => habit.checkIn)
-
-  if (checkIns) {
-    doesAHabitHaveCheckInToday = checkIns.some(checkIn => isTodayCheckInDay(checkIn))
-  }
-
-  const [isBannerDisplayed, setIsBannerDisplayed] = useState(doesAHabitHaveCheckInToday)
-
-  const toggleBannerDisplayed = () => {
-    setIsBannerDisplayed(!isBannerDisplayed);
-  }
 
   return (
     isAuthenticated || currentUser ? 
@@ -66,8 +58,8 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
           Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
         </Heading>
       </Show>
-      {isBannerDisplayed && <CTABanner isBannerDisplayed={isBannerDisplayed} toggleBannerDisplayed={toggleBannerDisplayed}/>}
-      <AppHeader isBannerDisplayed={isBannerDisplayed}/>
+      <CTABanner/>
+      <AppHeader/>
         <Box
           w="100%"
           h="100%"
@@ -84,7 +76,7 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
             <Text fontSize="xl" mt="20vh">You currently have no Goals.</Text> : 
             ""
           }
-          <RightDrawer toggleBannerDisplayed={toggleBannerDisplayed} isMilestonesEmpty={isMilestonesEmpty}/>
+          <RightDrawer isMilestonesEmpty={isMilestonesEmpty}/>
           <MyMilestones milestones={milestonesData?.milestones}/>
         </Box>
         {!isLoading && (
