@@ -8,11 +8,10 @@ import { useAppSelector } from '../app/hooks.js'
 import CreateMilestoneForm from './CreateMilestoneForm.js'
 
 export interface RightDrawerProps {
-    toggleBannerDisplayed: () => void
     isMilestonesEmpty: boolean
 }
 
-const RightDrawer = ({ toggleBannerDisplayed, isMilestonesEmpty }: RightDrawerProps) => {
+const RightDrawer = ({ isMilestonesEmpty }: RightDrawerProps) => {
     // TODO: Set this value to upper case when sending it to database
     const { isOpen, onClose, onOpen} = useDisclosure();
     const { isOpen: isOpenForMilestone, onClose: onCloseForMilestone, onOpen: onOpenForMilestone} = useDisclosure();
