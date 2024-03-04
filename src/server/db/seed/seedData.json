@@ -243,5 +243,28 @@
             "dayOfTheWeek": "SATURDAY",
             "habitId": 8
         }
-    ]   
+    ],
+    "milestones": [
+        {
+            "name": "Learn to Play 'Fur Elise' on the Piano",
+            "dueDate": "2024-01-01T00:00:00.000Z",
+            "isCompleted": false,
+            "isCanceled": false,
+            "ownerId": 5
+        },
+        {
+            "name": "Climb Mount Shasta",
+            "dueDate": "2024-01-01T00:00:00.000Z",
+            "isCompleted": false,
+            "isCanceled": false,
+            "ownerId": 5
+        },
+        {
+            "name": "Write a Short Story",
+            "dueDate": "2024-01-01T00:00:00.000Z",
+            "isCompleted": false,
+            "isCanceled": false,
+            "ownerId": 5
+        }
+    ]    
 }

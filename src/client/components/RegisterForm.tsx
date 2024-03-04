@@ -19,7 +19,8 @@ import {
     FormHelperText,
     Checkbox,
     Flex,
-    Image
+    Image,
+    Spacer
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { 
@@ -34,6 +35,7 @@ import {
 import getPasswordValidation from "../../utils/getPasswordValidation.js";
 import { useNavigate } from "react-router";
 import { validEmailRegex } from "./LoginForm.js";
+import DemoUserButton from "./DemoUserButton.js";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
@@ -116,7 +118,8 @@ const RegisterForm = () => {
                     src="/images/trac-logo-with-text.png"
                     alt="trac logo"
                 />
-                <Text>Sign up to stay on Trac.</Text>            </CardHeader>
+                <Text>Sign up to stay on Trac.</Text>            
+            </CardHeader>
             <CardBody>
                 <Box
                     as="form"
@@ -296,27 +299,34 @@ const RegisterForm = () => {
                                 I give <Text as="b">Trac</Text> permission to email me notifications.
                             </Checkbox>
                         </FormControl>
-                        <Button
-                            marginTop="3vh"
-                            colorScheme="yellow"
-                            data-testid="submit-button"
-                            type="submit"    
-                            isDisabled={
-                                isInputAndSubmitDisabled ||
-                                !email.length ||
-                                isEmailInvalid ||
-                                isEmailTaken ||
-                                !username.length ||
-                                isUsernameTaken ||
-                                !password.length ||
-                                isPasswordInvalid ||
-                                !confirmPassword.length ||
-                                password !== confirmPassword ||
-                                !isPermissionCheckboxChecked
-                            }
+                        <Flex
+                            mt="2vh"
+                            justifyContent={"space-evenly"}
+                            alignItems={"center"}
+                            width="100%"
                         >
+                            <Button
+                                colorScheme="yellow"
+                                data-testid="submit-button"
+                                type="submit"    
+                                isDisabled={
+                                    isInputAndSubmitDisabled ||
+                                    !email.length ||
+                                    isEmailInvalid ||
+                                    isEmailTaken ||
+                                    !username.length ||
+                                    isUsernameTaken ||
+                                    !password.length ||
+                                    isPasswordInvalid ||
+                                    !confirmPassword.length ||
+                                    password !== confirmPassword ||
+                                    !isPermissionCheckboxChecked
+                                }
+                            >
                             <Text>Sign Up</Text>
-                        </Button> 
+                        </Button>
+                        <DemoUserButton/>
+                        </Flex>
                     </VStack>
                 </Box>    
             </CardBody>

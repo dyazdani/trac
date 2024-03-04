@@ -17,12 +17,14 @@ import {
   InputRightElement,
   IconButton,
   FormErrorMessage,
-  Image
+  Image,
+  Flex
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useGetAllUsersQuery, useGetUserByEmailQuery, useLoginMutation } from "../features/api.js";
 import { useNavigate } from "react-router";
+import DemoUserButton from "./DemoUserButton.js";
 
 export const validEmailRegex = new RegExp(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/);
 
@@ -188,17 +190,17 @@ const LoginForm = () => {
               </InputGroup>
               <FormErrorMessage>Incorrect password</FormErrorMessage>
             </FormControl>
-
-            <Button
-              colorScheme="yellow"
-              marginTop="2vh"
-              data-testid="submit-button"
-              type="submit"
-              isLoading={isLoading}
-              isDisabled={isInputAndSubmitDisabled || isPasswordInvalid || isEmailInvalid || isEmailUnregistered || password.length === 0}
-            >
-              <Text>Log In</Text>
-            </Button>
+              <Button
+                colorScheme="yellow"
+                marginTop="2vh"
+                data-testid="submit-button"
+                type="submit"
+                isLoading={isLoading}
+                isDisabled={isInputAndSubmitDisabled || isPasswordInvalid || isEmailInvalid || isEmailUnregistered || password.length === 0}
+              >
+                <Text>Log In</Text>
+              </Button>
+              <DemoUserButton/>            
           </VStack>
         </Box>
       </CardBody>
