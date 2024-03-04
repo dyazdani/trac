@@ -22,6 +22,7 @@ import doesAHabitHaveACheckInToday from "../utils/doesAHabitHaveACheckInToday.js
 import { User } from "@prisma/client";
 import { useDispatch } from "react-redux";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
+import ArtistCredit from "./ArtistCredit.js";
 export interface DashboardProps {
   isAuthenticated: boolean
 }
@@ -79,33 +80,28 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
       </Show>
       <CTABanner isBannerDisplayed={isBannerDisplayed}/>
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
+      {!isLoading && 
         <Box
           w="100%"
           h="100%"
           display="flex"
           flexDirection="column"
           paddingBottom="10vh"
-          pt="5vh"
+          paddingTop="5vh"
           alignItems="center"
           bg="blue.50"
         >
           <Heading as='h1' size="2xl">My Goals</Heading>
-          {
-            !isLoading && !milestonesData?.milestones.length ?
-            <Text fontSize="xl" mt="20vh">You currently have no Goals.</Text> : 
-            ""
-          }
-          <RightDrawer isMilestonesEmpty={isMilestonesEmpty}/>
-          <MyMilestones milestones={milestonesData?.milestones}/>
-        </Box>
-        {!isLoading && (
-          <Text fontSize="sm" justifyContent="center">
-            <Link color="blue.500" href="https://thenounproject.com/icon/mountain-120042/" isExternal>Mountain<ExternalLinkIcon mr=".5em" boxSize=".9em" /></Link>
-            by <Link color="blue.500" href="https://thenounproject.com/bravo/" isExternal>Juan Pablo Bravo<ExternalLinkIcon mr=".3em" boxSize="1em"/></Link> 
-            is licensed under <Link color="blue.500" href="https://creativecommons.org/licenses/by/2.0/" isExternal>CC BY 2.0<ExternalLinkIcon mr=".5em" boxSize="1em"/></Link>
-          </Text>
-        )}
-        
+        {
+          !milestonesData?.milestones.length ?
+          <Text fontSize="xl" mt="20vh">You currently have no Goals.</Text> : 
+          ""
+        }
+        <RightDrawer isMilestonesEmpty={isMilestonesEmpty}/>
+        <MyMilestones milestones={milestonesData?.milestones}/>
+        {<ArtistCredit textColor="blue.500" position="left"/>}
+      </Box>
+      }   
     </> :
     <Navigate to="/login" replace />
   )

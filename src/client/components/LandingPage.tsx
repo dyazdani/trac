@@ -22,6 +22,7 @@ import {
     ExternalLinkIcon
 } from "@chakra-ui/icons";
 import { useNavigate } from "react-router";
+import ArtistCredit from "./ArtistCredit.js";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -41,7 +42,7 @@ const LandingPage = () => {
                 </Heading>
             </Show>
             <AppHeader isBannerDisplayed={false}/>
-            <VStack
+\            <VStack
                 h="100vh"                                                                                                                                          
                 w="100vw"
                 maxWidth="100%"
@@ -96,6 +97,8 @@ const LandingPage = () => {
                     maxW="100%"
                     p="4vw"
                     bgColor="orange.50"
+                    pb="0"
+
                 >
                     <Heading 
                         as="h2" 
@@ -261,15 +264,11 @@ const LandingPage = () => {
                     <Image
                         src="/images/trac_logo.png"
                         alt="trac mountain logo"
+                        mb="5vw"
                     /> 
+                    <ArtistCredit textColor="blue.500" position="center"/>
                 </VStack>
-                <Text fontSize="sm" justifyContent="center" position="relative" bottom="1.5em" left="0px">
-            <Link color="blue.500" href="https://thenounproject.com/icon/mountain-120042/" isExternal>Mountain<ExternalLinkIcon mr=".5em" boxSize=".9em" /></Link>
-            by <Link color="blue.500" href="https://thenounproject.com/bravo/" isExternal>Juan Pablo Bravo<ExternalLinkIcon mr=".3em" boxSize="1em"/></Link> 
-            is licensed under <Link color="blue.500" href="https://creativecommons.org/licenses/by/2.0/" isExternal>CC BY 2.0<ExternalLinkIcon mr=".5em" boxSize="1em"/></Link>
-          </Text>
             </VStack>  
-             
         </>   
     )
 }

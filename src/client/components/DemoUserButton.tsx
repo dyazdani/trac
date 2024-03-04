@@ -22,8 +22,9 @@ const DemoUserButton = () => {
                     } else {
                         console.error(new Error("Environmental variable used for demo user password is undefined"))
                     }
-
-                    navigate("/goals");
+                    if (!isLoading) {
+                        navigate("/goals");
+                    }
                 } catch (e) {
                     console.error(e)
                 }
