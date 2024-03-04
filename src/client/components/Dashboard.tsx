@@ -99,7 +99,7 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
         }
         <RightDrawer isMilestonesEmpty={isMilestonesEmpty}/>
         <MyMilestones milestones={milestonesData?.milestones}/>
-        {<ArtistCredit textColor="blue.500"/>}
+        {<ArtistCredit textColor="blue.500" position="left"/>}
       </Box>
       }   
     </> :

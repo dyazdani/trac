@@ -7,16 +7,17 @@ import {
 
 export interface ArtistCreditProps {
     textColor: string
+    position: "left" | "center"
 }
 
-const ArtistCredit = ({ textColor }: ArtistCreditProps) => {
+const ArtistCredit = ({ textColor, position }: ArtistCreditProps) => {
     
     
     return (
         <Box
-            position="absolute"
-            bottom=".1em"
-            left=".1em"
+            position={position === "left" ? "absolute" : undefined}
+            bottom={position === "left" ? ".1em" : undefined}
+            left={position === "left" ? ".1em" : undefined}
           >
             <Text 
               fontSize="sm" 
