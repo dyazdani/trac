@@ -1,7 +1,8 @@
 import { User } from "@prisma/client";
 import { useAppSelector } from "../app/hooks.js";
-import { useGetHabitsByUserQuery, useGetMilestonesByUserQuery } from "../features/api.js";
+import { useGetHabitsByUserQuery } from "../features/api.js";
 import isTodayCheckInDay from "./isTodayCheckInDay.js";
+import areDatesSameDayMonthYear from "./areDatesSameDayMonthYear.js";
 
 const doesAHabitHaveACheckInToday = () => {
     const localStorageUser = localStorage.getItem("user")
@@ -9,13 +10,11 @@ const doesAHabitHaveACheckInToday = () => {
     const currentUser: Omit<User, 'password'> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
   
     if (currentUser) {
-        const { data: milestonesData, isLoading } = useGetMilestonesByUserQuery(currentUser.id)
-
         let doesAHabitHaveACheckInToday: undefined | boolean;
         const { data } = useGetHabitsByUserQuery(currentUser.id);
-        const checkIns = data?.habits.map(habit => habit.checkIn)
-        if (checkIns) {
-            doesAHabitHaveACheckInToday = checkIns.some(checkIn => isTodayCheckInDay(checkIn))
+        const checkInsToday = data?.habits.filter(habit => !areDatesSameDayMonthYear(new Date(habit.dateCreated), new Date()) && isTodayCheckInDay(habit.checkIn))
+        if (checkInsToday) {
+            doesAHabitHaveACheckInToday = !!checkInsToday.length
         }
 
         if (typeof doesAHabitHaveACheckInToday === "undefined") {
