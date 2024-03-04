@@ -97,7 +97,10 @@ const RegisterForm = () => {
                 setIsInputAndSubmitDisabled(true);
             }
           
+            if (!isLoading && !isKnockLoading) {
                 navigate("/goals");
+
+            }
         } catch (e) {
             console.error(e)
         }

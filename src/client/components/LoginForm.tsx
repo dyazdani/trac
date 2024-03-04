@@ -80,7 +80,10 @@ const LoginForm = () => {
           setIsInputAndSubmitDisabled(true);
         }
 
-        navigate("/goals")
+        if (!isLoading) {
+          navigate("/goals")
+        }
+
       }
     } catch (e) {
       console.error(e);    
