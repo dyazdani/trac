@@ -1,5 +1,5 @@
 import { DaysOfWeek } from '@knocklabs/node';
-import {  CheckIn, DayOfTheWeek, Habit, Routine, StatusReport, User } from '@prisma/client';
+import {  CheckIn, DayOfTheWeek, Prisma, Routine, StatusReport, User } from '@prisma/client';
 
 // to make the file a module and avoid the TypeScript error
 export {}
@@ -41,7 +41,7 @@ export interface CreateHabitReqBody {
   routineDays: RoutineDays
   checkInDay: DayOfTheWeek
   scheduleId: string
-  milestoneId?: number
+  milestoneId: number
 }
 
 export interface UpdateHabitReqBody {
@@ -49,7 +49,7 @@ export interface UpdateHabitReqBody {
   datesCompleted: Date[]
   routineDays: RoutineDays
   checkInDay: DayOfTheWeek
-  scheduleId: string
+  scheduleId: string | null
 }
 
 export interface HabitWithDetails {
@@ -68,9 +68,8 @@ export interface HabitWithDetails {
 
 
 export interface CreateScheduleReqBody {
-  //TODO: userId will be deleted from this once req.user.id is being used instead in final version of branch
-  userId: string
   habitName: string
+  milestoneName: string
   days: DaysOfWeek[]
   workflowKey: string
 }
@@ -121,4 +120,15 @@ export interface UpdateMilestoneReqBody {
   dueDate: Date
   isCompleted: boolean
   isCanceled: boolean
+}
+export interface RegisterMutationResponse {
+  error?: Prisma.PrismaClientKnownRequestError | Prisma.PrismaClientValidationError
+  status?: number
+  token?: string,
+  user?: Omit<User, 'password'>,
+}
+
+export interface LoginMutationResponse extends RegisterMutationResponse {
+  name: string
+  message: string
 }

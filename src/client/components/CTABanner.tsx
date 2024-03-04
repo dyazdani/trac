@@ -1,13 +1,21 @@
-
-import { Box, CloseButton, HStack, Spacer, Text } from "@chakra-ui/react";
+import { 
+    Box, 
+    CloseButton, 
+    HStack, 
+    Spacer, 
+    Text 
+} from "@chakra-ui/react";
+import { useAppSelector } from "../app/hooks.js";
+import { setIsBannerDisplayed } from "../features/bannerSlice.js";
+import { useDispatch } from "react-redux";
+import doesAHabitHaveACheckInToday from "../utils/doesAHabitHaveACheckInToday.js";
 
 export interface CTABannerProps {
-    isBannerDisplayed: boolean
-    toggleBannerDisplayed: () => void
+    isBannerDisplayed: boolean | null
 }
 
-const CTABanner = ({isBannerDisplayed, toggleBannerDisplayed}: CTABannerProps) => {
-
+const CTABanner = ({ isBannerDisplayed }: CTABannerProps) => {
+    const dispatch = useDispatch();
     return (
         <Box
             position="sticky"
@@ -26,14 +34,14 @@ const CTABanner = ({isBannerDisplayed, toggleBannerDisplayed}: CTABannerProps) =
                 textAlign="center"
                 p="5px"
             >
-                ** Today is a Check-In Day for one or more of your Habits. Click the "Send Status Report" next to your Habit to update folks on your progress.**
+                ** Today is a Check-In Day for one or more of your Habits. Click "Send Status Report" to update folks on your progress.**
             </Text>
             <Spacer/>
                 <CloseButton
                     colorScheme="teal"
                     onClick={(e) => {
                         e.preventDefault();
-                        toggleBannerDisplayed()    
+                        dispatch(setIsBannerDisplayed(false));  
                     }}
                 />
             </HStack>

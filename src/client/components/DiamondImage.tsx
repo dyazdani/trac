@@ -1,10 +1,9 @@
 import { Image } from "@chakra-ui/react";
-import diamond from '../../../images/diamond-pink.png'
 
 const DiamondImage = () => {
     return (
         <Image
-            src={diamond}
+            src="/images/diamond-pink.png"
             alt="pink diamond"
             maxW="100px"
             maxH="100%"

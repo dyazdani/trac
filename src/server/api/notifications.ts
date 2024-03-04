@@ -14,6 +14,7 @@ notificationsRouter.post("/schedules", requireUser, async (req, res, next) => {
             const userId = String(req.user.id)
             const { 
                 habitName,
+                milestoneName,
                 days,
                 workflowKey
             }: CreateScheduleReqBody = req.body
@@ -30,7 +31,8 @@ notificationsRouter.post("/schedules", requireUser, async (req, res, next) => {
                     }
                 ],
                 data: {
-                    habit: habitName
+                    habit: habitName,
+                    milestone: milestoneName
                 }
             })
 
@@ -106,7 +108,8 @@ notificationsRouter.put("/users/:user_id", requireUser, async (req, res, next): 
             
             const user = await knock.users.identify(id, {
                 email,
-                username
+                username,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
             })
             res.send({user});
         } catch (e) {

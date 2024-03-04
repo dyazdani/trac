@@ -32,7 +32,9 @@
     "@tinymce/tinymce-react": "^4.3.2",
     "@types/react-redux": "^7.1.33",
     "bcrypt": "^5.1.1",
+    "buffer": "^6.0.3",
     "chakra-dayzed-datepicker": "^0.2.10",
+    "check-password-strength": "^2.0.7",
     "cors": "^2.8.5",
     "date-fns": "^3.3.1",
     "dayzed": "^3.2.3",
@@ -73,7 +75,8 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.6.2",
     "typescript": "^5.3.3",
-    "vite": "^5.0.2"
+    "vite": "^5.0.2",
+    "vite-plugin-node-polyfills": "^0.21.0"
   },
   "description": "",
   "main": "index.js",

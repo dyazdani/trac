@@ -1,89 +1,114 @@
 import { 
   Box, 
-  Flex, 
-  HStack, 
   Heading,
-  Image,
-  Spacer,
-  Text 
+  Link,
+  Show,
+  Text
 } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
-import MyHabits from "./MyHabits.js";
 import { useAppSelector } from "../app/hooks.js";
-import { useDeleteSchedulesMutation, useGetHabitsByUserQuery, useGetMilestonesByUserQuery } from "../features/api.js";
+import { 
+  useGetHabitsByUserQuery, 
+  useGetMilestonesByUserQuery 
+} from "../features/api.js";
 import AppHeader from "./AppHeader.js";
 import CTABanner from "./CTABanner.js";
-import isTodayCheckInDay from "../../utils/isTodayCheckInDay.js";
+import isTodayCheckInDay from "..//utils/isTodayCheckInDay.js";
 import { useState } from "react";
-import todayImg from "../../../images/trac_today_icon.png";
-import checkInDayImg from "../../../images/trac_check_in_day_img.png";
 import MyMilestones from "./MyMilestones.js";
+import { Navigate } from "react-router-dom";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
+import doesAHabitHaveACheckInToday from "../utils/doesAHabitHaveACheckInToday.js";
+import { User } from "@prisma/client";
+import { useDispatch } from "react-redux";
+import { setIsBannerDisplayed } from "../features/bannerSlice.js";
+export interface DashboardProps {
+  isAuthenticated: boolean
+}
+
+const Dashboard = ({isAuthenticated}: DashboardProps) => {
+  const dispatch = useDispatch()
+
+  let isThereACheckInToday = false;
+  const result = doesAHabitHaveACheckInToday();
+
+  if (result instanceof Error) {
+    console.error(result)
+  } else {
+    isThereACheckInToday = result
+  }
+
+  const localStorageIsBannerDisplayed = localStorage.getItem("isBannerDisplayed")
+  const appSelectorIsBannerDisplayed = useAppSelector(state => state.banner.isBannerDisplayed)
+  const isBannerDisplayed: boolean | null = localStorageIsBannerDisplayed ? JSON.parse(localStorageIsBannerDisplayed) : appSelectorIsBannerDisplayed
+
+  if (isBannerDisplayed === null && isThereACheckInToday) {
+    dispatch(setIsBannerDisplayed(true))
+  }
 
 
-const Dashboard = () => {
-  const currentUser = useAppSelector(state => state.auth.user)
-  const [deleteSchedules] = useDeleteSchedulesMutation();
-
-  let isTodayACheckInDay;
+  const localStorageUser = localStorage.getItem("user")
+  const appSelectorUser = useAppSelector(state => state.auth.user)
+  const currentUser: Omit<User, 'password'> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+  
+  let currentUserId: number | undefined;
   if (currentUser) {
-    const { data } = useGetHabitsByUserQuery(currentUser.id);
-    const { data: milestonesData } = useGetMilestonesByUserQuery(currentUser.id)
+    currentUserId = currentUser.id
+  }
 
-    const checkIns = data?.habits.map(habit => habit.checkIn)
+  const { data: milestonesData, isLoading } = useGetMilestonesByUserQuery(currentUserId)
 
-    if (checkIns) {
-      isTodayACheckInDay = isTodayCheckInDay(checkIns)
-    }
+  const isMilestonesEmpty = !isLoading && !milestonesData?.milestones.length
 
-    const [isBannerDisplayed, setIsBannerDisplayed] = useState(isTodayACheckInDay)
 
-    const toggleBannerDisplayed = () => {
-      setIsBannerDisplayed(!isBannerDisplayed);
-    }
-
-    return (
-      <>
-        {isBannerDisplayed && <CTABanner isBannerDisplayed={isBannerDisplayed} toggleBannerDisplayed={toggleBannerDisplayed}/>}
-        <AppHeader isBannerDisplayed={isBannerDisplayed}/>
-        <RightDrawer toggleBannerDisplayed={toggleBannerDisplayed}/>
-        <Box
-        as="div" 
-        w="100vw"
+  return (
+    isAuthenticated || currentUser ? 
+    <>
+      <Show 
+        below="md"
+      >
+        <Heading 
+          as="h1" 
+          size="lg" 
+          textAlign="center" 
+          backgroundColor="yellow.500"
+          padding="1vw"
         >
-          <Box
-            w="100vw"
-            h="100%"
-            pl={10}
-            display="flex"
-            flexDirection="column"
-            paddingBottom="50px"
-          >
-            <Box
-              marginTop={10}
-              mb="20"
-            >
-              <Heading as='h1' size='2xl' >My Dashboard</Heading>
-              <HStack>
-                <HStack spacing={0}>
-                  <Image src={todayImg} alt="purple circle indicating today" p={0} />
-                  <Text>= today</Text>
-                </HStack>
-                <HStack spacing={0}>
-                  <Image src={checkInDayImg} alt="yellow diamond indicating check-in day" />
-                  <Text>= check-in day</Text>
-                </HStack>
-              </HStack>
-            </Box>
-              <Heading as='h2' size='xl' >Milestones</Heading> 
-              <MyMilestones milestones={milestonesData?.milestones}/>
-              <Heading as='h2' size='xl' mt="20">Unassigned Habits</Heading> 
-              <MyHabits toggleBannerDisplayed={toggleBannerDisplayed} habits={data?.habits} />
-            </Box>
+          Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
+        </Heading>
+      </Show>
+      <CTABanner isBannerDisplayed={isBannerDisplayed}/>
+      <AppHeader isBannerDisplayed={isBannerDisplayed}/>
+        <Box
+          w="100%"
+          h="100%"
+          display="flex"
+          flexDirection="column"
+          paddingBottom="10vh"
+          pt="5vh"
+          alignItems="center"
+          bg="blue.50"
+        >
+          <Heading as='h1' size="2xl">My Goals</Heading>
+          {
+            !isLoading && !milestonesData?.milestones.length ?
+            <Text fontSize="xl" mt="20vh">You currently have no Goals.</Text> : 
+            ""
+          }
+          <RightDrawer isMilestonesEmpty={isMilestonesEmpty}/>
+          <MyMilestones milestones={milestonesData?.milestones}/>
         </Box>
-
-      </>
-    )
-};
+        {!isLoading && (
+          <Text fontSize="sm" justifyContent="center">
+            <Link color="blue.500" href="https://thenounproject.com/icon/mountain-120042/" isExternal>Mountain<ExternalLinkIcon mr=".5em" boxSize=".9em" /></Link>
+            by <Link color="blue.500" href="https://thenounproject.com/bravo/" isExternal>Juan Pablo Bravo<ExternalLinkIcon mr=".3em" boxSize="1em"/></Link> 
+            is licensed under <Link color="blue.500" href="https://creativecommons.org/licenses/by/2.0/" isExternal>CC BY 2.0<ExternalLinkIcon mr=".5em" boxSize="1em"/></Link>
+          </Text>
+        )}
+        
+    </> :
+    <Navigate to="/login" replace />
+  )
 };
 
 export default Dashboard;

@@ -44,9 +44,8 @@ authRouter.post("/register", async (req, res, next) => {
         if (e instanceof Prisma.PrismaClientValidationError) {
           console.log(e.message)
           res.status(401)
-          next({
-            name: "ValidationError", 
-            message: e.message                    
+          .send({
+            error: e                  
           })
         }
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
@@ -55,9 +54,8 @@ authRouter.post("/register", async (req, res, next) => {
             console.log(e.message)
           }
           res.status(401)
-          next({
-            name: "RequestError", 
-            message: e.message                    
+          .send({
+            error: e                  
           })
         }   
       }
@@ -122,8 +120,8 @@ authRouter.post("/login", async (req, res, next) => {
             user: excludePassword(user),
           });
         } else {
-          res.status(401);
-          next({
+          res
+          .send({
             name: "IncorrectPassword",
             message: "The password you entered is incorrect",
           });

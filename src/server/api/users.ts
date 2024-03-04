@@ -4,35 +4,36 @@ import prisma from "../../utils/test/prisma.js";
 import requireUser from "../../utils/requireUser.js";
 import formatStatusReportMessage from "../../utils/formatStatusReportMessage.js";
 import { CreateHabitReqBody, CreateMilestoneReqBody, UpdateHabitReqBody, UpdateMilestoneReqBody, statusReportsPostReqBody } from "../../types/index.js";
-import requireAdmin from "../../utils/requireAdmin.js";
 import nodemailer from 'nodemailer';
 import { Knock } from "@knocklabs/node";
+import getNodemailerTransporter from "../../utils/getNodemailerTransporter.js";
 
 const usersRouter = express.Router();
 
 const knock = new Knock(process.env.KNOCK_API_KEY);
 
-const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-  });
-
-  transporter.verify(function (error, success) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Server is ready to take our messages");
-    }
-  });
-
 // GET /api/users
-usersRouter.get("/", requireUser, requireAdmin, async (req, res, next): Promise<void> => {
+usersRouter.get("/", async (req, res, next): Promise<void> => {
     try {
         const users = await prisma.user.findMany();
         res.send({users: users.map(user => ({user: excludePassword(user)}))});
+    } catch (e) {
+        next(e);
+    }
+})
+
+// GET /api/users
+usersRouter.get("/", async (req, res, next): Promise<void> => {
+    try {
+        const { email } = req.body;
+
+        const user = await prisma.user.findUniqueOrThrow({
+            where: {
+                email: email,
+            },
+        }); 
+
+        res.send({user});
     } catch (e) {
         next(e);
     }
@@ -229,8 +230,22 @@ usersRouter.post("/:id/habits/:habitId/statusReports", requireUser, async (req, 
           html: `<h1>${habitName}</h1>
             ${formattedMessage}`,
         };
-        
-        transporter.sendMail(statusReportEmail);
+
+        if (process.env.EMAIL_USERNAME && process.env.EMAIL_PASSWORD) {
+            const transporter = getNodemailerTransporter(process.env.EMAIL_USERNAME, process.env.EMAIL_PASSWORD);
+
+            transporter.verify(function (error, success) {
+                if (error) {
+                console.log(error);
+                } else {
+                console.log("Server is ready to take our messages");
+                }
+            });
+            
+            transporter.sendMail(statusReportEmail);
+        } else {
+            throw new Error("Authentication for Nodemailer failed. Environment variables for email service username and password not defined.")
+        }        
 
         const habitId = Number(req.params.habitId)
         const statusReport = await prisma.statusReport.create({

@@ -15,7 +15,8 @@ import {
     EditablePreview,
     EditableInput,
     FormControl,
-    useToast
+    useToast,
+    Input
   } from '@chakra-ui/react'
 import { useAppSelector } from '../app/hooks.js';
 import { SingleDatepicker } from 'chakra-dayzed-datepicker';
@@ -27,7 +28,7 @@ export interface CreateMilestoneFormProps {
 }
 
 const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMilestoneFormProps) => {
-    const [datepickerValue, setDatepickerValue] = useState<Date | null>(null)
+    const [datepickerValue, setDatepickerValue] = useState<Date | undefined>()
     const [milestoneNameValue, setMilestoneNameValue] = useState("New Milestone")
 
     const [createMilestone] = useCreateMilestoneMutation();
@@ -35,8 +36,10 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
     const inputRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
 
-    const currentUser = useAppSelector(state => state.auth.user);
-
+    const localStorageUser = localStorage.getItem("user")
+    const appSelectorUser = useAppSelector(state => state.auth.user)
+    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    
     return (
         <Drawer 
             placement='right' 
@@ -46,13 +49,14 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
             closeOnOverlayClick={false}
             size="sm"
             initialFocusRef={inputRef}
+            colorScheme='yellow'
         >
             <DrawerOverlay />
             <DrawerContent>
             <DrawerHeader 
                 borderBottomWidth='1px'
             >
-                Create a Milestone
+                Create a Goal
             </DrawerHeader>
             <DrawerBody>
                 <Stack
@@ -72,8 +76,8 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                                     onCloseForMilestone()
 
                                     toast({
-                                        title: 'Milestone created.',
-                                        description: 'Your new Milestone was created and added to your dashboard.',
+                                        title: 'Goal created.',
+                                        description: `Your new Goal "${milestone.name} was created and added to your dashboard.`,
                                         status: 'success',
                                         duration: 9000,
                                         isClosable: true
@@ -94,7 +98,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                                 Name
                             </FormLabel>
                             <Editable
-                                defaultValue='New Milestone'
+                                defaultValue='New Goal'
                             >
                                 <EditablePreview />
                                 <EditableInput 
@@ -102,6 +106,8 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                                     ref={inputRef}
                                     onChange={(e) => {setMilestoneNameValue(e.target.value)}}
                                     value={milestoneNameValue}
+                                    paddingLeft="16px"
+                                    paddingRight="16px"
                                 />
                             </Editable>
                         </FormControl>  
@@ -113,8 +119,16 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                         >
                             Due Date</FormLabel>
                         <SingleDatepicker
-                            date={new Date()}
-                            onDateChange={setDatepickerValue}
+                            id="dueDate"
+                            name="date-input"
+                            date={datepickerValue}
+                            minDate={new Date()}
+                            onDateChange={(e) => {
+                                setDatepickerValue(e)
+                            }}
+                            configs={{
+                                dateFormat: "MM-dd-yyyy"   
+                            }}
                         />
                     </FormControl>
                     </Box>
@@ -124,15 +138,20 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                 <ButtonGroup>
                     <Button 
                         variant="outline" 
-                        colorScheme='teal' 
+                        colorScheme='yellow' 
                         mr={3} 
-                        onClick={onCloseForMilestone}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onCloseForMilestone();
+                            setDatepickerValue(undefined);
+                            setMilestoneNameValue("New Milestone");
+                        }}
                     >
                         Cancel
                     </Button>
                     <Button 
                         mr={3}  
-                        colorScheme='teal' 
+                        colorScheme='yellow' 
                         type="submit"
                         form="milestoneForm"
                     >

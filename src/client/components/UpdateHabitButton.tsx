@@ -15,9 +15,9 @@ import {
     EditablePreview, 
     FormControl, 
     FormLabel, 
-    IconButton, 
     Menu, 
     MenuButton, 
+    MenuItem, 
     MenuItemOption, 
     MenuList, 
     MenuOptionGroup, 
@@ -25,26 +25,33 @@ import {
     useDisclosure, 
     useToast 
 } from "@chakra-ui/react";
-import { ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
+import { 
+    ChevronDownIcon, 
+    EditIcon 
+} from "@chakra-ui/icons";
 import { 
     useUpdateHabitMutation,
-    useGetSchedulesByUserQuery, 
     useUpdateScheduleMutation 
 } from "../features/api.js";
 import { DayOfTheWeek } from "@prisma/client";
 import React, { useState } from "react";
-import getBooleanRoutineDays from "../../utils/getBooleanRoutineDays.js";
+import getBooleanRoutineDays from "..//utils/getBooleanRoutineDays.js";
 import { useAppSelector } from "../app/hooks.js";
-import { HabitWithDetails, RoutineDaysArrayType } from "../../types/index.js";
-import getRoutineDaysStringArray from "../../utils/getRoutineDaysStringArray.js";
+import { 
+    HabitWithDetails, 
+    RoutineDaysArrayType 
+} from "../../types/index.js";
+import getRoutineDaysStringArray from "..//utils/getRoutineDaysStringArray.js";
 import { DaysOfWeek } from "@knocklabs/node";
+import isTodayCheckInDay from "../utils/isTodayCheckInDay.js";
+import { useDispatch } from "react-redux";
+import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 
 export interface UpdateHabitButtonProps{
     habit: HabitWithDetails
-    handleClick: () => void
 }
 
-const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
+const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
     const [menuValue, setMenuValue] = useState<string | string[]>(habit.checkIn.dayOfTheWeek)
     const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>(getRoutineDaysStringArray(habit.routine))
     const [habitNameValue, setHabitNameValue] = useState(habit.name)
@@ -52,20 +59,23 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
     const inputRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
 
+    const dispatch = useDispatch();
+
     const [updateHabit] = useUpdateHabitMutation();
     const [updateSchedule] = useUpdateScheduleMutation();
 
-    const currentUser = useAppSelector((state) => state.auth.user);
-
+    const localStorageUser = localStorage.getItem("user")
+    const appSelectorUser = useAppSelector(state => state.auth.user)
+    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    
     if (currentUser) {
         return (
             <>
-            <IconButton 
-                aria-label="edit-habit-button" 
+            <MenuItem
+                aria-label="Edit Habit" 
                 icon={<EditIcon />} 
-                variant="unstyled"
                 onClick={onOpen}
-            />
+            >Edit Habit</MenuItem>
                 <Drawer 
                     placement='right' 
                     onClose={onClose} 
@@ -121,13 +131,26 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
                                         onClose();
                                         toast({
                                             title: 'Habit updated.',
-                                            description: 'Your Habit was successfully updated.',
+                                            description: `Your Habit "${newHabit.name}" was successfully updated.`,
                                             status: 'success',
                                             duration: 9000,
                                             isClosable: true
                                         });
+
+                                        if (isTodayCheckInDay(checkIn)) {
+                                            dispatch(setIsBannerDisplayed(true))
+                                        } else {
+                                            dispatch(setIsBannerDisplayed(false))
+                                        }
                                     } catch (e) {
                                         console.error(e)
+                                        toast({
+                                            title: 'ERROR',
+                                            description: `Unable to update Habit "${habit.name}"`,
+                                            status: 'error',
+                                            duration: 4000,
+                                            isClosable: true
+                                        })
                                     }
                                 }   
                             }}
@@ -150,6 +173,8 @@ const UpdateHabitButton = ({habit, handleClick}: UpdateHabitButtonProps) => {
                                             ref={inputRef}
                                             onChange={(e) => {setHabitNameValue(e.target.value)}}
                                             value={habitNameValue}
+                                            paddingLeft="16px"
+                                            paddingRight="16px"
                                         />
                                     </Editable>
                                 </FormControl>

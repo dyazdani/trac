@@ -1,10 +1,10 @@
 import { useAppSelector } from "../app/hooks.js";
 import { useDeleteHabitMutation, useDeleteSchedulesMutation } from "../features/api.js";
-import { HabitWithDetails } from "../../types/index.js";
+import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
 
 import { 
     useToast,
-    IconButton 
+    MenuItem 
 } from "@chakra-ui/react";
 
 import { 
@@ -13,63 +13,59 @@ import {
 
 type DeleteHabitButtonProps = {
     habit: HabitWithDetails
-    handleClick: () => void
 }
 
-const DeleteHabitButton = ({ habit, handleClick }: DeleteHabitButtonProps) =>  {
-    const currentUser = useAppSelector(state => state.auth.user);
-    const [deleteHabit, { isLoading, data, error}] = useDeleteHabitMutation();
-    const [
-        deleteSchedules, 
-        {
-            isLoading: isDeleteSchedulesLoading,
-            data: deleteSchedulesData,
-            error: deleteSchedulesError
-        }
-    ] = useDeleteSchedulesMutation();
+const DeleteHabitButton = ({ habit}: DeleteHabitButtonProps) =>  {
+    const localStorageUser = localStorage.getItem("user")
+    const appSelectorUser = useAppSelector(state => state.auth.user)
+    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    const [deleteHabit, { isLoading }] = useDeleteHabitMutation();
+    const [ deleteSchedules ] = useDeleteSchedulesMutation();
 
     const toast = useToast();
 
     const handleDeleteHabit = async () => {
         if (currentUser && habit.scheduleId) {
             try {
-                const { schedules } = await deleteSchedules({
+                await deleteSchedules({
                     scheduleIds: [habit.scheduleId]
-                }).unwrap()
+                })
         
-                const { habit: deletedHabit } = await deleteHabit({
+                await deleteHabit({
                     id: currentUser.id, 
                     habitId: habit.id
-                }).unwrap()
+                })
         
                 toast({
                     title: 'Habit deleted.',
-                    description: 'Your habit has been successfully deleted',
+                    description: `Your Habit "${habit.name}" has been successfully deleted`,
                     status: 'success',
                     duration: 4000,
                     isClosable: true
                 })
             } catch (e) {
                 console.error(e)
+                toast({
+                    title: 'ERROR',
+                    description: `Unable to delete Habit "${habit.name}"`,
+                    status: 'error',
+                    duration: 4000,
+                    isClosable: true
+                })
             }
             
         }
     }
     
     return(
-        <>
-            <IconButton 
-                aria-label="delete-habit-button" 
-                icon={<DeleteIcon />}
-                isLoading={isLoading} 
-                variant="unstyled"
-                onClick={(e) => {
-                    e.preventDefault();
-                    handleDeleteHabit();
-                    handleClick();
-                }}
-            />
-        </>
+        <MenuItem 
+            aria-label="Delete Habit" 
+            icon={<DeleteIcon />}
+            onClick={(e) => {
+                e.preventDefault();
+                handleDeleteHabit();
+            }}
+        >Delete Habit</MenuItem>
     );
 }
 

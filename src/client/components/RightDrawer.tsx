@@ -1,61 +1,47 @@
 import {
     useDisclosure,
-    Button,
-    VStack
+    VStack,
+    Button
   } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import { useAppSelector } from '../app/hooks.js'
-import CreateHabitForm from './CreateHabitForm.js'
 import CreateMilestoneForm from './CreateMilestoneForm.js'
 
 export interface RightDrawerProps {
-    toggleBannerDisplayed: () => void
+    isMilestonesEmpty: boolean
 }
 
-const RightDrawer = ({ toggleBannerDisplayed }: RightDrawerProps) => {
+const RightDrawer = ({ isMilestonesEmpty }: RightDrawerProps) => {
     // TODO: Set this value to upper case when sending it to database
     const { isOpen, onClose, onOpen} = useDisclosure();
     const { isOpen: isOpenForMilestone, onClose: onCloseForMilestone, onOpen: onOpenForMilestone} = useDisclosure();
 
-    const currentUser = useAppSelector((state) => state.auth.user);
-
+    const localStorageUser = localStorage.getItem("user")
+    const appSelectorUser = useAppSelector(state => state.auth.user)
+    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    
     return (
         <>
             {currentUser && 
                 <VStack
-                position="fixed"
-                bottom="50px"
-                right="50px"
+                    position={isMilestonesEmpty ? undefined : "fixed"}
+                    bottom={isMilestonesEmpty ? "" : "50px"}
+                    right={isMilestonesEmpty ? "" : "50px"}
+                    mt={isMilestonesEmpty ? "5vh" : ""}
                 >
                     <Button
-                    variant='solid'
-                    colorScheme='teal'
-                    aria-label='Create Milestone'
-                    fontSize='1.5vw'
-                    leftIcon={<AddIcon />}
-                    p="1.5vw"
-                    onClick={onOpenForMilestone}
+                        variant='solid'
+                        colorScheme='yellow'
+                        size="lg"
+                        aria-label='create-goal'
+                        leftIcon={<AddIcon />}
+                        onClick={onOpenForMilestone}
                     >
-                        Milestone
+                        {isMilestonesEmpty ? "Add your first Goal" : "Add Goal"}
                     </Button>
                     <CreateMilestoneForm
                         onCloseForMilestone={onCloseForMilestone}
                         isOpenForMilestone={isOpenForMilestone}
-                    />
-                    <Button
-                    variant='solid'
-                    colorScheme='teal'
-                    aria-label='Create Habit'
-                    fontSize='1.5vw'
-                    leftIcon={<AddIcon />}
-                    p="1.5vw"
-                    onClick={onOpen}
-                    >
-                        Habit
-                    </Button>
-                    <CreateHabitForm
-                        onClose={onClose}
-                        isOpen={isOpen}
                     />
                 </VStack>
             }

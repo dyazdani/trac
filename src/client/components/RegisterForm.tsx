@@ -9,45 +9,95 @@ import {
     CardHeader, 
     CardBody, 
     CardFooter,
-    Heading,
     Text,
     Button,
-    Link,
+    Link as ChakraLink,
     InputGroup,
     InputRightElement,
-    IconButton
+    IconButton,
+    FormErrorMessage,
+    FormHelperText,
+    Checkbox,
+    Flex,
+    Image
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
-import { useRegisterMutation, useIdentifyUserMutation } from "../features/api.js";
+import { Link as ReactRouterLink } from "react-router-dom";
+import { 
+    ViewIcon, 
+    ViewOffIcon 
+} from "@chakra-ui/icons"
+import { 
+    useRegisterMutation, 
+    useIdentifyUserMutation, 
+    useGetAllUsersQuery 
+} from "../features/api.js";
+import getPasswordValidation from "../../utils/getPasswordValidation.js";
+import { useNavigate } from "react-router";
+import { validEmailRegex } from "./LoginForm.js";
 
-export interface RegisterFormProps {
-    handleLinkClick: () => void
-}
-
-
-const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
+const RegisterForm = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
+    const [isUsernameTaken, setIsUsernameTaken] = useState(false);
+    const [isEmailInvalid, setIsEmailInvalid] = useState(false);
+    const [isEmailTaken, setIsEmailTaken] = useState(false);
+    const [isInputAndSubmitDisabled, setIsInputAndSubmitDisabled] = useState(false);
+    const [isPermissionCheckboxChecked, setIsPermissionCheckboxChecked] = useState(false)
  
-    const [register] = useRegisterMutation();
-    const [identifyUser] = useIdentifyUserMutation();
+    const { 
+        data, 
+        isLoading: isUsersLoading 
+    } = useGetAllUsersQuery();
+
+    const [
+        register, 
+        {
+            isError, 
+            isLoading, 
+            isSuccess
+        }] = useRegisterMutation();
+        
+    const [
+        identifyUser, 
+        {
+            isError: isKnockError, 
+            isLoading: isKnockLoading, 
+            isSuccess: isKnockSuccess
+        }
+    ] = useIdentifyUserMutation();
 
 
     const handleSubmit = async () => {
-        if (password === confirmPassword) {
-            const user = await register({ email, username, password });
-            console.log(user)
-            if ('data' in user) {
-                const knockUser = await identifyUser({id: String(user.data.user.id), email, username})
+        try {
+            const response = await register({ email, username, password }).unwrap();
+
+            console.log(response)
+
+            if (response.user) {
+                const knockUser = await identifyUser({id: String(response.user?.id), email, username})
                 console.log(knockUser)
+            } 
+
+            if (
+                isSuccess || 
+                isError || 
+                isLoading ||
+                isKnockSuccess ||
+                isKnockError ||
+                isKnockLoading
+                ) {
+                setIsInputAndSubmitDisabled(true);
             }
-        } else {
-            //TODO: replace this alert with something in the UI
-            alert("Password confirmation does not match");
+          
+                navigate("/goals");
+        } catch (e) {
+            console.error(e)
         }
     };
 
@@ -56,13 +106,17 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
             variant="elevated"
             align="center"
             size="md" 
-            m="4"
-            data-testid="register-form"
+            m="4vw"
+            bgColor="blue.50"
+            data-testid="landscape-register-form"
+            maxHeight="90%"
         >
             <CardHeader>
-                <Heading>trac</Heading>
-                <Text>Stay on trac by signing up.</Text>
-            </CardHeader>
+                <Image
+                    src="/images/trac-logo-with-text.png"
+                    alt="trac logo"
+                />
+                <Text>Sign up to stay on Trac.</Text>            </CardHeader>
             <CardBody>
                 <Box
                     as="form"
@@ -74,74 +128,192 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
                     <VStack
                         as="fieldset"
                     >
-                        <FormControl>
-                            <FormLabel>Email Address</FormLabel>
-                            <Input 
-                                type='email' 
-                                onChange={e => setEmail(e.target.value)}
-                                value={email}
-                                required
-                            />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel>Username</FormLabel>
-                            <Input 
-                                type='username' 
-                                onChange={e => setUsername(e.target.value)}
-                                value={username}
-                                required
-                            />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel>Password</FormLabel>
-                                <InputGroup size="md">
-                                    <Input
-                                        pr="4.5rem" 
-                                        type={showPassword ? "text" : "password"}
-                                        onChange={e => setPassword(e.target.value)}
-                                        value={password}
-                                        required
+                            <Flex
+                                alignItems="center"
+                                width="100%"
+                                gap="1vw"
+                            >
+                                <FormControl
+                                    isRequired
+                                    isDisabled={isInputAndSubmitDisabled}
+                                    isInvalid={isEmailInvalid || isEmailTaken}
+                                >
+                                    <FormLabel>Email Address</FormLabel>
+                                    <Input 
+                                        type='email' 
+                                        onChange={(e) => {
+                                            e.preventDefault();
+                                            setEmail(e.target.value);
+                                            setIsEmailInvalid(!validEmailRegex.test(e.target.value));
+                                            if (!isUsersLoading && data) {
+                                                const isUnregisteredEmail = data.users.every(element => element.user.email !== e.target.value)
+                                                if (isUnregisteredEmail) {
+                                                    setIsEmailTaken(false);
+                                                } else {
+                                                    setIsEmailTaken(true);
+                                                }
+                                            }
+                                        }}
+                                        value={email}
                                     />
-                                    <InputRightElement width="2.5rem">
-                                        <IconButton 
-                                            size="sm"
-                                            h="1.75rem"
-                                            icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                                            aria-label="toggle password visibility"
-                                            onClick={() => setShowPassword((show) => !show)}
-                                            onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>  e.preventDefault()}
-                                            data-testid="password-visibility-button"
-                                        />
-                                    </InputRightElement>
-                                </InputGroup>
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel>Confirm Password</FormLabel>
-                            <InputGroup size="md">
-                                    <Input
-                                        pr="4.5rem" 
-                                        type={showConfirmPassword ? "text" : "password"}
-                                        onChange={e => setConfirmPassword(e.target.value)}
-                                        value={confirmPassword}
-                                        required
+                                    <Box
+                                        height="1em"
+                                        marginTop=".3em"
+                                    >
+                                    {
+                                        isEmailInvalid ? 
+                                        <FormErrorMessage marginTop="0">Must enter valid email.</FormErrorMessage> :
+                                        ""
+                                    }
+                                    {
+                                        !isEmailInvalid && isEmailTaken ? 
+                                        <FormErrorMessage marginTop="0">An account with this email already exists.</FormErrorMessage> :
+                                        ""
+                                    }
+                                    </Box>
+                                </FormControl>
+                                <FormControl
+                                    isRequired
+                                    isInvalid={isUsernameTaken}
+                                    isDisabled={isInputAndSubmitDisabled}
+                                >
+                                    <FormLabel>Username</FormLabel>
+                                    <Input 
+                                        type='username' 
+                                        onChange={(e) => {
+                                            e.preventDefault();
+                                            setUsername(e.target.value);
+                                            if (!isUsersLoading && data) {
+                                                const isUsernameFree = data.users.every(element => element.user.username !== e.target.value)
+                                                if (isUsernameFree) {
+                                                    console.log("Username not taken")
+                                                    setIsUsernameTaken(false);
+                                                } else {
+                                                    console.log("Username taken")
+                                                    setIsUsernameTaken(true);
+                                                }
+                                            }
+                                        }}                                
+                                        value={username}
                                     />
-                                    <InputRightElement width="2.5rem">
-                                        <IconButton 
-                                            size="sm"
-                                            h="1.75rem"
-                                            icon={showConfirmPassword ? <ViewOffIcon /> : <ViewIcon />}
-                                            aria-label="toggle password visibility"
-                                            onClick={() => setShowConfirmPassword((show) => !show)}
-                                            onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>  e.preventDefault()}
-                                            data-testid="confirm-password-visibility-button"
+                                    <Box
+                                        height="1em"
+                                        marginTop=".3em"
+                                    >
+                                        <FormErrorMessage marginTop="0">Username already exists.</FormErrorMessage>
+                                    </Box>
+                                </FormControl>
+                                </Flex>
+                                <Flex
+                                    alignItems="center"
+                                    width="100%"
+                                    gap="1vw"
+                                >
+                                <FormControl
+                                    isRequired
+                                    isInvalid={password.length && isPasswordInvalid ? getPasswordValidation(password).isTooWeak : false}
+                                    isDisabled={isInputAndSubmitDisabled}
+                                >
+                                    <FormLabel>Password</FormLabel>
+                                        <InputGroup size="md">
+                                            <Input
+                                                pr="4.5rem" 
+                                                type={showPassword ? "text" : "password"}
+                                                onChange={e => {
+                                                    e.preventDefault();
+                                                    setPassword(e.target.value)
+                                                    setIsPasswordInvalid(getPasswordValidation(e.target.value).isTooWeak)
+                                                }}
+                                                value={password}
+                                            />
+                                            <InputRightElement width="2.5rem">
+                                                <IconButton 
+                                                    size="sm"
+                                                    h="1.75rem"
+                                                    icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                                                    aria-label="toggle password visibility"
+                                                    onClick={() => setShowPassword((show) => !show)}
+                                                    onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>  e.preventDefault()}
+                                                    data-testid="password-visibility-button"
+                                                />
+                                            </InputRightElement>
+                                        </InputGroup>
+                                        <Flex
+                                            height="5em"
+                                            direction="column"
+                                            width="263px"
+                                            mt=".3em"
+                                        >
+                                            {password.length ? <FormHelperText mt="0">{getPasswordValidation(password).message}</FormHelperText> : ""}
+                                            <FormErrorMessage>{getPasswordValidation(password).characterTypeMessage}</FormErrorMessage>
+                                            <FormErrorMessage>{getPasswordValidation(password).lengthMessage}</FormErrorMessage>
+                                        </Flex>
+                                </FormControl>
+                                <FormControl
+                                    isRequired
+                                    isInvalid={confirmPassword.length ? password !== confirmPassword : false}
+                                    isDisabled={isInputAndSubmitDisabled}
+                                >
+                                    <FormLabel>Confirm Password</FormLabel>
+                                    <InputGroup size="md">
+                                        <Input
+                                            pr="4.5rem" 
+                                            type={showConfirmPassword ? "text" : "password"}
+                                            onChange={e => setConfirmPassword(e.target.value)}
+                                            value={confirmPassword}
                                         />
-                                    </InputRightElement>
-                                </InputGroup>
+                                        <InputRightElement width="2.5rem">
+                                            <IconButton 
+                                                size="sm"
+                                                h="1.75rem"
+                                                icon={showConfirmPassword ? <ViewOffIcon /> : <ViewIcon />}
+                                                aria-label="toggle password visibility"
+                                                onClick={() => setShowConfirmPassword((show) => !show)}
+                                                onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>  e.preventDefault()}
+                                                data-testid="confirm-password-visibility-button"
+                                            />
+                                        </InputRightElement>
+                                    </InputGroup>
+                                        <Box
+                                            height="5em"
+                                            mt=".3em"
+                                        >
+                                            {confirmPassword.length ? <FormErrorMessage mt="0">Passwords do not match.</FormErrorMessage> : ""}
+                                        </Box>
+                                </FormControl>
+                            </Flex>
+                        <FormControl
+                            isRequired
+                            isDisabled={isInputAndSubmitDisabled}
+                            mt="1em"
+                        >
+                            <Checkbox
+                                onChange={(e) => {
+                                    e.preventDefault();
+                                    setIsPermissionCheckboxChecked(!isPermissionCheckboxChecked);
+                                }}
+                            >
+                                I give <Text as="b">Trac</Text> permission to email me notifications.
+                            </Checkbox>
                         </FormControl>
                         <Button
+                            marginTop="3vh"
                             colorScheme="yellow"
                             data-testid="submit-button"
                             type="submit"    
+                            isDisabled={
+                                isInputAndSubmitDisabled ||
+                                !email.length ||
+                                isEmailInvalid ||
+                                isEmailTaken ||
+                                !username.length ||
+                                isUsernameTaken ||
+                                !password.length ||
+                                isPasswordInvalid ||
+                                !confirmPassword.length ||
+                                password !== confirmPassword ||
+                                !isPermissionCheckboxChecked
+                            }
                         >
                             <Text>Sign Up</Text>
                         </Button> 
@@ -150,7 +322,15 @@ const RegisterForm: React.FC<RegisterFormProps> = ({handleLinkClick}) => {
             </CardBody>
             <CardFooter>
                 <Text> 
-                    Already registered? <Link data-testid="login-link" onClick={handleLinkClick} color="teal">Log in.</Link>
+                    Already registered?{" "} 
+                    <ChakraLink 
+                        data-testid="login-link"
+                        color="teal" 
+                        as={ReactRouterLink}
+                        to="/login"
+                    >
+                        Log in.
+                    </ChakraLink>
                 </Text>
             </CardFooter>
         </Card>

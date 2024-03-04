@@ -18,6 +18,7 @@ import {
     IconButton, 
     Menu, 
     MenuButton, 
+    MenuItem, 
     MenuItemOption, 
     MenuList, 
     MenuOptionGroup, 
@@ -34,19 +35,19 @@ import {
 } from "../features/api.js";
 import { DayOfTheWeek } from "@prisma/client";
 import React, { useState } from "react";
-import getBooleanRoutineDays from "../../utils/getBooleanRoutineDays.js";
+import getBooleanRoutineDays from "..//utils/getBooleanRoutineDays.js";
 import { useAppSelector } from "../app/hooks.js";
 import { HabitWithDetails, MilestoneWithDetails, RoutineDaysArrayType } from "../../types/index.js";
-import getRoutineDaysStringArray from "../../utils/getRoutineDaysStringArray.js";
+import getRoutineDaysStringArray from "..//utils/getRoutineDaysStringArray.js";
 import { DaysOfWeek } from "@knocklabs/node";
 import { SingleDatepicker } from "chakra-dayzed-datepicker";
 
-export interface UpdateMilestoneButtonProps{
+export interface UpdateMilestoneMenuItemProps{
     milestone: MilestoneWithDetails
 }
 
-const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
-    const [datepickerValue, setDatepickerValue] = useState<Date | null>(milestone.dueDate)
+const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
+    const [datepickerValue, setDatepickerValue] = useState<Date | undefined>(new Date(milestone.dueDate))
     const [milestoneNameValue, setMilestoneNameValue] = useState(milestone.name)
     const { isOpen: isOpenForUpdateMilestone, onClose: onCloseForUpdateMilestone, onOpen: onOpenForUpdateMilestone} = useDisclosure();
 
@@ -56,17 +57,18 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
     const toast = useToast();
 
 
-    const currentUser = useAppSelector((state) => state.auth.user);
-
+    const localStorageUser = localStorage.getItem("user")
+    const appSelectorUser = useAppSelector(state => state.auth.user)
+    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    
     if (currentUser) {
         return (
             <>
-                <IconButton 
-                    aria-label="edit-milestone-button" 
-                    icon={<EditIcon />} 
-                    variant="unstyled"
+                <MenuItem
+                    aria-label="Edit Goal" 
+                    icon={<EditIcon/>}
                     onClick={onOpenForUpdateMilestone}
-                />
+                >Edit Goal</MenuItem>
                 <Drawer 
                     placement='right' 
                     onClose={onCloseForUpdateMilestone} 
@@ -81,7 +83,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
                     <DrawerHeader 
                         borderBottomWidth='1px'
                     >
-                        Edit a Milestone
+                        Edit a Goal
                     </DrawerHeader>
                     <DrawerBody>
                         <Stack
@@ -96,7 +98,6 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
                                                 newMilestone: {
                                                     name: milestoneNameValue,
                                                     dueDate: datepickerValue,
-                                                    //TODO: allow the following two properties to be updated too Issue #250
                                                     isCompleted: milestone.isCompleted,
                                                     isCanceled: milestone.isCanceled
                                                 }
@@ -107,8 +108,8 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
                                             onCloseForUpdateMilestone()
 
                                             toast({
-                                                title: 'Milestone updated.',
-                                                description: 'Your new Milestone was updated.',
+                                                title: `Goal "${updatedMilestone.name}" updated.`,
+                                                description: 'Your Goal was updated.',
                                                 status: 'success',
                                                 duration: 9000,
                                                 isClosable: true
@@ -137,20 +138,32 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
                                             ref={inputRef}
                                             onChange={(e) => {setMilestoneNameValue(e.target.value)}}
                                             value={milestoneNameValue}
+                                            paddingLeft="16px"
+                                            paddingRight="16px"
                                         />
                                     </Editable>
                                 </FormControl>  
                             </Box>
                             <Box>
-                            <FormControl isRequired>
+                            <FormControl 
+                                isRequired
+                            >
                                 <FormLabel
                                     htmlFor="dueDate"
                                 >
                                     Due Date</FormLabel>
-                                <SingleDatepicker
-                                    date={new Date()}
-                                    onDateChange={setDatepickerValue}
-                                />
+                                    <SingleDatepicker
+                                        id="dueDate"
+                                        configs={{
+                                            dateFormat: "MM-dd-yyyy"   
+                                        }}
+                                        name="date-input"
+                                        date={datepickerValue}
+                                        minDate={new Date()}
+                                        onDateChange={(e) => {
+                                            setDatepickerValue(e)
+                                        }}
+                                    />
                             </FormControl>
                             </Box>
                         </Stack>
@@ -159,7 +172,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
                         <ButtonGroup>
                             <Button 
                                 variant="outline" 
-                                colorScheme='teal' 
+                                colorScheme='yellow' 
                                 mr={3} 
                                 onClick={onCloseForUpdateMilestone}
                             >
@@ -167,7 +180,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneButtonProps) => {
                             </Button>
                             <Button 
                                 mr={3}  
-                                colorScheme='teal' 
+                                colorScheme='yellow' 
                                 type="submit"
                                 form="updateMilestoneForm"
                             >
