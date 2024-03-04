@@ -46,6 +46,7 @@ import { DaysOfWeek } from "@knocklabs/node";
 import isTodayCheckInDay from "../utils/isTodayCheckInDay.js";
 import { useDispatch } from "react-redux";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
+import areDatesSameDayMonthYear from "../utils/areDatesSameDayMonthYear.js";
 
 export interface UpdateHabitButtonProps{
     habit: HabitWithDetails
@@ -137,7 +138,7 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                             isClosable: true
                                         });
 
-                                        if (isTodayCheckInDay(checkIn)) {
+                                        if (isTodayCheckInDay(checkIn) && !areDatesSameDayMonthYear(new Date(), new Date(habit.dateCreated))) {
                                             dispatch(setIsBannerDisplayed(true))
                                         } else {
                                             dispatch(setIsBannerDisplayed(false))
