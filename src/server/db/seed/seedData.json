@@ -20,11 +20,6 @@
             "email": "sauron@mordor.me",
             "username": "TheDarkLord",
             "password": "one-ring-to-rule-them-all"
-        },
-        {
-            "email": "demouser@trac.app",
-            "username": "DemoUser",
-            "password": "demo user"
         }
     ],
     "habits": [
