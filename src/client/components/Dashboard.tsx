@@ -85,7 +85,7 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
           display="flex"
           flexDirection="column"
           paddingBottom="10vh"
-          pt="5vh"
+          paddingTop="5vh"
           alignItems="center"
           bg="blue.50"
         >
@@ -97,14 +97,53 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
           }
           <RightDrawer isMilestonesEmpty={isMilestonesEmpty}/>
           <MyMilestones milestones={milestonesData?.milestones}/>
-        </Box>
-        {!isLoading && (
-          <Text fontSize="sm" justifyContent="center">
-            <Link color="blue.500" href="https://thenounproject.com/icon/mountain-120042/" isExternal>Mountain<ExternalLinkIcon mr=".5em" boxSize=".9em" /></Link>
-            by <Link color="blue.500" href="https://thenounproject.com/bravo/" isExternal>Juan Pablo Bravo<ExternalLinkIcon mr=".3em" boxSize="1em"/></Link> 
-            is licensed under <Link color="blue.500" href="https://creativecommons.org/licenses/by/2.0/" isExternal>CC BY 2.0<ExternalLinkIcon mr=".5em" boxSize="1em"/></Link>
+          <Box
+            position="absolute"
+            bottom=".1em"
+            left=".1em"
+          >
+            {!isLoading && (
+            <Text 
+              fontSize="sm" 
+              justifyContent="center"
+            >
+            <Link 
+              color="blue.500" 
+              href="https://thenounproject.com/icon/mountain-120042/" 
+              isExternal
+            >
+              Mountain
+              <ExternalLinkIcon 
+                mr=".5em" 
+                boxSize=".9em" 
+              />
+            </Link>
+              by <Link 
+                    color="blue.500" 
+                    href="https://thenounproject.com/bravo/" 
+                    isExternal
+                  >
+                Juan Pablo Bravo
+                <ExternalLinkIcon 
+                  mr=".3em" 
+                  boxSize="1em"
+                />
+              </Link> 
+              is licensed under <Link 
+                                  color="blue.500" 
+                                  href="https://creativecommons.org/licenses/by/2.0/" 
+                                  isExternal
+                                >
+                CC BY 2.0
+                <ExternalLinkIcon 
+                  mr=".5em" 
+                  boxSize="1em"
+                />
+              </Link>
           </Text>
         )}
+          </Box>
+        </Box>
         
     </> :
     <Navigate to="/login" replace />
