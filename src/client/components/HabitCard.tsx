@@ -291,7 +291,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                 const dayAbbreviation = getDayOfWeekLabelText(day);
 
                 // Determine if day Check-In Day
-                const isCheckInDay = DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek
+                const isCheckInDay = DAY_STRINGS[day.getDay()] === habit.checkIn?.dayOfTheWeek && !areDatesSameDayMonthYear(day, new Date(habit.dateCreated))
 
                 // Determine if day is out of range
                 const isOutOfRange = isDateOutOfRange(new Date(habit.dateCreated), new Date(), day)
