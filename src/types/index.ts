@@ -129,6 +129,6 @@ export interface RegisterMutationResponse {
 }
 
 export interface LoginMutationResponse extends RegisterMutationResponse {
-  name: string
-  message: string
+  name?: string
+  message?: string
 }
