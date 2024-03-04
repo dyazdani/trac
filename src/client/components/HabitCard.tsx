@@ -401,7 +401,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                   handleClick();
                 }}
               >
-                {isCompleted ? `"${habit.name}" Completed Today!` : `Complete "${habit.name}" Today`}
+                {isCompleted ? `Completed Today!` : `Complete Today`}
               </Button> :
               ""
             }
