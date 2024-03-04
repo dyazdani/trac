@@ -22,9 +22,9 @@ const ArtistCredit = ({ textColor, position }: ArtistCreditProps) => {
             <Text 
               fontSize="sm" 
               justifyContent="center"
+              color={textColor} 
             >
             <Link 
-              color={textColor} 
               href="https://thenounproject.com/icon/mountain-120042/" 
               isExternal
             >
@@ -35,7 +35,6 @@ const ArtistCredit = ({ textColor, position }: ArtistCreditProps) => {
               />
             </Link>
               by <Link 
-                    color={textColor}
                     href="https://thenounproject.com/bravo/" 
                     isExternal
                   >
@@ -46,7 +45,6 @@ const ArtistCredit = ({ textColor, position }: ArtistCreditProps) => {
                 />
               </Link> 
               is licensed under <Link 
-                                  color={textColor} 
                                   href="https://creativecommons.org/licenses/by/2.0/" 
                                   isExternal
                                 >
