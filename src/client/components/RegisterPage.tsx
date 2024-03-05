@@ -3,11 +3,8 @@ import {
     Hide, 
     Heading,
     Show,
-    Link,
-    Text
   } from "@chakra-ui/react"; 
 import LandscapeRegisterForm from "./RegisterForm.js";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
 import ArtistCredit from "./ArtistCredit.js";
   
   
@@ -48,6 +45,7 @@ import ArtistCredit from "./ArtistCredit.js";
           bgImage="url('/images/landing_page_bg_image.jpg')"
           bgPosition="bottom"
           bgRepeat="no-repeat"
+          bgSize="cover"
         >
           <LandscapeRegisterForm/>
         </Flex>

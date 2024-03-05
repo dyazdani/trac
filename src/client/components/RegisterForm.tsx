@@ -20,7 +20,8 @@ import {
     Checkbox,
     Flex,
     Image,
-    Spacer
+    Grid,
+    GridItem
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { 
@@ -117,11 +118,27 @@ const RegisterForm = () => {
             maxHeight="90%"
         >
             <CardHeader>
+            <Flex
+                direction="column"
+                alignItems={"center"}
+            >
+                <Grid
+                    mb="1rem"
+                    templateColumns="repeat(3, 1fr)"
+                    templateRows="repeat(1, 1fr)"
+                >
+                    <GridItem
+                    colStart={3}
+                    >
+                    <DemoUserButton/> 
+                    </GridItem> 
+                </Grid>
                 <Image
                     src="/images/trac-logo-with-text.png"
                     alt="trac logo"
                 />
-                <Text>Sign up to stay on Trac.</Text>            
+                <Text>Log in to stay on Trac.</Text> 
+        </Flex>          
             </CardHeader>
             <CardBody>
                 <Box
@@ -329,7 +346,6 @@ const RegisterForm = () => {
                             >
                             <Text>Sign Up</Text>
                         </Button>
-                        <DemoUserButton/>
                         </Flex>
                     </VStack>
                 </Box>    
