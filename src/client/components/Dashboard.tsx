@@ -1,23 +1,16 @@
 import { 
   Box, 
   Heading,
-  Link,
   Show,
   Text
 } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
 import { useAppSelector } from "../app/hooks.js";
-import { 
-  useGetHabitsByUserQuery, 
-  useGetMilestonesByUserQuery 
-} from "../features/api.js";
+import { useGetMilestonesByUserQuery } from "../features/api.js";
 import AppHeader from "./AppHeader.js";
 import CTABanner from "./CTABanner.js";
-import isTodayCheckInDay from "..//utils/isTodayCheckInDay.js";
-import { useState } from "react";
 import MyMilestones from "./MyMilestones.js";
 import { Navigate } from "react-router-dom";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
 import doesAHabitHaveACheckInToday from "../utils/doesAHabitHaveACheckInToday.js";
 import { User } from "@prisma/client";
 import { useDispatch } from "react-redux";
@@ -92,7 +85,15 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
           alignItems="center"
           bg="blue.50"
         >
-          <Heading as='h1' size="2xl">My Goals</Heading>
+          <Heading 
+            as='h1' 
+            size="2xl" 
+            position="sticky" 
+            top="100px" 
+            bg="orange.100" 
+            padding=".8rem 1rem" 
+            zIndex={2}
+            borderRadius={"2rem"}>My Goals</Heading>
         {
           !milestonesData?.milestones.length ?
           <Text fontSize="xl" mt="20vh">You currently have no Goals.</Text> : 
