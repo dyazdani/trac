@@ -89,11 +89,16 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
             as='h1' 
             size="2xl" 
             position="sticky" 
-            top="100px" 
+            top={isBannerDisplayed ? "154px" : "100px"} 
             bg="orange.100" 
             padding=".8rem 1rem" 
             zIndex={2}
-            borderRadius={"2rem"}>My Goals</Heading>
+            borderRadius={"2rem"}
+
+          >
+            My Goals
+          </Heading>
+
         {
           !milestonesData?.milestones.length ?
           <Text fontSize="xl" mt="20vh">You currently have no Goals.</Text> : 
