@@ -84,6 +84,7 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
         <Box
           w="100%"
           h="100%"
+          minHeight="100vh"
           display="flex"
           flexDirection="column"
           paddingBottom="10vh"
