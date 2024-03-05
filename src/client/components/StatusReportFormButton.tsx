@@ -43,7 +43,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
         const inputRef = React.useRef<HTMLInputElement>(null);
         const toast = useToast();
 
-        const [sendStatusReport] = useSendStatusReportMutation();
+        const [sendStatusReport, {isLoading}] = useSendStatusReportMutation();
         
         const checkInDate = getMostRecentCheckInDayDate(habit);
 
@@ -187,6 +187,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                                 color="#000000" 
                                 type="submit"
                                 form="status-report-form"
+                                isLoading={isLoading}
                             >
                                 Send
                             </Button>
