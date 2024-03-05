@@ -312,6 +312,7 @@ const RegisterForm = () => {
                                 colorScheme="yellow"
                                 data-testid="submit-button"
                                 type="submit"    
+                                isLoading={isLoading || isKnockLoading}
                                 isDisabled={
                                     isInputAndSubmitDisabled ||
                                     !email.length ||
