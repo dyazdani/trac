@@ -13,7 +13,7 @@ export interface CompleteMilestoneButtonProps{
 }
 
 const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
-    const [updateMilestone] = useUpdateMilestoneMutation();
+    const [updateMilestone, {isLoading}] = useUpdateMilestoneMutation();
     const toast = useToast();
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
@@ -78,6 +78,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                 variant={milestone.isCompleted ? "outline" : "solid"}
                 colorScheme="green"
                 flexShrink="0"
+                isLoading={isLoading}
                 onClick={(e) => {
                     e.preventDefault();
                     handleClick();
