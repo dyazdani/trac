@@ -18,7 +18,9 @@ import {
   IconButton,
   FormErrorMessage,
   Image,
-  Flex
+  Flex,
+  Grid,
+  GridItem
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -100,11 +102,27 @@ const LoginForm = () => {
       maxHeight="90%"
     >
       <CardHeader>
-        <Image
-          src="/images/trac-logo-with-text.png"
-          alt="trac logo"
-        />
-        <Text>Log in to stay on Trac.</Text>
+        <Flex
+          direction="column"
+          alignItems={"center"}
+        >
+          <Grid
+            mb="1rem"
+            templateColumns="repeat(3, 1fr)"
+            templateRows="repeat(1, 1fr)"
+          >
+            <GridItem
+              colStart={3}
+            >
+              <DemoUserButton/> 
+            </GridItem> 
+          </Grid>
+          <Image
+            src="/images/trac-logo-with-text.png"
+            alt="trac logo"
+          />
+          <Text>Log in to stay on Trac.</Text> 
+        </Flex>
       </CardHeader>
       <CardBody>
         <Box
@@ -203,7 +221,6 @@ const LoginForm = () => {
               >
                 <Text>Log In</Text>
               </Button>
-              <DemoUserButton/>            
           </VStack>
         </Box>
       </CardBody>

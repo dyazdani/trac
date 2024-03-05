@@ -3,11 +3,8 @@ import {
     Hide, 
     Heading,
     Show,
-    Link,
-    Text
   } from "@chakra-ui/react"; 
 import LandscapeRegisterForm from "./RegisterForm.js";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
 import ArtistCredit from "./ArtistCredit.js";
   
   
