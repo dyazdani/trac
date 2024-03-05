@@ -2,6 +2,7 @@ import {
   Box, 
   Heading,
   Show,
+  Spinner,
   Text
 } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
@@ -73,7 +74,15 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
       </Show>
       <CTABanner isBannerDisplayed={isBannerDisplayed}/>
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
-      {!isLoading && 
+      {
+      isLoading ?
+      <Spinner 
+        color="orange.500" 
+        size="xl"
+        position="absolute"
+        top="50vh"
+        left="50vw"
+      /> :
         <Box
           w="100%"
           h="100%"
@@ -83,7 +92,6 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
           paddingBottom="10vh"
           paddingTop="5vh"
           alignItems="center"
-          bg="blue.50"
         >
           <Heading 
             as='h1' 
@@ -94,7 +102,6 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
             padding=".8rem 1rem" 
             zIndex={2}
             borderRadius={"2rem"}
-
           >
             My Goals
           </Heading>

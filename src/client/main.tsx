@@ -16,6 +16,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           <Box
             maxHeight="100%"
             maxWidth="100%"
+            backgroundColor="blue.50"
           >
             <App />
             </Box>
