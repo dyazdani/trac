@@ -42,7 +42,7 @@ const LandingPage = () => {
                 </Heading>
             </Show>
             <AppHeader isBannerDisplayed={false}/>
-\            <VStack
+            <VStack
                 h="100vh"                                                                                                                                          
                 w="100vw"
                 maxWidth="100%"
