@@ -1,10 +1,13 @@
-import { Checkbox } from "@chakra-ui/react";
+import { 
+    Checkbox,
+    Spinner 
+} from "@chakra-ui/react";
 import { useUpdateHabitMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { 
     HabitWithDetails,
-     MilestoneWithDetails 
-    } from "../../types/index.js";
+    MilestoneWithDetails 
+} from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
 import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
 
@@ -78,6 +81,8 @@ const ToggleButton = ({
     }
 
     return (
+        isLoading ?
+        <Spinner color="#3a3c3c" size="sm"/> :
         <Checkbox
             isChecked={isCompleted}
             size="lg"
@@ -93,11 +98,10 @@ const ToggleButton = ({
             isDisabled={ 
                 milestone.isCanceled ||
                 isOutOfRange || 
-                milestone && milestone.isCompleted                   
+                milestone && milestone.isCompleted                
             }    
             display={!isHabitRoutineDay(habit, date) ? "none" : ""}
         />
-        
     )
 }
 
