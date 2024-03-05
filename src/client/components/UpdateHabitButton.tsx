@@ -131,11 +131,12 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                         }
                                         onClose();
                                         toast({
-                                            title: 'Habit updated.',
-                                            description: `Your Habit "${newHabit.name}" was successfully updated.`,
+                                            title: 'Habit updated',
+                                            description: `"${newHabit.name}" was successfully updated.`,
                                             status: 'success',
                                             duration: 9000,
-                                            isClosable: true
+                                            isClosable: true,
+                                            icon: <EditIcon boxSize="1.4em"/>
                                         });
 
                                         if (isTodayCheckInDay(checkIn) && !areDatesSameDayMonthYear(new Date(), new Date(habit.dateCreated))) {
