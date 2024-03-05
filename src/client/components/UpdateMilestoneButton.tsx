@@ -99,6 +99,13 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                                             })  
                                     } catch (e) {
                                         console.error(e)
+                                        toast({
+                                            title: 'ERROR',
+                                            description: `Unable to update Goal "${milestone.name}"`,
+                                            status: 'error',
+                                            duration: 4000,
+                                            isClosable: true
+                                        })
                                     }
                                 }
                             }}
