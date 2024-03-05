@@ -48,6 +48,7 @@ import ArtistCredit from "./ArtistCredit.js";
           bgImage="url('/images/landing_page_bg_image.jpg')"
           bgPosition="bottom"
           bgRepeat="no-repeat"
+          bgSize="cover"
         >
           <LandscapeRegisterForm/>
         </Flex>
