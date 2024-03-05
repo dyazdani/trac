@@ -246,6 +246,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                     colorScheme='yellow' 
                                     type="submit"
                                     form="habitForm"
+                                    isLoading={isLoading || isScheduleLoading}
                                 >
                                     Add
                                 </Button>

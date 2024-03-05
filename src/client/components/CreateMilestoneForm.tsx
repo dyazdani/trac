@@ -31,7 +31,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
     const [datepickerValue, setDatepickerValue] = useState<Date | undefined>()
     const [milestoneNameValue, setMilestoneNameValue] = useState("New Milestone")
 
-    const [createMilestone] = useCreateMilestoneMutation();
+    const [createMilestone, {isLoading}] = useCreateMilestoneMutation();
 
     const inputRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
@@ -154,6 +154,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                         colorScheme='yellow' 
                         type="submit"
                         form="milestoneForm"
+                        isLoading={isLoading}
                     >
                         Create
                     </Button>

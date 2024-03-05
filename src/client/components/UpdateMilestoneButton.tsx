@@ -2,8 +2,6 @@ import {
     Box, 
     Button, 
     ButtonGroup, 
-    Checkbox, 
-    CheckboxGroup, 
     Drawer, 
     DrawerBody, 
     DrawerContent, 
@@ -15,31 +13,16 @@ import {
     EditablePreview, 
     FormControl, 
     FormLabel, 
-    IconButton, 
-    Menu, 
-    MenuButton, 
-    MenuItem, 
-    MenuItemOption, 
-    MenuList, 
-    MenuOptionGroup, 
+    MenuItem,  
     Stack, 
     useDisclosure, 
     useToast 
 } from "@chakra-ui/react";
-import { ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
-import { 
-    useUpdateHabitMutation,
-    useGetSchedulesByUserQuery, 
-    useUpdateScheduleMutation, 
-    useUpdateMilestoneMutation
-} from "../features/api.js";
-import { DayOfTheWeek } from "@prisma/client";
+import { EditIcon } from "@chakra-ui/icons";
+import {  useUpdateMilestoneMutation } from "../features/api.js";
 import React, { useState } from "react";
-import getBooleanRoutineDays from "..//utils/getBooleanRoutineDays.js";
 import { useAppSelector } from "../app/hooks.js";
-import { HabitWithDetails, MilestoneWithDetails, RoutineDaysArrayType } from "../../types/index.js";
-import getRoutineDaysStringArray from "..//utils/getRoutineDaysStringArray.js";
-import { DaysOfWeek } from "@knocklabs/node";
+import { MilestoneWithDetails } from "../../types/index.js";
 import { SingleDatepicker } from "chakra-dayzed-datepicker";
 
 export interface UpdateMilestoneMenuItemProps{
@@ -51,7 +34,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
     const [milestoneNameValue, setMilestoneNameValue] = useState(milestone.name)
     const { isOpen: isOpenForUpdateMilestone, onClose: onCloseForUpdateMilestone, onOpen: onOpenForUpdateMilestone} = useDisclosure();
 
-    const [updateMilestone] = useUpdateMilestoneMutation();
+    const [updateMilestone, { isLoading }] = useUpdateMilestoneMutation();
 
     const inputRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
@@ -183,6 +166,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                                 colorScheme='yellow' 
                                 type="submit"
                                 form="updateMilestoneForm"
+                                isLoading={isLoading}
                             >
                                 Update
                             </Button>

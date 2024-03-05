@@ -62,8 +62,8 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
 
     const dispatch = useDispatch();
 
-    const [updateHabit] = useUpdateHabitMutation();
-    const [updateSchedule] = useUpdateScheduleMutation();
+    const [updateHabit, { isLoading }] = useUpdateHabitMutation();
+    const [updateSchedule, { isLoading: isScheduleLoading }] = useUpdateScheduleMutation();
 
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
@@ -244,6 +244,7 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                 colorScheme='teal' 
                                 type="submit"
                                 form="habitForm"
+                                isLoading={isLoading || isScheduleLoading}
                             >
                                 Save
                             </Button>
