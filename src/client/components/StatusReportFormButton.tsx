@@ -24,6 +24,7 @@ import { useAppSelector } from '../app/hooks.js';
 import { HabitWithDetails, MilestoneWithDetails } from '../../types/index.js';
 import getDefaultStatusReportMessage from '..//utils/getDefaultStatusReportMessage.js';
 import getMostRecentCheckInDayDate from '..//utils/getMostRecentCheckInDayDate.js';
+import { EmailIcon } from '@chakra-ui/icons';
 
 
 export interface StatusReportFormButtonProps {
@@ -63,11 +64,12 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                     console.log("statusReport: ", statusReport)
                 if (statusReport) {
                     toast({
-                        title: 'Status Report Sent.',
-                        description: `Your Status Report for "${habit.name}" was sent.`,
+                        title: 'Status Report Sent',
+                        description: `Your Status Report email for "${habit.name}" was sent.`,
                         status: 'success',
                         duration: 9000,
-                        isClosable: true
+                        isClosable: true,
+                        icon: <EmailIcon boxSize="1.4em"/>
                     })
                 } else {
                     toast({
