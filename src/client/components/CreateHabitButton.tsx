@@ -132,7 +132,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                                 status: 'success',
                                                 duration: 9000,
                                                 isClosable: true,
-                                                icon: <SmallAddIcon boxSize="1.4em"/>
+                                                icon: <AddIcon />
                                             })
 
                                             setMenuValue('Monday');
