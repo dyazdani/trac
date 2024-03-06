@@ -27,7 +27,9 @@ import ArtistCredit from "./ArtistCredit.js";
 const LandingPage = () => {
     const navigate = useNavigate();
     return (
-        <>
+        <Box 
+            minHeight="100vh"
+        >
             <AppHeader isBannerDisplayed={false}/>
             <Hide below="md">
                 <Show breakpoint="(max-height: 565px)">
@@ -59,11 +61,9 @@ const LandingPage = () => {
                     Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
                 </Heading>
             </Show>
-            <VStack
-                h="100vh"                                                                                                                                          
-                w="100vw"
-                maxWidth="100%"
-                spacing="0"
+            <AppHeader isBannerDisplayed={false}/>
+            <Flex
+                direction="column"
             >
                 <Box
                     w="100vw"
@@ -306,8 +306,8 @@ const LandingPage = () => {
                     </HStack>
                     <ArtistCredit textColor="stormyblue.700" position="center"/>
                 </VStack>
-            </VStack>  
-        </>   
+            </Flex>   
+        </Box>   
     )
 }
 
