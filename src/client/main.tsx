@@ -13,13 +13,13 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <BrowserRouter>
       <ChakraProvider theme={theme} >
         <Provider store={store}>
-          <Box
+          {/* <Box  
             maxHeight="100%"
             maxWidth="100%"
-            backgroundColor="blue.50"
-          >
+            minHeight="100vh"
+          > */}
             <App />
-            </Box>
+          {/* </Box>  */}
         </Provider>
       </ChakraProvider>
     </BrowserRouter>
