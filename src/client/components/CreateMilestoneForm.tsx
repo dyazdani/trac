@@ -21,6 +21,7 @@ import {
 import { useAppSelector } from '../app/hooks.js';
 import { SingleDatepicker } from 'chakra-dayzed-datepicker';
 import { useCreateMilestoneMutation } from '../features/api.js';
+import { AddIcon, SmallAddIcon } from '@chakra-ui/icons';
 
 export interface CreateMilestoneFormProps {
     isOpenForMilestone: boolean
@@ -76,11 +77,12 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                                     onCloseForMilestone()
 
                                     toast({
-                                        title: 'Goal created.',
-                                        description: `Your new Goal "${milestone.name} was created and added to your dashboard.`,
+                                        title: 'Goal created',
+                                        description: `"${milestone.name}" was added to your dashboard.`,
                                         status: 'success',
                                         duration: 9000,
-                                        isClosable: true
+                                        isClosable: true,
+                                        icon: <AddIcon/>
                                     })  
                             } catch (e) {
                                 console.error(e)

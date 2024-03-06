@@ -3,7 +3,7 @@ import {
     IconButton, 
     useToast 
 } from "@chakra-ui/react";
-import { CheckIcon } from "@chakra-ui/icons";
+import { CheckIcon, RepeatClockIcon } from "@chakra-ui/icons";
 import {  useUpdateMilestoneMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { MilestoneWithDetails } from "../../types/index.js";
@@ -36,7 +36,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
             if (updatedMilestone) {
                 if (updatedMilestone.isCompleted) {
                     toast({
-                        title: 'Goal completed.',
+                        title: 'Goal completed',
                         description: `Your Goal "${updatedMilestone.name}" was marked as complete.`,
                         status: 'success',
                         duration: 9000,
@@ -44,11 +44,12 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                     })
                 } else {
                     toast({
-                        title: 'Goal incomplete.',
+                        title: 'Goal incomplete',
                         description: `Your Goal "${updatedMilestone.name}" was marked as incomplete.`,
                         status: 'info',
                         duration: 9000,
-                        isClosable: true
+                        isClosable: true,
+                        icon: <RepeatClockIcon boxSize={"1.4em"}/>
                     })
                 }
             } else {

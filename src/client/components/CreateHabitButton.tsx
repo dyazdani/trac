@@ -15,7 +15,6 @@ import {
     EditablePreview, 
     FormControl, 
     FormLabel, 
-    IconButton, 
     Menu, 
     MenuButton, 
     MenuItemOption, 
@@ -25,7 +24,7 @@ import {
     useDisclosure, 
     useToast 
 } from "@chakra-ui/react";
-import { AddIcon, ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
+import { AddIcon, ChevronDownIcon, EditIcon, SmallAddIcon } from "@chakra-ui/icons";
 import { useCreateHabitMutation, useCreateScheduleMutation } from "../features/api.js";
 import { DayOfTheWeek } from "@prisma/client";
 import React, { useState } from "react";
@@ -128,11 +127,12 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                             console.log(schedules)
 
                                             toast({
-                                                title: 'Habit added.',
-                                                description: `Your new Habit "${habit.name}" was created and added to ${milestone.name}.`,
+                                                title: 'Habit created',
+                                                description: `"${habit.name}" added to Goal "${milestone.name}"`,
                                                 status: 'success',
                                                 duration: 9000,
-                                                isClosable: true
+                                                isClosable: true,
+                                                icon: <AddIcon />
                                             })
 
                                             setMenuValue('Monday');
