@@ -104,7 +104,15 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             ml="1vw"
             mr="1vw"
             variant="solid"
-            colorScheme="peach"
+            backgroundColor="peach.300"
+            color="353231"
+            _hover={{
+              backgroundColor: "peach.500"
+            }}
+            _active={{
+              backgroundColor: "peach.600",
+              color: "floralwhite.50"
+            }}
             onClick={(e) => {
               e.preventDefault();
               dispatch(resetIsBannerDisplayed())
@@ -116,7 +124,15 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
           </Button> :
           <Button
             rightIcon={<ChevronRightIcon/>}
-            colorScheme="peach"
+            backgroundColor="peach.300"
+            color="353231"
+            _hover={{
+              backgroundColor: "peach.500"
+            }}
+            _active={{
+              backgroundColor: "peach.600",
+              color: "floralwhite.50"
+            }}
             ml="1vw"
             mr="1vw"
             variant="solid"
