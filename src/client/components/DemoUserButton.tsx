@@ -9,7 +9,9 @@ const DemoUserButton = () => {
     return (
         <Button
             isLoading={isLoading}
-            colorScheme="blue"
+            colorScheme="skyblue"
+            // colorScheme="cornflowerblue"
+            // colorScheme="stormyblue"          
             size="sm"
             onClick={async (e) => {
                 e.preventDefault();
