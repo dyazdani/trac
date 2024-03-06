@@ -29,7 +29,6 @@ const LandingPage = () => {
     const navigate = useNavigate();
     return (
         <>
-            
             <AppHeader isBannerDisplayed={false}/>
             <Hide below="md">
                 <Show breakpoint="(max-height: 565px)">
