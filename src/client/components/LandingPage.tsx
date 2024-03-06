@@ -37,7 +37,7 @@ const LandingPage = () => {
                     as="h1" 
                     size="lg" 
                     textAlign="center" 
-                    backgroundColor="yellow.500"
+                    backgroundColor="gold.400"
                     padding="1vw"
                     position="sticky"
                     top="75px"
