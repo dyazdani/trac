@@ -104,8 +104,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             ml="1vw"
             mr="1vw"
             variant="solid"
-            color="#000000"
-            colorScheme="orange"
+            colorScheme="peach"
             onClick={(e) => {
               e.preventDefault();
               dispatch(resetIsBannerDisplayed())
@@ -117,8 +116,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
           </Button> :
           <Button
             rightIcon={<ChevronRightIcon/>}
-            colorScheme="orange"
-            color="#000000"
+            colorScheme="peach"
             ml="1vw"
             mr="1vw"
             variant="solid"
