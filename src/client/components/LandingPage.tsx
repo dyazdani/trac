@@ -94,7 +94,15 @@ const LandingPage = () => {
                     >
                         <Button
                             rightIcon={<ChevronRightIcon/>}
-                            colorScheme="peach"
+                            backgroundColor="peach.300"
+                            color="353231"
+                            _hover={{
+                                backgroundColor: "peach.500"
+                            }}
+                            _active={{
+                                backgroundColor: "peach.600",
+                                color: "floralwhite.50"
+                            }}
                             mt="8vw"
                             mb="4vw"
                             type="button"
