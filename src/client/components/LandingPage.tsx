@@ -27,7 +27,9 @@ import ArtistCredit from "./ArtistCredit.js";
 const LandingPage = () => {
     const navigate = useNavigate();
     return (
-        <>
+        <Box 
+            minHeight="100vh"
+        >
             <Show 
                 below="md"
             >
@@ -42,11 +44,8 @@ const LandingPage = () => {
                 </Heading>
             </Show>
             <AppHeader isBannerDisplayed={false}/>
-            <VStack
-                h="100vh"                                                                                                                                          
-                w="100vw"
-                maxWidth="100%"
-                spacing="0"
+            <Flex
+                direction="column"
             >
                 <Box
                     w="100vw"
@@ -266,10 +265,10 @@ const LandingPage = () => {
                         alt="trac mountain logo"
                         mb="5vw"
                     /> 
-                    <ArtistCredit textColor="blue.500" position="center"/>
+                    <ArtistCredit textColor="blue.500"/>
                 </VStack>
-            </VStack>  
-        </>   
+            </Flex>   
+        </Box>   
     )
 }
 
