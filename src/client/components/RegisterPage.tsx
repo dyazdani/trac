@@ -12,7 +12,7 @@ import ArtistCredit from "./ArtistCredit.js";
     return (
       <>
         <Hide below="md">
-          <Show breakpoint="(max-height: 680px)">
+          <Show breakpoint="(max-height: 660px)">
             <Heading 
               as="h1" 
               size="lg" 
