@@ -13,7 +13,8 @@ import {
     Text,
     Highlight,
     Show,
-    Link
+    Link,
+    Hide
 } from "@chakra-ui/react";
 import AppHeader from "./AppHeader.js";
 import { 
@@ -28,6 +29,19 @@ const LandingPage = () => {
     const navigate = useNavigate();
     return (
         <>
+            <Hide below="md">
+                <Show breakpoint="(max-height: 565px)">
+                    <Heading 
+                    as="h1" 
+                    size="md" 
+                    textAlign="center" 
+                    backgroundColor="yellow.500"
+                    padding="1vw"
+                    >
+                    Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
+                    </Heading>
+                </Show>
+            </Hide>
             <Show 
                 below="md"
             >
@@ -35,7 +49,7 @@ const LandingPage = () => {
                     as="h1" 
                     size="lg" 
                     textAlign="center" 
-                    backgroundColor="yellow.500"
+                    backgroundColor="gold.400"
                     padding="1vw"
                 >
                     Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
