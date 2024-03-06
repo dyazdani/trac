@@ -100,8 +100,11 @@ const LoginForm = () => {
       m="4"
       bgColor="blue.50"
       maxHeight="90%"
+
     >
-      <CardHeader>
+      <CardHeader
+        paddingBottom={0}  
+      >
         <Flex
           direction="column"
           alignItems={"center"}
@@ -110,21 +113,28 @@ const LoginForm = () => {
             mb="1rem"
             templateColumns="repeat(3, 1fr)"
             templateRows="repeat(1, 1fr)"
+            gap={3}
           >
+            <GridItem
+              colStart={2}
+            >
+              <Image
+                src="/images/trac-logo-with-text.png"
+                alt="trac logo"
+              />
+              <Text>Log in to stay on Trac.</Text> 
+            </GridItem>
             <GridItem
               colStart={3}
             >
               <DemoUserButton/> 
             </GridItem> 
           </Grid>
-          <Image
-            src="/images/trac-logo-with-text.png"
-            alt="trac logo"
-          />
-          <Text>Log in to stay on Trac.</Text> 
         </Flex>
       </CardHeader>
-      <CardBody>
+      <CardBody
+        width="70%"
+      >
         <Box
           as="form"
           onSubmit={(e: React.FormEvent<HTMLDivElement>) => {
