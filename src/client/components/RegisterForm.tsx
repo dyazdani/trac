@@ -137,7 +137,7 @@ const RegisterForm = () => {
                             src="/images/trac-logo-with-text.png"
                             alt="trac logo"
                         />
-                        <Text>Log in to stay on Trac.</Text> 
+                        <Text>Sign up to stay on Trac.</Text> 
                     </GridItem>
                     <GridItem
                     colStart={3}
