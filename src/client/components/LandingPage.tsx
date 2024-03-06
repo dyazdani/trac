@@ -29,14 +29,18 @@ const LandingPage = () => {
     const navigate = useNavigate();
     return (
         <>
+            
+            <AppHeader isBannerDisplayed={false}/>
             <Hide below="md">
                 <Show breakpoint="(max-height: 565px)">
                     <Heading 
                     as="h1" 
-                    size="md" 
+                    size="lg" 
                     textAlign="center" 
                     backgroundColor="yellow.500"
                     padding="1vw"
+                    position="sticky"
+                    top="75px"
                     >
                     Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
                     </Heading>
@@ -51,11 +55,12 @@ const LandingPage = () => {
                     textAlign="center" 
                     backgroundColor="gold.400"
                     padding="1vw"
+                    position="sticky"
+                    top="75px"
                 >
                     Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
                 </Heading>
             </Show>
-            <AppHeader isBannerDisplayed={false}/>
             <VStack
                 h="100vh"                                                                                                                                          
                 w="100vw"
