@@ -34,7 +34,11 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
 
   return (
     <Box 
-      bg="#b9eefe" 
+      // bg="skyblue.200"
+      // bg="skyblue.100"
+      bg="turquoise.100"
+      // bg="turquoise.200" 
+      // bg="turquoise.300" 
       w="100vw"
       maxWidth="100%" 
       p="1rem"
