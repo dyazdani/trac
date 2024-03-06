@@ -304,7 +304,7 @@ const LandingPage = () => {
                             h="4.5rem"
                         />
                     </HStack>
-                    <ArtistCredit textColor="stormyblue.700" position="center"/>
+                    <ArtistCredit textColor="stormyblue.700"/>
                 </VStack>
             </Flex>   
         </Box>   
