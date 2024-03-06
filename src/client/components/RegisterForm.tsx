@@ -117,7 +117,9 @@ const RegisterForm = () => {
             data-testid="landscape-register-form"
             maxHeight="90%"
         >
-            <CardHeader>
+            <CardHeader
+                paddingBottom={0}
+            >
             <Flex
                 direction="column"
                 alignItems={"center"}
@@ -126,18 +128,23 @@ const RegisterForm = () => {
                     mb="1rem"
                     templateColumns="repeat(3, 1fr)"
                     templateRows="repeat(1, 1fr)"
+                    gap={10}
                 >
+                    <GridItem
+                        colStart={2}
+                    >
+                        <Image
+                            src="/images/trac-logo-with-text.png"
+                            alt="trac logo"
+                        />
+                        <Text>Log in to stay on Trac.</Text> 
+                    </GridItem>
                     <GridItem
                     colStart={3}
                     >
                     <DemoUserButton/> 
                     </GridItem> 
                 </Grid>
-                <Image
-                    src="/images/trac-logo-with-text.png"
-                    alt="trac logo"
-                />
-                <Text>Log in to stay on Trac.</Text> 
         </Flex>          
             </CardHeader>
             <CardBody>
