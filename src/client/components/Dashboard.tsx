@@ -1,6 +1,7 @@
 import { 
   Box, 
   Heading,
+  Hide,
   Show,
   Spinner,
   Text
@@ -59,21 +60,40 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
   return (
     isAuthenticated || currentUser ? 
     <>
-      <Show 
-        below="md"
-      >
-        <Heading 
-          as="h1" 
-          size="lg" 
-          textAlign="center" 
-          backgroundColor="yellow.500"
-          padding="1vw"
-        >
-          Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
-        </Heading>
-      </Show>
       <CTABanner isBannerDisplayed={isBannerDisplayed}/>
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
+      <Hide below="md">
+                <Show breakpoint="(max-height: 565px)">
+                    <Heading 
+                    as="h1" 
+                    size="lg" 
+                    textAlign="center" 
+                    backgroundColor="gold.400"
+                    padding="1vw"
+                    position="sticky"
+                    top={isBannerDisplayed ? "134.5px" : "80.5px"}
+                    zIndex={100}
+                    >
+                    Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
+                    </Heading>
+                </Show>
+            </Hide>
+            <Show 
+                below="md"
+            >
+                <Heading 
+                    as="h1" 
+                    size="lg" 
+                    textAlign="center" 
+                    backgroundColor="gold.400"
+                    padding="1vw"
+                    position="sticky"
+                    top={isBannerDisplayed ? "134.5px" : "80.5px"}
+                    zIndex={100}
+                >
+                    Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
+                </Heading>
+            </Show>
       {
       isLoading ?
       <Spinner 
