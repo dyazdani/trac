@@ -34,11 +34,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
 
   return (
     <Box 
-      // bg="skyblue.200"
-      // bg="skyblue.100"
       bg="turquoise.100"
-      // bg="turquoise.200" 
-      // bg="turquoise.300" 
       w="100vw"
       maxWidth="100%" 
       p="1rem"
@@ -104,15 +100,14 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             ml="1vw"
             mr="1vw"
             variant="solid"
-            backgroundColor="peach.300"
-            color="353231"
+            backgroundColor="skyblue.600"     
+            color="floralwhite.50"    
             _hover={{
-              backgroundColor: "peach.500"
+                backgroundColor: "skyblue.700"
             }}
             _active={{
-              backgroundColor: "peach.600",
-              color: "floralwhite.50"
-            }}
+                backgroundColor: "skyblue.800",
+            }} 
             onClick={(e) => {
               e.preventDefault();
               dispatch(resetIsBannerDisplayed())

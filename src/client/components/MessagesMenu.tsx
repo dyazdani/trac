@@ -16,12 +16,14 @@ const MessagesMenu = (props: MessagesMenuProps) =>  {
             <ButtonGroup
                 isAttached
                 variant="unstyled"
-                border="black 1px solid"
                 borderRadius=".5rem"
                 alignItems="center"
                 p=".25vw"
                 _hover={{
-                    backgroundColor: "#EAF7FA"
+                    backgroundColor: "turquoise.200"
+                }}
+                _active={{
+                    backgroundColor: "turquoise.300"
                 }}
                 >
                 <Button
