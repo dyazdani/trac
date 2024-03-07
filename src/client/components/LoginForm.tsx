@@ -85,10 +85,7 @@ const LoginForm = () => {
           setIsInputAndSubmitDisabled(true);
         }
 
-        if (!isLoading) {
-          navigate("/goals")
-        }
-
+        navigate("/goals")
       }
     } catch (e) {
       console.error(e);    
