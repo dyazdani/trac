@@ -76,6 +76,13 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
             <MenuItem 
                 aria-label={milestone.isCanceled ? "Restore Goal" : "Cancel Goal"} 
                 icon={milestone.isCanceled ? (<ArrowUpIcon />) : (<NotAllowedIcon/>)} 
+                backgroundColor="turquoise.50"
+                _hover={{
+                    backgroundColor: "turquoise.100"
+                }}
+                _active={{
+                    backgroundColor: "turquoise.200"
+                }}
                 onClick={(e) => {
                     e.preventDefault();
                     handleClick();

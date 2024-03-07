@@ -16,7 +16,6 @@ import {
     CardFooter, 
     CardHeader, 
     Flex, 
-    HStack, 
     Heading, 
     Menu,
     MenuButton,
@@ -44,11 +43,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
         <Card
         w="50vw"
         minW="570px"
-        bg={
-            milestone.isCompleted ? "rgba(249, 199, 64, 0.4)" :
-            milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
-            `blue.100`
-        }
+        background="linear-gradient(0deg, rgba(183,186,251,1) 0%, rgba(193,232,240,1) 100%)"
         borderRadius="20px"
       >
         <CardHeader>
@@ -71,14 +66,14 @@ const Milestone = ({milestone}: MilestoneProps) => {
                     textAlign="center" 
                     fontSize="lg"
                 >
-                    Due {new Date(milestone.dueDate).toLocaleDateString()} <Badge colorScheme="yellow" variant="solid">TODAY!</Badge>
+                    Due {new Date(milestone.dueDate).toLocaleDateString()} <Badge colorScheme="yellow" variant="solid"ml=".5rem">TODAY!</Badge>
                 </Text> : 
                 new Date().getTime() > new Date(milestone.dueDate).setHours(23, 59, 59, 999) ?
                 <Text  
                     textAlign="center"
                     fontSize="lg"
                 >
-                    Due {new Date(milestone.dueDate).toLocaleDateString()} <Badge colorScheme="red" variant="solid">OVERDUE!</Badge>
+                    Due {new Date(milestone.dueDate).toLocaleDateString()} <Badge colorScheme="red" variant="solid" ml=".5rem">OVERDUE!</Badge>
                 </Text> : 
                 <Text 
                     textAlign="center"
@@ -101,12 +96,21 @@ const Milestone = ({milestone}: MilestoneProps) => {
                             as={Button}
                             aria-label="Open Goal options menu"
                             rightIcon={isOpen ? <CloseIcon/> :<HamburgerIcon/>}
-                            variant={isOpen ? "solid" : "outline"}
-                            colorScheme="blue"
+                            backgroundColor="turquoise.300"
+                            _hover={{
+                                backgroundColor: "turquoise.400"
+                            }}
+                            _active={{
+                                backgroundColor: "turquoise.600",
+                                color: "floralwhite.50"    
+
+                            }} 
                             flexShrink="0"
                             isActive={isOpen}
                         >Menu</MenuButton>
-                        <MenuList>
+                        <MenuList
+                            backgroundColor="turquoise.50"
+                        >
                             <UpdateMilestoneButton milestone={milestone}/>
                             <DeleteMilestoneButton milestone={milestone}/>
                             <CancelMilestoneButton milestone={milestone}/>
@@ -149,7 +153,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                     return (
                         <AccordionItem
                             key={habit.id}
-                            bgColor={"rgba(255, 255, 255, .2)"}
+                            bgColor={"#C9E5F6"}
                             border="none"
                             width="42vw"
                             minWidth="450px"

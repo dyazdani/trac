@@ -55,6 +55,13 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
             <MenuItem
                 aria-label="Delete Goal" 
                 icon={<DeleteIcon/>}
+                backgroundColor="turquoise.50"
+                _hover={{
+                    backgroundColor: "turquoise.100"
+                }}
+                _active={{
+                    backgroundColor: "turquoise.200"
+                }}
                 onClick={(e) => {
                     e.preventDefault();
                     handleDeleteMilestone();
