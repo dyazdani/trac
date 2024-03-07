@@ -60,7 +60,7 @@ const LoginForm = () => {
 
   const handleSubmit = async () => {
     try {
-      if (!isUsersLoading && !isUserLoading) {
+      if (!isUsersLoading && !isUserLoading && !isLoading) {
         if (data) {
           const isUnregisteredEmail = data.users.every(element => element.user.email !== email)
           if (isUnregisteredEmail) {
@@ -98,7 +98,7 @@ const LoginForm = () => {
       align="center" 
       size="md" 
       m="4"
-      bgColor="blue.50"
+      bgColor="turquoise.50"
       maxHeight="90%"
 
     >
@@ -222,7 +222,7 @@ const LoginForm = () => {
               <FormErrorMessage>Incorrect password</FormErrorMessage>
             </FormControl>
               <Button
-                colorScheme="yellow"
+                colorScheme="peach"
                 marginTop="2vh"
                 data-testid="submit-button"
                 type="submit"
@@ -239,7 +239,7 @@ const LoginForm = () => {
           Don't have an account?{" "}
           <ChakraLink
             data-testid="signup-link"
-            color="teal"
+            color="stormyblue.700"
             as={ReactRouterLink}
             to="/register"
           >
