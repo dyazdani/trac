@@ -223,19 +223,19 @@ const LandingPage = () => {
                                 spacing="1vw"
                             >
                                 <ListItem fontSize="2xl">
-                                    <ListIcon as={CheckCircleIcon} color="gold.300" boxSize="1.6rem" mr="1rem"/>
+                                    <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
                                     <Text as="b">Send Status Report</Text> button appears when it is a Check-In Day.
                                 </ListItem>
                                 <ListItem fontSize="2xl">
-                                    <ListIcon as={CheckCircleIcon} color="gold.300" boxSize="1.6rem" mr="1rem"/>
+                                    <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
                                     Receive in-app and email reminders to send status reports as well.
                                 </ListItem>
                                 <ListItem fontSize="2xl">
-                                    <ListIcon as={CheckCircleIcon} color="gold.300" boxSize="1.6rem" mr="1rem"/>
+                                    <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
                                     Editable text pre-populates the status report form, making it easy to compose a message quickly. 
                                 </ListItem>
                                 <ListItem fontSize="2xl">
-                                    <ListIcon as={CheckCircleIcon} color="gold.300" boxSize="1.6rem" mr="1rem"/>
+                                    <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
                                     Add emails of everyone you want to send status report to and click <Text as="b">Send</Text>.
                                 </ListItem>
                             </List>
