@@ -60,7 +60,14 @@ const DeleteHabitButton = ({ habit}: DeleteHabitButtonProps) =>  {
     
     return(
         <MenuItem 
-            aria-label="Delete Habit" 
+            aria-label="Delete Habit"
+            backgroundColor="turquoise.50"
+            _hover={{
+                backgroundColor: "turquoise.100"
+            }}
+            _active={{
+                backgroundColor: "turquoise.200"
+            }}
             icon={<DeleteIcon />}
             onClick={(e) => {
                 e.preventDefault();
