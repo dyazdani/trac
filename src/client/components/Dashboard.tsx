@@ -1,5 +1,7 @@
 import { 
   Box, 
+  Grid, 
+  GridItem, 
   Heading,
   Hide,
   Show,
@@ -63,37 +65,37 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
       <CTABanner isBannerDisplayed={isBannerDisplayed}/>
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
       <Hide below="md">
-                <Show breakpoint="(max-height: 565px)">
-                    <Heading 
-                    as="h1" 
-                    size="lg" 
-                    textAlign="center" 
-                    backgroundColor="gold.400"
-                    padding="1vw"
-                    position="sticky"
-                    top={isBannerDisplayed ? "134.5px" : "80.5px"}
-                    zIndex={100}
-                    >
-                    Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
-                    </Heading>
-                </Show>
-            </Hide>
-            <Show 
-                below="md"
-            >
-                <Heading 
-                    as="h1" 
-                    size="lg" 
-                    textAlign="center" 
-                    backgroundColor="gold.400"
-                    padding="1vw"
-                    position="sticky"
-                    top={isBannerDisplayed ? "134.5px" : "80.5px"}
-                    zIndex={100}
-                >
-                    Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
-                </Heading>
-            </Show>
+        <Show breakpoint="(max-height: 565px)">
+          <Heading 
+            as="h1" 
+            size="lg" 
+            textAlign="center" 
+            backgroundColor="gold.400"
+            padding="1vw"
+            position="sticky"
+            top={isBannerDisplayed ? "134.5px" : "80.5px"}
+            zIndex={100}
+          >
+            Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
+          </Heading>
+        </Show>
+      </Hide>
+      <Show 
+        below="md"
+      >
+        <Heading 
+          as="h1" 
+          size="lg" 
+          textAlign="center" 
+          backgroundColor="gold.400"
+          padding="1vw"
+          position="sticky"
+          top={isBannerDisplayed ? "134.5px" : "80.5px"}
+          zIndex={100}
+        >
+          Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
+        </Heading>
+      </Show>
       {
       isLoading ?
       <Spinner 
@@ -103,41 +105,53 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
         top="50vh"
         left="50vw"
       /> :
-        <Box
-          w="100%"
-          h="100%"
-          minHeight="100vh"
-          display="flex"
-          flexDirection="column"
-          paddingBottom="10vh"
-          alignItems="center"
-          backgroundColor="floralwhite.50"
-        >
-          <Heading 
-            as='h1' 
-            size="2xl" 
-            // position="sticky" 
-            // top={isBannerDisplayed ? "154px" : "100px"} 
-            // bg="cornflowerblue.100" 
-            // padding=".8rem 1rem" 
-            // zIndex={2}
-            // borderRadius={"2rem"}
-            position="fixed"
-            top="145px"
-            left="150px"
+        <>
+          <Grid
+            templateColumns="repeat(3, 1fr)"
           >
-            My Goals:
-          </Heading>
-
-        {
-          !milestonesData?.milestones.length ?
-          <Text fontSize="xl" mt="20vh">You currently have no Goals.</Text> : 
-          ""
-        }
-        <RightDrawer isMilestonesEmpty={isMilestonesEmpty}/>
-        <MyMilestones milestones={milestonesData?.milestones}/>
-        {<ArtistCredit textColor="stormyblue.700"/>}
-      </Box>
+            <GridItem
+              colStart={1}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+            >
+              <Heading
+                as='h1'
+                size="2xl"
+                marginTop="3.8rem"
+                position="fixed"
+              >
+                My Goals:
+              </Heading>
+            </GridItem>
+            {
+              !milestonesData?.milestones.length ?
+              <GridItem
+                colStart={2}
+              >
+                <Text
+                  fontSize="xl"
+                  mt="20vh">
+                  You currently have no Goals.
+                </Text>
+              </GridItem> :
+              <GridItem
+                colStart={2}
+              >
+                <MyMilestones milestones={milestonesData?.milestones} />
+              </GridItem>               
+            }
+            <GridItem
+              colStart={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+            >
+              <RightDrawer isMilestonesEmpty={isMilestonesEmpty} />
+            </GridItem>
+          </Grid>
+          <ArtistCredit textColor="stormyblue.700" />
+        </>
       }   
     </> :
     <Navigate to="/login" replace />
