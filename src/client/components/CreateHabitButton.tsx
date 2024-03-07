@@ -246,7 +246,12 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                     colorScheme='yellow' 
                                     color="yellow.800"
                                     mr={3} 
-                                    onClick={onClose}
+                                    onClick={e => {
+                                        onClose();
+                                        setMenuValue('Monday');
+                                        setCheckboxGroupValue([]);
+                                        setHabitNameValue('New Habit');
+                                    }}
                                 >
                                     Cancel
                                 </Button>
