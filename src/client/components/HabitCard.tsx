@@ -186,7 +186,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
         bg={
           milestone && milestone.isCompleted ? `rgba(249, 209, 98, 0.1)` :
           milestone && milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
-          !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "linear-gradient(-45deg, #F9D162 40%, #FBE29D 50%, #F9D162 60%)" : "rgb(249, 209, 98)"
+          !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "linear-gradient(-45deg, #F9D162 40%, #FBE29D 50%, #F9D162 60%)" : "#C9E5F6"
         }
         borderRadius="20px"
         border={milestone && milestone.isCompleted || milestone.isCanceled ? "" :
