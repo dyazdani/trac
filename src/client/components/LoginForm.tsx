@@ -98,7 +98,7 @@ const LoginForm = () => {
       align="center" 
       size="md" 
       m="4"
-      bgColor="turquoise.50"
+      bgColor="blue.50"
       maxHeight="90%"
 
     >
@@ -222,7 +222,15 @@ const LoginForm = () => {
               <FormErrorMessage>Incorrect password</FormErrorMessage>
             </FormControl>
               <Button
-                colorScheme="peach"
+                backgroundColor="peach.300"
+                color="353231"
+                _hover={{
+                  backgroundColor: "peach.500"
+                }}
+                _active={{
+                  backgroundColor: "peach.600",
+                  color: "floralwhite.50"
+                }}
                 marginTop="2vh"
                 data-testid="submit-button"
                 type="submit"
