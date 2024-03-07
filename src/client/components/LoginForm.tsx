@@ -9,7 +9,6 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Heading,
   Text,
   Button,
   Link as ChakraLink,
@@ -24,7 +23,11 @@ import {
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useGetAllUsersQuery, useGetUserByEmailQuery, useLoginMutation } from "../features/api.js";
+import { 
+  useGetAllUsersQuery, 
+  useGetUserByEmailQuery, 
+  useLoginMutation 
+} from "../features/api.js";
 import { useNavigate } from "react-router";
 import DemoUserButton from "./DemoUserButton.js";
 
@@ -98,9 +101,8 @@ const LoginForm = () => {
       align="center" 
       size="md" 
       m="4"
-      bgColor="blue.50"
+      bgColor="#C9E5F6"
       maxHeight="90%"
-
     >
       <CardHeader
         paddingBottom={0}  
@@ -150,10 +152,14 @@ const LoginForm = () => {
               isRequired
               isDisabled={isInputAndSubmitDisabled}
               isInvalid={isEmailInvalid || isEmailUnregistered}
+              borderColor={"darkslategray.400"}
             >
               <FormLabel>Email Address</FormLabel>
               <Input
                 type="email"
+                _hover={{
+                  borderColor: "darkslategray.600"
+                }}
                 onChange={(e) => {
                   e.preventDefault();
                   setEmail(e.target.value);
@@ -184,7 +190,6 @@ const LoginForm = () => {
                   ""
                 }
               </Box>
-              
             </FormControl>
 
             <FormControl
@@ -193,8 +198,14 @@ const LoginForm = () => {
               isDisabled={isInputAndSubmitDisabled}
             >
               <FormLabel>Password</FormLabel>
-              <InputGroup size="md">
+              <InputGroup 
+                size="md" 
+                borderColor={"darkslategray.400"}
+              >
                 <Input
+                  _hover={{
+                    borderColor: "darkslategray.600"
+                  }}
                   pr="4.5rem"
                   type={showPassword ? "text" : "password"}
                   onChange={(e) => {
@@ -208,6 +219,13 @@ const LoginForm = () => {
                 <InputRightElement width="2.5rem">
                   <IconButton
                     size="sm"
+                    backgroundColor="darkslategray.200"
+                    _hover={{
+                      backgroundColor: "darkslategray.300"
+                    }}
+                    _active={{
+                      backgroundColor: "darkslategray.400"
+                    }}
                     h="1.75rem"
                     icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
                     aria-label="toggle password visibility"
