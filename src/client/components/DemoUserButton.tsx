@@ -9,9 +9,14 @@ const DemoUserButton = () => {
     return (
         <Button
             isLoading={isLoading}
-            colorScheme="skyblue"
-            // colorScheme="cornflowerblue"
-            // colorScheme="stormyblue"          
+            backgroundColor="skyblue.600"     
+            color="floralwhite.50"    
+            _hover={{
+                backgroundColor: "skyblue.700"
+            }}
+            _active={{
+                backgroundColor: "skyblue.800",
+            }} 
             size="sm"
             onClick={async (e) => {
                 e.preventDefault();
