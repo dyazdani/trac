@@ -333,7 +333,15 @@ const RegisterForm = () => {
                             width="100%"
                         >
                             <Button
-                                colorScheme="yellow"
+                                backgroundColor="peach.300"
+                                color="353231"
+                                _hover={{
+                                  backgroundColor: "peach.500"
+                                }}
+                                _active={{
+                                  backgroundColor: "peach.600",
+                                  color: "floralwhite.50"
+                                }}
                                 data-testid="submit-button"
                                 type="submit"    
                                 isLoading={isLoading || isKnockLoading}
@@ -362,7 +370,7 @@ const RegisterForm = () => {
                     Already registered?{" "} 
                     <ChakraLink 
                         data-testid="login-link"
-                        color="teal" 
+                        color="stormyblue.700" 
                         as={ReactRouterLink}
                         to="/login"
                     >
