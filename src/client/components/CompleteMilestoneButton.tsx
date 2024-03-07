@@ -36,7 +36,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
             if (updatedMilestone) {
                 if (updatedMilestone.isCompleted) {
                     toast({
-                        title: 'Goal completed',
+                        title: 'Goal Completed',
                         description: `Your Goal "${updatedMilestone.name}" was marked as complete.`,
                         status: 'success',
                         duration: 9000,
@@ -44,7 +44,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                     })
                 } else {
                     toast({
-                        title: 'Goal incomplete',
+                        title: 'Goal Incomplete',
                         description: `Your Goal "${updatedMilestone.name}" was marked as incomplete.`,
                         status: 'info',
                         duration: 9000,
@@ -77,7 +77,15 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                 aria-label="Complete goal" 
                 leftIcon={milestone.isCompleted ? <CheckIcon /> : undefined} 
                 variant={milestone.isCompleted ? "outline" : "solid"}
-                colorScheme="green"
+                backgroundColor="peach.300"
+                color="353231"
+                _hover={{
+                    backgroundColor: "peach.500"
+                }}
+                _active={{
+                    backgroundColor: "peach.600",
+                    color: "floralwhite.50"
+                }}
                 flexShrink="0"
                 isLoading={isLoading}
                 onClick={(e) => {
