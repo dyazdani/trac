@@ -97,7 +97,7 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
       {
       isLoading ?
       <Spinner 
-        color="orange.500" 
+        color="peach.500" 
         size="xl"
         position="absolute"
         top="50vh"
@@ -110,20 +110,23 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
           display="flex"
           flexDirection="column"
           paddingBottom="10vh"
-          paddingTop="5vh"
           alignItems="center"
+          backgroundColor="floralwhite.50"
         >
           <Heading 
             as='h1' 
             size="2xl" 
-            position="sticky" 
-            top={isBannerDisplayed ? "154px" : "100px"} 
-            bg="orange.100" 
-            padding=".8rem 1rem" 
-            zIndex={2}
-            borderRadius={"2rem"}
+            // position="sticky" 
+            // top={isBannerDisplayed ? "154px" : "100px"} 
+            // bg="cornflowerblue.100" 
+            // padding=".8rem 1rem" 
+            // zIndex={2}
+            // borderRadius={"2rem"}
+            position="fixed"
+            top="145px"
+            left="150px"
           >
-            My Goals
+            My Goals:
           </Heading>
 
         {
@@ -133,7 +136,7 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
         }
         <RightDrawer isMilestonesEmpty={isMilestonesEmpty}/>
         <MyMilestones milestones={milestonesData?.milestones}/>
-        {<ArtistCredit textColor="blue.500" position="left"/>}
+        {<ArtistCredit textColor="stormyblue.700"/>}
       </Box>
       }   
     </> :
