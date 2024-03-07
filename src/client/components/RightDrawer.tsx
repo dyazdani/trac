@@ -32,6 +32,12 @@ const RightDrawer = ({ isMilestonesEmpty }: RightDrawerProps) => {
                     <Button
                         variant='solid'
                         colorScheme='yellow'
+                        _hover={{
+                            backgroundColor: "yellow.600"
+                        }}
+                        _active={{
+                            backgroundColor: "yellow.700"
+                        }} 
                         size="lg"
                         aria-label='create-goal'
                         leftIcon={<AddIcon />}
