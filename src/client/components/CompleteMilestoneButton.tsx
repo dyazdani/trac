@@ -7,12 +7,14 @@ import { CheckIcon, RepeatClockIcon } from "@chakra-ui/icons";
 import {  useUpdateMilestoneMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { MilestoneWithDetails } from "../../types/index.js";
+import { useState } from "react";
 
 export interface CompleteMilestoneButtonProps{
     milestone: MilestoneWithDetails
 }
 
 const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
+    const [isHovering, setIsHovering] = useState(false)
     const [updateMilestone, {isLoading}] = useUpdateMilestoneMutation();
     const toast = useToast();
     const localStorageUser = localStorage.getItem("user")
@@ -75,13 +77,14 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
         return (
             <Button 
                 aria-label="Complete goal" 
-                leftIcon={milestone.isCompleted ? <CheckIcon /> : undefined} 
-                variant={milestone.isCompleted ? "outline" : "solid"}
-                backgroundColor="peach.300"
-                color="353231"
-                _hover={{
-                    backgroundColor: "peach.500"
-                }}
+                leftIcon={milestone.isCompleted ? !isHovering ? <CheckIcon /> : undefined : undefined} 
+                backgroundColor={milestone.isCompleted ? "peach.100" : "peach.300"}
+                color={milestone.isCompleted ? "peach.700" : "353231"}
+                _hover={
+                    milestone.isCompleted ? 
+                    { backgroundColor: "peach.200"} :
+                    { backgroundColor: "peach.500"}
+                }
                 _active={{
                     backgroundColor: "peach.600",
                     color: "floralwhite.50"
@@ -92,7 +95,11 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                     e.preventDefault();
                     handleClick();
                 }}
-            >{milestone.isCompleted ? "Goal Completed!" : "Complete Goal"}</Button>           
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+            >
+                {milestone.isCompleted ? isHovering ? "Undo Complete Goal" : "Goal Completed!" : "Complete Goal"}
+            </Button>           
         )
     }
 }
