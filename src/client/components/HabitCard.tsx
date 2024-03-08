@@ -221,8 +221,15 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     as={Button}
                     aria-label="Open Habit options menu"
                     rightIcon={isOpen ? <CloseIcon/> :<HamburgerIcon/>}
-                    variant={isOpen ? "solid" : "outline"}
-                    colorScheme="blue"
+                    backgroundColor="cornflowerblue.100"
+                    _hover={{
+                      backgroundColor: "cornflowerblue.300",
+                      color: "floralwhite.50"    
+                    }}
+                    _active={{
+                      backgroundColor: "cornflowerblue.600",
+                      color: "floralwhite.50"    
+                    }} 
                     isActive={isOpen}
                   >Menu</MenuButton>
                   <MenuList>
