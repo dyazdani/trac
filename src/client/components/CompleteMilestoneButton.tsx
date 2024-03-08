@@ -14,7 +14,6 @@ export interface CompleteMilestoneButtonProps{
 }
 
 const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
-    const [isHovering, setIsHovering] = useState(false)
     const [updateMilestone, {isLoading}] = useUpdateMilestoneMutation();
     const toast = useToast();
     const localStorageUser = localStorage.getItem("user")
@@ -38,7 +37,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
             if (updatedMilestone) {
                 if (updatedMilestone.isCompleted) {
                     toast({
-                        title: 'Goal Completed',
+                        title: 'Goal Completed!',
                         description: `Your Goal "${updatedMilestone.name}" was marked as complete.`,
                         status: 'success',
                         duration: 9000,
@@ -77,7 +76,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
         return (
             <Button 
                 aria-label="Complete goal" 
-                leftIcon={milestone.isCompleted ? !isHovering ? <CheckIcon /> : undefined : undefined} 
+                leftIcon={milestone.isCompleted ? undefined : <CheckIcon />}
                 backgroundColor={milestone.isCompleted ? "peach.100" : "peach.300"}
                 color={milestone.isCompleted ? "peach.700" : "353231"}
                 _hover={
@@ -95,10 +94,8 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                     e.preventDefault();
                     handleClick();
                 }}
-                onMouseEnter={() => setIsHovering(true)}
-                onMouseLeave={() => setIsHovering(false)}
             >
-                {milestone.isCompleted ? isHovering ? "Undo Complete Goal" : "Goal Completed!" : "Complete Goal"}
+                {milestone.isCompleted ? "Undo Complete Goal" : "Complete Goal"}
             </Button>           
         )
     }
