@@ -76,6 +76,14 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                 aria-label="Edit Habit" 
                 icon={<EditIcon />} 
                 onClick={onOpen}
+                backgroundColor="cornflowerblue.50"
+                _hover={{
+                    backgroundColor: "cornflowerblue.100"
+                }}
+                _active={{
+                    backgroundColor: "cornflowerblue.200",
+                    color: "floralwhite.50"
+                }}
             >Edit Habit</MenuItem>
                 <Drawer 
                     placement='right' 

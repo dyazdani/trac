@@ -232,7 +232,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     }} 
                     isActive={isOpen}
                   >Menu</MenuButton>
-                  <MenuList>
+                  <MenuList
+                    backgroundColor="cornflowerblue.50"
+                  >
                     <UpdateHabitButton habit={habit}/>
                     <DeleteHabitButton habit={habit}/>
                   </MenuList>

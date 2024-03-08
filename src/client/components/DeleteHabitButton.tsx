@@ -61,12 +61,13 @@ const DeleteHabitButton = ({ habit}: DeleteHabitButtonProps) =>  {
     return(
         <MenuItem 
             aria-label="Delete Habit"
-            backgroundColor="turquoise.50"
+            backgroundColor="cornflowerblue.50"
             _hover={{
-                backgroundColor: "turquoise.100"
+                backgroundColor: "cornflowerblue.100"
             }}
             _active={{
-                backgroundColor: "turquoise.200"
+                backgroundColor: "cornflowerblue.200",
+                color: "floralwhite.50"
             }}
             icon={<DeleteIcon />}
             onClick={(e) => {
