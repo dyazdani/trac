@@ -404,6 +404,34 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       </>
                     : ""
                     }
+                    {
+                    areDatesSameDayMonthYear(day, new Date(habit.dateCreated)) ?
+                    <>
+                      <GridItem
+                        padding={".2vw"}
+                        colStart={(i * 2) + 3}
+                        colSpan={1} 
+                        rowStart={isHabitRoutineDay(habit, day) ? 5 : 4}
+                        textAlign="center"
+                      >
+                        <ChevronUpIcon color={"darkslategray.800"}/>
+                      </GridItem>
+                      <GridItem
+                        padding={".2vw"}
+                        colStart={(i * 2) + 2}
+                        colSpan={3} 
+                        rowStart={isHabitRoutineDay(habit, day) ? 6 : 5}
+                        textAlign="center"
+                      >
+                        <Box
+                          color={"darkslategray.800"}
+                        >
+                          Start
+                        </Box>
+                      </GridItem>
+                      </>
+                    : ""
+                    }
                 </React.Fragment>
               )
             })}
