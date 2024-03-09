@@ -303,19 +303,21 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               // Determine if day is out of range
               const isOutOfRange = isDateOutOfRange(new Date(habit.dateCreated), new Date(), day)
 
-              const todayBorderColor = isToday ? milestone.isCompleted || milestone.isCanceled ? "2px solid #918a88" : "2px solid darkslategray.800" : {}
+              const todayBorder = isToday && day.setHours(0, 0, 0, 0) <= new Date(milestone.dueDate).setHours(0, 0, 0, 0)  ? "2px solid #282625" : {}
                 
+              
               return (
                 <React.Fragment key={`${day}`}>
                   {
-                    isToday ? 
+                    isToday && 
+                    day.setHours(0, 0, 0, 0) <= new Date(milestone.dueDate).setHours(0, 0, 0, 0) ?  
                     <GridItem 
                       colStart={(i * 2) + 1} 
                       textAlign="center" 
                       rowStart={1} 
                       colSpan={5} 
                       rowSpan={1}
-                      color={milestone.isCompleted || milestone.isCanceled ? "darkslategray.400" : ""}
+                      color={"darkslategray.800"}
                     >
                       Today
                     </GridItem> : 
@@ -323,9 +325,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                   }
                   <GridItem
                     padding={".2vw"}
-                    borderTop={todayBorderColor}
-                    borderLeft={todayBorderColor}
-                    borderRight={todayBorderColor}
+                    borderTop={todayBorder}
+                    borderLeft={todayBorder}
+                    borderRight={todayBorder}
                     borderTopRadius={isToday ? 10 : {}}
                     colStart={(i * 2) + 3}
                     colSpan={1} 
@@ -341,9 +343,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     colSpan={1} 
                     rowStart={3}
                     textAlign="center"
-                    borderLeft={todayBorderColor}
-                    borderRight={todayBorderColor}
-                    borderBottom={!isHabitRoutineDay(habit, day) ? todayBorderColor : ""}
+                    borderLeft={todayBorder}
+                    borderRight={todayBorder}
+                    borderBottom={!isHabitRoutineDay(habit, day) ? todayBorder : ""}
                     borderBottomRadius={isToday && !isHabitRoutineDay(habit, day)? 10 : {}}
                     color={isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) || isOutOfRange || milestone.isCanceled || milestone.isCompleted  ? "darkslategray.400" : "darkslategray.800"}
                   >
@@ -351,9 +353,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                   </GridItem>
                   <GridItem
                     padding={".2vw"}
-                    borderBottom={isHabitRoutineDay(habit, day) ? todayBorderColor : {}}
-                    borderLeft={isHabitRoutineDay(habit, day) ? todayBorderColor : {}}
-                    borderRight={isHabitRoutineDay(habit, day) ? todayBorderColor : {}}
+                    borderBottom={isHabitRoutineDay(habit, day) ? todayBorder : {}}
+                    borderLeft={isHabitRoutineDay(habit, day) ? todayBorder : {}}
+                    borderRight={isHabitRoutineDay(habit, day) ? todayBorder : {}}
                     borderBottomRadius={isToday && isHabitRoutineDay(habit, day)? 10 : {}}
                     colStart={(i * 2) + 3}
                     colSpan={1} 
