@@ -303,14 +303,21 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               // Determine if day is out of range
               const isOutOfRange = isDateOutOfRange(new Date(habit.dateCreated), new Date(), day)
 
-              const todayBorder = isToday && day.setHours(0, 0, 0, 0) <= new Date(milestone.dueDate).setHours(0, 0, 0, 0)  ? "2px solid #282625" : {}
+              const todayBorder =  isToday && 
+                day.setHours(0, 0, 0, 0) <= new Date(milestone.dueDate).setHours(0, 0, 0, 0) &&
+                !milestone.isCompleted &&
+                !milestone.isCanceled  ? 
+                "2px solid #282625" : 
+                {}
                 
               
               return (
                 <React.Fragment key={`${day}`}>
                   {
                     isToday && 
-                    day.setHours(0, 0, 0, 0) <= new Date(milestone.dueDate).setHours(0, 0, 0, 0) ?  
+                    day.setHours(0, 0, 0, 0) <= new Date(milestone.dueDate).setHours(0, 0, 0, 0) &&
+                    !milestone.isCompleted &&
+                    !milestone.isCanceled ?  
                     <GridItem 
                       colStart={(i * 2) + 1} 
                       textAlign="center" 
