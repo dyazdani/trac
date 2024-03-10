@@ -133,7 +133,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
                         >Menu</MenuButton>
                         <MenuList
                             backgroundColor="turquoise.50"
-                        >
+                        >   
+                            <CreateHabitButton milestone={milestone}/>
                             <UpdateMilestoneButton milestone={milestone}/>
                             <DeleteMilestoneButton milestone={milestone}/>
                             <CancelMilestoneButton milestone={milestone}/>
@@ -211,9 +212,6 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 })}     
             </Accordion>
           </CardBody>
-          <CardFooter>
-            <CreateHabitButton milestone={milestone}/>
-          </CardFooter>
         </Flex>
       </Card>
     )
