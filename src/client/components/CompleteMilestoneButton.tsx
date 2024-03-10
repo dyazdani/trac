@@ -78,7 +78,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                 aria-label="Complete goal" 
                 leftIcon={milestone.isCompleted ? undefined : <CheckIcon />}
                 backgroundColor={milestone.isCompleted ? "peach.100" : "peach.300"}
-                color={milestone.isCompleted ? "peach.700" : "353231"}
+                color={milestone.isCompleted ? "peach.700" : "#353231"}
                 _hover={
                     milestone.isCompleted ? 
                     { backgroundColor: "peach.200"} :
