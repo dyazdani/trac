@@ -40,7 +40,7 @@ const CTABanner = ({ isBannerDisplayed }: CTABannerProps) => {
                         textAlign="center"
                         p="3px"
                     >
-                        {`Check-In Time!`}
+                        {`** Check-In Time! **`}
                     </Heading>
                     <Heading
                         as="h2"
