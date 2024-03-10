@@ -2,11 +2,9 @@ import {useState} from "react";
 import ToggleButton from "./ToggleButton.js";
 import DeleteHabitButton from "./DeleteHabitButton.js";
 import {
-  HStack,
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Heading,
   IconButton,
   Flex,
@@ -182,6 +180,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
       }
       w="40vw" 
       minW="424px"
+      boxShadow="none"
       bg={
         milestone && milestone.isCanceled ? "#CDCBCB" :
         milestone && milestone.isCompleted ? "#C9E5F6" :
@@ -276,15 +275,17 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
         </Flex>
       </CardHeader>
       <Flex 
-          direction={"column"} 
-          align={"center"}
-          >
-        <CardBody>
+        direction={"column"} 
+        align={"center"}
+      >
+        <CardBody
+          padding="0"
+
+        >
           <Grid 
             templateColumns="repeat(17, 1fr)" 
             templateRows="repeat(6, 1fr)" 
             p="1vw"
-            boxShadow="2xl"
             rounded="lg"
           >
             <GridItem
