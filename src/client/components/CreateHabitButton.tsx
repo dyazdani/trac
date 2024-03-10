@@ -17,6 +17,7 @@ import {
     FormLabel, 
     Menu, 
     MenuButton, 
+    MenuItem, 
     MenuItemOption, 
     MenuList, 
     MenuOptionGroup, 
@@ -24,7 +25,10 @@ import {
     useDisclosure, 
     useToast 
 } from "@chakra-ui/react";
-import { AddIcon, ChevronDownIcon, EditIcon, SmallAddIcon } from "@chakra-ui/icons";
+import { 
+    AddIcon, 
+    ChevronDownIcon
+} from "@chakra-ui/icons";
 import { useCreateHabitMutation, useCreateScheduleMutation } from "../features/api.js";
 import { DayOfTheWeek } from "@prisma/client";
 import React, { useState } from "react";
@@ -60,27 +64,42 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
         }
     ] = useCreateScheduleMutation();
 
-    const iconButtonBackgroundColor = milestone.isCompleted ? "rgba(249, 209, 98, 0.1)" : milestone.isCanceled ? "rgba(212, 211, 212, 1)" : "yellow.500"
-
     if (currentUser) {
         return (
             <>
+                {milestone.habits.length ?
+                <MenuItem
+                    aria-label="Add Habit" 
+                    icon={<AddIcon/>}
+                    display={milestone && milestone.isCompleted || milestone.isCanceled ? "none" : ""}
+                    onClick={onOpen}
+                    backgroundColor="turquoise.50"
+                    _hover={{
+                        backgroundColor: "turquoise.100"
+                    }}
+                    _active={{
+                        backgroundColor: "turquoise.200"
+                    }}
+                >
+                    Add Habit
+                </MenuItem> :
                 <Button 
                     aria-label="Add Habit" 
                     leftIcon={<AddIcon />} 
                     isDisabled={milestone && milestone.isCompleted || milestone.isCanceled}
                     variant="solid"
                     onClick={onOpen}
-                    backgroundColor={iconButtonBackgroundColor}
+                    backgroundColor="turquoise.50"
                     _hover={{
-                        backgroundColor: "yellow.600"
+                        backgroundColor: "turquoise.100"
                     }}
                     _active={{
-                        backgroundColor: "yellow.700"
-                    }} 
+                        backgroundColor: "turquoise.200"
+                    }}
                 >
-                    {!milestone.habits.length ? `Add first Habit for "${milestone.name}"` : "Add Habit"}
+                    {`Add first Habit for "${milestone.name}"`}
                 </Button>
+                }
                 <Drawer 
                     placement='right' 
                     onClose={onClose} 
