@@ -62,40 +62,45 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
   return (
     isAuthenticated || currentUser ? 
     <>
-      <CTABanner isBannerDisplayed={isBannerDisplayed}/>
-      <AppHeader isBannerDisplayed={isBannerDisplayed}/>
-      <Hide below="md">
-        <Show breakpoint="(max-height: 565px)">
-          <Heading 
-            as="h1" 
-            size="lg" 
-            textAlign="center" 
-            backgroundColor="gold.400"
-            padding="1vw"
-            position="sticky"
-            top={isBannerDisplayed ? "134.5px" : "80.5px"}
-            zIndex={100}
-          >
-            Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
-          </Heading>
-        </Show>
-      </Hide>
       <Show 
-        below="md"
+        breakpoint="(max-width: 943px)"
       >
         <Heading 
           as="h1" 
           size="lg" 
           textAlign="center" 
           backgroundColor="gold.400"
-          padding="1vw"
+          padding="6px"
           position="sticky"
-          top={isBannerDisplayed ? "134.5px" : "80.5px"}
-          zIndex={100}
+          top="0"
+          zIndex={1000}
         >
           Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
         </Heading>
+        <CTABanner top="90px" isBannerDisplayed={isBannerDisplayed}/>
       </Show>
+      <Hide breakpoint="(max-width: 943px)">
+        <CTABanner top="0px" isBannerDisplayed={isBannerDisplayed}/>
+      </Hide>
+
+      <Hide breakpoint="(max-width: 943px)">
+        <Show breakpoint="(max-height: 565px)">
+          <Heading 
+            as="h1" 
+            size="lg" 
+            textAlign="center" 
+            backgroundColor="gold.400"
+            padding="6px"
+            position="sticky"
+            top="0"
+            zIndex={1000}
+          >
+            Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
+          </Heading>
+        </Show>
+      </Hide>     
+      <AppHeader isBannerDisplayed={isBannerDisplayed}/>
+    
       {
       isLoading ?
       <Spinner 
@@ -120,6 +125,7 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
                 size="2xl"
                 marginTop="3.8rem"
                 position="fixed"
+                paddingX="1rem"
               >
                 My Goals:
               </Heading>

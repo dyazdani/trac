@@ -11,15 +11,16 @@ import { useDispatch } from "react-redux";
 
 export interface CTABannerProps {
     isBannerDisplayed: boolean | null
+    top: "0px" | "90px"
 }
 
-const CTABanner = ({ isBannerDisplayed }: CTABannerProps) => {
+const CTABanner = ({ isBannerDisplayed, top }: CTABannerProps) => {
     const dispatch = useDispatch();
     return (
         <Box
             position="sticky"
             w="100%"
-            top="0px"
+            top={top}
             zIndex="1000"
             minH="40px"
             bg="gold.400"
