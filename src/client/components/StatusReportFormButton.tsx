@@ -178,7 +178,8 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                         <ButtonGroup>
                             <Button 
                                 variant="outline" 
-                                colorScheme='teal' 
+                                colorScheme='yellow' 
+                                color="yellow.800" 
                                 mr={3} 
                                 onClick={(e) => {
                                     e.preventDefault();
@@ -190,8 +191,13 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                             </Button>
                             <Button 
                                 mr={3}  
-                                colorScheme='orange'
-                                color="#000000" 
+                                backgroundColor="yellow.500"
+                                _hover={{
+                                    backgroundColor: "yellow.600"
+                                }}
+                                _active={{
+                                    backgroundColor: "yellow.700"
+                                }} 
                                 type="submit"
                                 form="status-report-form"
                                 isLoading={isLoading}
