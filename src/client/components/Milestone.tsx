@@ -211,7 +211,16 @@ const Milestone = ({milestone}: MilestoneProps) => {
                     )
                 })}     
             </Accordion>
-          </CardBody>
+        </CardBody>
+            <CardFooter
+                marginBottom="2rem"    
+            >
+                {
+                    !milestone.habits.length ?
+                    <CreateHabitButton milestone={milestone}/> :
+                    ""
+                }
+            </CardFooter>
         </Flex>
       </Card>
     )
