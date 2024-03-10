@@ -459,15 +459,24 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
           {
             isHabitRoutineDay(habit, today) && !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), today) ? 
             <Button
-              colorScheme="green"
+              backgroundColor={milestone.isCompleted ? "peach.100" : "peach.300"}
+              color={isCompleted ? "peach.700" : "#353231"}
+              _hover={
+                milestone.isCompleted ? 
+                { backgroundColor: "peach.200"} :
+                { backgroundColor: "peach.500"}
+              }
+              _active={{
+                backgroundColor: "peach.600",
+                color: "floralwhite.50"
+              }}
               isLoading={isLoading}
-              variant={isCompleted ? "outline" : "solid"}
-              leftIcon={isCompleted ? <CheckIcon/> : undefined}
+              leftIcon={!isCompleted ? <CheckIcon/> : undefined}
               onClick={() => {
                 handleClick();
               }}
             >
-              {isCompleted ? `Completed Today!` : `Complete Today`}
+              {isCompleted ? `Undo Complete Today` : `Complete Today`}
             </Button> :
             ""
           }
