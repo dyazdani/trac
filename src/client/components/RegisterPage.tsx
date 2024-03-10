@@ -12,13 +12,16 @@ import ArtistCredit from "./ArtistCredit.js";
     return (
       <>
         <Hide below="md">
-          <Show breakpoint="(max-height: 680px)">
+          <Show breakpoint="(max-height: 660px)">
             <Heading 
               as="h1" 
-              size="md" 
+              size="lg" 
               textAlign="center" 
-              backgroundColor="yellow.500"
+              backgroundColor="gold.400"
               padding="1vw"
+              position="sticky"
+              top="0"
+              zIndex={2}
             >
               Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
             </Heading>
@@ -29,10 +32,13 @@ import ArtistCredit from "./ArtistCredit.js";
         >
           <Heading 
             as="h1" 
-            size="md" 
+            size="lg" 
             textAlign="center" 
-            backgroundColor="yellow.500"
+            backgroundColor="gold.400"
             padding="1vw"
+            position="sticky"
+            top="0"
+            zIndex={2}
           >
             Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
           </Heading>

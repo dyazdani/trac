@@ -23,15 +23,19 @@ const RightDrawer = ({ isMilestonesEmpty }: RightDrawerProps) => {
     return (
         <>
             {currentUser && 
-                <VStack
-                    position={isMilestonesEmpty ? undefined : "fixed"}
-                    bottom={isMilestonesEmpty ? "" : "50px"}
-                    right={isMilestonesEmpty ? "" : "50px"}
-                    mt={isMilestonesEmpty ? "5vh" : ""}
-                >
+                <>
                     <Button
+                        position={isMilestonesEmpty ? undefined : "fixed"}
+                        bottom={isMilestonesEmpty ? "" : "50px"}
+                        mt={isMilestonesEmpty ? "5vh" : ""}
                         variant='solid'
-                        colorScheme='yellow'
+                        backgroundColor="yellow.500"
+                        _hover={{
+                            backgroundColor: "yellow.600"
+                        }}
+                        _active={{
+                            backgroundColor: "yellow.700"
+                        }} 
                         size="lg"
                         aria-label='create-goal'
                         leftIcon={<AddIcon />}
@@ -43,7 +47,7 @@ const RightDrawer = ({ isMilestonesEmpty }: RightDrawerProps) => {
                         onCloseForMilestone={onCloseForMilestone}
                         isOpenForMilestone={isOpenForMilestone}
                     />
-                </VStack>
+                </>     
             }
         </>
     )

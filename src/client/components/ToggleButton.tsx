@@ -86,7 +86,7 @@ const ToggleButton = ({
         <Checkbox
             isChecked={isCompleted}
             size="lg"
-            colorScheme="green"
+            colorScheme="peach"
             borderColor="#3a3c3c"
             _checked={{
                 "& .chakra-checkbox__control": { borderColor: "#3a3c3c" }
@@ -99,7 +99,7 @@ const ToggleButton = ({
                 milestone.isCanceled ||
                 isOutOfRange || 
                 milestone && milestone.isCompleted                
-            }    
+            } 
             display={!isHabitRoutineDay(habit, date) ? "none" : ""}
         />
     )

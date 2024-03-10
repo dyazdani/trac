@@ -89,11 +89,16 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
         return (
             <>
             <Button
-            variant={'solid'}
-            colorScheme="yellow"
+            backgroundColor="yellow.500"
+            _hover={{
+                backgroundColor: "yellow.600"
+            }}
+            _active={{
+                backgroundColor: "yellow.700"
+            }} 
             aria-label='send-status-report-form'
             fontSize='20px'
-            border="2mm ridge rgba(255,215,0, .6)"
+            border="2mm ridge rgba(249, 199, 31, 0.6)"
             onClick={(e) => {
                 e.preventDefault();
                 if (!message) {
@@ -136,7 +141,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                                     <FormLabel
                                         htmlFor="emails"
                                     >
-                                        Send Status Report To:
+                                        Email Status Report To:
                                     </FormLabel>
                                     <Input
                                         placeholder="e.g., jack@hill.com, jill@hill.com"
@@ -173,7 +178,8 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                         <ButtonGroup>
                             <Button 
                                 variant="outline" 
-                                colorScheme='teal' 
+                                colorScheme='yellow' 
+                                color="yellow.800" 
                                 mr={3} 
                                 onClick={(e) => {
                                     e.preventDefault();
@@ -185,8 +191,13 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                             </Button>
                             <Button 
                                 mr={3}  
-                                colorScheme='orange'
-                                color="#000000" 
+                                backgroundColor="yellow.500"
+                                _hover={{
+                                    backgroundColor: "yellow.600"
+                                }}
+                                _active={{
+                                    backgroundColor: "yellow.700"
+                                }} 
                                 type="submit"
                                 form="status-report-form"
                                 isLoading={isLoading}

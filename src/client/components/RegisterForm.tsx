@@ -113,11 +113,13 @@ const RegisterForm = () => {
             align="center"
             size="md" 
             m="4vw"
-            bgColor="blue.50"
+            bgColor="#C9E5F6"
             data-testid="landscape-register-form"
             maxHeight="90%"
         >
-            <CardHeader>
+            <CardHeader
+                paddingBottom={0}
+            >
             <Flex
                 direction="column"
                 alignItems={"center"}
@@ -126,18 +128,23 @@ const RegisterForm = () => {
                     mb="1rem"
                     templateColumns="repeat(3, 1fr)"
                     templateRows="repeat(1, 1fr)"
+                    gap={10}
                 >
                     <GridItem
-                    colStart={3}
+                        colStart={2}
+                    >
+                        <Image
+                            src="/images/trac-logo-with-text.png"
+                            alt="trac logo"
+                        />
+                        <Text>Sign up to stay on Trac.</Text> 
+                    </GridItem>
+                    <GridItem
+                        colStart={3}
                     >
                     <DemoUserButton/> 
                     </GridItem> 
                 </Grid>
-                <Image
-                    src="/images/trac-logo-with-text.png"
-                    alt="trac logo"
-                />
-                <Text>Log in to stay on Trac.</Text> 
         </Flex>          
             </CardHeader>
             <CardBody>
@@ -151,166 +158,211 @@ const RegisterForm = () => {
                     <VStack
                         as="fieldset"
                     >
+                        <Flex
+                            alignItems="center"
+                            width="100%"
+                            gap="1vw"
+                        >
+                            <FormControl
+                                isRequired
+                                isDisabled={isInputAndSubmitDisabled}
+                                isInvalid={isEmailInvalid || isEmailTaken}
+                                borderColor={"darkslategray.400"}
+                            >
+                                <FormLabel>Email Address</FormLabel>
+                                <Input 
+                                    type='email' 
+                                    _hover={{
+                                        borderColor: "darkslategray.600"
+                                    }}
+                                    onChange={(e) => {
+                                        e.preventDefault();
+                                        setEmail(e.target.value);
+                                        setIsEmailInvalid(!validEmailRegex.test(e.target.value));
+                                        if (!isUsersLoading && data) {
+                                            const isUnregisteredEmail = data.users.every(element => element.user.email !== e.target.value)
+                                            if (isUnregisteredEmail) {
+                                                setIsEmailTaken(false);
+                                            } else {
+                                                setIsEmailTaken(true);
+                                            }
+                                        }
+                                    }}
+                                    value={email}
+                                />
+                                <Box
+                                    height="1em"
+                                    marginTop=".3em"
+                                >
+                                {
+                                    isEmailInvalid ? 
+                                    <FormErrorMessage marginTop="0">Must enter valid email.</FormErrorMessage> :
+                                    ""
+                                }
+                                {
+                                    !isEmailInvalid && isEmailTaken ? 
+                                    <FormErrorMessage marginTop="0">An account with this email already exists.</FormErrorMessage> :
+                                    ""
+                                }
+                                </Box>
+                            </FormControl>
+                            <FormControl
+                                isRequired
+                                isInvalid={isUsernameTaken}
+                                isDisabled={isInputAndSubmitDisabled}
+                                borderColor={"darkslategray.400"}
+                            >
+                                <FormLabel>Username</FormLabel>
+                                <Input 
+                                    type='username'
+                                    _hover={{
+                                        borderColor: "darkslategray.600"
+                                    }} 
+                                    onChange={(e) => {
+                                        e.preventDefault();
+                                        setUsername(e.target.value);
+                                        if (!isUsersLoading && data) {
+                                            const isUsernameFree = data.users.every(element => element.user.username !== e.target.value)
+                                            if (isUsernameFree) {
+                                                console.log("Username not taken")
+                                                setIsUsernameTaken(false);
+                                            } else {
+                                                console.log("Username taken")
+                                                setIsUsernameTaken(true);
+                                            }
+                                        }
+                                    }}                                
+                                    value={username}
+                                />
+                                <Box
+                                    height="1em"
+                                    marginTop=".3em"
+                                >
+                                    <FormErrorMessage marginTop="0">Username already exists.</FormErrorMessage>
+                                </Box>
+                            </FormControl>
+                            </Flex>
                             <Flex
                                 alignItems="center"
                                 width="100%"
                                 gap="1vw"
                             >
-                                <FormControl
-                                    isRequired
-                                    isDisabled={isInputAndSubmitDisabled}
-                                    isInvalid={isEmailInvalid || isEmailTaken}
-                                >
-                                    <FormLabel>Email Address</FormLabel>
-                                    <Input 
-                                        type='email' 
-                                        onChange={(e) => {
-                                            e.preventDefault();
-                                            setEmail(e.target.value);
-                                            setIsEmailInvalid(!validEmailRegex.test(e.target.value));
-                                            if (!isUsersLoading && data) {
-                                                const isUnregisteredEmail = data.users.every(element => element.user.email !== e.target.value)
-                                                if (isUnregisteredEmail) {
-                                                    setIsEmailTaken(false);
-                                                } else {
-                                                    setIsEmailTaken(true);
-                                                }
-                                            }
-                                        }}
-                                        value={email}
-                                    />
-                                    <Box
-                                        height="1em"
-                                        marginTop=".3em"
+                            <FormControl
+                                isRequired
+                                isInvalid={password.length && isPasswordInvalid ? getPasswordValidation(password).isTooWeak : false}
+                                isDisabled={isInputAndSubmitDisabled}
+                            >
+                                <FormLabel>Password</FormLabel>
+                                    <InputGroup 
+                                        borderColor={"darkslategray.400"}
+                                        size="md"
                                     >
-                                    {
-                                        isEmailInvalid ? 
-                                        <FormErrorMessage marginTop="0">Must enter valid email.</FormErrorMessage> :
-                                        ""
-                                    }
-                                    {
-                                        !isEmailInvalid && isEmailTaken ? 
-                                        <FormErrorMessage marginTop="0">An account with this email already exists.</FormErrorMessage> :
-                                        ""
-                                    }
-                                    </Box>
-                                </FormControl>
-                                <FormControl
-                                    isRequired
-                                    isInvalid={isUsernameTaken}
-                                    isDisabled={isInputAndSubmitDisabled}
-                                >
-                                    <FormLabel>Username</FormLabel>
-                                    <Input 
-                                        type='username' 
-                                        onChange={(e) => {
-                                            e.preventDefault();
-                                            setUsername(e.target.value);
-                                            if (!isUsersLoading && data) {
-                                                const isUsernameFree = data.users.every(element => element.user.username !== e.target.value)
-                                                if (isUsernameFree) {
-                                                    console.log("Username not taken")
-                                                    setIsUsernameTaken(false);
-                                                } else {
-                                                    console.log("Username taken")
-                                                    setIsUsernameTaken(true);
-                                                }
-                                            }
-                                        }}                                
-                                        value={username}
-                                    />
-                                    <Box
-                                        height="1em"
-                                        marginTop=".3em"
-                                    >
-                                        <FormErrorMessage marginTop="0">Username already exists.</FormErrorMessage>
-                                    </Box>
-                                </FormControl>
-                                </Flex>
-                                <Flex
-                                    alignItems="center"
-                                    width="100%"
-                                    gap="1vw"
-                                >
-                                <FormControl
-                                    isRequired
-                                    isInvalid={password.length && isPasswordInvalid ? getPasswordValidation(password).isTooWeak : false}
-                                    isDisabled={isInputAndSubmitDisabled}
-                                >
-                                    <FormLabel>Password</FormLabel>
-                                        <InputGroup size="md">
-                                            <Input
-                                                pr="4.5rem" 
-                                                type={showPassword ? "text" : "password"}
-                                                onChange={e => {
-                                                    e.preventDefault();
-                                                    setPassword(e.target.value)
-                                                    setIsPasswordInvalid(getPasswordValidation(e.target.value).isTooWeak)
-                                                }}
-                                                value={password}
-                                            />
-                                            <InputRightElement width="2.5rem">
-                                                <IconButton 
-                                                    size="sm"
-                                                    h="1.75rem"
-                                                    icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                                                    aria-label="toggle password visibility"
-                                                    onClick={() => setShowPassword((show) => !show)}
-                                                    onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>  e.preventDefault()}
-                                                    data-testid="password-visibility-button"
-                                                />
-                                            </InputRightElement>
-                                        </InputGroup>
-                                        <Flex
-                                            height="5em"
-                                            direction="column"
-                                            width="263px"
-                                            mt=".3em"
-                                        >
-                                            {password.length ? <FormHelperText mt="0">{getPasswordValidation(password).message}</FormHelperText> : ""}
-                                            <FormErrorMessage>{getPasswordValidation(password).characterTypeMessage}</FormErrorMessage>
-                                            <FormErrorMessage>{getPasswordValidation(password).lengthMessage}</FormErrorMessage>
-                                        </Flex>
-                                </FormControl>
-                                <FormControl
-                                    isRequired
-                                    isInvalid={confirmPassword.length ? password !== confirmPassword : false}
-                                    isDisabled={isInputAndSubmitDisabled}
-                                >
-                                    <FormLabel>Confirm Password</FormLabel>
-                                    <InputGroup size="md">
                                         <Input
+                                            _hover={{
+                                                borderColor: "darkslategray.600"
+                                            }}
                                             pr="4.5rem" 
-                                            type={showConfirmPassword ? "text" : "password"}
-                                            onChange={e => setConfirmPassword(e.target.value)}
-                                            value={confirmPassword}
+                                            type={showPassword ? "text" : "password"}
+                                            onChange={e => {
+                                                e.preventDefault();
+                                                setPassword(e.target.value)
+                                                setIsPasswordInvalid(getPasswordValidation(e.target.value).isTooWeak)
+                                            }}
+                                            value={password}
                                         />
                                         <InputRightElement width="2.5rem">
                                             <IconButton 
+                                                backgroundColor="darkslategray.200"
+                                                _hover={{
+                                                  backgroundColor: "darkslategray.300"
+                                                }}
+                                                _active={{
+                                                  backgroundColor: "darkslategray.400"
+                                                }}
                                                 size="sm"
                                                 h="1.75rem"
-                                                icon={showConfirmPassword ? <ViewOffIcon /> : <ViewIcon />}
+                                                icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
                                                 aria-label="toggle password visibility"
-                                                onClick={() => setShowConfirmPassword((show) => !show)}
+                                                onClick={() => setShowPassword((show) => !show)}
                                                 onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>  e.preventDefault()}
-                                                data-testid="confirm-password-visibility-button"
+                                                data-testid="password-visibility-button"
                                             />
                                         </InputRightElement>
                                     </InputGroup>
-                                        <Box
-                                            height="5em"
-                                            mt=".3em"
-                                        >
-                                            {confirmPassword.length ? <FormErrorMessage mt="0">Passwords do not match.</FormErrorMessage> : ""}
-                                        </Box>
-                                </FormControl>
-                            </Flex>
+                                    <Flex
+                                        height="5em"
+                                        direction="column"
+                                        width="263px"
+                                        mt=".3em"
+                                    >
+                                        {
+                                            password.length ? 
+                                            <FormHelperText 
+                                                mt="0" 
+                                                color="darkslategray.600"
+                                            >
+                                                {getPasswordValidation(password).message}
+                                            </FormHelperText> : 
+                                            ""
+                                            }
+                                        <FormErrorMessage>{getPasswordValidation(password).characterTypeMessage}</FormErrorMessage>
+                                        <FormErrorMessage>{getPasswordValidation(password).lengthMessage}</FormErrorMessage>
+                                    </Flex>
+                            </FormControl>
+                            <FormControl
+                                isRequired
+                                isInvalid={confirmPassword.length ? password !== confirmPassword : false}
+                                isDisabled={isInputAndSubmitDisabled}
+                            >
+                                <FormLabel>Confirm Password</FormLabel>
+                                <InputGroup 
+                                    borderColor={"darkslategray.400"}
+                                    size="md"
+                                >
+                                    <Input
+                                         _hover={{
+                                            borderColor: "darkslategray.600"
+                                        }}
+                                        pr="4.5rem" 
+                                        type={showConfirmPassword ? "text" : "password"}
+                                        onChange={e => setConfirmPassword(e.target.value)}
+                                        value={confirmPassword}
+                                    />
+                                    <InputRightElement width="2.5rem">
+                                        <IconButton 
+                                            backgroundColor="darkslategray.200"
+                                            _hover={{
+                                              backgroundColor: "darkslategray.300"
+                                            }}
+                                            _active={{
+                                              backgroundColor: "darkslategray.400"
+                                            }}
+                                            size="sm"
+                                            h="1.75rem"
+                                            icon={showConfirmPassword ? <ViewOffIcon /> : <ViewIcon />}
+                                            aria-label="toggle password visibility"
+                                            onClick={() => setShowConfirmPassword((show) => !show)}
+                                            onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>  e.preventDefault()}
+                                            data-testid="confirm-password-visibility-button"
+                                        />
+                                    </InputRightElement>
+                                </InputGroup>
+                                    <Box
+                                        height="5em"
+                                        mt=".3em"
+                                    >
+                                        {confirmPassword.length ? <FormErrorMessage mt="0">Passwords do not match.</FormErrorMessage> : ""}
+                                    </Box>
+                            </FormControl>
+                        </Flex>
                         <FormControl
                             isRequired
                             isDisabled={isInputAndSubmitDisabled}
                             mt="1em"
                         >
                             <Checkbox
+                                borderColor={"darkslategray.400"}
+                                colorScheme="skyblue"
                                 onChange={(e) => {
                                     e.preventDefault();
                                     setIsPermissionCheckboxChecked(!isPermissionCheckboxChecked);
@@ -326,7 +378,15 @@ const RegisterForm = () => {
                             width="100%"
                         >
                             <Button
-                                colorScheme="yellow"
+                                backgroundColor="peach.300"
+                                color="#353231"
+                                _hover={{
+                                  backgroundColor: "peach.500"
+                                }}
+                                _active={{
+                                  backgroundColor: "peach.600",
+                                  color: "floralwhite.50"
+                                }}
                                 data-testid="submit-button"
                                 type="submit"    
                                 isLoading={isLoading || isKnockLoading}
@@ -355,7 +415,7 @@ const RegisterForm = () => {
                     Already registered?{" "} 
                     <ChakraLink 
                         data-testid="login-link"
-                        color="teal" 
+                        color="stormyblue.700" 
                         as={ReactRouterLink}
                         to="/login"
                     >

@@ -76,6 +76,14 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                 aria-label="Edit Habit" 
                 icon={<EditIcon />} 
                 onClick={onOpen}
+                backgroundColor="cornflowerblue.50"
+                _hover={{
+                    backgroundColor: "cornflowerblue.100"
+                }}
+                _active={{
+                    backgroundColor: "cornflowerblue.200",
+                    color: "floralwhite.50"
+                }}
             >Edit Habit</MenuItem>
                 <Drawer 
                     placement='right' 
@@ -183,9 +191,11 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                 
                             </Box>
                             {/* TODO: Prevent submitting form unless > 0 boxes are checked */}
-                            <Box as="fieldset">
+                            <Box 
+                                as="fieldset"
+                            >
                                 <FormLabel>Weekly Routine</FormLabel>
-                                <CheckboxGroup colorScheme='teal' onChange={(e: RoutineDaysArrayType) => {
+                                <CheckboxGroup colorScheme='stormyblue' onChange={(e: RoutineDaysArrayType) => {
                                     setCheckboxGroupValue(e);
                                 }} 
                                     value={checkboxGroupValue}
@@ -207,6 +217,8 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                     <MenuButton 
                                         as={Button} 
                                         rightIcon={<ChevronDownIcon />}
+                                        colorScheme="stormyblue"
+                                        variant="outline"
                                     >{menuValue}</MenuButton>
                                     <MenuList>
                                         <MenuOptionGroup 
@@ -234,7 +246,7 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                         <ButtonGroup>
                             <Button 
                                 variant="outline" 
-                                colorScheme='teal' 
+                                colorScheme='stormyblue' 
                                 mr={3} 
                                 onClick={onClose}
                             >
@@ -242,7 +254,14 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                             </Button>
                             <Button 
                                 mr={3}  
-                                colorScheme='teal' 
+                                backgroundColor="stormyblue.100"
+                                _hover={{
+                                    backgroundColor: "stormyblue.200",
+                                }}
+                                _active={{
+                                    backgroundColor: "stormyblue.400",
+                                    color: "floralwhite.50"
+                                }}
                                 type="submit"
                                 form="habitForm"
                                 isLoading={isLoading || isScheduleLoading}

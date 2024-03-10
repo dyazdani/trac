@@ -16,12 +16,11 @@ import {
     EditableInput,
     FormControl,
     useToast,
-    Input
   } from '@chakra-ui/react'
 import { useAppSelector } from '../app/hooks.js';
 import { SingleDatepicker } from 'chakra-dayzed-datepicker';
 import { useCreateMilestoneMutation } from '../features/api.js';
-import { AddIcon, SmallAddIcon } from '@chakra-ui/icons';
+import { AddIcon } from '@chakra-ui/icons';
 
 export interface CreateMilestoneFormProps {
     isOpenForMilestone: boolean
@@ -50,14 +49,13 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
             closeOnOverlayClick={false}
             size="sm"
             initialFocusRef={inputRef}
-            colorScheme='yellow'
         >
             <DrawerOverlay />
             <DrawerContent>
             <DrawerHeader 
                 borderBottomWidth='1px'
             >
-                Create a Goal
+                Add a Goal
             </DrawerHeader>
             <DrawerBody>
                 <Stack
@@ -77,7 +75,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                                     onCloseForMilestone()
 
                                     toast({
-                                        title: 'Goal created',
+                                        title: 'Goal Added',
                                         description: `"${milestone.name}" was added to your dashboard.`,
                                         status: 'success',
                                         duration: 9000,
@@ -141,7 +139,8 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                     <Button 
                         variant="outline" 
                         colorScheme='yellow' 
-                        mr={3} 
+                        color="yellow.800"
+                        mr={6} 
                         onClick={(e) => {
                             e.preventDefault();
                             onCloseForMilestone();
@@ -153,12 +152,19 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                     </Button>
                     <Button 
                         mr={3}  
-                        colorScheme='yellow' 
+                        colorScheme='yellow'
+                        _hover={{
+                            backgroundColor: "yellow.600"
+                        }}
+                        _active={{
+                            backgroundColor: "yellow.700"
+                        }} 
                         type="submit"
                         form="milestoneForm"
                         isLoading={isLoading}
+                        paddingX={"2rem"}
                     >
-                        Create
+                        Add
                     </Button>
                 </ButtonGroup>
             </DrawerFooter>

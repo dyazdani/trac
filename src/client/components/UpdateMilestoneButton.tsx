@@ -51,6 +51,13 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                     aria-label="Edit Goal" 
                     icon={<EditIcon/>}
                     onClick={onOpenForUpdateMilestone}
+                    backgroundColor="turquoise.50"
+                    _hover={{
+                        backgroundColor: "turquoise.100"
+                    }}
+                    _active={{
+                        backgroundColor: "turquoise.200"
+                    }}
                 >Edit Goal</MenuItem>
                 <Drawer 
                     placement='right' 

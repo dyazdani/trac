@@ -9,7 +9,6 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Heading,
   Text,
   Button,
   Link as ChakraLink,
@@ -24,7 +23,11 @@ import {
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useGetAllUsersQuery, useGetUserByEmailQuery, useLoginMutation } from "../features/api.js";
+import { 
+  useGetAllUsersQuery, 
+  useGetUserByEmailQuery, 
+  useLoginMutation 
+} from "../features/api.js";
 import { useNavigate } from "react-router";
 import DemoUserButton from "./DemoUserButton.js";
 
@@ -60,7 +63,7 @@ const LoginForm = () => {
 
   const handleSubmit = async () => {
     try {
-      if (!isUsersLoading && !isUserLoading) {
+      if (!isUsersLoading && !isUserLoading && !isLoading) {
         if (data) {
           const isUnregisteredEmail = data.users.every(element => element.user.email !== email)
           if (isUnregisteredEmail) {
@@ -82,10 +85,7 @@ const LoginForm = () => {
           setIsInputAndSubmitDisabled(true);
         }
 
-        if (!isLoading) {
-          navigate("/goals")
-        }
-
+        navigate("/goals")
       }
     } catch (e) {
       console.error(e);    
@@ -98,10 +98,12 @@ const LoginForm = () => {
       align="center" 
       size="md" 
       m="4"
-      bgColor="blue.50"
+      bgColor="#C9E5F6"
       maxHeight="90%"
     >
-      <CardHeader>
+      <CardHeader
+        paddingBottom={0}  
+      >
         <Flex
           direction="column"
           alignItems={"center"}
@@ -110,21 +112,28 @@ const LoginForm = () => {
             mb="1rem"
             templateColumns="repeat(3, 1fr)"
             templateRows="repeat(1, 1fr)"
+            gap={3}
           >
+            <GridItem
+              colStart={2}
+            >
+              <Image
+                src="/images/trac-logo-with-text.png"
+                alt="trac logo"
+              />
+              <Text>Log in to stay on Trac.</Text> 
+            </GridItem>
             <GridItem
               colStart={3}
             >
               <DemoUserButton/> 
             </GridItem> 
           </Grid>
-          <Image
-            src="/images/trac-logo-with-text.png"
-            alt="trac logo"
-          />
-          <Text>Log in to stay on Trac.</Text> 
         </Flex>
       </CardHeader>
-      <CardBody>
+      <CardBody
+        width="70%"
+      >
         <Box
           as="form"
           onSubmit={(e: React.FormEvent<HTMLDivElement>) => {
@@ -140,10 +149,14 @@ const LoginForm = () => {
               isRequired
               isDisabled={isInputAndSubmitDisabled}
               isInvalid={isEmailInvalid || isEmailUnregistered}
+              borderColor={"darkslategray.400"}
             >
               <FormLabel>Email Address</FormLabel>
               <Input
                 type="email"
+                _hover={{
+                  borderColor: "darkslategray.600"
+                }}
                 onChange={(e) => {
                   e.preventDefault();
                   setEmail(e.target.value);
@@ -174,7 +187,6 @@ const LoginForm = () => {
                   ""
                 }
               </Box>
-              
             </FormControl>
 
             <FormControl
@@ -183,8 +195,14 @@ const LoginForm = () => {
               isDisabled={isInputAndSubmitDisabled}
             >
               <FormLabel>Password</FormLabel>
-              <InputGroup size="md">
+              <InputGroup 
+                size="md" 
+                borderColor={"darkslategray.400"}
+              >
                 <Input
+                  _hover={{
+                    borderColor: "darkslategray.600"
+                  }}
                   pr="4.5rem"
                   type={showPassword ? "text" : "password"}
                   onChange={(e) => {
@@ -198,6 +216,13 @@ const LoginForm = () => {
                 <InputRightElement width="2.5rem">
                   <IconButton
                     size="sm"
+                    backgroundColor="darkslategray.200"
+                    _hover={{
+                      backgroundColor: "darkslategray.300"
+                    }}
+                    _active={{
+                      backgroundColor: "darkslategray.400"
+                    }}
                     h="1.75rem"
                     icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
                     aria-label="toggle password visibility"
@@ -212,7 +237,15 @@ const LoginForm = () => {
               <FormErrorMessage>Incorrect password</FormErrorMessage>
             </FormControl>
               <Button
-                colorScheme="yellow"
+                backgroundColor="peach.300"
+                color="#353231"
+                _hover={{
+                  backgroundColor: "peach.500"
+                }}
+                _active={{
+                  backgroundColor: "peach.600",
+                  color: "floralwhite.50"
+                }}
                 marginTop="2vh"
                 data-testid="submit-button"
                 type="submit"
@@ -229,7 +262,7 @@ const LoginForm = () => {
           Don't have an account?{" "}
           <ChakraLink
             data-testid="signup-link"
-            color="teal"
+            color="stormyblue.700"
             as={ReactRouterLink}
             to="/register"
           >

@@ -34,7 +34,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
 
   return (
     <Box 
-      bg="#b9eefe" 
+      bg="turquoise.100"
       w="100vw"
       maxWidth="100%" 
       p="1rem"
@@ -42,7 +42,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
       position={"sticky"}
       top={
         isBannerDisplayed ? 
-        "54px" : 
+        "92px" : 
         "0px"}
       zIndex={100}
     >
@@ -100,8 +100,14 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             ml="1vw"
             mr="1vw"
             variant="solid"
-            color="#000000"
-            colorScheme="orange"
+            backgroundColor="skyblue.600"     
+            color="floralwhite.50"    
+            _hover={{
+                backgroundColor: "skyblue.700"
+            }}
+            _active={{
+                backgroundColor: "skyblue.800",
+            }} 
             onClick={(e) => {
               e.preventDefault();
               dispatch(resetIsBannerDisplayed())
@@ -113,8 +119,15 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
           </Button> :
           <Button
             rightIcon={<ChevronRightIcon/>}
-            colorScheme="orange"
-            color="#000000"
+            backgroundColor="peach.300"
+            color="#353231"
+            _hover={{
+              backgroundColor: "peach.500"
+            }}
+            _active={{
+              backgroundColor: "peach.600",
+              color: "floralwhite.50"
+            }}
             ml="1vw"
             mr="1vw"
             variant="solid"

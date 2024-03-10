@@ -1,6 +1,9 @@
 import { 
   Box, 
+  Grid, 
+  GridItem, 
   Heading,
+  Hide,
   Show,
   Spinner,
   Text
@@ -60,61 +63,101 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
     isAuthenticated || currentUser ? 
     <>
       <Show 
-        below="md"
+        breakpoint="(max-width: 943px)"
       >
         <Heading 
           as="h1" 
           size="lg" 
           textAlign="center" 
-          backgroundColor="yellow.500"
-          padding="1vw"
+          backgroundColor="gold.400"
+          padding="6px"
+          position="sticky"
+          top="0"
+          zIndex={1000}
         >
           Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
         </Heading>
+        <CTABanner top="90px" isBannerDisplayed={isBannerDisplayed}/>
       </Show>
-      <CTABanner isBannerDisplayed={isBannerDisplayed}/>
+      <Hide breakpoint="(max-width: 943px)">
+        <CTABanner top="0px" isBannerDisplayed={isBannerDisplayed}/>
+      </Hide>
+
+      <Hide breakpoint="(max-width: 943px)">
+        <Show breakpoint="(max-height: 565px)">
+          <Heading 
+            as="h1" 
+            size="lg" 
+            textAlign="center" 
+            backgroundColor="gold.400"
+            padding="6px"
+            position="sticky"
+            top="0"
+            zIndex={1000}
+          >
+            Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
+          </Heading>
+        </Show>
+      </Hide>     
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
+    
       {
       isLoading ?
       <Spinner 
-        color="orange.500" 
+        color="peach.500" 
         size="xl"
         position="absolute"
         top="50vh"
         left="50vw"
       /> :
-        <Box
-          w="100%"
-          h="100%"
-          minHeight="100vh"
-          display="flex"
-          flexDirection="column"
-          paddingBottom="10vh"
-          paddingTop="5vh"
-          alignItems="center"
-        >
-          <Heading 
-            as='h1' 
-            size="2xl" 
-            position="sticky" 
-            top={isBannerDisplayed ? "154px" : "100px"} 
-            bg="orange.100" 
-            padding=".8rem 1rem" 
-            zIndex={2}
-            borderRadius={"2rem"}
+        <>
+          <Grid
+            templateColumns="repeat(3, 1fr)"
           >
-            My Goals
-          </Heading>
-
-        {
-          !milestonesData?.milestones.length ?
-          <Text fontSize="xl" mt="20vh">You currently have no Goals.</Text> : 
-          ""
-        }
-        <RightDrawer isMilestonesEmpty={isMilestonesEmpty}/>
-        <MyMilestones milestones={milestonesData?.milestones}/>
-        {<ArtistCredit textColor="blue.500" position="left"/>}
-      </Box>
+            <GridItem
+              colStart={1}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+            >
+              <Heading
+                as='h1'
+                size="2xl"
+                marginTop="3.8rem"
+                position="fixed"
+                paddingX="1rem"
+              >
+                My Goals:
+              </Heading>
+            </GridItem>
+            {
+              !milestonesData?.milestones.length ?
+              <GridItem
+                colStart={2}
+              >
+                <Text
+                  fontSize="xl"
+                  mt="20vh">
+                  You currently have no Goals.
+                </Text>
+              </GridItem> :
+              <GridItem
+                colStart={2}
+              >
+                <MyMilestones milestones={milestonesData?.milestones} />
+              </GridItem>               
+            }
+            <GridItem
+              colStart={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+            >
+              <RightDrawer isMilestonesEmpty={isMilestonesEmpty} />
+            </GridItem>
+          </Grid>
+          <ArtistCredit textColor="stormyblue.700" />
+        </>
       }   
     </> :
     <Navigate to="/login" replace />

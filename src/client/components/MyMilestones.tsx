@@ -9,7 +9,7 @@ export interface MyMilestonesProps {
 const MyMilestones = ({ milestones }: MyMilestonesProps) => {
     return (
         <VStack
-            paddingTop="7vh"
+            paddingY="3rem"
             align="start"
             spacing="20"
         >

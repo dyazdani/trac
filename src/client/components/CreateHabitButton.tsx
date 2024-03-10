@@ -60,21 +60,27 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
         }
     ] = useCreateScheduleMutation();
 
-    const iconButtonBackgroundColor = milestone.isCompleted ? "rgba(249, 209, 98, 0.1)" : milestone.isCanceled ? "rgba(212, 211, 212, 1)" : ""
+    const iconButtonBackgroundColor = milestone.isCompleted ? "rgba(249, 209, 98, 0.1)" : milestone.isCanceled ? "rgba(212, 211, 212, 1)" : "yellow.500"
 
     if (currentUser) {
         return (
             <>
-            <Button 
-                aria-label="Add Habit" 
-                leftIcon={<AddIcon />} 
-                isDisabled={milestone && milestone.isCompleted || milestone.isCanceled}
-                variant="solid"
-                border="1px solid black"
-                onClick={onOpen}
-                backgroundColor={iconButtonBackgroundColor}
-                colorScheme="yellow"
-            >{!milestone.habits.length ? `Add first Habit for "${milestone.name}"` : "Add Habit"}</Button>
+                <Button 
+                    aria-label="Add Habit" 
+                    leftIcon={<AddIcon />} 
+                    isDisabled={milestone && milestone.isCompleted || milestone.isCanceled}
+                    variant="solid"
+                    onClick={onOpen}
+                    backgroundColor={iconButtonBackgroundColor}
+                    _hover={{
+                        backgroundColor: "yellow.600"
+                    }}
+                    _active={{
+                        backgroundColor: "yellow.700"
+                    }} 
+                >
+                    {!milestone.habits.length ? `Add first Habit for "${milestone.name}"` : "Add Habit"}
+                </Button>
                 <Drawer 
                     placement='right' 
                     onClose={onClose} 
@@ -180,9 +186,11 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                 {/* TODO: Prevent submitting form unless > 0 boxes are checked */}
                                 <Box as="fieldset">
                                     <FormLabel>Weekly Routine</FormLabel>
-                                    <CheckboxGroup colorScheme='teal' onChange={(e: RoutineDaysArrayType) => {
-                                        setCheckboxGroupValue(e);
-                                    }} 
+                                    <CheckboxGroup 
+                                        colorScheme='stormyblue' 
+                                        onChange={(e: RoutineDaysArrayType) => {
+                                            setCheckboxGroupValue(e);
+                                        }} 
                                         value={checkboxGroupValue}
                                     >
                                         <Stack direction='row'>
@@ -202,7 +210,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                         <MenuButton 
                                             as={Button} 
                                             rightIcon={<ChevronDownIcon />}
-                                            colorScheme="blue"
+                                            colorScheme="stormyblue"
                                             variant="outline"
                                         >{menuValue}</MenuButton>
                                         <MenuList>
@@ -235,18 +243,31 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                             <ButtonGroup>
                                 <Button 
                                     variant="outline" 
-                                    colorScheme='yellow' 
+                                    colorScheme='stormyblue' 
                                     mr={3} 
-                                    onClick={onClose}
+                                    onClick={e => {
+                                        onClose();
+                                        setMenuValue('Monday');
+                                        setCheckboxGroupValue([]);
+                                        setHabitNameValue('New Habit');
+                                    }}
                                 >
                                     Cancel
                                 </Button>
                                 <Button 
                                     mr={3}  
-                                    colorScheme='yellow' 
                                     type="submit"
                                     form="habitForm"
+                                    paddingX={"2rem"}
                                     isLoading={isLoading || isScheduleLoading}
+                                    backgroundColor="stormyblue.100"
+                                    _hover={{
+                                        backgroundColor: "stormyblue.200",
+                                    }}
+                                    _active={{
+                                        backgroundColor: "stormyblue.400",
+                                        color: "floralwhite.50"
+                                    }}
                                 >
                                     Add
                                 </Button>

@@ -13,13 +13,16 @@ const LoginPage = () => {
     return (
         <>  
             <Hide below="md">
-                <Show breakpoint="(max-height: 565px)">
+                <Show breakpoint="(max-height: 517px)">
                     <Heading 
                     as="h1" 
-                    size="md" 
+                    size="lg" 
                     textAlign="center" 
-                    backgroundColor="yellow.500"
+                    backgroundColor="gold.400"
                     padding="1vw"
+                    position="sticky"
+                    top="0"
+                    zIndex={2}
                     >
                     Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
                     </Heading>
@@ -30,10 +33,13 @@ const LoginPage = () => {
             >
                 <Heading 
                     as="h1" 
-                    size="md" 
+                    size="lg" 
                     textAlign="center" 
-                    backgroundColor="yellow.500"
+                    backgroundColor="gold.400"
                     padding="1vw"
+                    position="sticky"
+                    top="0"
+                    zIndex={2}
                 >
                     Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
                 </Heading>
