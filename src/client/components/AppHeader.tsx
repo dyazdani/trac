@@ -42,7 +42,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
       position={"sticky"}
       top={
         isBannerDisplayed ? 
-        "54px" : 
+        "92px" : 
         "0px"}
       zIndex={100}
     >
