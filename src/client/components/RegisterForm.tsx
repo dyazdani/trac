@@ -378,7 +378,7 @@ const RegisterForm = () => {
                         >
                             <Button
                                 backgroundColor="peach.300"
-                                color="353231"
+                                color="#353231"
                                 _hover={{
                                   backgroundColor: "peach.500"
                                 }}
