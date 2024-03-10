@@ -384,7 +384,10 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                   }
                   
                   {
-                    isCheckInDay && !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ?
+                    isCheckInDay && 
+                    !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) &&
+                    !milestone.isCompleted && 
+                    !milestone.isCanceled ?
                     <>
                       <GridItem
                         padding={".2vw"}
