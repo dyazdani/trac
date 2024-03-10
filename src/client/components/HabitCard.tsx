@@ -199,7 +199,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
         {}
       }
     >
-      <CardHeader>
+      <CardHeader
+        paddingY="0"
+      >
         <Flex
           justifyContent="space-between"
           alignItems="center"

@@ -201,7 +201,9 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                         <AccordionIcon />
                                     </AccordionButton>
                                     </h2>
-                                    <AccordionPanel pb={4}>
+                                    <AccordionPanel 
+                                        padding="0"
+                                    >
                                         <HabitCard 
                                             habit={habit}
                                             milestone={milestone}
