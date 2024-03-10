@@ -393,7 +393,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         rowStart={isHabitRoutineDay(habit, day) ? 5 : 4}
                         textAlign="center"
                       >
-                        <ChevronUpIcon color={isOutOfRange ? "gray" : "darkslategray.800"}/>
+                        <ChevronUpIcon color={isOutOfRange ? "darkslategray.400" : "darkslategray.800"}/>
                       </GridItem>
                       <GridItem
                         padding={".2vw"}
@@ -403,7 +403,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         textAlign="center"
                       >
                         <Box
-                          color={isOutOfRange ? "gray" : "darkslategray.800"}
+                          color={isOutOfRange ? "darkslategray.400" : "darkslategray.800"}
                         >
                           Check-In Day
                         </Box>
