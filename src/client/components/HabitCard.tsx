@@ -188,7 +188,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
       }
       borderRadius="20px"
       border={milestone && milestone.isCompleted || milestone.isCanceled ? "" :
-        !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "2mm ridge rgba(255,215,0, .6)" : ""
+        !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "2mm ridge rgba(249, 199, 31, 0.6)" : ""
       }
       backgroundSize={milestone && milestone.isCompleted || milestone.isCanceled ? "" :
         !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "300%" : ""
