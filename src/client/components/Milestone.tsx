@@ -68,7 +68,17 @@ const Milestone = ({milestone}: MilestoneProps) => {
                     fontSize="lg"
                     color={textColor}
                 >
-                    Due {new Date(milestone.dueDate).toLocaleDateString()} { !milestone.isCompleted && <Badge colorScheme="yellow" variant="solid"ml=".5rem">TODAY!</Badge> }
+                    Due {new Date(milestone.dueDate).toLocaleDateString()} { 
+                        !milestone.isCompleted && 
+                        <Badge 
+                            colorScheme="gold" 
+                            variant="solid" 
+                            color="darkslategray.800" 
+                            ml=".5rem"
+                        >
+                            TODAY!
+                        </Badge> 
+                    }
                 </Text> : 
                 new Date().getTime() > new Date(milestone.dueDate).setHours(23, 59, 59, 999) ?
                 <Text  
@@ -76,7 +86,16 @@ const Milestone = ({milestone}: MilestoneProps) => {
                     fontSize="lg"
                     color={textColor}
                 >
-                    Due {new Date(milestone.dueDate).toLocaleDateString()} { !milestone.isCompleted && <Badge colorScheme="red" variant="solid" ml=".5rem">OVERDUE!</Badge> }
+                    Due {new Date(milestone.dueDate).toLocaleDateString()} { 
+                        !milestone.isCompleted && 
+                        <Badge 
+                            colorScheme="red" 
+                            variant="solid" 
+                            ml=".5rem"
+                        >
+                            OVERDUE!
+                        </Badge> 
+                    }
                 </Text> : 
                 <Text 
                     textAlign="center"
