@@ -361,7 +361,8 @@ const RegisterForm = () => {
                             mt="1em"
                         >
                             <Checkbox
-                                 borderColor={"darkslategray.400"}
+                                borderColor={"darkslategray.400"}
+                                colorScheme="skyblue"
                                 onChange={(e) => {
                                     e.preventDefault();
                                     setIsPermissionCheckboxChecked(!isPermissionCheckboxChecked);
