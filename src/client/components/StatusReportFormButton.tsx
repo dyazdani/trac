@@ -135,7 +135,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                                     <FormLabel
                                         htmlFor="emails"
                                     >
-                                        Send Status Report To:
+                                        Email Status Report To:
                                     </FormLabel>
                                     <Input
                                         placeholder="e.g., jack@hill.com, jill@hill.com"
