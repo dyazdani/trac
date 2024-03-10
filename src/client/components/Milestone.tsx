@@ -71,7 +71,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                     Due {new Date(milestone.dueDate).toLocaleDateString()} { 
                         !milestone.isCompleted && 
                         <Badge 
-                            colorScheme="gold" 
+                            colorScheme="yellow" 
                             variant="solid" 
                             color="darkslategray.800" 
                             ml=".5rem"
