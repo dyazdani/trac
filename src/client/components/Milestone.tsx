@@ -184,6 +184,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                             minWidth="450px"
                             mb=".5vw"
                             borderRadius="8px"
+                            boxShadow="2xl"
                         >
                             {({ isExpanded }) => (
                                 <>
