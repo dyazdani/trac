@@ -44,7 +44,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
         <Card
         w="50vw"
         minW="570px"
-        background="linear-gradient(0deg, rgba(183,186,251, 1) 0%, rgba(193,232,240, 1) 100%)"
+        background={milestone.isCanceled ? "#C3C1C1" : "linear-gradient(0deg, rgba(183,186,251, 1) 0%, rgba(193,232,240, 1) 100%)"}
         borderRadius="20px"
         >
         <CardHeader>
@@ -158,7 +158,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                     return (
                         <AccordionItem
                             key={habit.id}
-                            bgColor="#C9E5F6"
+                            bgColor={milestone.isCanceled ? "#CDCBCB" : "#C9E5F6"}
                             border="none"
                             width="42vw"
                             minWidth="450px"

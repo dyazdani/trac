@@ -183,7 +183,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
       w="40vw" 
       minW="424px"
       bg={
-        milestone && milestone.isCanceled ? "rgba(212, 211, 212, 1)" :
+        milestone && milestone.isCanceled ? "#CDCBCB" :
         !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "linear-gradient(-45deg, #F9D162 40%, #FBE29D 50%, #F9D162 60%)" : "#C9E5F6"
       }
       borderRadius="20px"
