@@ -201,7 +201,11 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
       }
     >
       <CardHeader>
-        <HStack justify={"end"}>
+        <Flex
+          justifyContent="space-between"
+          alignItems="center"
+          gap="1vw"
+        >
           <Heading 
             sx={{ marginRight: "auto" }} 
             size="md"
@@ -230,7 +234,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     color: "floralwhite.50"    
                   }} 
                   isActive={isOpen}
-                >Menu</MenuButton>
+                >
+                  Menu
+                </MenuButton>
                 <MenuList
                   backgroundColor="cornflowerblue.50"
                 >
@@ -240,7 +246,34 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               </>
             )}
           </Menu>
-        </HStack>
+          {
+            isHabitRoutineDay(habit, today) && 
+            !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), today) &&
+            !milestone.isCompleted &&
+            !milestone.isCanceled ? 
+            <Button
+              backgroundColor={milestone.isCompleted ? "peach.100" : "peach.300"}
+              color={isCompleted ? "peach.700" : "#353231"}
+              _hover={
+                milestone.isCompleted ? 
+                { backgroundColor: "peach.200"} :
+                { backgroundColor: "peach.500"}
+              }
+              _active={{
+                backgroundColor: "peach.600",
+                color: "floralwhite.50"
+              }}
+              isLoading={isLoading}
+              leftIcon={!isCompleted ? <CheckIcon/> : undefined}
+              onClick={() => {
+                handleClick();
+              }}
+            >
+              {isCompleted ? `Undo Complete Today` : `Complete Today`}
+            </Button> :
+            ""
+          }
+        </Flex>
       </CardHeader>
       <Flex 
           direction={"column"} 
@@ -453,39 +486,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               )
             })}
           </Grid>
-        </CardBody>
-        <CardFooter
-          color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
-        >
-          {
-            isHabitRoutineDay(habit, today) && 
-            !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), today) &&
-            !milestone.isCompleted &&
-            !milestone.isCanceled ? 
-            <Button
-              backgroundColor={milestone.isCompleted ? "peach.100" : "peach.300"}
-              color={isCompleted ? "peach.700" : "#353231"}
-              _hover={
-                milestone.isCompleted ? 
-                { backgroundColor: "peach.200"} :
-                { backgroundColor: "peach.500"}
-              }
-              _active={{
-                backgroundColor: "peach.600",
-                color: "floralwhite.50"
-              }}
-              isLoading={isLoading}
-              leftIcon={!isCompleted ? <CheckIcon/> : undefined}
-              onClick={() => {
-                handleClick();
-              }}
-            >
-              {isCompleted ? `Undo Complete Today` : `Complete Today`}
-            </Button> :
-            ""
-          }
-        </CardFooter>
-        
+        </CardBody>       
         {milestone && milestone.isCompleted || milestone.isCanceled ? "" : (!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
           <Box
           mt="15px"
