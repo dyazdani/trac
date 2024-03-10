@@ -89,11 +89,10 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
         return (
             <>
             <Button
-            variant={'solid'}
             colorScheme="yellow"
             aria-label='send-status-report-form'
             fontSize='20px'
-            border="2mm ridge rgba(255,215,0, .6)"
+            border="2mm ridge rgba(249, 199, 31, 0.6)"
             onClick={(e) => {
                 e.preventDefault();
                 if (!message) {
