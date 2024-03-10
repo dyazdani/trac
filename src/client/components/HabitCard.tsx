@@ -457,7 +457,10 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
           color={milestone.isCanceled || milestone.isCompleted ? "gray" : ""}
         >
           {
-            isHabitRoutineDay(habit, today) && !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), today) ? 
+            isHabitRoutineDay(habit, today) && 
+            !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), today) &&
+            !milestone.isCompleted &&
+            !milestone.isCanceled ? 
             <Button
               backgroundColor={milestone.isCompleted ? "peach.100" : "peach.300"}
               color={isCompleted ? "peach.700" : "#353231"}
