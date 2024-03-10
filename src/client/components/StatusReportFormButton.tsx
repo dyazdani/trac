@@ -89,7 +89,13 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
         return (
             <>
             <Button
-            colorScheme="yellow"
+            backgroundColor="yellow.500"
+            _hover={{
+                backgroundColor: "yellow.600"
+            }}
+            _active={{
+                backgroundColor: "yellow.700"
+            }} 
             aria-label='send-status-report-form'
             fontSize='20px'
             border="2mm ridge rgba(249, 199, 31, 0.6)"
