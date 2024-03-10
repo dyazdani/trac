@@ -242,7 +242,7 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                         <ButtonGroup>
                             <Button 
                                 variant="outline" 
-                                colorScheme='teal' 
+                                colorScheme='cornflowerblue' 
                                 mr={3} 
                                 onClick={onClose}
                             >
@@ -250,7 +250,15 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                             </Button>
                             <Button 
                                 mr={3}  
-                                colorScheme='teal' 
+                                backgroundColor="cornflowerblue.100"
+                                _hover={{
+                                    backgroundColor: "cornflowerblue.200",
+                                    color: "floralwhite.50"
+                                }}
+                                _active={{
+                                    backgroundColor: "cornflowerblue.300",
+                                    color: "floralwhite.50"
+                                }}
                                 type="submit"
                                 form="habitForm"
                                 isLoading={isLoading || isScheduleLoading}
