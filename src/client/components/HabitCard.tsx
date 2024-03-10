@@ -284,7 +284,11 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                 size="sm"
                 variant="unstyled"
                 isDisabled={currentWeek.some(day => {
-                  return day.setHours(0, 0, 0, 0) >= new Date(milestone.dueDate).setHours(0, 0, 0, 0); 
+                  return (
+                    (milestone.isCompleted || milestone.isCanceled) && 
+                    isDateToday(day) || 
+                    day.setHours(0, 0, 0, 0) >= new Date(milestone.dueDate).setHours(0, 0, 0, 0) 
+                  )
                 })}
                 onClick={handleRightArrowClick}
               />
@@ -331,6 +335,8 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     ""
                   }
                   {
+                    (milestone.isCompleted || milestone.isCanceled) && isOutOfRange ? 
+                    "" :
                     !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ?
                     <>
                       <GridItem
