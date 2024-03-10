@@ -243,8 +243,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                             <ButtonGroup>
                                 <Button 
                                     variant="outline" 
-                                    colorScheme='yellow' 
-                                    color="yellow.800"
+                                    colorScheme='stormyblue' 
                                     mr={3} 
                                     onClick={e => {
                                         onClose();
@@ -257,17 +256,18 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                 </Button>
                                 <Button 
                                     mr={3}  
-                                    colorScheme='yellow' 
                                     type="submit"
                                     form="habitForm"
                                     paddingX={"2rem"}
                                     isLoading={isLoading || isScheduleLoading}
+                                    backgroundColor="stormyblue.100"
                                     _hover={{
-                                        backgroundColor: "yellow.600"
+                                        backgroundColor: "stormyblue.200",
                                     }}
                                     _active={{
-                                        backgroundColor: "yellow.700"
-                                    }} 
+                                        backgroundColor: "stormyblue.400",
+                                        color: "floralwhite.50"
+                                    }}
                                 >
                                     Add
                                 </Button>
