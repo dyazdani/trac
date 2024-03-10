@@ -40,7 +40,7 @@ const CTABanner = ({ isBannerDisplayed }: CTABannerProps) => {
                         textAlign="center"
                         p="3px"
                     >
-                        {`** Check-In Day **`}
+                        {`Check-In Time!`}
                     </Heading>
                     <Heading
                         as="h2"
@@ -48,7 +48,7 @@ const CTABanner = ({ isBannerDisplayed }: CTABannerProps) => {
                         textAlign="center"
                         p="3px"
                     >
-                        {`Click "Send Status Report" button in your Habit(s) to update your friends on your progress.`}
+                        {`Click the "Send Status Report" buttons in your Habits to update your friends on your progress.`}
                     </Heading>
                 </Flex>
                 
