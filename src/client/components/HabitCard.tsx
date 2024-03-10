@@ -174,30 +174,10 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
 
   return (
     <Card
-      as={motion.div}
-      animation={milestone && milestone.isCompleted || milestone.isCanceled ? "" :
-        !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? animation : ""
-      }
       w="40vw" 
       minW="424px"
-      boxShadow="none"
-      bg={
-        milestone && milestone.isCanceled ? "#CDCBCB" :
-        milestone && milestone.isCompleted ? "#C9E5F6" :
-        !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "linear-gradient(-45deg, #C9E5F6 40%, #DCEEF9 50%, #C9E5F6 60%)" : "#C9E5F6"
-      }
-      borderRadius="20px"
-      border={milestone && milestone.isCompleted || milestone.isCanceled ? "" :
-        !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "2mm ridge rgba(249, 199, 31, 0.6)" : ""
-      }
-      backgroundSize={milestone && milestone.isCompleted || milestone.isCanceled ? "" :
-        !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "300%" : ""
-      }
-      sx={milestone && milestone.isCompleted || milestone.isCanceled ? {} :
-        !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? 
-        {backgroundPositionX: '100%'} : 
-        {}
-      }
+      backgroundColor="transparent"
+      boxShadow="none"  
     >
       <CardHeader
         paddingY="0"

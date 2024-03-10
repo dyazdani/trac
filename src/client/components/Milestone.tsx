@@ -21,7 +21,8 @@ import {
     MenuButton,
     MenuList,
     Spacer,
-    Text
+    Text,
+    keyframes
 } from "@chakra-ui/react";
 import HabitCard from "./HabitCard.js";
 import { MilestoneWithDetails } from "../../types/index.js";
@@ -31,6 +32,9 @@ import CompleteMilestoneButton from "./CompleteMilestoneButton.js";
 import CancelMilestoneButton from "./CancelMilestoneButton.js";
 import CreateHabitButton from "./CreateHabitButton.js";
 import areDatesSameDayMonthYear from "../utils/areDatesSameDayMonthYear.js";
+import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
+import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
+import { motion } from "framer-motion";
 
 export interface MilestoneProps {
     milestone: MilestoneWithDetails
@@ -175,15 +179,59 @@ const Milestone = ({milestone}: MilestoneProps) => {
             >
                 {[...milestone.habits].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
                     .map(habit => {
+                        const isStatusReportSent = isMostRecentStatusReportSent(habit);
+
+                        const midnightOfFirstCheckIn = getFirstCheckInDayDate(habit)?.setHours(0, 0, 0, 0)
+                        const isTodayBeforeFirstCheckInDayDate = midnightOfFirstCheckIn && Date.now() < midnightOfFirstCheckIn
+
+
+                        const animationKeyframes = keyframes`to { background-position-x: 0% }`;
+                        const animation = `${animationKeyframes} 1s infinite linear`; 
+
                     return (
                         <AccordionItem
                             key={habit.id}
-                            bgColor={milestone.isCanceled ? "#CDCBCB" : "#C9E5F6"}
-                            border="none"
+                            as={motion.div}
+                            paddingLeft="8px"
+                            animation={
+                                milestone && milestone.isCompleted || milestone.isCanceled ? "" :
+                                !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? animation : ""
+                            }
+                            bg={
+                                milestone && milestone.isCanceled ? "#CDCBCB" :
+                                milestone && milestone.isCompleted ? "#C9E5F6" :
+                                !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "linear-gradient(-45deg, #C9E5F6 40%, #DCEEF9 50%, #C9E5F6 60%)" : "#C9E5F6"
+                            }
+                            border={
+                                milestone && milestone.isCompleted ||
+                                milestone.isCanceled ? 
+                                "none" :
+                                !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? 
+                                "2mm ridge rgba(249, 199, 31, 0.6)" : 
+                                "none"
+                            }
+                            backgroundSize={
+                                milestone && milestone.isCompleted || 
+                                milestone.isCanceled ? 
+                                "" :
+                                !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? 
+                                "300%" : 
+                                ""
+                            }
+                            sx={
+                                milestone && milestone.isCompleted || 
+                                milestone.isCanceled ? 
+                                {} :
+                                !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? 
+                                {
+                                    backgroundPositionX: '100%'
+                                } : 
+                                {}
+                            }
                             width="42vw"
                             minWidth="450px"
                             mb=".5vw"
-                            borderRadius="8px"
+                            borderRadius="20px"
                             boxShadow="2xl"
                         >
                             {({ isExpanded }) => (
