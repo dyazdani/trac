@@ -134,7 +134,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                         <MenuList
                             backgroundColor="turquoise.50"
                         >   
-                            <CreateHabitButton milestone={milestone}/>
+                            {milestone.habits.length ? <CreateHabitButton milestone={milestone}/> : ""}
                             <UpdateMilestoneButton milestone={milestone}/>
                             <DeleteMilestoneButton milestone={milestone}/>
                             <CancelMilestoneButton milestone={milestone}/>
