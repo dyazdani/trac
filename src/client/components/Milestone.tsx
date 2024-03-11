@@ -192,6 +192,9 @@ const Milestone = ({milestone}: MilestoneProps) => {
                         <AccordionItem
                             key={habit.id}
                             as={motion.div}
+                            _last={{
+                                borderBottomWidth: "7px"
+                            }}
                             paddingLeft="8px"
                             animation={
                                 milestone && milestone.isCompleted || milestone.isCanceled ? "" :
@@ -207,7 +210,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                 milestone.isCanceled ? 
                                 "none" :
                                 !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? 
-                                "2mm ridge rgba(249, 199, 31, 0.6)" : 
+                                "7px ridge rgba(249, 199, 31, 0.6)" : 
                                 "none"
                             }
                             backgroundSize={
