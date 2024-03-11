@@ -239,8 +239,11 @@ const Milestone = ({milestone}: MilestoneProps) => {
                         >
                             {({ isExpanded }) => (
                                 <>
-                                    <h2>
-                                    <AccordionButton>
+                                    <AccordionButton
+                                        _focusVisible={{
+                                            borderRadius: "20px"
+                                        }}
+                                    >
                                         <Box 
                                             as="span" 
                                             flex='1' 
@@ -251,7 +254,6 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                         </Box>
                                         <AccordionIcon />
                                     </AccordionButton>
-                                    </h2>
                                     <AccordionPanel 
                                         padding="0"
                                     >

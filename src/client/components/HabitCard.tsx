@@ -187,7 +187,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
         >
           <Heading 
             sx={{ marginRight: "auto" }} 
-            as="h3"
+            as="h4"
             size="md"
             color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : ""}
           >
