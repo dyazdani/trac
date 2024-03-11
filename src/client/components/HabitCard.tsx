@@ -9,7 +9,7 @@ import {
   IconButton,
   Flex,
   Box,
-  keyframes,
+  Text,
   MenuButton,
   Menu,
   MenuList,
@@ -177,19 +177,25 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
       boxShadow="none"  
     >
       <CardHeader
-        paddingY="0"
+        paddingTop="0"      
+        paddingBottom="20px"
       >
         <Flex
           justifyContent="space-between"
-          alignItems="center"
+          alignItems="end"
           gap="1vw"
         >
           <Heading 
             sx={{ marginRight: "auto" }} 
+            as="h3"
             size="md"
             color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : ""}
           >
-            {habit.name}
+            <Text 
+              borderBottom="1px solid"
+            >
+              {habit.name}
+            </Text>
           </Heading>
           <Menu
             isLazy
