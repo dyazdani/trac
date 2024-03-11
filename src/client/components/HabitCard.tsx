@@ -2,16 +2,14 @@ import {useState} from "react";
 import ToggleButton from "./ToggleButton.js";
 import DeleteHabitButton from "./DeleteHabitButton.js";
 import {
-  HStack,
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Heading,
   IconButton,
   Flex,
   Box,
-  keyframes,
+  Text,
   MenuButton,
   Menu,
   MenuList,
@@ -171,47 +169,33 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
   }
 
 
-  const animationKeyframes = keyframes`to { background-position-x: 0% }`;
-  const animation = `${animationKeyframes} 1s infinite linear`; 
-
   return (
     <Card
-      as={motion.div}
-      animation={milestone && milestone.isCompleted || milestone.isCanceled ? "" :
-        !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? animation : ""
-      }
       w="40vw" 
       minW="424px"
-      bg={
-        milestone && milestone.isCanceled ? "#CDCBCB" :
-        milestone && milestone.isCompleted ? "#C9E5F6" :
-        !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "linear-gradient(-45deg, #C9E5F6 40%, #DCEEF9 50%, #C9E5F6 60%)" : "#C9E5F6"
-      }
-      borderRadius="20px"
-      border={milestone && milestone.isCompleted || milestone.isCanceled ? "" :
-        !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "2mm ridge rgba(249, 199, 31, 0.6)" : ""
-      }
-      backgroundSize={milestone && milestone.isCompleted || milestone.isCanceled ? "" :
-        !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "300%" : ""
-      }
-      sx={milestone && milestone.isCompleted || milestone.isCanceled ? {} :
-        !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? 
-        {backgroundPositionX: '100%'} : 
-        {}
-      }
+      backgroundColor="transparent"
+      boxShadow="none"  
     >
-      <CardHeader>
+      <CardHeader
+        paddingTop="0"      
+        paddingBottom="20px"
+      >
         <Flex
           justifyContent="space-between"
-          alignItems="center"
+          alignItems="end"
           gap="1vw"
         >
           <Heading 
             sx={{ marginRight: "auto" }} 
+            as="h4"
             size="md"
             color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : ""}
           >
-            {habit.name}
+            <Text 
+              borderBottom="1px solid"
+            >
+              {habit.name}
+            </Text>
           </Heading>
           <Menu
             isLazy
@@ -276,15 +260,17 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
         </Flex>
       </CardHeader>
       <Flex 
-          direction={"column"} 
-          align={"center"}
-          >
-        <CardBody>
+        direction={"column"} 
+        align={"center"}
+      >
+        <CardBody
+          padding="0"
+
+        >
           <Grid 
             templateColumns="repeat(17, 1fr)" 
             templateRows="repeat(6, 1fr)" 
             p="1vw"
-            boxShadow="2xl"
             rounded="lg"
           >
             <GridItem
@@ -489,7 +475,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
         </CardBody>       
         {milestone && milestone.isCompleted || milestone.isCanceled ? "" : (!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
           <Box
-          mt="15px"
           mb="20px"
         >
           <StatusReportFormButton
