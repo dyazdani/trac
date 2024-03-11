@@ -169,9 +169,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
   }
 
 
-  const animationKeyframes = keyframes`to { background-position-x: 0% }`;
-  const animation = `${animationKeyframes} 1s infinite linear`; 
-
   return (
     <Card
       w="40vw" 
