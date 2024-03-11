@@ -154,7 +154,15 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
       thisWeek.push(new Date(previousDay.setDate(previousDayOfTheMonth + 1)))
     }
     setCurrentWeek(thisWeek);
-  } 
+  } else if (currentWeek.every(date => date.setHours(0, 0, 0, 0) > new Date(milestone.dueDate).setHours(0, 0, 0, 0))) {
+    let targetWeek = getPreviousWeek(currentWeek);
+
+    while (targetWeek.every(date => date.setHours(0, 0, 0, 0) > new Date(milestone.dueDate).setHours(0, 0, 0, 0))) {
+      targetWeek = getPreviousWeek(targetWeek);
+    }
+
+    setCurrentWeek(targetWeek);
+  }
 
   // Function for left arrow button that displays previous week
   const handleLeftArrowClick = () => {
