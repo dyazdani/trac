@@ -475,7 +475,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
         </CardBody>       
         {milestone && milestone.isCompleted || milestone.isCanceled ? "" : (!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
           <Box
-          mt="15px"
           mb="20px"
         >
           <StatusReportFormButton
