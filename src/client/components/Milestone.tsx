@@ -243,6 +243,9 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                         _focusVisible={{
                                             borderRadius: "20px"
                                         }}
+                                        _hover={{
+                                            borderRadius: "20px"
+                                        }}
                                     >
                                         <Box 
                                             as="span" 
