@@ -202,10 +202,10 @@ const LandingPage = () => {
                         lineHeight="4rem"
                     >
                         <Highlight
-                            query={['Status Report', 'Check-In Day', 'social accountability']}
+                            query={['Check-In Report', 'Check-In Day', 'social accountability']}
                             styles={{ px: '3', py: '1', rounded: 'xl', bg: 'gold.100' }}
                         >
-                            Email a Status Report to your friends every week on your Habit's Check-In Day. Research shows that social accountability works. 
+                            Email a Check-In Report to your friends every week on your Habit's Check-In Day. Research shows that social accountability works. 
                         </Highlight>
                     </Heading>
                     <Flex
@@ -224,19 +224,19 @@ const LandingPage = () => {
                             >
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
-                                    <Text as="b">Send Status Report</Text> button appears when it is a Check-In Day.
+                                    <Text as="b">Send Check-In Report</Text> button appears when it is a Check-In Day.
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
-                                    Receive in-app and email reminders to send status reports as well.
+                                    Receive in-app and email reminders to send Check-In Reports.
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
-                                    Editable text pre-populates the status report form, making it easy to compose a message quickly. 
+                                    Editable text pre-populates the Check-In Report form, making it easy to compose a message quickly. 
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
-                                    Add emails of everyone you want to send status report to and click <Text as="b">Send</Text>.
+                                    Add emails of everyone you want to send Check-in Report to and click <Text as="b">Send</Text>.
                                 </ListItem>
                             </List>
                         </Card>
@@ -265,7 +265,7 @@ const LandingPage = () => {
                     >
                         <Image
                             src="/images/status_report_form_drawer_screenshot.png"
-                            alt="status report form drawer screenshot"
+                            alt="check-in report form drawer screenshot"
                             minW="70vw"
                         />
                     </Card>

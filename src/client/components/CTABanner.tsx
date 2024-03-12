@@ -49,7 +49,7 @@ const CTABanner = ({ isBannerDisplayed, top }: CTABannerProps) => {
                         textAlign="center"
                         p="3px"
                     >
-                        {`Click the "Send Status Report" buttons in your Habits to update your friends on your progress.`}
+                        {`Click "Send Check-In Report" button in Habit to update folks on your progress.`}
                     </Heading>
                 </Flex>
                 
