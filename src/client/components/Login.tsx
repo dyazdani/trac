@@ -11,8 +11,7 @@ const Login = ({isAuthenticated}: LoginProps) => {
 
     return (
         isAuthenticated ? 
-        <Navigate to="/goals" replace />
-         :
+        <Navigate to="/goals" replace /> :
         <LoginPage/>
     )
 }

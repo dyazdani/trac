@@ -22,7 +22,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<HomePage isAuthenticated={!!currentUser}/>}/>
         <Route path="goals" element={<Dashboard isAuthenticated={!!currentUser}/>}/>
-        <Route path="register" element={<Register/>}/>
+        <Route path="register" element={<Register isAuthenticated={!!currentUser}/>}/>
         <Route path="login" element={<Login isAuthenticated={!!currentUser}/>}/>
       </Routes>
     </>
