@@ -35,12 +35,20 @@ import areDatesSameDayMonthYear from "../utils/areDatesSameDayMonthYear.js";
 import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
 import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { setIsBannerDisplayed } from "../features/bannerSlice.js";
+import { useAppSelector } from "../app/hooks.js";
+import { useEffect } from "react";
 
 export interface MilestoneProps {
     milestone: MilestoneWithDetails
 }
 
 const Milestone = ({milestone}: MilestoneProps) => {
+    const dispatch = useDispatch();
+
+    const appSelectorIsBannerDisplayed = useAppSelector(state => state.banner.isBannerDisplayed)
+
 
     const textColor = milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : ""
 
@@ -180,6 +188,14 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 {[...milestone.habits].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
                     .map(habit => {
                         const isStatusReportSent = isMostRecentStatusReportSent(habit);
+
+                        useEffect(() => {
+                            if (!isStatusReportSent && appSelectorIsBannerDisplayed === null) {
+                                dispatch(setIsBannerDisplayed(true));
+                            }
+                        }, [appSelectorIsBannerDisplayed])
+
+                        
 
                         const midnightOfFirstCheckIn = getFirstCheckInDayDate(habit)?.setHours(0, 0, 0, 0)
                         const isTodayBeforeFirstCheckInDayDate = midnightOfFirstCheckIn && Date.now() < midnightOfFirstCheckIn
