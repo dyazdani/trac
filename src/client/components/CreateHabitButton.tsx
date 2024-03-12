@@ -279,12 +279,12 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                     form="habitForm"
                                     paddingX={"2rem"}
                                     isLoading={isLoading || isScheduleLoading}
-                                    backgroundColor="stormyblue.100"
+                                    backgroundColor="stormyblue.400"
                                     _hover={{
-                                        backgroundColor: "stormyblue.200",
+                                        backgroundColor: "stormyblue.500",
                                     }}
                                     _active={{
-                                        backgroundColor: "stormyblue.400",
+                                        backgroundColor: "stormyblue.600",
                                         color: "floralwhite.50"
                                     }}
                                 >
