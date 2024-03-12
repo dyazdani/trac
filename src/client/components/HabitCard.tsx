@@ -275,9 +275,45 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
         direction={"column"} 
         align={"center"}
       >
+        {
+          !currentWeek.some(date => isDateToday(date)) ?
+          <Button
+            position="relative"
+            top="30px"
+            aria-label="go to current week"
+            backgroundColor="cornflowerblue.100"
+            _hover={{
+              backgroundColor: "cornflowerblue.300",
+              color: "floralwhite.50"    
+            }}
+            _active={{
+              backgroundColor: "cornflowerblue.600",
+              color: "floralwhite.50"    
+            }} 
+            onClick={e => {
+              e.preventDefault();
+
+              let targetWeek = currentWeek;
+
+              while (targetWeek.every(date => !isDateToday(date))) {
+                if (targetWeek[0].setHours(0, 0, 0, 0) > new Date().setHours(0, 0, 0, 0)) {
+                  targetWeek = getPreviousWeek(targetWeek);
+                }
+
+                if (targetWeek[6].setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0)) {
+                  targetWeek = getNextWeek(targetWeek);
+                }
+                
+              }
+              setCurrentWeek(targetWeek);
+            }}
+          >
+            Go To Today
+          </Button> : 
+          ""
+        }
         <CardBody
           padding="0"
-
         >
           <Grid 
             templateColumns="repeat(17, 1fr)" 
