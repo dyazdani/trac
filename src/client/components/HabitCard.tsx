@@ -16,6 +16,7 @@ import {
   Button,
   Grid,
   GridItem,
+  useToast
 } from "@chakra-ui/react";
 import { motion } from 'framer-motion';
 import { 
@@ -68,6 +69,8 @@ export const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 const HabitCard = ({ habit, milestone }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>([])
 
+  const toast = useToast();
+  
   const isCompleted = habit.datesCompleted.some(date => areDatesSameDayMonthYear(new Date(date), new Date()))
 
   const localStorageUser = localStorage.getItem("user")
@@ -106,25 +109,80 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
         }) : 
         [...habitData.datesCompleted, today]
 
-        const currentHabit = await updateHabit({
-            id: currentUser?.id,
-            habitId: habit.id,
-            newHabit: {
-                name: habitData.name,
-                datesCompleted: newDatesCompleted,
-                routineDays: {
-                    monday,
-                    tuesday,
-                    wednesday,
-                    thursday,
-                    friday,
-                    saturday,
-                    sunday
-                },
-                checkInDay: habitData.checkIn.dayOfTheWeek,
-                scheduleId: habit.scheduleId
-            }
-        })
+        try {
+          const updateResult = await updateHabit({
+              id: currentUser?.id,
+              habitId: habit.id,
+              newHabit: {
+                  name: habitData.name,
+                  datesCompleted: newDatesCompleted,
+                  routineDays: {
+                      monday,
+                      tuesday,
+                      wednesday,
+                      thursday,
+                      friday,
+                      saturday,
+                      sunday
+                  },
+                  checkInDay: habitData.checkIn.dayOfTheWeek,
+                  scheduleId: habit.scheduleId
+              }
+          }).unwrap()
+
+          if (updateResult.habit.datesCompleted.length > habit.datesCompleted.length) {
+              toast({
+                  title: 'Routine Day Completed',
+                  description: `"${habit.name}" completed for ${
+                      today.toLocaleDateString(
+                          undefined, 
+                          {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                          }
+                      )}.`,
+                  status: 'success',
+                  duration: 9000,
+                  isClosable: true,
+                  icon: <CheckIcon boxSize="1.4em"/>
+              })
+          }
+
+          if (updateResult.habit.datesCompleted.length < habit.datesCompleted.length) {
+              toast({
+                  title: 'Routine Day Incomplete',
+                  description: `"${habit.name}" marked incomplete for ${
+                      today.toLocaleDateString(
+                          undefined, 
+                          {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                          }
+                      )}.`,
+                  status: 'success',
+                  duration: 9000,
+                  isClosable: true,
+                  icon: <CheckIcon boxSize="1.4em"/>
+              })
+          }
+      } catch (e) {
+          toast({
+              title: 'ERROR',
+              description: `Unable to complete "${habit.name}" for ${date.toLocaleDateString(
+                  undefined, 
+                  {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                  }
+              )}`,
+              status: 'error',
+              duration: 9000,
+              isClosable: true
+          })
+      }      
     }
   } 
   

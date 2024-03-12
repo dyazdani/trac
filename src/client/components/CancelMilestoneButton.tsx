@@ -35,7 +35,7 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
             if (updatedMilestone) {
                 if (updatedMilestone.isCanceled) {
                     toast({
-                        title: 'Goal canceled',
+                        title: 'Goal Canceled',
                         description: `Your Goal "${updatedMilestone.name}" was canceled.`,
                         status: 'info',
                         duration: 9000,
@@ -44,7 +44,7 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
                     })
                 } else {
                     toast({
-                        title: 'Goal restored',
+                        title: 'Goal Restored',
                         description: `Your Goal "${updatedMilestone.name}" was restored.`,
                         status: 'info',
                         duration: 9000,

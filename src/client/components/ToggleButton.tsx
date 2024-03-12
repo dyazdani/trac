@@ -120,8 +120,6 @@ const ToggleButton = ({
                         icon: <CheckIcon boxSize="1.4em"/>
                     })
                 }
-
-                
             } catch (e) {
                 toast({
                     title: 'ERROR',
@@ -137,12 +135,7 @@ const ToggleButton = ({
                     duration: 9000,
                     isClosable: true
                 })
-            }
-            
-
-
-
-                
+            }      
         }
     }
 
