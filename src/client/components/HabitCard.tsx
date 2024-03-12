@@ -190,17 +190,21 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
       >
         <Flex
           justifyContent="space-between"
-          alignItems="end"
+          alignItems="center"
           gap="1vw"
         >
           <Heading 
             sx={{ marginRight: "auto" }} 
             as="h4"
+            minWidth="0"
+            flex={1}
             size="md"
             color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : ""}
           >
             <Text 
-              borderBottom="1px solid"
+              whiteSpace="nowrap"
+              overflow="hidden"
+              textOverflow="ellipsis"
             >
               {habit.name}
             </Text>
