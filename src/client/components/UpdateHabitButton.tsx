@@ -139,7 +139,7 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                         }
                                         onClose();
                                         toast({
-                                            title: 'Habit updated',
+                                            title: 'Habit Updated',
                                             description: `"${newHabit.name}" was successfully updated.`,
                                             status: 'success',
                                             duration: 9000,

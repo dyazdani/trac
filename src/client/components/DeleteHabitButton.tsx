@@ -37,7 +37,7 @@ const DeleteHabitButton = ({ habit}: DeleteHabitButtonProps) =>  {
                 })
         
                 toast({
-                    title: 'Habit deleted',
+                    title: 'Habit Deleted',
                     description: `"${habit.name}" was successfully deleted`,
                     status: 'info',
                     duration: 4000,

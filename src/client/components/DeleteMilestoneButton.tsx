@@ -30,7 +30,7 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                 if (deletedMilestone) {
                     console.log(deletedMilestone);
                     toast({
-                        title: 'Goal deleted',
+                        title: 'Goal Deleted',
                         description: `"${milestone.name}" has been successfully deleted`,
                         status: 'info',
                         duration: 4000,
