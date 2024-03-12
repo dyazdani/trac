@@ -61,11 +61,10 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                         message,
                         checkInDate
                     }).unwrap()
-                    console.log("statusReport: ", statusReport)
                 if (statusReport) {
                     toast({
-                        title: 'Status Report Sent',
-                        description: `Your Status Report email for "${habit.name}" was sent.`,
+                        title: 'Check-In Report Sent',
+                        description: `Your Check-In Report email for "${habit.name}" was sent.`,
                         status: 'success',
                         duration: 9000,
                         isClosable: true,
@@ -74,7 +73,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                 } else {
                     toast({
                         title: 'Sending Failed',
-                        description: `Your Status Report for "${habit.name}" failed to send.`,
+                        description: `Your Check-In Report for "${habit.name}" failed to send.`,
                         status: 'error',
                         duration: 9000,
                         isClosable: true
@@ -96,7 +95,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
             _active={{
                 backgroundColor: "yellow.700"
             }} 
-            aria-label='send-status-report-form'
+            aria-label='send Check-In Report form'
             fontSize='20px'
             border="2mm ridge rgba(249, 199, 31, 0.6)"
             onClick={(e) => {
@@ -107,7 +106,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                 onOpen();
             }}
             >
-                Send Status Report
+                Send Check-In Report
             </Button>
             <Drawer 
                 placement='right' 
@@ -124,7 +123,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                     <DrawerHeader 
                         borderBottomWidth='1px'
                     >
-                        Send a Status Report
+                        Send a Check-In Report
                     </DrawerHeader>
                     <DrawerBody>
                         <Stack
@@ -133,7 +132,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                                 e.preventDefault();
                                 handleSubmit()
                             }}
-                            id="status-report-form"
+                            id="check-in-report-form"
                             spacing="3vw"
                         >
                             <Box>
@@ -141,7 +140,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                                     <FormLabel
                                         htmlFor="emails"
                                     >
-                                        Email Status Report To:
+                                        Email Check-in Report To:
                                     </FormLabel>
                                     <Input
                                         placeholder="e.g., jack@hill.com, jill@hill.com"
@@ -158,12 +157,13 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                             <Box>
                                 <FormControl isRequired>
                                     <FormLabel
-                                        htmlFor='status-report-message'
+                                        htmlFor='check-in-report-message'
                                     >
-                                        Status Report Email Body:
+                                        Check-In Report Email Body:
                                     </FormLabel>
                                     <Textarea
                                         isRequired
+                                        id="check-in-report-message"
                                         size="lg"
                                         placeholder={`For example: \n\nDear Friends, \n\nThis past week I completed my Habit called "Fetching Pail of Water" 5/7 times. \n\n Cheers,\n Jill`}
                                         value={message}
@@ -199,7 +199,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                                     backgroundColor: "yellow.700"
                                 }} 
                                 type="submit"
-                                form="status-report-form"
+                                form="check-in-report-form"
                                 isLoading={isLoading}
                             >
                                 Send

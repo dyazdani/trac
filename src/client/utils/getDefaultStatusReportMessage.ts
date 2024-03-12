@@ -15,10 +15,10 @@ const getDefaultStatusReportMessage = (habit: HabitWithDetails, milestone: Miles
         `Hi Friends!
         I've been using the Trac app to track how frequently I am completing practice for a habit I'm calling "${habit.name}". I am practicing it in order to accomplish my goal called "${milestone.name}". I would like to send you a quick report of how it's been going:
         
-            STATUS REPORT 📈
+            CHECK-IN REPORT 📈
         ${statusReportString} 
 
-Thank you for helping to keep me accountable and motivated! I'll be sending another status report soon.
+Thank you for helping to keep me accountable and motivated! I'll be sending another check-in report soon.
 
 
 Onward and upward,
