@@ -1,6 +1,7 @@
 import { 
     Checkbox,
-    Spinner 
+    Spinner, 
+    useToast
 } from "@chakra-ui/react";
 import { useUpdateHabitMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
@@ -10,6 +11,7 @@ import {
 } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
 import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
+import { CheckIcon } from "@chakra-ui/icons";
 
  export interface ToggleButtonProps {
     date: Date
@@ -27,8 +29,10 @@ const ToggleButton = ({
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+
+    const toast = useToast();
     
-    const [updateHabit, {isLoading}] = useUpdateHabitMutation();
+    const [updateHabit, {isLoading, error}] = useUpdateHabitMutation();
 
     const isCompleted = !!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date))
     
@@ -58,25 +62,82 @@ const ToggleButton = ({
             }) : 
             [...habitData.datesCompleted, date]
 
-            const currentHabit = await updateHabit({
-                id: currentUser?.id,
-                habitId: habit.id,
-                newHabit: {
-                    name: habitData.name,
-                    datesCompleted: newDatesCompleted,
-                    routineDays: {
-                        monday,
-                        tuesday,
-                        wednesday,
-                        thursday,
-                        friday,
-                        saturday,
-                        sunday
-                    },
-                    checkInDay: habitData.checkIn.dayOfTheWeek,
-                    scheduleId: habit.scheduleId
+            try {
+                const updateResult = await updateHabit({
+                    id: currentUser?.id,
+                    habitId: habit.id,
+                    newHabit: {
+                        name: habitData.name,
+                        datesCompleted: newDatesCompleted,
+                        routineDays: {
+                            monday,
+                            tuesday,
+                            wednesday,
+                            thursday,
+                            friday,
+                            saturday,
+                            sunday
+                        },
+                        checkInDay: habitData.checkIn.dayOfTheWeek,
+                        scheduleId: habit.scheduleId
+                    }
+                }).unwrap()
+
+                if (updateResult.habit.datesCompleted.length > habit.datesCompleted.length) {
+                    toast({
+                        title: 'Routine Day Completed',
+                        description: `"${habit.name}" completed for ${
+                            date.toLocaleDateString(
+                                undefined, 
+                                {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                }
+                            )}.`,
+                        status: 'success',
+                        variant: 'subtle',
+                        duration: 9000,
+                        isClosable: true,
+                        icon: <CheckIcon boxSize="1.4em"/>
+                    })
                 }
-            })
+
+                if (updateResult.habit.datesCompleted.length < habit.datesCompleted.length) {
+                    toast({
+                        title: 'Routine Day Incomplete',
+                        description: `"${habit.name}" marked incomplete for ${
+                            date.toLocaleDateString(
+                                undefined, 
+                                {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                }
+                            )}.`,
+                        status: 'success',
+                        variant: 'subtle',
+                        duration: 9000,
+                        isClosable: true,
+                        icon: <CheckIcon boxSize="1.4em"/>
+                    })
+                }
+            } catch (e) {
+                toast({
+                    title: 'ERROR',
+                    description: `Unable to complete "${habit.name}" for ${date.toLocaleDateString(
+                        undefined, 
+                        {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                        }
+                    )}`,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true
+                })
+            }      
         }
     }
 

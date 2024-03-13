@@ -139,9 +139,10 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                         }
                                         onClose();
                                         toast({
-                                            title: 'Habit updated',
+                                            title: 'Habit Updated',
                                             description: `"${newHabit.name}" was successfully updated.`,
                                             status: 'success',
+                                            variant: 'subtle',
                                             duration: 9000,
                                             isClosable: true,
                                             icon: <EditIcon boxSize="1.4em"/>

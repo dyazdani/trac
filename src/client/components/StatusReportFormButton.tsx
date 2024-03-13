@@ -66,6 +66,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                         title: 'Check-In Report Sent',
                         description: `Your Check-In Report email for "${habit.name}" was sent.`,
                         status: 'success',
+                        variant: 'subtle',
                         duration: 9000,
                         isClosable: true,
                         icon: <EmailIcon boxSize="1.4em"/>

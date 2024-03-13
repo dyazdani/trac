@@ -39,6 +39,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                     toast({
                         title: 'Goal Completed!',
                         description: `Your Goal "${updatedMilestone.name}" was marked as complete.`,
+                        variant: 'subtle',
                         status: 'success',
                         duration: 9000,
                         isClosable: true
@@ -47,6 +48,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                     toast({
                         title: 'Goal Incomplete',
                         description: `Your Goal "${updatedMilestone.name}" was marked as incomplete.`,
+                        variant: 'subtle',
                         status: 'info',
                         duration: 9000,
                         isClosable: true,

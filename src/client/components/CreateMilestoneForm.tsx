@@ -78,6 +78,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                                         title: 'Goal Added',
                                         description: `"${milestone.name}" was added to your dashboard.`,
                                         status: 'success',
+                                        variant: 'subtle',
                                         duration: 9000,
                                         isClosable: true,
                                         icon: <AddIcon/>

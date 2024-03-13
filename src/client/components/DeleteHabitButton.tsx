@@ -37,9 +37,10 @@ const DeleteHabitButton = ({ habit}: DeleteHabitButtonProps) =>  {
                 })
         
                 toast({
-                    title: 'Habit deleted',
+                    title: 'Habit Deleted',
                     description: `"${habit.name}" was successfully deleted`,
                     status: 'info',
+                    variant: 'subtle',
                     duration: 4000,
                     isClosable: true,
                     icon: <DeleteIcon boxSize="1.2em"/>
