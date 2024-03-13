@@ -47,13 +47,14 @@ import isTodayCheckInDay from "../utils/isTodayCheckInDay.js";
 import { useDispatch } from "react-redux";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 import areDatesSameDayMonthYear from "../utils/areDatesSameDayMonthYear.js";
+import getCapitalizedDayOfTheWeek from "../utils/getCapitalizedDayOfTheWeek.js";
 
 export interface UpdateHabitButtonProps{
     habit: HabitWithDetails
 }
 
 const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
-    const [menuValue, setMenuValue] = useState<string | string[]>(habit.checkIn.dayOfTheWeek)
+    const [menuValue, setMenuValue] = useState<string | string[]>(getCapitalizedDayOfTheWeek(habit.checkIn.dayOfTheWeek))
     const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>(getRoutineDaysStringArray(habit.routine))
     const [habitNameValue, setHabitNameValue] = useState(habit.name)
     const { isOpen, onOpen, onClose } = useDisclosure()
