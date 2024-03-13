@@ -78,14 +78,12 @@ const Milestone = ({milestone}: MilestoneProps) => {
             {
                 milestone.isCompleted ? 
                 <>
-                    <Spacer
+                    {/* <Spacer
                         minWidth="20px"
-                    />
+                    /> */}
                     <Flex
                         justifyContent="center"
                         alignItems="center"
-                        backgroundColor=""
-                        // marginLeft="2rem"
                     >
                         <CheckCircleIcon
                             boxSize="1.3rem"
@@ -98,7 +96,12 @@ const Milestone = ({milestone}: MilestoneProps) => {
                             marginRight=".5rem"
                             color={milestone.isCanceled ? "darkslategray.400" : "darkslategray.800"}
                         >
-                            Done! 🎉 
+                            Done! 
+                        </Text>
+                        <Text
+                            fontSize="1.8rem"
+                        >
+                            🎉
                         </Text>
                     </Flex>
                 </> :
@@ -106,53 +109,57 @@ const Milestone = ({milestone}: MilestoneProps) => {
             }
             {
                 !milestone.isCompleted ?
-                (
-                    areDatesSameDayMonthYear(new Date(), new Date(milestone.dueDate)) ? 
-                    <Text 
-                        textAlign="center" 
-                        fontSize="lg"
-                        color={textColor}
-                    >
-                        Due {new Date(milestone.dueDate).toLocaleDateString()} {  
-                            <Badge 
-                                colorScheme="yellow" 
-                                variant="solid" 
-                                color="darkslategray.800" 
-                                ml=".5rem"
-                            >
-                                TODAY!
-                            </Badge> 
-                        }
-                    </Text> : 
-                    new Date().getTime() > new Date(milestone.dueDate).setHours(23, 59, 59, 999) ?
-                    <Text  
-                        textAlign="center"
-                        fontSize="lg"
-                        color={textColor}
-                    >
-                        Due {new Date(milestone.dueDate).toLocaleDateString()} {  
-                            <Badge 
-                                colorScheme="red" 
-                                variant="solid" 
-                                ml=".5rem"
-                            >
-                                OVERDUE!
-                            </Badge> 
-                        }
-                    </Text> : 
-                    <Text 
-                        textAlign="center"
-                        fontSize="lg"
-                        color={textColor}
-                    >
-                        Due {new Date(milestone.dueDate).toLocaleDateString()}
-                    </Text>
-                ) :
+                <>
+                    {
+                        areDatesSameDayMonthYear(new Date(), new Date(milestone.dueDate)) ? 
+                        <Text 
+                            textAlign="center" 
+                            fontSize="lg"
+                            color={textColor}
+                        >
+                            Due {new Date(milestone.dueDate).toLocaleDateString()} {  
+                                <Badge 
+                                    colorScheme="yellow" 
+                                    variant="solid" 
+                                    color="darkslategray.800" 
+                                    ml=".5rem"
+                                >
+                                    TODAY!
+                                </Badge> 
+                            }
+                        </Text> : 
+                        new Date().getTime() > new Date(milestone.dueDate).setHours(23, 59, 59, 999) ?
+                        <Text  
+                            textAlign="center"
+                            fontSize="lg"
+                            color={textColor}
+                        >
+                            Due {new Date(milestone.dueDate).toLocaleDateString()} {  
+                                <Badge 
+                                    colorScheme="red" 
+                                    variant="solid" 
+                                    ml=".5rem"
+                                >
+                                    OVERDUE!
+                                </Badge> 
+                            }
+                        </Text> : 
+                        <Text 
+                            textAlign="center"
+                            fontSize="lg"
+                            color={textColor}
+                        >
+                            Due {new Date(milestone.dueDate).toLocaleDateString()}
+                        </Text>
+                    }
+                    <Spacer
+                        minWidth="20px"
+                    />
+                </>
+                 :
                 ""
             }
-            <Spacer
-                minWidth="20px"
-            />
+            
             <Menu
                 isLazy
                 closeOnSelect={false}
