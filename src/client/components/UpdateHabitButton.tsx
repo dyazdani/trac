@@ -13,6 +13,7 @@ import {
     Editable, 
     EditableInput, 
     EditablePreview, 
+    Flex, 
     FormControl, 
     FormLabel, 
     Menu, 
@@ -23,7 +24,8 @@ import {
     MenuOptionGroup, 
     Stack, 
     useDisclosure, 
-    useToast 
+    useToast ,
+    Text
 } from "@chakra-ui/react";
 import { 
     ChevronDownIcon, 
@@ -192,11 +194,32 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                 </FormControl>
                                 
                             </Box>
-                            {/* TODO: Prevent submitting form unless > 0 boxes are checked */}
                             <Box 
                                 as="fieldset"
                             >
-                                <FormLabel>Weekly Routine</FormLabel>
+                                <FormLabel>
+                                    <Flex
+                                        alignItems="center"
+                                        justifyContent="start"
+                                    >
+                                        <Text
+                                        >
+                                            Weekly Routine
+                                        </Text>
+                                        <Text 
+                                            marginLeft="4px"
+                                            color="red.500"
+                                        >
+                                            *
+                                        </Text>
+                                        <Text 
+                                            marginLeft=".5rem" 
+                                            color="darkslategray.400"
+                                        >
+                                            {`(select at least one)`}
+                                        </Text>
+                                    </Flex>
+                                </FormLabel>
                                 <CheckboxGroup colorScheme='stormyblue' onChange={(e: RoutineDaysArrayType) => {
                                     setCheckboxGroupValue(e);
                                 }} 
@@ -267,6 +290,7 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                 type="submit"
                                 form="habitForm"
                                 isLoading={isLoading || isScheduleLoading}
+                                isDisabled={!checkboxGroupValue.length || !habitNameValue }
                             >
                                 Save
                             </Button>
