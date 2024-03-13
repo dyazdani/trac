@@ -210,11 +210,23 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                             alignItems="center"
                                             justifyContent="start"
                                         >
-                                            <Text>Weekly Routine</Text>
-                                            <Text marginLeft="4px"color="red.500">*</Text>
-                                            <Text marginLeft=".5rem" color="darkslategray.400">{`(select at least one)`}</Text>
+                                            <Text
+                                            >
+                                                Weekly Routine
+                                            </Text>
+                                            <Text 
+                                                marginLeft="4px"
+                                                color="red.500"
+                                            >
+                                                *
+                                            </Text>
+                                            <Text 
+                                                marginLeft=".5rem" 
+                                                color="darkslategray.400"
+                                            >
+                                                {`(select at least one)`}
+                                            </Text>
                                         </Flex>
-                                        
                                     </FormLabel>
                                     <CheckboxGroup 
                                         colorScheme='stormyblue' 
