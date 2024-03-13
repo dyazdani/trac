@@ -164,6 +164,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                         form="milestoneForm"
                         isLoading={isLoading}
                         paddingX={"2rem"}
+                        isDisabled={!datepickerValue || !milestoneNameValue}
                     >
                         Add
                     </Button>
