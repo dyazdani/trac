@@ -1,12 +1,12 @@
 const getDayOfWeekLabelText = (date: Date) => {
     const dayAbbreviations = [
-        "SU", 
+        "Su", 
         "M",
         "T",
         "W",
-        "TH",
+        "Th",
         "F",
-        "SA" 
+        "Sa" 
     ]
     
     return dayAbbreviations[date.getDay()]

@@ -183,8 +183,9 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                                 type="submit"
                                 form="updateMilestoneForm"
                                 isLoading={isLoading}
+                                isDisabled={!datepickerValue || !milestoneNameValue}
                             >
-                                Update
+                                Save
                             </Button>
                         </ButtonGroup>
                     </DrawerFooter>

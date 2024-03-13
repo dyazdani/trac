@@ -23,7 +23,9 @@ import {
     MenuOptionGroup, 
     Stack, 
     useDisclosure, 
-    useToast 
+    useToast,
+    Text,
+    Flex
 } from "@chakra-ui/react";
 import { 
     AddIcon, 
@@ -54,12 +56,11 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
     const appSelectorUser = useAppSelector(state => state.auth.user)
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
-    const [createHabit, {isLoading, data, error}] = useCreateHabitMutation();
+    const [createHabit, {isLoading}] = useCreateHabitMutation();
     const [
         createSchedule, 
         {
             isLoading: isScheduleLoading,
-            data: scheduleData,
             error: scheduleError
         }
     ] = useCreateScheduleMutation();
@@ -203,9 +204,30 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                     </FormControl>
                                     
                                 </Box>
-                                {/* TODO: Prevent submitting form unless > 0 boxes are checked */}
                                 <Box as="fieldset">
-                                    <FormLabel>Weekly Routine</FormLabel>
+                                    <FormLabel>
+                                        <Flex
+                                            alignItems="center"
+                                            justifyContent="start"
+                                        >
+                                            <Text
+                                            >
+                                                Weekly Routine
+                                            </Text>
+                                            <Text 
+                                                marginLeft="4px"
+                                                color="red.500"
+                                            >
+                                                *
+                                            </Text>
+                                            <Text 
+                                                marginLeft=".5rem" 
+                                                color="darkslategray.400"
+                                            >
+                                                {`(select at least one)`}
+                                            </Text>
+                                        </Flex>
+                                    </FormLabel>
                                     <CheckboxGroup 
                                         colorScheme='stormyblue' 
                                         onChange={(e: RoutineDaysArrayType) => {
@@ -214,13 +236,13 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                         value={checkboxGroupValue}
                                     >
                                         <Stack direction='row'>
+                                            <Checkbox value="sunday">Su</Checkbox>
                                             <Checkbox value="monday">M</Checkbox>
                                             <Checkbox value="tuesday">T</Checkbox>
                                             <Checkbox value="wednesday">W</Checkbox>
                                             <Checkbox value="thursday">Th</Checkbox>
                                             <Checkbox value="friday">F</Checkbox>
                                             <Checkbox value="saturday">Sa</Checkbox>
-                                            <Checkbox value="sunday">Su</Checkbox>
                                         </Stack>
                                     </CheckboxGroup>
                                 </Box>
@@ -288,6 +310,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                         backgroundColor: "stormyblue.600",
                                         color: "floralwhite.50"
                                     }}
+                                    isDisabled={!checkboxGroupValue.length || !habitNameValue }
                                 >
                                     Add
                                 </Button>

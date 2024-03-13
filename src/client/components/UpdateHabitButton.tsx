@@ -13,6 +13,7 @@ import {
     Editable, 
     EditableInput, 
     EditablePreview, 
+    Flex, 
     FormControl, 
     FormLabel, 
     Menu, 
@@ -23,7 +24,8 @@ import {
     MenuOptionGroup, 
     Stack, 
     useDisclosure, 
-    useToast 
+    useToast ,
+    Text
 } from "@chakra-ui/react";
 import { 
     ChevronDownIcon, 
@@ -47,13 +49,14 @@ import isTodayCheckInDay from "../utils/isTodayCheckInDay.js";
 import { useDispatch } from "react-redux";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 import areDatesSameDayMonthYear from "../utils/areDatesSameDayMonthYear.js";
+import getCapitalizedDayOfTheWeek from "../utils/getCapitalizedDayOfTheWeek.js";
 
 export interface UpdateHabitButtonProps{
     habit: HabitWithDetails
 }
 
 const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
-    const [menuValue, setMenuValue] = useState<string | string[]>(habit.checkIn.dayOfTheWeek)
+    const [menuValue, setMenuValue] = useState<string | string[]>(getCapitalizedDayOfTheWeek(habit.checkIn.dayOfTheWeek))
     const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>(getRoutineDaysStringArray(habit.routine))
     const [habitNameValue, setHabitNameValue] = useState(habit.name)
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -191,11 +194,32 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                 </FormControl>
                                 
                             </Box>
-                            {/* TODO: Prevent submitting form unless > 0 boxes are checked */}
                             <Box 
                                 as="fieldset"
                             >
-                                <FormLabel>Weekly Routine</FormLabel>
+                                <FormLabel>
+                                    <Flex
+                                        alignItems="center"
+                                        justifyContent="start"
+                                    >
+                                        <Text
+                                        >
+                                            Weekly Routine
+                                        </Text>
+                                        <Text 
+                                            marginLeft="4px"
+                                            color="red.500"
+                                        >
+                                            *
+                                        </Text>
+                                        <Text 
+                                            marginLeft=".5rem" 
+                                            color="darkslategray.400"
+                                        >
+                                            {`(select at least one)`}
+                                        </Text>
+                                    </Flex>
+                                </FormLabel>
                                 <CheckboxGroup colorScheme='stormyblue' onChange={(e: RoutineDaysArrayType) => {
                                     setCheckboxGroupValue(e);
                                 }} 
@@ -266,6 +290,7 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                 type="submit"
                                 form="habitForm"
                                 isLoading={isLoading || isScheduleLoading}
+                                isDisabled={!checkboxGroupValue.length || !habitNameValue }
                             >
                                 Save
                             </Button>
