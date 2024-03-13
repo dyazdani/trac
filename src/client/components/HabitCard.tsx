@@ -143,6 +143,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           }
                       )}.`,
                   status: 'success',
+                  variant: 'subtle',
                   duration: 9000,
                   isClosable: true,
                   icon: <CheckIcon boxSize="1.4em"/>
@@ -162,6 +163,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           }
                       )}.`,
                   status: 'success',
+                  variant: 'subtle',
                   duration: 9000,
                   isClosable: true,
                   icon: <CheckIcon boxSize="1.4em"/>
@@ -170,7 +172,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
       } catch (e) {
           toast({
               title: 'ERROR',
-              description: `Unable to complete "${habit.name}" for ${date.toLocaleDateString(
+              description: `Unable to complete "${habit.name}" for ${today.toLocaleDateString(
                   undefined, 
                   {
                       year: 'numeric',

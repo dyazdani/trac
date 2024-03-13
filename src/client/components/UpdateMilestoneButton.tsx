@@ -101,6 +101,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                                                 title: `Goal Updated`,
                                                 description: `"${milestone.name}" was successfully updated.`,
                                                 status: 'success',
+                                                variant: 'subtle',
                                                 duration: 9000,
                                                 isClosable: true,
                                                 icon: <EditIcon boxSize="1.4em"/>

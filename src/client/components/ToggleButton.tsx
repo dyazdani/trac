@@ -96,6 +96,7 @@ const ToggleButton = ({
                                 }
                             )}.`,
                         status: 'success',
+                        variant: 'subtle',
                         duration: 9000,
                         isClosable: true,
                         icon: <CheckIcon boxSize="1.4em"/>
@@ -115,6 +116,7 @@ const ToggleButton = ({
                                 }
                             )}.`,
                         status: 'success',
+                        variant: 'subtle',
                         duration: 9000,
                         isClosable: true,
                         icon: <CheckIcon boxSize="1.4em"/>
