@@ -85,7 +85,6 @@ const Milestone = ({milestone}: MilestoneProps) => {
                         justifyContent="center"
                         alignItems="center"
                         backgroundColor=""
-                        // marginLeft="2rem"
                     >
                         <CheckCircleIcon
                             boxSize="1.3rem"
