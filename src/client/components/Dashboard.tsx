@@ -103,6 +103,7 @@ const Dashboard = () => {
         <>
           <Grid
             templateColumns="repeat(3, 1fr)"
+            minHeight="100vh"
           >
             <GridItem
               colStart={1}
