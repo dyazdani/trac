@@ -144,7 +144,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                                         Email Check-in Report To:
                                     </FormLabel>
                                     <Input
-                                        placeholder="e.g., jack@hill.com, jill@hill.com"
+                                        placeholder="e.g., jack@upthehill.com, jill@upthehill.com"
                                         isRequired
                                         type="email"
                                         id="emails" 
