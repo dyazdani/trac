@@ -1,4 +1,5 @@
 import { 
+  Flex,
   Grid, 
   GridItem, 
   Heading,
@@ -126,11 +127,25 @@ const Dashboard = () => {
               <GridItem
                 colStart={2}
               >
-                <Text
-                  fontSize="xl"
-                  mt="20vh">
-                  You currently have no Goals.
-                </Text>
+                <Flex
+                  direction="column"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Heading
+                    as="h2"
+                    size="lg"
+                    mt="4.6rem"
+                    textAlign="center"
+                  >
+                    You currently have no Goals
+                  </Heading>
+                  {
+                    isMilestonesEmpty ? 
+                    <RightDrawer isMilestonesEmpty={isMilestonesEmpty}/> :
+                    ""
+                  }
+                </Flex>
               </GridItem> :
               <GridItem
                 colStart={2}
@@ -138,14 +153,18 @@ const Dashboard = () => {
                 <MyMilestones milestones={milestonesData?.milestones} />
               </GridItem>               
             }
-            <GridItem
-              colStart={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-            >
-              <RightDrawer isMilestonesEmpty={isMilestonesEmpty} />
-            </GridItem>
+            {
+              !isMilestonesEmpty ?
+              <GridItem
+                colStart={isMilestonesEmpty ? 2 : 3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+              >
+                <RightDrawer isMilestonesEmpty={isMilestonesEmpty} />
+              </GridItem> :
+              ""
+            }
           </Grid>
           <ArtistCredit textColor="stormyblue.700" />
         </>
