@@ -11,7 +11,7 @@ import {
 } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
 import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
-import { CheckIcon } from "@chakra-ui/icons";
+import { CheckIcon, RepeatClockIcon } from "@chakra-ui/icons";
 
  export interface ToggleButtonProps {
     date: Date
@@ -115,11 +115,11 @@ const ToggleButton = ({
                                     day: 'numeric',
                                 }
                             )}.`,
-                        status: 'success',
+                        status: 'info',
                         variant: 'subtle',
                         duration: 9000,
                         isClosable: true,
-                        icon: <CheckIcon boxSize="1.4em"/>
+                        icon: <RepeatClockIcon boxSize="1.4em"/>
                     })
                 }
             } catch (e) {
