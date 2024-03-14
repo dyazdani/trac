@@ -1,5 +1,4 @@
 import { 
-  Box, 
   Grid, 
   GridItem, 
   Heading,
@@ -20,21 +19,12 @@ import { User } from "@prisma/client";
 import { useDispatch } from "react-redux";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 import ArtistCredit from "./ArtistCredit.js";
-export interface DashboardProps {
-  isAuthenticated: boolean
-}
 
-const Dashboard = ({isAuthenticated}: DashboardProps) => {
+
+const Dashboard = () => {
   const dispatch = useDispatch()
 
-  let isThereACheckInToday = false;
-  const result = doesAHabitHaveACheckInToday();
-
-  if (result instanceof Error) {
-    console.error(result)
-  } else {
-    isThereACheckInToday = result
-  }
+ const isThereACheckInToday = doesAHabitHaveACheckInToday();
 
   const localStorageIsBannerDisplayed = localStorage.getItem("isBannerDisplayed")
   const appSelectorIsBannerDisplayed = useAppSelector(state => state.banner.isBannerDisplayed)
@@ -60,7 +50,7 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
 
 
   return (
-    isAuthenticated || currentUser ? 
+    currentUser ? 
     <>
       <Show 
         breakpoint="(max-width: 943px)"
