@@ -48,6 +48,7 @@ import { useAppSelector } from "../app/hooks.js";
 import getPreviousWeek from "../utils/getPreviousWeek.js";
 import getNextWeek from "../utils/getNextWeek.js";
 import React from "react";
+import getCurrentWeek from "../utils/getCurrentWeek.js";
 
 
 type HabitProps = {
@@ -70,7 +71,7 @@ export const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 
 const HabitCard = ({ habit, milestone }: HabitProps) => {
-  const [currentWeek, setCurrentWeek] = useState<Date[]>([])
+  const [currentWeek, setCurrentWeek] = useState<Date[]>(getCurrentWeek(habit, milestone))
 
   const toast = useToast();
   
@@ -196,28 +197,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
   const midnightOfFirstCheckIn = getFirstCheckInDayDate(habit)?.setHours(0, 0, 0, 0)
   const isTodayBeforeFirstCheckInDayDate = midnightOfFirstCheckIn && Date.now() < midnightOfFirstCheckIn
 
-  if (!currentWeek.length) {
-    let thisWeek: Date[] = [];
-    let firstDay = new Date()
-
-    while (firstDay.setHours(0, 0, 0, 0) > new Date(milestone.dueDate).setHours(0, 0, 0, 0)) {
-      firstDay = new Date(firstDay.setDate(firstDay.getDate() - 1))
-    }
-
-    // Get number associated with current day of the week
-    const firstDayNumber = firstDay.getDay()
-
-    // Push Sunday before firstDay's date to firstWeek array
-    thisWeek.push(new Date(firstDay.setDate(firstDay.getDate() - firstDayNumber)))
-
-    // Push the rest of dates in that week to firstWeek array
-    for (let i = 1; i < 7; i++) {
-      const previousDay = new Date(thisWeek[i - 1]);
-      const previousDayOfTheMonth = thisWeek[i - 1].getDate()
-      thisWeek.push(new Date(previousDay.setDate(previousDayOfTheMonth + 1)))
-    }
-    setCurrentWeek(thisWeek);
-  } else if (currentWeek.every(date => date.setHours(0, 0, 0, 0) > new Date(milestone.dueDate).setHours(0, 0, 0, 0))) {
+  if (currentWeek.every(date => date.setHours(0, 0, 0, 0) > new Date(milestone.dueDate).setHours(0, 0, 0, 0))) {
     let targetWeek = getPreviousWeek(currentWeek);
 
     while (targetWeek.every(date => date.setHours(0, 0, 0, 0) > new Date(milestone.dueDate).setHours(0, 0, 0, 0))) {
