@@ -23,6 +23,8 @@ import {
     ArrowLeftIcon,
     ArrowRightIcon,
     CheckIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
     ChevronUpIcon,
     CloseIcon,
     HamburgerIcon,
@@ -339,6 +341,16 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
           !currentWeek.some(date => isDateToday(date)) ?
           <Button
             position="relative"
+            leftIcon={
+              currentWeek[0].setHours(0, 0, 0, 0) > new Date().setHours(0, 0, 0, 0) ?
+              <ChevronLeftIcon/> :
+              undefined 
+            }
+            rightIcon={
+              currentWeek[6].setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) ?
+              <ChevronRightIcon/> :
+              undefined 
+            }
             top="30px"
             aria-label="go to current week"
             backgroundColor="cornflowerblue.100"
