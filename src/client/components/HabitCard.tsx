@@ -319,7 +319,8 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
         align={"center"}
       >
         {
-          !currentWeek.some(date => isDateToday(date)) ?
+          !currentWeek.some(date => isDateToday(date)) &&
+          today.setHours(0, 0, 0, 0) < new Date(milestone.dueDate).setHours(0, 0, 0, 0) ?
           <Button
             position="relative"
             leftIcon={
