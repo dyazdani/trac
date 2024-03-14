@@ -28,6 +28,7 @@ import {
     ChevronUpIcon,
     CloseIcon,
     HamburgerIcon,
+    RepeatClockIcon,
 } from "@chakra-ui/icons";
 import { 
   HabitWithDetails, 
@@ -164,11 +165,11 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                               day: 'numeric',
                           }
                       )}.`,
-                  status: 'success',
+                  status: 'info',
                   variant: 'subtle',
                   duration: 9000,
                   isClosable: true,
-                  icon: <CheckIcon boxSize="1.4em"/>
+                  icon: <RepeatClockIcon boxSize="1.4em"/>
               })
           }
       } catch (e) {
