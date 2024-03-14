@@ -323,7 +323,11 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                                     variant="solid" 
                                                     ml=".5rem"
                                                 >
-                                                    Routine Day
+                                                    {
+                                                        !!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), new Date())) ?
+                                                        "Completed!" : 
+                                                        "Routine Day"
+                                                    }
                                                 </Badge> :
                                                 ""
                                             }
