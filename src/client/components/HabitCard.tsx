@@ -522,8 +522,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                   {
                     isCheckInDay && 
                     !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) &&
-                    !milestone.isCompleted && 
-                    !milestone.isCanceled ?
+                    !milestone.isCompleted &&
+                    !milestone.isCanceled &&
+                    !areDatesSameDayMonthYear(day, new Date(milestone.dueDate)) ?
                     <>
                       <GridItem
                         padding={".2vw"}
@@ -544,7 +545,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         <Box
                           color={isOutOfRange ? "darkslategray.400" : "darkslategray.800"}
                         >
-                          Check-In Day
+                          Check-In
                         </Box>
                       </GridItem>
                       </>
@@ -560,7 +561,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         rowStart={isHabitRoutineDay(habit, day) ? 5 : 4}
                         textAlign="center"
                       >
-                        <ChevronUpIcon color={"darkslategray.800"}/>
+                        <ChevronUpIcon color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : "darkslategray.800"}/>
                       </GridItem>
                       <GridItem
                         padding={".2vw"}
@@ -570,13 +571,41 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         textAlign="center"
                       >
                         <Box
-                          color={"darkslategray.800"}
+                          color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : "darkslategray.800"}
                         >
                           Start
                         </Box>
                       </GridItem>
-                      </>
-                    : ""
+                      </> :
+                      ""
+                    }
+                    {
+                      areDatesSameDayMonthYear(day, new Date(milestone.dueDate)) ?
+                      <>
+                        <GridItem
+                          padding={".2vw"}
+                          colStart={(i * 2) + 3}
+                          colSpan={1} 
+                          rowStart={isHabitRoutineDay(habit, day) ? 5 : 4}
+                          textAlign="center"
+                        >
+                          <ChevronUpIcon color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : "darkslategray.800"}/>
+                        </GridItem>
+                        <GridItem
+                          padding={".2vw"}
+                          colStart={(i * 2) + 2}
+                          colSpan={3} 
+                          rowStart={isHabitRoutineDay(habit, day) ? 6 : 5}
+                          textAlign="center"
+                        >
+                          <Box
+                            color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : "darkslategray.800"}
+                          >
+                            Due Date
+                          </Box>
+                        </GridItem>
+                      </> : 
+                      ""
                     }
                 </React.Fragment>
               )
