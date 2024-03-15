@@ -382,6 +382,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               rowSpan={1}
               rowStart={3}
             >
+              {/* {
+                currentWeek
+              } */}
               <IconButton 
                 aria-label="see-previous-week" 
                 icon={<ArrowLeftIcon />}
@@ -487,7 +490,12 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       borderBottomRadius={isToday && !isHabitRoutineDay(habit, day)? 10 : {}}
                       color={isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) || isOutOfRange || milestone.isCanceled || milestone.isCompleted  ? "darkslategray.400" : "darkslategray.800"}
                     >
-                      {day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'})}
+                      {
+                        (day.getMonth() === 11 && day.getDate() === 31) ||
+                        (day.getMonth() === 0 && day.getDate() === 1) ?
+                        day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric', year: '2-digit'}) :
+                        day.toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'}) 
+                      }
                     </GridItem>
                     <GridItem
                       padding={".2vw"}
