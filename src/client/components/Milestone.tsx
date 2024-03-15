@@ -309,7 +309,10 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                                 habit.name
                                             }
                                             {
-                                                !isExpanded && isHabitRoutineDay(habit, new Date()) ?
+                                                !isExpanded && 
+                                                isHabitRoutineDay(habit, new Date()) && 
+                                                !milestone.isCompleted && 
+                                                !milestone.isCanceled ?
                                                 <Badge
                                                     colorScheme="peach"
                                                     color="darkslategray.800" 
