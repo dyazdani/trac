@@ -144,7 +144,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                                         Email Check-in Report To:
                                     </FormLabel>
                                     <Input
-                                        placeholder="e.g., jack@hill.com, jill@hill.com"
+                                        placeholder="example@gmail.com, example_two@mail.com, etc."
                                         isRequired
                                         type="email"
                                         id="emails" 
@@ -166,7 +166,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                                         isRequired
                                         id="check-in-report-message"
                                         size="lg"
-                                        placeholder={`For example: \n\nDear Friends, \n\nThis past week I completed my Habit called "Fetching Pail of Water" 5/7 times. \n\n Cheers,\n Jill`}
+                                        placeholder={`Dear Friends, \n\nThis past week I completed my Habit everyday.  \n\n Cheers!`}
                                         value={message}
                                         onChange={(e) => {setMessage(e.target.value)}}
                                         minHeight="20rem"
@@ -202,6 +202,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                                 type="submit"
                                 form="check-in-report-form"
                                 isLoading={isLoading}
+                                isDisabled={!message || !emails.length}
                             >
                                 Send
                             </Button>
