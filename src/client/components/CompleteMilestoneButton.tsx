@@ -81,8 +81,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                         })    
                     ) {
                         dispatch(setIsBannerDisplayed(true))
-                    }
-                      
+                    } 
                 }
             } else {
                 toast({
