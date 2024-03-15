@@ -1,5 +1,6 @@
 import { 
     CheckCircleIcon,
+    CheckIcon,
     CloseIcon, 
     HamburgerIcon 
 } from "@chakra-ui/icons";
@@ -317,7 +318,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                                 >
                                                     {
                                                         !!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), new Date())) ?
-                                                        "Completed!" : 
+                                                        <Text><CheckIcon/>  Routine Day</Text> : 
                                                         "Routine Day"
                                                     }
                                                 </Badge> :
