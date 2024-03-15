@@ -1,5 +1,6 @@
 import { 
     CheckCircleIcon,
+    CheckIcon,
     CloseIcon, 
     HamburgerIcon 
 } from "@chakra-ui/icons";
@@ -40,6 +41,7 @@ import { useDispatch } from "react-redux";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 import { useAppSelector } from "../app/hooks.js";
 import { useEffect } from "react";
+import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
 
 export interface MilestoneProps {
     milestone: MilestoneWithDetails
@@ -301,7 +303,27 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                             textAlign='left'
                                             color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : ""}
                                         >
-                                            {isExpanded ? "" : habit.name}
+                                            {
+                                                isExpanded ? 
+                                                "" : 
+                                                habit.name
+                                            }
+                                            {
+                                                !isExpanded && isHabitRoutineDay(habit, new Date()) ?
+                                                <Badge
+                                                    colorScheme="peach"
+                                                    color="darkslategray.800" 
+                                                    variant="solid" 
+                                                    ml=".5rem"
+                                                >
+                                                    {
+                                                        !!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), new Date())) ?
+                                                        <Text><CheckIcon/>  Routine Day</Text> : 
+                                                        "Routine Day"
+                                                    }
+                                                </Badge> :
+                                                ""
+                                            }
                                         </Box>
                                         <AccordionIcon />
                                     </AccordionButton>
