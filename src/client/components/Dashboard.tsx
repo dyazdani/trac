@@ -24,12 +24,11 @@ import { MilestoneWithDetails } from "../../types/index.js";
 import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
 import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 import { useEffect } from "react";
+import toggleBannerDisplay from "../utils/doOtherMilestonesHaveStatusReportDue.js";
 
 
 const Dashboard = () => {
   const dispatch = useDispatch()
-
- const isThereACheckInToday = doesAHabitHaveACheckInToday();
 
   const localStorageIsBannerDisplayed = localStorage.getItem("isBannerDisplayed")
   const appSelectorIsBannerDisplayed = useAppSelector(state => state.banner.isBannerDisplayed)
@@ -50,16 +49,19 @@ const Dashboard = () => {
   useEffect(() => {
     if (milestonesData) {
       const isAStatusReportDue = milestonesData.milestones.some((milestone: MilestoneWithDetails) => {
-        return milestone.habits.some(habit => {
-          const firstCheckInDate = getFirstCheckInDayDate(habit);
-          if (firstCheckInDate) {
-            return (
-              firstCheckInDate.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
-              !isMostRecentStatusReportSent(habit)
-            )
-          }
-          
-        })
+        return (
+          !milestone.isCompleted &&
+          !milestone.isCanceled &&
+          milestone.habits.some(habit => {
+            const firstCheckInDate = getFirstCheckInDayDate(habit);
+            if (firstCheckInDate) {
+              return (
+                firstCheckInDate.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
+                !isMostRecentStatusReportSent(habit)
+              )
+            }
+          })
+        )
       })
   
       if (isBannerDisplayed && !isAStatusReportDue) {
