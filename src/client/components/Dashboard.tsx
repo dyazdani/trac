@@ -59,8 +59,6 @@ const Dashboard = () => {
       })
     })
 
-    console.log (isAStatusReportDue)
-
     if (isBannerDisplayed && !isAStatusReportDue) {
       dispatch(setIsBannerDisplayed(false))
     }
