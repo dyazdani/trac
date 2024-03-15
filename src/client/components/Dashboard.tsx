@@ -23,6 +23,7 @@ import ArtistCredit from "./ArtistCredit.js";
 import { MilestoneWithDetails } from "../../types/index.js";
 import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
 import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
+import { useEffect } from "react";
 
 
 const Dashboard = () => {
@@ -45,28 +46,32 @@ const Dashboard = () => {
 
   const { data: milestonesData, isLoading } = useGetMilestonesByUserQuery(currentUserId)
 
-  if (milestonesData) {
-    const isAStatusReportDue = milestonesData.milestones.some((milestone: MilestoneWithDetails) => {
-      return milestone.habits.some(habit => {
-        const firstCheckInDate = getFirstCheckInDayDate(habit);
-        if (firstCheckInDate) {
-          return (
-            firstCheckInDate.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
-            !isMostRecentStatusReportSent(habit)
-          )
-        }
-        
+
+  useEffect(() => {
+    if (milestonesData) {
+      const isAStatusReportDue = milestonesData.milestones.some((milestone: MilestoneWithDetails) => {
+        return milestone.habits.some(habit => {
+          const firstCheckInDate = getFirstCheckInDayDate(habit);
+          if (firstCheckInDate) {
+            return (
+              firstCheckInDate.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
+              !isMostRecentStatusReportSent(habit)
+            )
+          }
+          
+        })
       })
-    })
-
-    if (isBannerDisplayed && !isAStatusReportDue) {
-      dispatch(setIsBannerDisplayed(false))
+  
+      if (isBannerDisplayed && !isAStatusReportDue) {
+        dispatch(setIsBannerDisplayed(false))
+      }
+  
+      if (isBannerDisplayed === null && isAStatusReportDue) {
+        dispatch(setIsBannerDisplayed(true))
+      }
     }
-
-    if (isBannerDisplayed === null && isAStatusReportDue) {
-      dispatch(setIsBannerDisplayed(true))
-    }
-  }
+  }, [])
+  
 
   const isMilestonesEmpty = !isLoading && !milestonesData?.milestones.length
  
