@@ -20,6 +20,9 @@ import { User } from "@prisma/client";
 import { useDispatch } from "react-redux";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 import ArtistCredit from "./ArtistCredit.js";
+import { MilestoneWithDetails } from "../../types/index.js";
+import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
+import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 
 
 const Dashboard = () => {
@@ -30,11 +33,6 @@ const Dashboard = () => {
   const localStorageIsBannerDisplayed = localStorage.getItem("isBannerDisplayed")
   const appSelectorIsBannerDisplayed = useAppSelector(state => state.banner.isBannerDisplayed)
   const isBannerDisplayed: boolean | null = localStorageIsBannerDisplayed ? JSON.parse(localStorageIsBannerDisplayed) : appSelectorIsBannerDisplayed
-
-  if (isBannerDisplayed === null && isThereACheckInToday) {
-    dispatch(setIsBannerDisplayed(true))
-  }
-
 
   const localStorageUser = localStorage.getItem("user")
   const appSelectorUser = useAppSelector(state => state.auth.user)
@@ -47,8 +45,33 @@ const Dashboard = () => {
 
   const { data: milestonesData, isLoading } = useGetMilestonesByUserQuery(currentUserId)
 
-  const isMilestonesEmpty = !isLoading && !milestonesData?.milestones.length
+  if (milestonesData) {
+    const isAStatusReportDue = milestonesData.milestones.some((milestone: MilestoneWithDetails) => {
+      return milestone.habits.some(habit => {
+        const firstCheckInDate = getFirstCheckInDayDate(habit);
+        if (firstCheckInDate) {
+          return (
+            firstCheckInDate.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
+            !isMostRecentStatusReportSent(habit)
+          )
+        }
+        
+      })
+    })
 
+    console.log (isAStatusReportDue)
+
+    if (isBannerDisplayed && !isAStatusReportDue) {
+      dispatch(setIsBannerDisplayed(false))
+    }
+
+    if (isBannerDisplayed === null && isAStatusReportDue) {
+      dispatch(setIsBannerDisplayed(true))
+    }
+  }
+
+  const isMilestonesEmpty = !isLoading && !milestonesData?.milestones.length
+ 
 
   return (
     currentUser ? 
