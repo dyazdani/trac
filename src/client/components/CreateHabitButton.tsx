@@ -98,7 +98,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                         backgroundColor: "turquoise.200"
                     }}
                 >
-                    {`Add first Habit for "${milestone.name}"`}
+                    {`Add first Habit to "${milestone.name}"`}
                 </Button>
                 }
                 <Drawer 

@@ -1,16 +1,15 @@
 import { Navigate } from "react-router-dom";
 import LoginPage from "./LoginPage.js";
-
-export interface LoginProps {
-    isAuthenticated: boolean
-}
+import { useAppSelector } from "../app/hooks.js";
 
 
-const Login = ({isAuthenticated}: LoginProps) => {
-  
+const Login = () => {
+    const localStorageUser = localStorage.getItem("user")
+    const appSelectorUser = useAppSelector(state => state.auth.user)
+    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
 
     return (
-        isAuthenticated ? 
+        currentUser ? 
         <Navigate to="/goals" replace /> :
         <LoginPage/>
     )

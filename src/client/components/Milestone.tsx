@@ -230,14 +230,6 @@ const Milestone = ({milestone}: MilestoneProps) => {
                     .map(habit => {
                         const isStatusReportSent = isMostRecentStatusReportSent(habit);
 
-                        useEffect(() => {
-                            if (!isStatusReportSent && appSelectorIsBannerDisplayed === null) {
-                                dispatch(setIsBannerDisplayed(true));
-                            }
-                        }, [appSelectorIsBannerDisplayed])
-
-                        
-
                         const midnightOfFirstCheckIn = getFirstCheckInDayDate(habit)?.setHours(0, 0, 0, 0)
                         const isTodayBeforeFirstCheckInDayDate = midnightOfFirstCheckIn && Date.now() < midnightOfFirstCheckIn
 

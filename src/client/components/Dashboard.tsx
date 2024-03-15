@@ -1,5 +1,5 @@
 import { 
-  Box, 
+  Flex,
   Grid, 
   GridItem, 
   Heading,
@@ -20,30 +20,19 @@ import { User } from "@prisma/client";
 import { useDispatch } from "react-redux";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 import ArtistCredit from "./ArtistCredit.js";
-export interface DashboardProps {
-  isAuthenticated: boolean
-}
+import { MilestoneWithDetails } from "../../types/index.js";
+import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
+import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 
-const Dashboard = ({isAuthenticated}: DashboardProps) => {
+
+const Dashboard = () => {
   const dispatch = useDispatch()
 
-  let isThereACheckInToday = false;
-  const result = doesAHabitHaveACheckInToday();
-
-  if (result instanceof Error) {
-    console.error(result)
-  } else {
-    isThereACheckInToday = result
-  }
+ const isThereACheckInToday = doesAHabitHaveACheckInToday();
 
   const localStorageIsBannerDisplayed = localStorage.getItem("isBannerDisplayed")
   const appSelectorIsBannerDisplayed = useAppSelector(state => state.banner.isBannerDisplayed)
   const isBannerDisplayed: boolean | null = localStorageIsBannerDisplayed ? JSON.parse(localStorageIsBannerDisplayed) : appSelectorIsBannerDisplayed
-
-  if (isBannerDisplayed === null && isThereACheckInToday) {
-    dispatch(setIsBannerDisplayed(true))
-  }
-
 
   const localStorageUser = localStorage.getItem("user")
   const appSelectorUser = useAppSelector(state => state.auth.user)
@@ -56,11 +45,34 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
 
   const { data: milestonesData, isLoading } = useGetMilestonesByUserQuery(currentUserId)
 
-  const isMilestonesEmpty = !isLoading && !milestonesData?.milestones.length
+  if (milestonesData) {
+    const isAStatusReportDue = milestonesData.milestones.some((milestone: MilestoneWithDetails) => {
+      return milestone.habits.some(habit => {
+        const firstCheckInDate = getFirstCheckInDayDate(habit);
+        if (firstCheckInDate) {
+          return (
+            firstCheckInDate.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
+            !isMostRecentStatusReportSent(habit)
+          )
+        }
+        
+      })
+    })
 
+    if (isBannerDisplayed && !isAStatusReportDue) {
+      dispatch(setIsBannerDisplayed(false))
+    }
+
+    if (isBannerDisplayed === null && isAStatusReportDue) {
+      dispatch(setIsBannerDisplayed(true))
+    }
+  }
+
+  const isMilestonesEmpty = !isLoading && !milestonesData?.milestones.length
+ 
 
   return (
-    isAuthenticated || currentUser ? 
+    currentUser ? 
     <>
       <Show 
         breakpoint="(max-width: 943px)"
@@ -113,6 +125,7 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
         <>
           <Grid
             templateColumns="repeat(3, 1fr)"
+            minHeight="100vh"
           >
             <GridItem
               colStart={1}
@@ -135,11 +148,25 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
               <GridItem
                 colStart={2}
               >
-                <Text
-                  fontSize="xl"
-                  mt="20vh">
-                  You currently have no Goals.
-                </Text>
+                <Flex
+                  direction="column"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Heading
+                    as="h2"
+                    size="lg"
+                    mt="4.6rem"
+                    textAlign="center"
+                  >
+                    You currently have no Goals
+                  </Heading>
+                  {
+                    isMilestonesEmpty ? 
+                    <RightDrawer isMilestonesEmpty={isMilestonesEmpty}/> :
+                    ""
+                  }
+                </Flex>
               </GridItem> :
               <GridItem
                 colStart={2}
@@ -147,14 +174,18 @@ const Dashboard = ({isAuthenticated}: DashboardProps) => {
                 <MyMilestones milestones={milestonesData?.milestones} />
               </GridItem>               
             }
-            <GridItem
-              colStart={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-            >
-              <RightDrawer isMilestonesEmpty={isMilestonesEmpty} />
-            </GridItem>
+            {
+              !isMilestonesEmpty ?
+              <GridItem
+                colStart={isMilestonesEmpty ? 2 : 3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+              >
+                <RightDrawer isMilestonesEmpty={isMilestonesEmpty} />
+              </GridItem> :
+              ""
+            }
           </Grid>
           <ArtistCredit textColor="stormyblue.700" />
         </>
