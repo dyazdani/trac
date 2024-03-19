@@ -382,9 +382,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               rowSpan={1}
               rowStart={3}
             >
-              {/* {
-                currentWeek
-              } */}
               <IconButton 
                 aria-label="see-previous-week" 
                 icon={<ArrowLeftIcon />}
@@ -612,16 +609,28 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             })}
           </Grid>
         </CardBody>       
-        {milestone && milestone.isCompleted || milestone.isCanceled ? "" : (!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
-          <Box
-          mb="20px"
-        >
-          <StatusReportFormButton
-            habit={habit}
-            milestone={milestone}
-          />
-        </Box>
-        )}
+        {
+          milestone && 
+          milestone.isCompleted || 
+          milestone.isCanceled ? "" : 
+          (
+            !isStatusReportSent && 
+            !isTodayBeforeFirstCheckInDayDate &&
+            <Box
+              mb="20px"
+            >
+              <StatusReportFormButton
+                habit={habit}
+                milestone={milestone}
+                textContent={
+                  new Date().setHours(0, 0, 0, 0) >= new Date(milestone.dueDate).setHours(0, 0, 0, 0) ? 
+                  "Send Final Check-In Report" :
+                  "Send Check-In Report"
+                }
+              />
+            </Box>
+          )
+        }
       </Flex>
     </Card>
   );

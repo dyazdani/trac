@@ -3,22 +3,31 @@ import {
     useToast 
 } from "@chakra-ui/react";
 import { ArrowUpIcon, NotAllowedIcon, PlusSquareIcon } from "@chakra-ui/icons";
-import {  useUpdateMilestoneMutation } from "../features/api.js";
+import {  useGetMilestonesByUserQuery, useUpdateMilestoneMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { MilestoneWithDetails } from "../../types/index.js";
+import { useDispatch } from "react-redux";
+import doOtherMilestonesHaveStatusReportDue from "../utils/doOtherMilestonesHaveStatusReportDue.js";
+import { setIsBannerDisplayed } from "../features/bannerSlice.js";
+import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
+import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
 
 export interface CancelMilestoneButtonProps{
     milestone: MilestoneWithDetails
 }
 
 const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
-    const [updateMilestone] = useUpdateMilestoneMutation();
+    const [updateMilestone, { isLoading }] = useUpdateMilestoneMutation();
     const toast = useToast();
+    const dispatch = useDispatch();
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
     if (currentUser) {
+        const currentUserId = currentUser.id
+        const { data, isLoading: isMilestonesLoading } = useGetMilestonesByUserQuery(currentUserId); 
+
     const handleClick = async () => {
         try {
             const { milestone: updatedMilestone } = await updateMilestone({
@@ -43,6 +52,12 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
                         isClosable: true,
                         icon: <NotAllowedIcon boxSize="1.4em"/>
                     })
+
+                    if (data) {
+                        if (!doOtherMilestonesHaveStatusReportDue(milestone, data.milestones)) {
+                            dispatch(setIsBannerDisplayed(false))
+                        }
+                    }
                 } else {
                     toast({
                         title: 'Goal Restored',
@@ -53,6 +68,21 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
                         isClosable: true,
                         icon: <ArrowUpIcon boxSize="1.4em"/>
                     })
+
+                    if (
+                        !milestone.isCompleted &&
+                        milestone.habits.some(habit => {
+                            const firstCheckInDate = getFirstCheckInDayDate(habit);
+                            if (firstCheckInDate) {
+                                return (
+                                    firstCheckInDate.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
+                                    !isMostRecentStatusReportSent(habit)
+                                )
+                            }
+                        })    
+                    ) {
+                        dispatch(setIsBannerDisplayed(true))
+                    }
                 }
             } else {
                 toast({
@@ -79,6 +109,7 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
                 aria-label={milestone.isCanceled ? "Restore Goal" : "Cancel Goal"} 
                 icon={milestone.isCanceled ? (<ArrowUpIcon />) : (<NotAllowedIcon/>)} 
                 backgroundColor="turquoise.50"
+                isDisabled={isLoading || isMilestonesLoading}
                 _hover={{
                     backgroundColor: "turquoise.100"
                 }}

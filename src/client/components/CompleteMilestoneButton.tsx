@@ -1,13 +1,16 @@
 import { 
     Button,
-    IconButton, 
     useToast 
 } from "@chakra-ui/react";
 import { CheckIcon, RepeatClockIcon } from "@chakra-ui/icons";
-import {  useUpdateMilestoneMutation } from "../features/api.js";
+import {  useGetMilestonesByUserQuery, useUpdateMilestoneMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { MilestoneWithDetails } from "../../types/index.js";
-import { useState } from "react";
+import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
+import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
+import { useDispatch } from "react-redux";
+import { setIsBannerDisplayed } from "../features/bannerSlice.js";
+import doOtherMilestonesHaveStatusReportDue from "../utils/doOtherMilestonesHaveStatusReportDue.js";
 
 export interface CompleteMilestoneButtonProps{
     milestone: MilestoneWithDetails
@@ -15,12 +18,17 @@ export interface CompleteMilestoneButtonProps{
 
 const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
     const [updateMilestone, {isLoading}] = useUpdateMilestoneMutation();
+
     const toast = useToast();
+    const dispatch= useDispatch();
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
     if (currentUser) {
+        const currentUserId = currentUser.id
+        const { data, isLoading: isMilestonesLoading } = useGetMilestonesByUserQuery(currentUserId); 
+
     const handleClick = async () => {
         try {
             const { milestone: updatedMilestone } = await updateMilestone({
@@ -44,6 +52,11 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                         duration: 9000,
                         isClosable: true
                     })
+                    if (data) {
+                        if (!doOtherMilestonesHaveStatusReportDue(milestone, data.milestones)) {
+                            dispatch(setIsBannerDisplayed(false))
+                        }
+                    }
                 } else {
                     toast({
                         title: 'Goal Incomplete',
@@ -54,6 +67,21 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                         isClosable: true,
                         icon: <RepeatClockIcon boxSize={"1.4em"}/>
                     })
+                    
+                    if (
+                        !milestone.isCanceled &&
+                        milestone.habits.some(habit => {
+                            const firstCheckInDate = getFirstCheckInDayDate(habit);
+                            if (firstCheckInDate) {
+                                return (
+                                    firstCheckInDate.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
+                                    !isMostRecentStatusReportSent(habit)
+                                )
+                            }
+                        })    
+                    ) {
+                        dispatch(setIsBannerDisplayed(true))
+                    } 
                 }
             } else {
                 toast({
@@ -91,7 +119,8 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                     color: "floralwhite.50"
                 }}
                 flexShrink="0"
-                isLoading={isLoading}
+                isLoading={isLoading || isMilestonesLoading}
+                isDisabled={isLoading || isMilestonesLoading}
                 onClick={(e) => {
                     e.preventDefault();
                     handleClick();

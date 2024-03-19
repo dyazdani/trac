@@ -30,9 +30,10 @@ import { EmailIcon } from '@chakra-ui/icons';
 export interface StatusReportFormButtonProps {
     habit: HabitWithDetails
     milestone: MilestoneWithDetails
+    textContent: string
 }
 
-const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps) => {
+const StatusReportFormButton = ({habit, milestone, textContent}: StatusReportFormButtonProps) => {
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
@@ -107,7 +108,7 @@ const StatusReportFormButton = ({habit, milestone}: StatusReportFormButtonProps)
                 onOpen();
             }}
             >
-                Send Check-In Report
+                {textContent}
             </Button>
             <Drawer 
                 placement='right' 
