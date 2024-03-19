@@ -19,7 +19,10 @@ import {
   Image,
   Flex,
   Grid,
-  GridItem
+  GridItem,
+  LinkBox,
+  LinkOverlay,
+  Heading
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -112,15 +115,27 @@ const LoginForm = () => {
             mb="1rem"
             templateColumns="repeat(3, 1fr)"
             templateRows="repeat(1, 1fr)"
-            gap={3}
+            gap={10}
           >
             <GridItem
               colStart={2}
             >
-              <Image
-                src="/images/trac-logo-with-text.png"
-                alt="trac logo"
-              />
+              <LinkBox>
+                <LinkOverlay as={ReactRouterLink} to="/">
+                  <Flex
+                    gap="0.5rem"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Text fontSize="4xl">trac</Text>
+                    <Image
+                      src="/images/trac_logo.png"
+                      alt="trac mountain logo"
+                      h="2.5rem"
+                    />
+                  </Flex>
+                </LinkOverlay>
+              </LinkBox>
               <Text>Log in to stay on Trac.</Text> 
             </GridItem>
             <GridItem
