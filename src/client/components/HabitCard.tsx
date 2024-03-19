@@ -382,9 +382,6 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               rowSpan={1}
               rowStart={3}
             >
-              {/* {
-                currentWeek
-              } */}
               <IconButton 
                 aria-label="see-previous-week" 
                 icon={<ArrowLeftIcon />}
