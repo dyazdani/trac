@@ -609,16 +609,28 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             })}
           </Grid>
         </CardBody>       
-        {milestone && milestone.isCompleted || milestone.isCanceled ? "" : (!isStatusReportSent && !isTodayBeforeFirstCheckInDayDate &&
-          <Box
-          mb="20px"
-        >
-          <StatusReportFormButton
-            habit={habit}
-            milestone={milestone}
-          />
-        </Box>
-        )}
+        {
+          milestone && 
+          milestone.isCompleted || 
+          milestone.isCanceled ? "" : 
+          (
+            !isStatusReportSent && 
+            !isTodayBeforeFirstCheckInDayDate &&
+            <Box
+              mb="20px"
+            >
+              <StatusReportFormButton
+                habit={habit}
+                milestone={milestone}
+                textContent={
+                  new Date().setHours(0, 0, 0, 0) >= new Date(milestone.dueDate).setHours(0, 0, 0, 0) ? 
+                  "Send Final Status Report" :
+                  "Send Status Report"
+                }
+              />
+            </Box>
+          )
+        }
       </Flex>
     </Card>
   );
