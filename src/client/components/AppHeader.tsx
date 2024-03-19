@@ -12,7 +12,10 @@ import {
     Spacer,
     Heading,
     Image,
-    Link as ChakraLink, 
+    Link as ChakraLink,
+    LinkBox,
+    LinkOverlay,
+    Flex, 
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from 'react-router-dom'
 import MessagesMenu from "./MessagesMenu.js";
@@ -48,12 +51,23 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
     >
       <HStack>
         <Spacer/>
-        <Heading>trac</Heading>
-        <Image
-          src="/images/trac_logo.png"
-          alt="trac mountain logo"
-          h="2.5rem"
-        />
+        <LinkBox>
+          <LinkOverlay as={ReactRouterLink} to="/">
+            <Flex
+              gap="0.5rem"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Heading>trac</Heading>
+              <Image
+                src="/images/trac_logo.png"
+                alt="trac mountain logo"
+                h="2.5rem"
+              />
+            </Flex>
+          </LinkOverlay>
+        </LinkBox>
+        
         <Spacer/>
         <Spacer/>
         <Spacer/>
