@@ -624,8 +624,8 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                 milestone={milestone}
                 textContent={
                   new Date().setHours(0, 0, 0, 0) >= new Date(milestone.dueDate).setHours(0, 0, 0, 0) ? 
-                  "Send Final Status Report" :
-                  "Send Status Report"
+                  "Send Final Check-In Report" :
+                  "Send Check-In Report"
                 }
               />
             </Box>
