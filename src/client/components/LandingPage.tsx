@@ -131,10 +131,21 @@ const LandingPage = () => {
                         lineHeight="4rem"
                     >
                         <Highlight
-                            query={['Goals', 'Goal', 'Habits', 'Habit']}
-                            styles={{ px: '3', py: '1', rounded: 'xl', bg: 'cornflowerblue.50' }}
+                            query={[
+                                'Goals', 
+                                'Goal', 
+                                'Habits', 
+                                'Habit'
+                            ]}
+                            styles={{ 
+                                px: '3', 
+                                py: '1', 
+                                rounded: 'xl', 
+                                bg: 'cornflowerblue.50', 
+                                color: '#353231' 
+                            }}
                         >
-                            Create Goals and the Habits required to meet them. Check off each day you practice your Habit. Mark your Goal as complete when it's finished. 
+                            Create Goals and the Habits required to meet them. Check off your Habits each day you practice until your Goals have been met. 
                         </Highlight>
                     </Heading>
                     <Flex
@@ -172,7 +183,7 @@ const LandingPage = () => {
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="cornflowerblue.100" boxSize="1.6rem" mr="1rem"/>
-                                    Choose which days of the week to practice each Habit. 
+                                    Choose day(s) of the week to practice each Habit (Routine Days). 
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="cornflowerblue.100" boxSize="1.6rem" mr="1rem"/>
@@ -180,11 +191,11 @@ const LandingPage = () => {
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="cornflowerblue.100" boxSize="1.6rem" mr="1rem"/>
-                                    Make revisions as needed, even to past days.
+                                    Make revisions as needed, even to past dates.
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="cornflowerblue.100" boxSize="1.6rem" mr="1rem"/>
-                                    Complete or cancel your Goal.
+                                    Complete or cancel your Goals.
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="cornflowerblue.100" boxSize="1.6rem" mr="1rem"/>
@@ -202,10 +213,20 @@ const LandingPage = () => {
                         lineHeight="4rem"
                     >
                         <Highlight
-                            query={['Check-In Report', 'Check-In Day', 'social accountability']}
-                            styles={{ px: '3', py: '1', rounded: 'xl', bg: 'gold.100' }}
+                            query={[
+                                'Check-In Report', 
+                                'Check-In Day', 
+                                'social accountability'
+                            ]}
+                            styles={{ 
+                                px: '3', 
+                                py: '1', 
+                                rounded: 'xl', 
+                                bg: 'gold.100',
+                                color: '#353231' 
+                            }}
                         >
-                            Email a Check-In Report to your friends every week on your Habit's Check-In Day. Research shows that social accountability works. 
+                            Send a Check-In Report to your friends every week to share your progress. Research shows that social accountability works. 
                         </Highlight>
                     </Heading>
                     <Flex
@@ -224,7 +245,11 @@ const LandingPage = () => {
                             >
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
-                                    <Text as="b">Send Check-In Report</Text> button appears when it is a Check-In Day.
+                                    Choose day of the week for each Habit's Check-In Day.
+                                </ListItem>
+                                <ListItem fontSize="2xl">
+                                    <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
+                                    "Send Check-In Report" button and banner appear when it is time to send a Check-In Report.
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
@@ -236,7 +261,7 @@ const LandingPage = () => {
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
-                                    Add emails of everyone you want to send Check-in Report to and click <Text as="b">Send</Text>.
+                                    Add emails of everyone you want to send Check-in Report to and click "Send".
                                 </ListItem>
                             </List>
                         </Card>
