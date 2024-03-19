@@ -300,17 +300,19 @@ const LandingPage = () => {
                     >
                         Inspire.
                     </Heading>
-                    <HStack
-                        marginBottom="5vw"
-                        marginTop="1vw"
+                    <Flex
+                        gap="0.5rem"
+                        alignItems="center"
+                        justifyContent="center"
+                        marginBottom="5rem"
                     >
-                        <Heading size="2xl">trac</Heading>
+                        <Text fontSize="4xl">trac</Text>
                         <Image
-                            src="/images/trac_logo.png"
-                            alt="trac mountain logo"
-                            h="4.5rem"
+                        src="/images/trac_logo.png"
+                        alt="trac mountain logo"
+                        h="2.5rem"
                         />
-                    </HStack>
+                    </Flex>
                     <ArtistCredit textColor="stormyblue.700"/>
                 </VStack>
             </Flex>   
