@@ -67,7 +67,6 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             </Flex>
           </LinkOverlay>
         </LinkBox>
-        
         <Spacer/>
         <Spacer/>
         <Spacer/>
