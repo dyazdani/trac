@@ -58,7 +58,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
               alignItems="center"
               justifyContent="center"
             >
-              <Heading>trac</Heading>
+              <Text fontSize="4xl">trac</Text>
               <Image
                 src="/images/trac_logo.png"
                 alt="trac mountain logo"
