@@ -291,11 +291,13 @@ const LandingPage = () => {
                         height="fit-content"
                         width="fit-content"
                         mt="5vw"
+                        bgColor="transparent"
+                        borderRadius="20px"
                     >
                         <Image
-                            src="/images/status_report_form_drawer_screenshot.png"
+                            src="/images/new_trac_screenshot_3.png"
                             alt="check-in report form drawer screenshot"
-                            minH="70vh"
+                            minH="40vh"
                             borderRadius="20px"
                         />
                     </Card>
