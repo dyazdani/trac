@@ -162,7 +162,7 @@ const LandingPage = () => {
                             <Image
                                 src="/images/new_trac_screenshot_1.png"
                                 alt="trac screenshot"
-                                minH="70vh"
+                                minH="40vh"
                                 borderRadius="20px"
                             />
                         </Card>
@@ -275,12 +275,14 @@ const LandingPage = () => {
                             boxShadow="2xl"
                             height="fit-content"
                             width="fit-content"
+                            bgColor="transparent"
+                            borderRadius="20px"
                         >
                             <Image
-                                src="/images/status_report_button_screenshot.png"
+                                src="/images/new_trac_screenshot_2.png"
                                 alt="status report button screenshot"
-                                maxH="80vh"
-                                minH="50vh"
+                                minH="40vh"
+                                borderRadius="20px"
                             />
                         </Card>
                     </Flex>
@@ -293,7 +295,8 @@ const LandingPage = () => {
                         <Image
                             src="/images/status_report_form_drawer_screenshot.png"
                             alt="check-in report form drawer screenshot"
-                            minW="70vw"
+                            minH="70vh"
+                            borderRadius="20px"
                         />
                     </Card>
                     <Heading 
