@@ -156,12 +156,14 @@ const LandingPage = () => {
                             boxShadow="2xl"
                             height="fit-content"
                             width="fit-content"
+                            bgColor="transparent"
+                            borderRadius="20px"
                         >
                             <Image
-                                src="/images/trac_screenshot.jpg"
+                                src="/images/new_trac_screenshot_1.png"
                                 alt="trac screenshot"
-                                maxH="60vh"
-                                minH="40vh"
+                                minH="70vh"
+                                borderRadius="20px"
                             />
                         </Card>
                         <Spacer
