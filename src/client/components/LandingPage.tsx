@@ -183,7 +183,7 @@ const LandingPage = () => {
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="cornflowerblue.100" boxSize="1.6rem" mr="1rem"/>
-                                    Choose day(s) of the week to practice each Habit (Routine Days). 
+                                    Choose weekly Routine Days to practice each Habit. 
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="cornflowerblue.100" boxSize="1.6rem" mr="1rem"/>
@@ -199,7 +199,7 @@ const LandingPage = () => {
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="cornflowerblue.100" boxSize="1.6rem" mr="1rem"/>
-                                    Edit or delete Habits and/or Goals at any time.
+                                    Edit or delete Habits or Goals at any time.
                                 </ListItem>
                             </List>
                         </Card>
