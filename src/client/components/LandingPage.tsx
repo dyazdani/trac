@@ -247,7 +247,7 @@ const LandingPage = () => {
                             >
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
-                                    Choose day of the week for each Habit's Check-In Day.
+                                    Choose day of the week for Habit's Check-In Day.
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
