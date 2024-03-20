@@ -41,6 +41,7 @@ const LandingPage = () => {
                     padding="1vw"
                     position="sticky"
                     top="75px"
+                    zIndex={1000}
                     >
                     Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
                     </Heading>
@@ -57,6 +58,7 @@ const LandingPage = () => {
                     padding="1vw"
                     position="sticky"
                     top="75px"
+                    zIndex={1000}
                 >
                     Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
                 </Heading>
