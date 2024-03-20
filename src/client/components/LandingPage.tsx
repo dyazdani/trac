@@ -41,6 +41,7 @@ const LandingPage = () => {
                     padding="1vw"
                     position="sticky"
                     top="75px"
+                    zIndex={1000}
                     >
                     Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
                     </Heading>
@@ -57,6 +58,7 @@ const LandingPage = () => {
                     padding="1vw"
                     position="sticky"
                     top="75px"
+                    zIndex={1000}
                 >
                     Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
                 </Heading>
@@ -131,10 +133,21 @@ const LandingPage = () => {
                         lineHeight="4rem"
                     >
                         <Highlight
-                            query={['Goals', 'Goal', 'Habits', 'Habit']}
-                            styles={{ px: '3', py: '1', rounded: 'xl', bg: 'cornflowerblue.50' }}
+                            query={[
+                                'Goals', 
+                                'Goal', 
+                                'Habits', 
+                                'Habit'
+                            ]}
+                            styles={{ 
+                                px: '3', 
+                                py: '1', 
+                                rounded: 'xl', 
+                                bg: 'cornflowerblue.50', 
+                                color: '#353231' 
+                            }}
                         >
-                            Create Goals and the Habits required to meet them. Check off each day you practice your Habit. Mark your Goal as complete when it's finished. 
+                            Create Goals and the Habits required to meet them. Check off your Habits each day you practice until your Goals have been met. 
                         </Highlight>
                     </Heading>
                     <Flex
@@ -145,12 +158,14 @@ const LandingPage = () => {
                             boxShadow="2xl"
                             height="fit-content"
                             width="fit-content"
+                            bgColor="transparent"
+                            borderRadius="20px"
                         >
                             <Image
-                                src="/images/trac_screenshot.jpg"
+                                src="/images/new_trac_screenshot_1.png"
                                 alt="trac screenshot"
-                                maxH="60vh"
                                 minH="40vh"
+                                borderRadius="20px"
                             />
                         </Card>
                         <Spacer
@@ -172,7 +187,7 @@ const LandingPage = () => {
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="cornflowerblue.100" boxSize="1.6rem" mr="1rem"/>
-                                    Choose which days of the week to practice each Habit. 
+                                    Choose weekly Routine Days to practice each Habit. 
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="cornflowerblue.100" boxSize="1.6rem" mr="1rem"/>
@@ -180,15 +195,15 @@ const LandingPage = () => {
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="cornflowerblue.100" boxSize="1.6rem" mr="1rem"/>
-                                    Make revisions as needed, even to past days.
+                                    Make revisions as needed, even to past dates.
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="cornflowerblue.100" boxSize="1.6rem" mr="1rem"/>
-                                    Complete or cancel your Goal.
+                                    Complete or cancel your Goals.
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="cornflowerblue.100" boxSize="1.6rem" mr="1rem"/>
-                                    Edit or delete Habits and/or Goals at any time.
+                                    Edit or delete Habits or Goals at any time.
                                 </ListItem>
                             </List>
                         </Card>
@@ -202,10 +217,20 @@ const LandingPage = () => {
                         lineHeight="4rem"
                     >
                         <Highlight
-                            query={['Check-In Report', 'Check-In Day', 'social accountability']}
-                            styles={{ px: '3', py: '1', rounded: 'xl', bg: 'gold.100' }}
+                            query={[
+                                'Check-In Report', 
+                                'Check-In Day', 
+                                'social accountability'
+                            ]}
+                            styles={{ 
+                                px: '3', 
+                                py: '1', 
+                                rounded: 'xl', 
+                                bg: 'gold.100',
+                                color: '#353231' 
+                            }}
                         >
-                            Email a Check-In Report to your friends every week on your Habit's Check-In Day. Research shows that social accountability works. 
+                            Send a Check-In Report to your friends every week to share your progress. Research shows that social accountability works. 
                         </Highlight>
                     </Heading>
                     <Flex
@@ -224,7 +249,11 @@ const LandingPage = () => {
                             >
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
-                                    <Text as="b">Send Check-In Report</Text> button appears when it is a Check-In Day.
+                                    Choose day of the week for Habit's Check-In Day.
+                                </ListItem>
+                                <ListItem fontSize="2xl">
+                                    <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
+                                    "Send Check-In Report" button and banner appear when it is time to send a Check-In Report.
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
@@ -236,7 +265,7 @@ const LandingPage = () => {
                                 </ListItem>
                                 <ListItem fontSize="2xl">
                                     <ListIcon as={CheckCircleIcon} color="gold.400" boxSize="1.6rem" mr="1rem"/>
-                                    Add emails of everyone you want to send Check-in Report to and click <Text as="b">Send</Text>.
+                                    Add emails of everyone you want to send Check-in Report to and click "Send".
                                 </ListItem>
                             </List>
                         </Card>
@@ -248,12 +277,14 @@ const LandingPage = () => {
                             boxShadow="2xl"
                             height="fit-content"
                             width="fit-content"
+                            bgColor="transparent"
+                            borderRadius="20px"
                         >
                             <Image
-                                src="/images/status_report_button_screenshot.png"
+                                src="/images/new_trac_screenshot_2.png"
                                 alt="status report button screenshot"
-                                maxH="80vh"
-                                minH="50vh"
+                                minH="40vh"
+                                borderRadius="20px"
                             />
                         </Card>
                     </Flex>
@@ -262,11 +293,14 @@ const LandingPage = () => {
                         height="fit-content"
                         width="fit-content"
                         mt="5vw"
+                        bgColor="transparent"
+                        borderRadius="20px"
                     >
                         <Image
-                            src="/images/status_report_form_drawer_screenshot.png"
+                            src="/images/new_trac_screenshot_3.png"
                             alt="check-in report form drawer screenshot"
-                            minW="70vw"
+                            minH="40vh"
+                            borderRadius="20px"
                         />
                     </Card>
                     <Heading 
