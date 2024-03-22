@@ -29,7 +29,7 @@ export interface CreateMilestoneFormProps {
 
 const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMilestoneFormProps) => {
     const [datepickerValue, setDatepickerValue] = useState<Date | undefined>()
-    const [milestoneNameValue, setMilestoneNameValue] = useState("New Milestone")
+    const [milestoneNameValue, setMilestoneNameValue] = useState("New Goal")
 
     const [createMilestone, {isLoading}] = useCreateMilestoneMutation();
 
@@ -146,7 +146,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                             e.preventDefault();
                             onCloseForMilestone();
                             setDatepickerValue(undefined);
-                            setMilestoneNameValue("New Milestone");
+                            setMilestoneNameValue("New Goal");
                         }}
                     >
                         Cancel
