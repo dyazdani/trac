@@ -292,7 +292,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             !milestone.isCanceled ? 
             <Button
               backgroundColor={milestone.isCompleted ? "peach.100" : "peach.300"}
-              color={isCompleted ? "peach.700" : "#353231"}
+              color="#353231"
               _hover={
                 milestone.isCompleted ? 
                 { backgroundColor: "peach.200"} :
