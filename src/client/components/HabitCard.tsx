@@ -586,7 +586,15 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           rowStart={isHabitRoutineDay(habit, day) ? 5 : 4}
                           textAlign="center"
                         >
-                          <ChevronUpIcon color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.600" : "darkslategray.900"}/>
+                          <ChevronUpIcon 
+                            color={
+                              milestone.isCanceled || 
+                              milestone.isCompleted ||
+                              new Date().setHours(0, 0, 0, 0) < new Date(milestone.dueDate).setHours(0, 0, 0, 0) ?  
+                              "darkslategray.600" : 
+                              "darkslategray.900"
+                            }
+                          />
                         </GridItem>
                         <GridItem
                           padding={".2vw"}
@@ -596,7 +604,13 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           textAlign="center"
                         >
                           <Box
-                            color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.600" : "darkslategray.900"}
+                            color={
+                              milestone.isCanceled || 
+                              milestone.isCompleted || 
+                              new Date().setHours(0, 0, 0, 0) < new Date(milestone.dueDate).setHours(0, 0, 0, 0) ? 
+                              "darkslategray.600" : 
+                              "darkslategray.900"
+                            }
                           >
                             Due Date
                           </Box>
