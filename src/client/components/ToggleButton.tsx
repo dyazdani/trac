@@ -150,7 +150,10 @@ const ToggleButton = ({
             colorScheme="peach"
             borderColor="#3a3c3c"
             _checked={{
-                "& .chakra-checkbox__control": { borderColor: "#3a3c3c" }
+                "& .chakra-checkbox__control": { 
+                    borderColor: "#3a3c3c",
+                    color:  "#3a3c3c"
+                }
             }}
             onChange={(e) => {
                 e.preventDefault();
