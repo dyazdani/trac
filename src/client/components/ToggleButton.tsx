@@ -149,8 +149,18 @@ const ToggleButton = ({
             size="lg"
             colorScheme="peach"
             borderColor="#3a3c3c"
+            _disabled={{
+                "& .chakra-checkbox__control": { 
+                    borderColor: "darkslategray.600",
+                    background:  "darkslategray.600",
+                    cursor: "not-allowed"
+                }
+            }}
             _checked={{
-                "& .chakra-checkbox__control": { borderColor: "#3a3c3c" }
+                "& .chakra-checkbox__control": { 
+                    borderColor: "#3a3c3c",
+                    color:  "#3a3c3c"
+                }
             }}
             onChange={(e) => {
                 e.preventDefault();

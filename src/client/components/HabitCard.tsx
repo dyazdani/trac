@@ -242,7 +242,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             minWidth="0"
             flex={1}
             size="md"
-            color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : ""}
+            color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.600" : ""}
           >
             <Text 
               whiteSpace="nowrap"
@@ -292,7 +292,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             !milestone.isCanceled ? 
             <Button
               backgroundColor={milestone.isCompleted ? "peach.100" : "peach.300"}
-              color={isCompleted ? "peach.700" : "#353231"}
+              color="#353231"
               _hover={
                 milestone.isCompleted ? 
                 { backgroundColor: "peach.200"} :
@@ -450,7 +450,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       rowStart={1} 
                       colSpan={5} 
                       rowSpan={1}
-                      color={"darkslategray.800"}
+                      color={"darkslategray.900"}
                     >
                       Today
                     </GridItem> : 
@@ -471,7 +471,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       colSpan={1} 
                       rowStart={2}
                       textAlign="center"
-                      color={isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) || isOutOfRange || milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : "darkslategray.800"}
+                      color={isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) || isOutOfRange || milestone.isCanceled || milestone.isCompleted ? "darkslategray.600" : "darkslategray.900"}
                     >
                       {dayAbbreviation}
                     </GridItem>
@@ -485,7 +485,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       borderRight={todayBorder}
                       borderBottom={!isHabitRoutineDay(habit, day) ? todayBorder : ""}
                       borderBottomRadius={isToday && !isHabitRoutineDay(habit, day)? 10 : {}}
-                      color={isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) || isOutOfRange || milestone.isCanceled || milestone.isCompleted  ? "darkslategray.400" : "darkslategray.800"}
+                      color={isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) || isOutOfRange || milestone.isCanceled || milestone.isCompleted  ? "darkslategray.600" : "darkslategray.900"}
                     >
                       {
                         (day.getMonth() === 11 && day.getDate() === 31) ||
@@ -530,7 +530,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         rowStart={isHabitRoutineDay(habit, day) ? 5 : 4}
                         textAlign="center"
                       >
-                        <ChevronUpIcon color={isOutOfRange ? "darkslategray.400" : "darkslategray.800"}/>
+                        <ChevronUpIcon color={isOutOfRange ? "darkslategray.600" : "darkslategray.900"}/>
                       </GridItem>
                       <GridItem
                         padding={".2vw"}
@@ -540,7 +540,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         textAlign="center"
                       >
                         <Box
-                          color={isOutOfRange ? "darkslategray.400" : "darkslategray.800"}
+                          color={isOutOfRange ? "darkslategray.600" : "darkslategray.900"}
                         >
                           Check-In
                         </Box>
@@ -558,7 +558,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         rowStart={isHabitRoutineDay(habit, day) ? 5 : 4}
                         textAlign="center"
                       >
-                        <ChevronUpIcon color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : "darkslategray.800"}/>
+                        <ChevronUpIcon color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.600" : "darkslategray.900"}/>
                       </GridItem>
                       <GridItem
                         padding={".2vw"}
@@ -568,7 +568,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         textAlign="center"
                       >
                         <Box
-                          color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : "darkslategray.800"}
+                          color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.600" : "darkslategray.900"}
                         >
                           Start
                         </Box>
@@ -586,7 +586,15 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           rowStart={isHabitRoutineDay(habit, day) ? 5 : 4}
                           textAlign="center"
                         >
-                          <ChevronUpIcon color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : "darkslategray.800"}/>
+                          <ChevronUpIcon 
+                            color={
+                              milestone.isCanceled || 
+                              milestone.isCompleted ||
+                              new Date().setHours(0, 0, 0, 0) < new Date(milestone.dueDate).setHours(0, 0, 0, 0) ?  
+                              "darkslategray.600" : 
+                              "darkslategray.900"
+                            }
+                          />
                         </GridItem>
                         <GridItem
                           padding={".2vw"}
@@ -596,7 +604,13 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                           textAlign="center"
                         >
                           <Box
-                            color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : "darkslategray.800"}
+                            color={
+                              milestone.isCanceled || 
+                              milestone.isCompleted || 
+                              new Date().setHours(0, 0, 0, 0) < new Date(milestone.dueDate).setHours(0, 0, 0, 0) ? 
+                              "darkslategray.600" : 
+                              "darkslategray.900"
+                            }
                           >
                             Due Date
                           </Box>
