@@ -2,7 +2,8 @@ import {
     CheckCircleIcon,
     CheckIcon,
     CloseIcon, 
-    HamburgerIcon 
+    HamburgerIcon, 
+    SettingsIcon
 } from "@chakra-ui/icons";
 import { 
     Accordion,
@@ -19,6 +20,7 @@ import {
     CardHeader, 
     Flex, 
     Heading, 
+    IconButton, 
     Menu,
     MenuButton,
     MenuList,
@@ -170,9 +172,9 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 {({ isOpen }) => 
                     <>
                         <MenuButton
-                            as={Button}
+                            as={IconButton}
                             aria-label="Open Goal options menu"
-                            rightIcon={isOpen ? <CloseIcon/> :<HamburgerIcon/>}
+                            icon={<SettingsIcon/>}
                             backgroundColor="turquoise.300"
                             _hover={{
                                 backgroundColor: "turquoise.400"
