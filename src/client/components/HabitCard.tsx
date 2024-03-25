@@ -576,7 +576,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       ""
                     }
                     {
-                      areDatesSameDayMonthYear(day, new Date(milestone.dueDate)) ?
+                      areDatesSameDayMonthYear(day, new Date(milestone.dueDate)) &&
+                      !milestone.isCompleted &&
+                      !milestone.isCanceled ?
                       <>
                         <GridItem
                           padding={".2vw"}
