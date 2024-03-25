@@ -11,6 +11,7 @@ import doOtherMilestonesHaveStatusReportDue from "../utils/doOtherMilestonesHave
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
+import { User } from "@prisma/client";
 
 export interface CancelMilestoneButtonProps{
     milestone: MilestoneWithDetails
@@ -22,7 +23,7 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
     const dispatch = useDispatch();
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
-    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    const currentUser: Omit<User, "password"> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
     if (currentUser) {
         const currentUserId = currentUser.id
@@ -75,7 +76,7 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
                             const firstCheckInDate = getFirstCheckInDayDate(habit);
                             if (firstCheckInDate) {
                                 return (
-                                    firstCheckInDate.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
+                                    firstCheckInDate.setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0) &&
                                     !isMostRecentStatusReportSent(habit)
                                 )
                             }

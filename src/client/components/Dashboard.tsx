@@ -53,7 +53,7 @@ const Dashboard = () => {
             const firstCheckInDate = getFirstCheckInDayDate(habit);
             if (firstCheckInDate) {
               return (
-                firstCheckInDate.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
+                firstCheckInDate.setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0) &&
                 !isMostRecentStatusReportSent(habit)
               )
             }
@@ -65,7 +65,7 @@ const Dashboard = () => {
         dispatch(setIsBannerDisplayed(false))
       }
   
-      if (isBannerDisplayed === null && isAStatusReportDue) {
+      if (!isBannerDisplayed && isAStatusReportDue) {
         dispatch(setIsBannerDisplayed(true))
       }
     }
@@ -74,7 +74,6 @@ const Dashboard = () => {
 
   const isMilestonesEmpty = !isLoading && !milestonesData?.milestones.length
  
-  console.log(`isBannerDisplayed after dispatch: ${isBannerDisplayed}`)
   return (
     currentUser ? 
     <>
