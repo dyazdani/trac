@@ -32,7 +32,7 @@ import {
     ChevronDownIcon
 } from "@chakra-ui/icons";
 import { useCreateHabitMutation, useCreateScheduleMutation } from "../features/api.js";
-import { DayOfTheWeek } from "@prisma/client";
+import { DayOfTheWeek, User } from "@prisma/client";
 import React, { useState } from "react";
 import getBooleanRoutineDays from "..//utils/getBooleanRoutineDays.js";
 import { useAppSelector } from "../app/hooks.js";
@@ -54,7 +54,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
     
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
-    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    const currentUser: Omit<User, "password"> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
     const [createHabit, {isLoading}] = useCreateHabitMutation();
     const [

@@ -25,6 +25,7 @@ import { HabitWithDetails, MilestoneWithDetails } from '../../types/index.js';
 import getDefaultStatusReportMessage from '..//utils/getDefaultStatusReportMessage.js';
 import getMostRecentCheckInDayDate from '..//utils/getMostRecentCheckInDayDate.js';
 import { EmailIcon } from '@chakra-ui/icons';
+import { User } from '@prisma/client';
 
 
 export interface StatusReportFormButtonProps {
@@ -36,7 +37,7 @@ export interface StatusReportFormButtonProps {
 const StatusReportFormButton = ({habit, milestone, textContent}: StatusReportFormButtonProps) => {
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
-    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    const currentUser: Omit<User, "password"> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
     if (currentUser) {
         const [emails, setEmails] = useState<string[]>([])
