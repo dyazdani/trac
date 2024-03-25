@@ -72,12 +72,12 @@ const Dashboard = () => {
         dispatch(setIsBannerDisplayed(true))
       }
     }
-  }, [])
+  }, [milestonesData])
   
 
   const isMilestonesEmpty = !isLoading && !milestonesData?.milestones.length
  
-
+  console.log(`isBannerDisplayed after dispatch: ${isBannerDisplayed}`)
   return (
     currentUser ? 
     <>
