@@ -29,6 +29,7 @@ import {
     CloseIcon,
     HamburgerIcon,
     RepeatClockIcon,
+    SettingsIcon,
 } from "@chakra-ui/icons";
 import { 
   HabitWithDetails, 
@@ -260,9 +261,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             {({ isOpen}) => (
               <>
                 <MenuButton
-                  as={Button}
+                  as={IconButton}
                   aria-label="Open Habit options menu"
-                  rightIcon={isOpen ? <CloseIcon/> :<HamburgerIcon/>}
+                  icon={<SettingsIcon/>}
                   backgroundColor="cornflowerblue.100"
                   _hover={{
                     backgroundColor: "cornflowerblue.300",
@@ -273,9 +274,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     color: "floralwhite.50"    
                   }} 
                   isActive={isOpen}
-                >
-                  Menu
-                </MenuButton>
+                />
                 <MenuList
                   backgroundColor="cornflowerblue.50"
                 >
