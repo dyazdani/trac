@@ -11,6 +11,7 @@ import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.
 import { useDispatch } from "react-redux";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 import doOtherMilestonesHaveStatusReportDue from "../utils/doOtherMilestonesHaveStatusReportDue.js";
+import { User } from "@prisma/client";
 
 export interface CompleteMilestoneButtonProps{
     milestone: MilestoneWithDetails
@@ -23,67 +24,80 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
     const dispatch= useDispatch();
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
-    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    const currentUser: Omit<User, "password"> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
     if (currentUser) {
         const currentUserId = currentUser.id
-        const { data, isLoading: isMilestonesLoading } = useGetMilestonesByUserQuery(currentUserId); 
+        const { data, isLoading: isMilestonesLoading, error } = useGetMilestonesByUserQuery(currentUserId); 
 
     const handleClick = async () => {
-        try {
-            const { milestone: updatedMilestone } = await updateMilestone({
-                ownerId: currentUser.id,
-                milestoneId: milestone.id,
-                newMilestone: {
-                    name: milestone.name,
-                    dueDate: milestone.dueDate,
-                    isCompleted: !milestone.isCompleted,
-                    isCanceled: milestone.isCanceled
-                }
-            }).unwrap();
-    
-            if (updatedMilestone) {
-                if (updatedMilestone.isCompleted) {
-                    toast({
-                        title: 'Goal Completed!',
-                        description: `Your Goal "${updatedMilestone.name}" was marked as complete.`,
-                        variant: 'subtle',
-                        status: 'success',
-                        duration: 9000,
-                        isClosable: true
-                    })
-                    if (data) {
-                        if (!doOtherMilestonesHaveStatusReportDue(milestone, data.milestones)) {
-                            dispatch(setIsBannerDisplayed(false))
+        if (typeof error === "undefined") {
+            try {
+                const { milestone: updatedMilestone } = await updateMilestone({
+                    ownerId: currentUser.id,
+                    milestoneId: milestone.id,
+                    newMilestone: {
+                        name: milestone.name,
+                        dueDate: milestone.dueDate,
+                        isCompleted: !milestone.isCompleted,
+                        isCanceled: milestone.isCanceled
+                    }
+                }).unwrap();
+        
+                if (updatedMilestone) {
+                    if (updatedMilestone.isCompleted) {
+                        toast({
+                            title: 'Goal Completed!',
+                            description: `Your Goal "${updatedMilestone.name}" was marked as complete.`,
+                            variant: 'subtle',
+                            status: 'success',
+                            duration: 9000,
+                            isClosable: true
+                        })
+                        if (data) {
+                            if (data.milestones.length) {
+                                if (!doOtherMilestonesHaveStatusReportDue(milestone, data.milestones)) {
+                                    dispatch(setIsBannerDisplayed(false))
+                                }
+                            }                       
                         }
+                    } else {
+                        toast({
+                            title: 'Goal Incomplete',
+                            description: `Your Goal "${updatedMilestone.name}" was marked as incomplete.`,
+                            variant: 'subtle',
+                            status: 'info',
+                            duration: 9000,
+                            isClosable: true,
+                            icon: <RepeatClockIcon boxSize={"1.4em"}/>
+                        })
+                        
+                        if (
+                            !updatedMilestone.isCanceled &&
+                            updatedMilestone.habits.some(habit => {
+                                const firstCheckInDate = getFirstCheckInDayDate(habit);
+                                if (firstCheckInDate) {
+                                    return (
+                                        firstCheckInDate.setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0) &&
+                                        !isMostRecentStatusReportSent(habit)
+                                    )
+                                }
+                            })    
+                        ) {
+                            dispatch(setIsBannerDisplayed(true))
+                        } 
                     }
                 } else {
                     toast({
-                        title: 'Goal Incomplete',
-                        description: `Your Goal "${updatedMilestone.name}" was marked as incomplete.`,
-                        variant: 'subtle',
-                        status: 'info',
+                        title: 'ERROR',
+                        description: `Unable to mark Goal "${milestone.name}" as complete or incomplete`,
+                        status: 'error',
                         duration: 9000,
-                        isClosable: true,
-                        icon: <RepeatClockIcon boxSize={"1.4em"}/>
+                        isClosable: true
                     })
-                    
-                    if (
-                        !milestone.isCanceled &&
-                        milestone.habits.some(habit => {
-                            const firstCheckInDate = getFirstCheckInDayDate(habit);
-                            if (firstCheckInDate) {
-                                return (
-                                    firstCheckInDate.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
-                                    !isMostRecentStatusReportSent(habit)
-                                )
-                            }
-                        })    
-                    ) {
-                        dispatch(setIsBannerDisplayed(true))
-                    } 
                 }
-            } else {
+            } catch (e) {
+                console.error(e)
                 toast({
                     title: 'ERROR',
                     description: `Unable to mark Goal "${milestone.name}" as complete or incomplete`,
@@ -91,9 +105,8 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                     duration: 9000,
                     isClosable: true
                 })
-            }
-        } catch (e) {
-            console.error(e)
+            }    
+        } else {
             toast({
                 title: 'ERROR',
                 description: `Unable to mark Goal "${milestone.name}" as complete or incomplete`,
@@ -120,7 +133,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                 }}
                 flexShrink="0"
                 isLoading={isLoading || isMilestonesLoading}
-                isDisabled={isLoading || isMilestonesLoading}
+                isDisabled={isLoading || isMilestonesLoading || !!error}
                 onClick={(e) => {
                     e.preventDefault();
                     handleClick();
