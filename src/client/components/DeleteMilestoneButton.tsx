@@ -1,12 +1,17 @@
 import { 
-    IconButton, 
     MenuItem, 
     useToast 
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { useDeleteMilestoneMutation } from "../features/api.js";
+import { useDeleteMilestoneMutation, useGetMilestonesByUserQuery } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { MilestoneWithDetails } from "../../types/index.js";
+import { useDispatch } from "react-redux";
+import doOtherMilestonesHaveStatusReportDue from "../utils/doOtherMilestonesHaveStatusReportDue.js";
+import { setIsBannerDisplayed } from "../features/bannerSlice.js";
+import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
+import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
+import { User } from "@prisma/client";
 
 export interface DeleteMilestoneButtonProps{
     milestone: MilestoneWithDetails
@@ -15,41 +20,73 @@ export interface DeleteMilestoneButtonProps{
 const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
     const [deleteMilestone] = useDeleteMilestoneMutation();
     const toast = useToast();
+    const dispatch = useDispatch();
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
-    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    const currentUser: Omit<User, "password"> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
     if (currentUser) {
-        const handleDeleteMilestone = async () => {
-            try {
-                const { milestone: deletedMilestone } = await deleteMilestone({
-                    ownerId: currentUser.id,
-                    milestoneId: milestone.id
-                }).unwrap();
+        const currentUserId = currentUser.id
+        const { data, isLoading: isMilestonesLoading, error } = useGetMilestonesByUserQuery(currentUserId); 
 
-                if (deletedMilestone) {
-                    console.log(deletedMilestone);
-                    toast({
-                        title: 'Goal Deleted',
-                        description: `"${milestone.name}" has been successfully deleted`,
-                        status: 'info',
-                        variant: 'subtle',
-                        duration: 4000,
-                        isClosable: true,
-                        icon: <DeleteIcon boxSize="1.2em"/>
-                    })
-                } else {
+        const handleDeleteMilestone = async () => {
+            if (typeof error === "undefined") {
+                try {
+                    const { milestone: deletedMilestone } = await deleteMilestone({
+                        ownerId: currentUser.id,
+                        milestoneId: milestone.id
+                    }).unwrap();
+    
+                    if (deletedMilestone) {
+                        toast({
+                            title: 'Goal Deleted',
+                            description: `"${milestone.name}" has been successfully deleted`,
+                            status: 'info',
+                            variant: 'subtle',
+                            duration: 4000,
+                            isClosable: true,
+                            icon: <DeleteIcon boxSize="1.2em"/>
+                        })
+
+                        if (data) {
+                            if (data.milestones.length) {
+                                if (!doOtherMilestonesHaveStatusReportDue(milestone, data.milestones)) {
+                                    dispatch(setIsBannerDisplayed(false))
+                                }
+                            } else {
+                                dispatch(setIsBannerDisplayed(false))
+                            }
+                        }
+                    } else {
+                        toast({
+                            title: 'ERROR',
+                            description: `Unable to delete "${milestone.name}"`,                        
+                            status: 'error',
+                            duration: 4000,
+                            isClosable: true
+                        })
+                    }
+                } catch (e) {
+                    console.error(e);
                     toast({
                         title: 'ERROR',
-                        description: `Unable to delete Goal "${milestone.name}"`,                        
+                        description: `Unable to delete "${milestone.name}"`,
                         status: 'error',
-                        duration: 4000,
+                        duration: 9000,
                         isClosable: true
                     })
                 }
-            } catch (e) {
-                console.error(e);
+            } else {
+                toast({
+                    title: 'ERROR',
+                    description: `Unable to delete Goal "${milestone.name}" as complete or incomplete`,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true
+                })
             }
+    
+            
         }
 
         return (
