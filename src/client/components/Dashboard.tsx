@@ -94,9 +94,11 @@ const Dashboard = () => {
         </Heading>
         <CTABanner top="90px" isBannerDisplayed={isBannerDisplayed}/>
       </Show>
-      <Hide breakpoint="(max-width: 943px)">
-        <CTABanner top="0px" isBannerDisplayed={isBannerDisplayed}/>
-      </Hide>
+      <Show breakpoint="(min-width: 944px)">
+        <Hide breakpoint="(max-height: 565px)">
+          <CTABanner top="0px" isBannerDisplayed={isBannerDisplayed}/>
+        </Hide>
+      </Show>
 
       <Hide breakpoint="(max-width: 943px)">
         <Show breakpoint="(max-height: 565px)">
@@ -112,6 +114,7 @@ const Dashboard = () => {
           >
             Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
           </Heading>
+          <CTABanner top="90px" isBannerDisplayed={isBannerDisplayed}/>
         </Show>
       </Hide>     
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
