@@ -44,7 +44,6 @@ export interface MilestoneProps {
 }
 
 const Milestone = ({milestone}: MilestoneProps) => {
-
     const textColor = milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : ""
 
     return (
@@ -68,13 +67,10 @@ const Milestone = ({milestone}: MilestoneProps) => {
             >
              {milestone.name}
             </Heading>
-            
             {
                 milestone.isCompleted ? 
                 <>
-                    {/* <Spacer
-                        minWidth="20px"
-                    /> */}
+                    <Spacer/>
                     <Flex
                         justifyContent="center"
                         alignItems="center"
@@ -98,7 +94,9 @@ const Milestone = ({milestone}: MilestoneProps) => {
                             🎉
                         </Text>
                     </Flex>
-                </> :
+                    <Spacer/>
+                </>
+                 :
                 "" 
             }
             {
