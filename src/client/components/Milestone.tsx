@@ -37,8 +37,6 @@ import areDatesSameDayMonthYear from "../utils/areDatesSameDayMonthYear.js";
 import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
 import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 import { motion } from "framer-motion";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "../app/hooks.js";
 import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
 
 export interface MilestoneProps {
@@ -46,10 +44,6 @@ export interface MilestoneProps {
 }
 
 const Milestone = ({milestone}: MilestoneProps) => {
-    const dispatch = useDispatch();
-
-    const appSelectorIsBannerDisplayed = useAppSelector(state => state.banner.isBannerDisplayed)
-
 
     const textColor = milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : ""
 
