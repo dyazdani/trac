@@ -1,8 +1,6 @@
 import { 
     CheckCircleIcon,
     CheckIcon,
-    CloseIcon, 
-    HamburgerIcon, 
     SettingsIcon
 } from "@chakra-ui/icons";
 import { 
@@ -40,9 +38,7 @@ import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.
 import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
-import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 import { useAppSelector } from "../app/hooks.js";
-import { useEffect } from "react";
 import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
 
 export interface MilestoneProps {
