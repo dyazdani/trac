@@ -104,12 +104,12 @@ notificationsRouter.put("/users/:user_id", requireUser, async (req, res, next): 
     if (req.user) {
         try {
             const id = req.params.user_id
-            const { email, username } = req.body;
+            const { email, username, timezone } = req.body;
             
             const user = await knock.users.identify(id, {
                 email,
                 username,
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+                timezone
             })
             res.send({user});
         } catch (e) {

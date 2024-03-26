@@ -24,7 +24,6 @@ import {
     GridItem,
     LinkBox,
     LinkOverlay,
-    Heading
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { 
@@ -81,12 +80,13 @@ const RegisterForm = () => {
 
     const handleSubmit = async () => {
         try {
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             const response = await register({ email, username, password }).unwrap();
 
             console.log(response)
 
             if (response.user) {
-                const knockUser = await identifyUser({id: String(response.user?.id), email, username})
+                const knockUser = await identifyUser({id: String(response.user?.id), email, username, timezone})
                 console.log(knockUser)
             } 
 

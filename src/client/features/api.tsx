@@ -113,13 +113,14 @@ export const api = createApi({
         }),
         invalidatesTags: ["KnockUser"],
       }),
-      identifyUser: builder.mutation<{user: KnockUser}, {id: string, email: string, username: string}>({
-        query: ({id, email, username}) => ({
+      identifyUser: builder.mutation<{user: KnockUser}, {id: string, email: string, username: string, timezone: string}>({
+        query: ({id, email, username, timezone}) => ({
           url: `/notifications/users/${id}`,
           method: "PUT",
           body: {
             email,
-            username
+            username,
+            timezone
           }
         }),
         invalidatesTags: ["KnockUser"]
