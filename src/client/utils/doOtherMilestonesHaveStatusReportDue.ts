@@ -14,7 +14,7 @@ const doOtherMilestonesHaveStatusReportDue = (milestone: MilestoneWithDetails, m
           const firstCheckInDate = getFirstCheckInDayDate(habit);
           if (firstCheckInDate) {
             return (
-              firstCheckInDate.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
+              firstCheckInDate.setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0) &&
               !isMostRecentStatusReportSent(habit)
             )
           }

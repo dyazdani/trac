@@ -12,6 +12,7 @@ import {
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
 import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
 import { CheckIcon, RepeatClockIcon } from "@chakra-ui/icons";
+import { User } from "@prisma/client";
 
  export interface ToggleButtonProps {
     date: Date
@@ -28,7 +29,7 @@ const ToggleButton = ({
     }: ToggleButtonProps) => {
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
-    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    const currentUser: Omit<User, "password"> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
 
     const toast = useToast();
     

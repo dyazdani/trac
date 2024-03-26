@@ -24,6 +24,7 @@ import React, { useState } from "react";
 import { useAppSelector } from "../app/hooks.js";
 import { MilestoneWithDetails } from "../../types/index.js";
 import { SingleDatepicker } from "chakra-dayzed-datepicker";
+import { User } from "@prisma/client";
 
 export interface UpdateMilestoneMenuItemProps{
     milestone: MilestoneWithDetails
@@ -42,7 +43,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
 
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
-    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    const currentUser: Omit<User, "password"> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
     if (currentUser) {
         return (

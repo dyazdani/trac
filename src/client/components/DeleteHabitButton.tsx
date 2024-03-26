@@ -10,6 +10,7 @@ import {
 import { 
     DeleteIcon 
 } from "@chakra-ui/icons";
+import { User } from "@prisma/client";
 
 type DeleteHabitButtonProps = {
     habit: HabitWithDetails
@@ -18,7 +19,7 @@ type DeleteHabitButtonProps = {
 const DeleteHabitButton = ({ habit}: DeleteHabitButtonProps) =>  {
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
-    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    const currentUser: Omit<User, "password"> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     const [deleteHabit, { isLoading }] = useDeleteHabitMutation();
     const [ deleteSchedules ] = useDeleteSchedulesMutation();
 

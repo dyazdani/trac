@@ -5,6 +5,7 @@ import {
 import { AddIcon } from '@chakra-ui/icons'
 import { useAppSelector } from '../app/hooks.js'
 import CreateMilestoneForm from './CreateMilestoneForm.js'
+import { User } from '@prisma/client'
 
 export interface RightDrawerProps {
     isMilestonesEmpty: boolean
@@ -15,7 +16,7 @@ const RightDrawer = ({ isMilestonesEmpty }: RightDrawerProps) => {
 
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
-    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    const currentUser: Omit<User, "password"> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
     return (
         <>

@@ -21,6 +21,7 @@ import { useAppSelector } from '../app/hooks.js';
 import { SingleDatepicker } from 'chakra-dayzed-datepicker';
 import { useCreateMilestoneMutation } from '../features/api.js';
 import { AddIcon } from '@chakra-ui/icons';
+import { User } from '@prisma/client';
 
 export interface CreateMilestoneFormProps {
     isOpenForMilestone: boolean
@@ -38,7 +39,7 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
 
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
-    const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
+    const currentUser: Omit<User, "password"> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
     return (
         <Drawer 

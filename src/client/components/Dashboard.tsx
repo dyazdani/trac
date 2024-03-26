@@ -6,7 +6,6 @@ import {
   Hide,
   Show,
   Spinner,
-  Text
 } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
 import { useAppSelector } from "../app/hooks.js";
@@ -15,7 +14,6 @@ import AppHeader from "./AppHeader.js";
 import CTABanner from "./CTABanner.js";
 import MyMilestones from "./MyMilestones.js";
 import { Navigate } from "react-router-dom";
-import doesAHabitHaveACheckInToday from "../utils/doesAHabitHaveACheckInToday.js";
 import { User } from "@prisma/client";
 import { useDispatch } from "react-redux";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
@@ -24,7 +22,6 @@ import { MilestoneWithDetails } from "../../types/index.js";
 import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
 import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 import { useEffect } from "react";
-import toggleBannerDisplay from "../utils/doOtherMilestonesHaveStatusReportDue.js";
 
 
 const Dashboard = () => {
@@ -56,7 +53,7 @@ const Dashboard = () => {
             const firstCheckInDate = getFirstCheckInDayDate(habit);
             if (firstCheckInDate) {
               return (
-                firstCheckInDate.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
+                firstCheckInDate.setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0) &&
                 !isMostRecentStatusReportSent(habit)
               )
             }
@@ -68,16 +65,15 @@ const Dashboard = () => {
         dispatch(setIsBannerDisplayed(false))
       }
   
-      if (isBannerDisplayed === null && isAStatusReportDue) {
+      if (!isBannerDisplayed && isAStatusReportDue) {
         dispatch(setIsBannerDisplayed(true))
       }
     }
-  }, [])
+  }, [milestonesData])
   
 
   const isMilestonesEmpty = !isLoading && !milestonesData?.milestones.length
  
-
   return (
     currentUser ? 
     <>
