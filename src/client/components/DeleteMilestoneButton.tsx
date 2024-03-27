@@ -3,7 +3,11 @@ import {
     useToast 
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { useDeleteMilestoneMutation, useGetMilestonesByUserQuery } from "../features/api.js";
+import { 
+    useDeleteMilestoneMutation, 
+    useGetMilestonesByUserQuery, 
+    useDeleteSchedulesMutation 
+} from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { MilestoneWithDetails } from "../../types/index.js";
 import { useDispatch } from "react-redux";
@@ -18,7 +22,9 @@ export interface DeleteMilestoneButtonProps{
 }
 
 const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
-    const [deleteMilestone] = useDeleteMilestoneMutation();
+    const [deleteMilestone, {isLoading: isDeleteMilestoneLoading}] = useDeleteMilestoneMutation();
+    const [deleteSchedules, {isLoading: isDeleteSchedulesLoading}] = useDeleteSchedulesMutation();
+
     const toast = useToast();
     const dispatch = useDispatch();
     const localStorageUser = localStorage.getItem("user")
@@ -94,6 +100,11 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                 aria-label="Delete Goal" 
                 icon={<DeleteIcon/>}
                 backgroundColor="turquoise.50"
+                isDisabled={
+                    isMilestonesLoading || 
+                    isDeleteMilestoneLoading || 
+                    isDeleteSchedulesLoading
+                }
                 _hover={{
                     backgroundColor: "turquoise.100"
                 }}
