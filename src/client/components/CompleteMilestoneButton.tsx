@@ -3,7 +3,12 @@ import {
     useToast 
 } from "@chakra-ui/react";
 import { CheckIcon, RepeatClockIcon } from "@chakra-ui/icons";
-import {  useGetMilestonesByUserQuery, useUpdateMilestoneMutation } from "../features/api.js";
+import {  
+    useCreateScheduleMutation, 
+    useDeleteSchedulesMutation, 
+    useGetMilestonesByUserQuery, 
+    useUpdateMilestoneMutation 
+} from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { MilestoneWithDetails } from "../../types/index.js";
 import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
@@ -18,7 +23,27 @@ export interface CompleteMilestoneButtonProps{
 }
 
 const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
-    const [updateMilestone, {isLoading}] = useUpdateMilestoneMutation();
+    const [
+        updateMilestone, 
+        {
+            isLoading: isUpdateMilestoneLoading, 
+            error: updateMilestoneError
+        }
+    ] = useUpdateMilestoneMutation();
+    const [
+        deleteSchedules, 
+        {
+            isLoading: isDeleteSchedulesLoading, 
+            error: deleteSchedulesError
+        }
+    ] = useDeleteSchedulesMutation();
+    const [
+        createSchedule, 
+        {
+            isLoading: isCreateScheduleLoading, 
+            error: createScheduleError
+        }
+    ] = useCreateScheduleMutation();
 
     const toast = useToast();
     const dispatch= useDispatch();
@@ -28,10 +53,18 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
     
     if (currentUser) {
         const currentUserId = currentUser.id
-        const { data, isLoading: isMilestonesLoading, error } = useGetMilestonesByUserQuery(currentUserId); 
+        const { 
+            data, 
+            isLoading: isMilestonesLoading, 
+            error 
+        } = useGetMilestonesByUserQuery(currentUserId); 
 
     const handleClick = async () => {
-        if (typeof error === "undefined") {
+        if (
+            typeof error === "undefined" &&
+            typeof deleteSchedulesError === "undefined" &&
+            typeof createScheduleError === "undefined"
+        ) {
             try {
                 const { milestone: updatedMilestone } = await updateMilestone({
                     ownerId: currentUser.id,
@@ -43,6 +76,8 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                         isCanceled: milestone.isCanceled
                     }
                 }).unwrap();
+
+
         
                 if (updatedMilestone) {
                     if (updatedMilestone.isCompleted) {
@@ -132,8 +167,18 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                     color: "floralwhite.50"
                 }}
                 flexShrink="0"
-                isLoading={isLoading || isMilestonesLoading}
-                isDisabled={isLoading || isMilestonesLoading || !!error}
+                isLoading={
+                    isUpdateMilestoneLoading || 
+                    isMilestonesLoading ||
+                    isDeleteSchedulesLoading ||
+                    isCreateScheduleLoading
+                }
+                isDisabled={
+                    isUpdateMilestoneLoading || 
+                    isMilestonesLoading ||
+                    isDeleteSchedulesLoading ||
+                    isCreateScheduleLoading
+                }
                 onClick={(e) => {
                     e.preventDefault();
                     handleClick();
