@@ -2,8 +2,17 @@ import {
     MenuItem, 
     useToast 
 } from "@chakra-ui/react";
-import { ArrowUpIcon, NotAllowedIcon, PlusSquareIcon } from "@chakra-ui/icons";
-import {  useCreateScheduleMutation, useDeleteSchedulesMutation, useGetMilestonesByUserQuery, useUpdateHabitMutation, useUpdateMilestoneMutation } from "../features/api.js";
+import { 
+    ArrowUpIcon,
+    NotAllowedIcon 
+} from "@chakra-ui/icons";
+import {  
+    useCreateScheduleMutation, 
+    useDeleteSchedulesMutation, 
+    useGetMilestonesByUserQuery, 
+    useUpdateHabitMutation, 
+    useUpdateMilestoneMutation 
+} from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { MilestoneWithDetails } from "../../types/index.js";
 import { useDispatch } from "react-redux";
@@ -146,7 +155,7 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
                                 }).unwrap()
                             }
                         }
-                        
+
                         toast({
                             title: 'Goal Restored',
                             description: `Your Goal "${updatedMilestone.name}" was restored.`,
