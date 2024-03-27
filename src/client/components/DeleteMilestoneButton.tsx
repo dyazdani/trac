@@ -13,8 +13,6 @@ import { MilestoneWithDetails } from "../../types/index.js";
 import { useDispatch } from "react-redux";
 import doOtherMilestonesHaveStatusReportDue from "../utils/doOtherMilestonesHaveStatusReportDue.js";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
-import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
-import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 import { User } from "@prisma/client";
 import getHabitScheduleIds from "../utils/getHabitScheduleIds.js";
 
