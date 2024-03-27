@@ -3,22 +3,39 @@ import {
     useToast 
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { useDeleteMilestoneMutation, useGetMilestonesByUserQuery } from "../features/api.js";
+import { 
+    useDeleteMilestoneMutation, 
+    useGetMilestonesByUserQuery, 
+    useDeleteSchedulesMutation 
+} from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { MilestoneWithDetails } from "../../types/index.js";
 import { useDispatch } from "react-redux";
 import doOtherMilestonesHaveStatusReportDue from "../utils/doOtherMilestonesHaveStatusReportDue.js";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
-import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
-import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 import { User } from "@prisma/client";
+import getHabitScheduleIds from "../utils/getHabitScheduleIds.js";
 
 export interface DeleteMilestoneButtonProps{
     milestone: MilestoneWithDetails
 }
 
 const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
-    const [deleteMilestone] = useDeleteMilestoneMutation();
+    const [
+        deleteMilestone, 
+        {
+            isLoading: isDeleteMilestoneLoading, 
+            error: deleteMilestoneError
+        }
+    ] = useDeleteMilestoneMutation();
+    const [
+        deleteSchedules, 
+        {
+            isLoading: isDeleteSchedulesLoading,
+            error: deleteSchedulesError
+        }
+    ] = useDeleteSchedulesMutation();
+
     const toast = useToast();
     const dispatch = useDispatch();
     const localStorageUser = localStorage.getItem("user")
@@ -27,17 +44,34 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
     
     if (currentUser) {
         const currentUserId = currentUser.id
-        const { data, isLoading: isMilestonesLoading, error } = useGetMilestonesByUserQuery(currentUserId); 
+        const { 
+            data, 
+            isLoading: isMilestonesLoading, 
+            error 
+        } = useGetMilestonesByUserQuery(currentUserId); 
 
         const handleDeleteMilestone = async () => {
-            if (typeof error === "undefined") {
+            if (
+                typeof error === "undefined" &&
+                typeof deleteMilestoneError === "undefined" &&
+                typeof deleteSchedulesError === "undefined"
+                ) {
                 try {
+                    const scheduleIds = getHabitScheduleIds(milestone);
+
+                    const deleteSchedulesResponse = await deleteSchedules({
+                        scheduleIds
+                    }).unwrap()
+
                     const { milestone: deletedMilestone } = await deleteMilestone({
                         ownerId: currentUser.id,
                         milestoneId: milestone.id
                     }).unwrap();
     
-                    if (deletedMilestone) {
+                    if (
+                        deletedMilestone && 
+                        deleteSchedulesResponse.message === "successfully deleted"
+                        ) {
                         toast({
                             title: 'Goal Deleted',
                             description: `"${milestone.name}" has been successfully deleted`,
@@ -85,8 +119,6 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                     isClosable: true
                 })
             }
-    
-            
         }
 
         return (
@@ -94,6 +126,11 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                 aria-label="Delete Goal" 
                 icon={<DeleteIcon/>}
                 backgroundColor="turquoise.50"
+                isDisabled={
+                    isMilestonesLoading || 
+                    isDeleteMilestoneLoading || 
+                    isDeleteSchedulesLoading
+                }
                 _hover={{
                     backgroundColor: "turquoise.100"
                 }}
