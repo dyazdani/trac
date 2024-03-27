@@ -6,7 +6,9 @@ const getDaysOfWeekArray = (routine: Routine) => {
 
     for (const prop in routine) {
         if (routine[prop as keyof typeof routine] === true) {
-            daysOfWeekArray.push(DaysOfWeek[prop.slice(0, 3) as keyof typeof DaysOfWeek])
+            let propArray = prop.split("")
+            const capitalizedProp = propArray.map((el, i) => i === 0 ? el.toUpperCase() : el).join("")
+            daysOfWeekArray.push(DaysOfWeek[capitalizedProp.slice(0, 3) as keyof typeof DaysOfWeek])
         }
     }
 
