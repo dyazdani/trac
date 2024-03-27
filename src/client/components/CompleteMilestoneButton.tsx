@@ -80,7 +80,8 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
             typeof error === "undefined" &&
             typeof deleteSchedulesError === "undefined" &&
             typeof createScheduleError === "undefined" && 
-            typeof updateHabitError === "undefined"
+            typeof updateHabitError === "undefined" &&
+            typeof updateMilestoneError === "undefined"
         ) {
             try {
                 const { milestone: updatedMilestone } = await updateMilestone({
