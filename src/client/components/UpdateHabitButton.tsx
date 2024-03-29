@@ -226,13 +226,13 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                     value={checkboxGroupValue}
                                 >
                                     <Stack direction='row'>
+                                        <Checkbox isChecked={habit.routine.sunday} value="sunday">Su</Checkbox>
                                         <Checkbox isChecked={habit.routine.monday} value="monday">M</Checkbox>
                                         <Checkbox isChecked={habit.routine.tuesday} value="tuesday">T</Checkbox>
                                         <Checkbox isChecked={habit.routine.wednesday} value="wednesday">W</Checkbox>
                                         <Checkbox isChecked={habit.routine.thursday} value="thursday">Th</Checkbox>
                                         <Checkbox isChecked={habit.routine.friday} value="friday">F</Checkbox>
                                         <Checkbox isChecked={habit.routine.saturday} value="saturday">Sa</Checkbox>
-                                        <Checkbox isChecked={habit.routine.sunday} value="sunday">Su</Checkbox>
                                     </Stack>
                                 </CheckboxGroup>
                             </Box>
