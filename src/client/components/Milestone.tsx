@@ -11,7 +11,6 @@ import {
     AccordionPanel,
     Badge,
     Box,
-    Button,
     Card, 
     CardBody, 
     CardFooter, 
@@ -235,7 +234,6 @@ const Milestone = ({milestone}: MilestoneProps) => {
                             _last={{
                                 borderBottomWidth: "7px"
                             }}
-                            paddingLeft="8px"
                             animation={
                                 milestone && milestone.isCompleted || milestone.isCanceled ? "" :
                                 !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? animation : ""
@@ -284,7 +282,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                             borderRadius: "20px"
                                         }}
                                         _hover={{
-                                            borderRadius: "20px"
+                                            borderRadius: "20px",
+                                            backgroundColor: "#B9DDF3"
                                         }}
                                     >
                                         <Box 
