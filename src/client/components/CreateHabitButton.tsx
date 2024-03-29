@@ -278,7 +278,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                 <Checkbox
                                     isChecked
                                     isDisabled
-                                >I agree to have trac email me a weekly reminder on my Check-In Day (unsubscribing from these emails not available at this time).</Checkbox>
+                                >I agree to have Trac email me a weekly reminder on my Check-In Day (unsubscribing from these emails not available at this time).</Checkbox>
                             </Stack>
                         </DrawerBody>
                         <DrawerFooter>

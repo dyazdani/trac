@@ -163,7 +163,7 @@ const LandingPage = () => {
                         >
                             <Image
                                 src="/images/new_trac_screenshot_1.png"
-                                alt="trac screenshot"
+                                alt="Trac screenshot"
                                 minH="40vh"
                                 borderRadius="20px"
                             />
@@ -343,7 +343,7 @@ const LandingPage = () => {
                         <Text fontSize="4xl">trac</Text>
                         <Image
                         src="/images/trac_logo.png"
-                        alt="trac mountain logo"
+                        alt="Trac mountain logo"
                         h="2.5rem"
                         />
                     </Flex>
