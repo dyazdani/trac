@@ -361,7 +361,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               setCurrentWeek(targetWeek);
             }}
           >
-            Go To Today
+            Today
           </Button> : 
           ""
         }
