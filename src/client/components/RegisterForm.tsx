@@ -146,7 +146,7 @@ const RegisterForm = () => {
                                 <Text fontSize="4xl">trac</Text>
                                 <Image
                                 src="/images/trac_logo.png"
-                                alt="trac mountain logo"
+                                alt="Trac mountain logo"
                                 h="2.5rem"
                                 />
                             </Flex>
