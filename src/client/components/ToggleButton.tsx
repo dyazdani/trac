@@ -160,7 +160,7 @@ const ToggleButton = ({
             _checked={{
                 "& .chakra-checkbox__control": { 
                     borderColor: "#3a3c3c",
-                    color:  "#3a3c3c"
+                    color:  `${milestone.isCompleted || milestone.isCanceled ? "#FFFFFF" : "#3a3c3c"}`
                 }
             }}
             onChange={(e) => {
