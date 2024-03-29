@@ -283,7 +283,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                             borderRadius: "20px"
                                         }}
                                         _hover={{
-                                            borderRadius: "20px"
+                                            borderRadius: "20px",
+                                            backgroundColor: "#B9DDF3"
                                         }}
                                     >
                                         <Box 
