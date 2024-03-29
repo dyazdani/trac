@@ -53,7 +53,9 @@ notificationsRouter.put("/schedules", requireUser, async (req, res, next) => {
                 repeats: [
                     {
                         frequency: RepeatFrequency.Weekly,
-                        days
+                        days,
+                        hours: 5,
+                        minutes: 0
                     }
                 ]
             })
