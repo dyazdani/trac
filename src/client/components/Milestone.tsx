@@ -234,7 +234,6 @@ const Milestone = ({milestone}: MilestoneProps) => {
                             _last={{
                                 borderBottomWidth: "7px"
                             }}
-                            paddingLeft="8px"
                             animation={
                                 milestone && milestone.isCompleted || milestone.isCanceled ? "" :
                                 !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? animation : ""
