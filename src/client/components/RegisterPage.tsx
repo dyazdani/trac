@@ -55,7 +55,9 @@ import ArtistCredit from "./ArtistCredit.js";
         >
           <LandscapeRegisterForm/>
         </Flex>
-        <ArtistCredit textColor="blue.50" position="left"/>
+        <ArtistCredit 
+          textColor="blue.50" 
+        />
       </>
     );
   };
