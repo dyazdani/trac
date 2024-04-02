@@ -22,6 +22,7 @@ import MessagesMenu from "./MessagesMenu.js";
 import { useNavigate } from "react-router";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { resetIsBannerDisplayed } from "../features/bannerSlice.js";
+import GitHubButton from "./GitHubButton.js";
 
 export interface AppHeaderProps {
   isBannerDisplayed: boolean | null
@@ -154,7 +155,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             Get Started
           </Button>
         }
-        <Spacer/>
+        <GitHubButton/>
       </HStack>
     </Box>
   );
