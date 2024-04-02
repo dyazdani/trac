@@ -155,7 +155,9 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             Get Started
           </Button>
         }
-        <GitHubButton/>
+        <GitHubButton
+          isAbsolutePosition={false}
+        />
       </HStack>
     </Box>
   );
