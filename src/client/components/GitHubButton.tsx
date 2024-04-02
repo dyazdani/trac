@@ -17,7 +17,7 @@ const GitHubButton = (
         <LinkBox
             as="button"
             position={isAbsolutePosition ? "absolute" : undefined}
-            top={isAbsolutePosition ? "10vh" : undefined}
+            top={isAbsolutePosition ? "5vh" : undefined}
             right={isAbsolutePosition ? "30px" : undefined}
             backgroundColor="#FFFFFF"
             padding=".2rem"
