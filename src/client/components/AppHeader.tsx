@@ -13,9 +13,9 @@ import {
     Heading,
     Image,
     Link as ChakraLink,
-    LinkBox,
     LinkOverlay,
-    Flex, 
+    Flex,
+    LinkBox, 
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from 'react-router-dom'
 import MessagesMenu from "./MessagesMenu.js";
@@ -155,9 +155,12 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             Get Started
           </Button>
         }
-        <GitHubButton
-          isAbsolutePosition={false}
-        />
+        <LinkBox>
+          <GitHubButton
+            isAbsolutePosition={false}
+          />
+        </LinkBox>
+        
       </HStack>
     </Box>
   );
