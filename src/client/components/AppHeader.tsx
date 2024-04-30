@@ -13,15 +13,16 @@ import {
     Heading,
     Image,
     Link as ChakraLink,
-    LinkBox,
     LinkOverlay,
-    Flex, 
+    Flex,
+    LinkBox, 
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from 'react-router-dom'
 import MessagesMenu from "./MessagesMenu.js";
 import { useNavigate } from "react-router";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { resetIsBannerDisplayed } from "../features/bannerSlice.js";
+import GitHubButton from "./GitHubButton.js";
 
 export interface AppHeaderProps {
   isBannerDisplayed: boolean | null
@@ -154,7 +155,12 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             Get Started
           </Button>
         }
-        <Spacer/>
+        <LinkBox>
+          <GitHubButton
+            isAbsolutePosition={false}
+          />
+        </LinkBox>
+        
       </HStack>
     </Box>
   );

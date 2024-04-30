@@ -6,6 +6,7 @@ import {
   } from "@chakra-ui/react"; 
 import LandscapeRegisterForm from "./RegisterForm.js";
 import ArtistCredit from "./ArtistCredit.js";
+import GitHubButton from "./GitHubButton.js";
   
   
   const RegisterPage = () => {
@@ -53,9 +54,14 @@ import ArtistCredit from "./ArtistCredit.js";
           bgRepeat="no-repeat"
           bgSize="cover"
         >
+          <GitHubButton
+            isAbsolutePosition={true}
+          /> 
           <LandscapeRegisterForm/>
         </Flex>
-        <ArtistCredit textColor="blue.50" position="left"/>
+        <ArtistCredit 
+          textColor="blue.50" 
+        />
       </>
     );
   };
