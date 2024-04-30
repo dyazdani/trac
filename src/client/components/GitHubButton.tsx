@@ -1,8 +1,11 @@
 import { 
+    Box,
     Flex, 
     Image, 
     LinkBox,
-    LinkOverlay
+    LinkOverlay, 
+    Spacer, 
+    Text
 } from "@chakra-ui/react";
 
 export interface GitHubButtonProps {
@@ -44,11 +47,13 @@ const GitHubButton = (
                         alt="GitHub mark"
                         height="100%"
                     />
-                    <Image
-                        src="/images/GitHub_Logo.png"
-                        alt="GitHub logo"
-                        height="100%"
-                    />
+                    <Text
+                        as='b'
+                        marginLeft=".5rem"
+                        marginRight=".5rem"
+                    >
+                        View code
+                    </Text>
                 </Flex>
             </LinkOverlay>
         </LinkBox>
