@@ -59,37 +59,46 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                 try {
                     const scheduleIds = getHabitScheduleIds(milestone);
 
-                    const deleteSchedulesResponse = await deleteSchedules({
-                        scheduleIds
-                    }).unwrap()
-
                     const { milestone: deletedMilestone } = await deleteMilestone({
                         ownerId: currentUser.id,
                         milestoneId: milestone.id
                     }).unwrap();
-    
-                    if (
-                        deletedMilestone && 
-                        deleteSchedulesResponse.message === "successfully deleted"
-                        ) {
-                        toast({
-                            title: 'Goal Deleted',
-                            description: `"${milestone.name}" has been successfully deleted`,
-                            status: 'info',
-                            variant: 'subtle',
-                            duration: 4000,
-                            isClosable: true,
-                            icon: <DeleteIcon boxSize="1.2em"/>
-                        })
 
-                        if (data) {
-                            if (data.milestones.length) {
-                                if (!doOtherMilestonesHaveStatusReportDue(milestone, data.milestones)) {
-                                    dispatch(setIsBannerDisplayed(false))
-                                }
+                    if (deletedMilestone) {
+                        if (scheduleIds.length) {
+                            const deleteSchedulesResponse = await deleteSchedules({
+                                scheduleIds
+                            }).unwrap()
+
+                            if (deleteSchedulesResponse.message === "successfully deleted") {
+                                toast({
+                                    title: 'Goal Deleted',
+                                    description: `"${milestone.name}" has been successfully deleted`,
+                                    status: 'info',
+                                    variant: 'subtle',
+                                    duration: 4000,
+                                    isClosable: true,
+                                    icon: <DeleteIcon boxSize="1.2em"/>
+                                })
                             } else {
-                                dispatch(setIsBannerDisplayed(false))
+                                toast({
+                                    title: 'ERROR',
+                                    description: `Unable to delete "${milestone.name}" Line 100`,                        
+                                    status: 'error',
+                                    duration: 4000,
+                                    isClosable: true
+                                })
                             }
+                        } else {
+                            toast({
+                                title: 'Goal Deleted',
+                                description: `"${milestone.name}" has been successfully deleted`,
+                                status: 'info',
+                                variant: 'subtle',
+                                duration: 4000,
+                                isClosable: true,
+                                icon: <DeleteIcon boxSize="1.2em"/>
+                            })
                         }
                     } else {
                         toast({
@@ -100,8 +109,18 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                             isClosable: true
                         })
                     }
+                    
+                    if (data) {
+                        if (data.milestones.length) {
+                            if (!doOtherMilestonesHaveStatusReportDue(milestone, data.milestones)) {
+                                dispatch(setIsBannerDisplayed(false))
+                            }
+                        } else {
+                            dispatch(setIsBannerDisplayed(false))
+                        }
+                    }
+                    
                 } catch (e) {
-                    console.error(e);
                     toast({
                         title: 'ERROR',
                         description: `Unable to delete "${milestone.name}"`,
@@ -113,7 +132,7 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
             } else {
                 toast({
                     title: 'ERROR',
-                    description: `Unable to delete Goal "${milestone.name}" as complete or incomplete`,
+                    description: `Unable to delete "${milestone.name}"`,
                     status: 'error',
                     duration: 9000,
                     isClosable: true
