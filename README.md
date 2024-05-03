@@ -20,8 +20,11 @@
 -->
 
 <!-- PROJECT LOGO -->
+<div align="center">
+  <a href="https://trac-kl33.onrender.com">
+    <img src="public/images/trac_logo_blue_circle_150px.png" alt="Logo" width="150" height="150">
+  </a>
 <br />
-
   <h1 align="center">Trac</h1>
 
   <p align="center">
