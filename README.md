@@ -66,7 +66,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+![Product Name Screen Shot][product-screenshot]
 
  Trac is a web application for tracking goals and staying accountable. It allows you to create Goals and the regular Habits needed to meet them, and then prompts you to send weekly updates on your progress to your friends. 
 
@@ -224,7 +224,7 @@ Use this space to list resources you find helpful and would like to give credit 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: public/images/README-screenshot-1.png
 [Express.js]: https://img.shields.io/badge/Express.js-grey?style=for-the-badge&logo=express&logoColor=white
 [Express-url]: https://expressjs.com
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
