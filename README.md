@@ -91,8 +91,10 @@
 * [Nodemailer](https://nodemailer.com) - A module for Node.js applications to allow easy email sending.
 * [node.bcrypt.js](https://github.com/kelektiv/node.bcrypt.js#readme) - A bcrypt library for Node.js.
 * [node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken?tab=readme-ov-file#jsonwebtoken) - An implementation of JSON Web Tokens for Node.js.
+* [check-password-strength](https://github.com/deanilvincent/check-password-strength#readme) - A password strength checker based from Javascript RegEx.
 * [Vite + Express](https://github.com/szymmis/vite-express#readme) - A Vite integration module for Express.js.
 * [Render](https://www.render.com) - A cloud application hosting service for developers.
+
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
