@@ -134,8 +134,10 @@ _Below is an example of how you can instruct your audience on installing and set
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Contributors
 
-
+Dara Yazdani - dara.s.yazdani@gmail.com • [linkedin.com/in/dyazdani](https://www.linkedin.com/in/darayazdani) • [github.com/dyazdani](https://www.github.com/dyazdani)<br>
+[Josh van Eyken](https://www.joshvaneyken.com) - josh.vaneyken@gmail.com • [linkedin.com/in/joshvaneyken](https://linkedin.com/in/joshvaneyken) • [github.com/jvaneyken](https://github.com/jvaneyken)
 <!-- USAGE EXAMPLES -->
 <!-- ## Usage
 
