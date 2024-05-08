@@ -84,9 +84,14 @@
 * Receive email and in-app reminders for Check-In Days
 * Compose and send Check-In Day emails directly from app
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Database Schema
 
 ![schema](/public/images/schema.png)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Built With
 
 * [![Typescript][Typescript]][Typescript-url]
@@ -111,12 +116,12 @@
 
 
 
-### Contributors
+## Contributors
 
 Dara Yazdani - dara.s.yazdani@gmail.com • [linkedin.com/in/darayazdani](https://www.linkedin.com/in/darayazdani) • [github.com/dyazdani](https://www.github.com/dyazdani)<br>
 [Josh van Eyken](https://www.joshvaneyken.com) - josh.vaneyken@gmail.com • [linkedin.com/in/joshvaneyken](https://linkedin.com/in/joshvaneyken) • [github.com/jvaneyken](https://github.com/jvaneyken)
 
-
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
