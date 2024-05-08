@@ -84,7 +84,9 @@
 * Receive email and in-app reminders for Check-In Days
 * Compose and send Check-In Day emails directly from app
 
+### Database Schema
 
+![schema](/public/images/schema.png)
 ### Built With
 
 * [![Typescript][Typescript]][Typescript-url]
