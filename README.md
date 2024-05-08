@@ -1,6 +1,3 @@
-
-<a name="readme-top"></a>
-
 <!-- PROJECT LOGO -->
 <div align="center">
   <a href="https://trac-kl33.onrender.com">
@@ -16,9 +13,6 @@
 </div>
 
 
-
-
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
@@ -26,7 +20,6 @@
 
  Trac is a web application for tracking goals and holding users accountable through updates to their social circle. A user creates Goals with a due date, then gives each Goal any number of Habits, which are tasks that need to be completed weekly in order to meet the Goal by the Goal's due date. The user also chooses a day of the week for each Habit to be its Check-In Day. Each week on that day, Trac will prompt the user via email and within the app to send an update on the Habit's progress to their friends directly from Trac. Research shows that being accountable to others helps people follow through with goals. Trac builds that functionality right into the app.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Features
 * Password encryption using bcrypt
@@ -40,13 +33,10 @@
 * Receive email and in-app reminders for Check-In Days
 * Compose and send Check-In Day emails directly from app
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Database Schema
 
 ![schema](/public/images/schema.png)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 
@@ -68,16 +58,12 @@
 * [Vite + Express](https://github.com/szymmis/vite-express#readme) - A Vite integration module for Express.js.
 * [Render](https://www.render.com) - A cloud application hosting service for developers.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 ## Contributors
 
 Dara Yazdani - dara.s.yazdani@gmail.com • [linkedin.com/in/darayazdani](https://www.linkedin.com/in/darayazdani) • [github.com/dyazdani](https://www.github.com/dyazdani)<br>
 [Josh van Eyken](https://www.joshvaneyken.com) - josh.vaneyken@gmail.com • [linkedin.com/in/joshvaneyken](https://linkedin.com/in/joshvaneyken) • [github.com/jvaneyken](https://github.com/jvaneyken)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
