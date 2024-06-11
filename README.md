@@ -10,6 +10,9 @@
     The goal-tracking app that keeps you accountable.
     <br />
     <a href="https://trac-kl33.onrender.com">https://trac-kl33.onrender.com</a>
+    <br />
+    <br />
+    See demo on YouTube: <a href="https://youtu.be/teCDVIfZVTI">https://youtu.be/teCDVIfZVTI</a>
 </div>
 
 
