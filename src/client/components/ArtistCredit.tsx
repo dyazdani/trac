@@ -24,10 +24,10 @@ const ArtistCredit = ({ textColor }: ArtistCreditProps) => {
               color={textColor} 
             >
             <Link 
-              href="https://thenounproject.com/icon/mountain-120042/" 
+              href="https://thenounproject.com/icon/mountain-flag-119605" 
               isExternal
             >
-              Mountain
+              Mountain Flag
               <ExternalLinkIcon 
                 mr=".5em" 
                 boxSize=".9em" 
