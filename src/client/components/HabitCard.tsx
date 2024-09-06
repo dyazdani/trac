@@ -73,6 +73,7 @@ export const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 const HabitCard = ({ habit, milestone }: HabitProps) => {
   const [currentWeek, setCurrentWeek] = useState<Date[]>(getCurrentWeek(habit, milestone))
+  const [isToggleLoading, setIsToggleLoading] = useState(false);
 
   const toast = useToast();
   
@@ -503,12 +504,19 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       colSpan={1} 
                       rowStart={4}
                       textAlign="center"
+                      onClickCapture={isToggleLoading ? 
+                        (e) => {
+                        e.stopPropagation();
+                      } : undefined
+                    }
                     > 
                     <ToggleButton
                       milestone={milestone}
                       date={day}
                       habit={habit}
                       isOutOfRange={isOutOfRange}
+                      isToggleLoading={isToggleLoading}
+                      setIsToggleLoading={setIsToggleLoading}
                     /> 
                     </GridItem>
                     </> :
