@@ -152,7 +152,7 @@ const ToggleButton = ({
         }
     }
 
-    // const debouncedHandleSubmit = useDebounce(handleSubmit, 500);
+    const debouncedHandleSubmit = useDebounce(handleSubmit, 500);
 
     return (
         isLoading ?
@@ -180,7 +180,7 @@ const ToggleButton = ({
             }}
             onChange={(e) => {
                 e.preventDefault();
-                handleSubmit();
+                debouncedHandleSubmit();
             }}
             isDisabled={ 
                 milestone.isCanceled ||
