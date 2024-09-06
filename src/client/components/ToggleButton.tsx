@@ -11,14 +11,21 @@ import {
 } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
 import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
-import { CheckIcon, RepeatClockIcon } from "@chakra-ui/icons";
+import { 
+    CheckIcon, 
+    RepeatClockIcon 
+} from "@chakra-ui/icons";
 import { User } from "@prisma/client";
+import { useDebounce } from '../app/hooks.js';
+
 
  export interface ToggleButtonProps {
     date: Date
     milestone: MilestoneWithDetails
     habit: HabitWithDetails
     isOutOfRange: boolean
+    isToggleLoading: boolean
+    setIsToggleLoading: (arg0: boolean) => void
  }
 
 const ToggleButton = ({
@@ -26,6 +33,8 @@ const ToggleButton = ({
         milestone, 
         habit, 
         isOutOfRange, 
+        isToggleLoading,
+        setIsToggleLoading
     }: ToggleButtonProps) => {
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
@@ -33,7 +42,7 @@ const ToggleButton = ({
 
     const toast = useToast();
     
-    const [updateHabit, {isLoading, error}] = useUpdateHabitMutation();
+    const [updateHabit, {isLoading}] = useUpdateHabitMutation();
 
     const isCompleted = !!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date))
     
@@ -45,7 +54,7 @@ const ToggleButton = ({
     }
 
     const handleSubmit = async () => {
-        if (currentUser && habitData && !isLoading) {
+        if (currentUser && habitData) {
             const {
                 monday,
                 tuesday,
@@ -64,6 +73,7 @@ const ToggleButton = ({
             [...habitData.datesCompleted, date]
 
             try {
+                setIsToggleLoading(true);
                 const updateResult = await updateHabit({
                     id: currentUser?.id,
                     habitId: habit.id,
@@ -84,6 +94,8 @@ const ToggleButton = ({
                     }
                 }).unwrap()
 
+                setIsToggleLoading(false);
+       
                 if (updateResult.habit.datesCompleted.length > habit.datesCompleted.length) {
                     toast({
                         title: 'Routine Day Completed',
@@ -98,7 +110,6 @@ const ToggleButton = ({
                             )}.`,
                         status: 'success',
                         variant: 'subtle',
-                        duration: 9000,
                         isClosable: true,
                         icon: <CheckIcon boxSize="1.4em"/>
                     })
@@ -118,7 +129,6 @@ const ToggleButton = ({
                             )}.`,
                         status: 'info',
                         variant: 'subtle',
-                        duration: 9000,
                         isClosable: true,
                         icon: <RepeatClockIcon boxSize="1.4em"/>
                     })
@@ -135,16 +145,21 @@ const ToggleButton = ({
                         }
                     )}`,
                     status: 'error',
-                    duration: 9000,
                     isClosable: true
                 })
-            }      
+                setIsToggleLoading(false);
+            }           
         }
     }
 
+    // const debouncedHandleSubmit = useDebounce(handleSubmit, 500);
+
     return (
         isLoading ?
-        <Spinner color="#3a3c3c" size="sm"/> :
+        <Spinner 
+            color="#3a3c3c" 
+            size="sm"
+        /> :
         <Checkbox
             isChecked={isCompleted}
             size="lg"
@@ -170,7 +185,9 @@ const ToggleButton = ({
             isDisabled={ 
                 milestone.isCanceled ||
                 isOutOfRange || 
-                milestone && milestone.isCompleted                
+                milestone && milestone.isCompleted ||
+                isToggleLoading ||
+                isLoading
             } 
             display={!isHabitRoutineDay(habit, date) ? "none" : ""}
         />
