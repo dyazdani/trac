@@ -50,8 +50,9 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
         "0px"}
       zIndex={100}
     >
-      <HStack>
-        <Spacer/>
+      <HStack 
+        justifyContent="space-between"
+      >
         <LinkBox>
           <LinkOverlay as={ReactRouterLink} to="/">
             <Flex
@@ -68,17 +69,10 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             </Flex>
           </LinkOverlay>
         </LinkBox>
-        <Spacer/>
-        <Spacer/>
-        <Spacer/>
-        <Spacer/>
-        <Spacer/>
-        <Spacer/>
-        <Spacer/>
-
-
-        {
-          currentUser ? 
+        <HStack 
+          alignSelf="flex-end"
+        >
+          {currentUser ? 
           <Box
             ml="1vw"
             mr="1vw"
@@ -93,7 +87,6 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             Log In
           </ChakraLink>
         }
-
         {
           process.env.KNOCK_FEED_CHANNEL_ID && 
           process.env.KNOCK_PUBLIC_API_KEY && 
@@ -160,7 +153,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             isAbsolutePosition={false}
           />
         </LinkBox>
-        
+        </HStack> 
       </HStack>
     </Box>
   );
