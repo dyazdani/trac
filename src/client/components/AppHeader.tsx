@@ -96,7 +96,9 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             feedId={process.env.KNOCK_FEED_CHANNEL_ID}
             userId={currentUser?.id.toString()}
           >
-            <MessagesMenu />
+            <MessagesMenu 
+              label="Notifications" 
+            />
           </KnockFeedProvider>
         }
       
