@@ -122,6 +122,7 @@ const RegisterForm = () => {
         >
             <CardHeader
                 paddingBottom={0}
+                minW="100%"
             >
             <Flex
                 direction="column"
@@ -130,11 +131,12 @@ const RegisterForm = () => {
                 <Grid
                     mb="1rem"
                     templateColumns="repeat(3, 1fr)"
-                    templateRows="repeat(1, 1fr)"
-                    gap={10}
+                    templateRows="repeat(2, 1fr)"
+                    minW="100%"
                 >
                     <GridItem
                         colStart={2}
+                        rowStart={1}
                     >
                         <LinkBox>
                             <LinkOverlay as={ReactRouterLink} to="/">
@@ -152,13 +154,20 @@ const RegisterForm = () => {
                             </Flex>
                             </LinkOverlay>
                         </LinkBox>
-                        <Text>Sign up to stay on Trac.</Text> 
                     </GridItem>
                     <GridItem
-                        colStart={3}
+                        colStart={1}
+                        rowStart={1}
                     >
                     <DemoUserButton/> 
                     </GridItem> 
+                    <GridItem
+                        gridColumn={"1 / 4"}
+                        rowStart={2}
+                        justifySelf={"center"}
+                    >
+                    <Text>Sign up to stay on Trac.</Text> 
+                    </GridItem>
                 </Grid>
         </Flex>          
             </CardHeader>
