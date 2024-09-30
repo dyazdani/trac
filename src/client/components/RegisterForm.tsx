@@ -115,10 +115,10 @@ const RegisterForm = () => {
             variant="elevated"
             align="center"
             size="md" 
-            m="4vw"
             bgColor="#C9E5F6"
             data-testid="landscape-register-form"
             maxHeight="90%"
+            minHeight="610px"
         >
             <CardHeader
                 paddingBottom={0}
