@@ -4,6 +4,14 @@ import { extendTheme } from "@chakra-ui/react";
 
 //2. Theme object containing custom styling
 const themes = {
+    breakpoints: {
+        base: '0px',
+        sm: '320px',
+        md: '650px',
+        lg: '960px',
+        xl: '1200px',
+        '2xl': '1536px',
+      },
     fonts: {
         body: "Gabarito, sans-serif",
         heading: "Gabarito, sans-serif",
