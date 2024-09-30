@@ -39,6 +39,7 @@ import getPasswordValidation from "../../utils/getPasswordValidation.js";
 import { useNavigate } from "react-router";
 import { validEmailRegex } from "./LoginForm.js";
 import DemoUserButton from "./DemoUserButton.js";
+import GitHubButton from "./GitHubButton.js";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
@@ -162,9 +163,21 @@ const RegisterForm = () => {
                     <DemoUserButton/> 
                     </GridItem> 
                     <GridItem
-                        gridColumn={"1 / 4"}
+                        colStart={3}
+                        rowStart={1}
+                        justifySelf="end"
+                    >
+                        <LinkBox>
+                            <GitHubButton
+                                isAbsolutePosition={false}
+                            /> 
+                        </LinkBox>
+                        
+                    </GridItem>
+                    <GridItem
+                        gridColumn="1 / 4"
                         rowStart={2}
-                        justifySelf={"center"}
+                        justifySelf="center"
                     >
                     <Text>Sign up to stay on Trac.</Text> 
                     </GridItem>

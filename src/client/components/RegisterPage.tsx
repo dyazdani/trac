@@ -17,9 +17,6 @@ import GitHubButton from "./GitHubButton.js";
           bgRepeat="no-repeat"
           bgSize="cover"
         >
-          <GitHubButton
-            isAbsolutePosition={true}
-          /> 
           <RegisterForm/>
         </Flex>
         <ArtistCredit 
