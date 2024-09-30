@@ -12,9 +12,6 @@ import {
     ListIcon,
     Text,
     Highlight,
-    Show,
-    Hide,
-    HStack
 } from "@chakra-ui/react";
 import AppHeader from "./AppHeader.js";
 import { 
@@ -31,38 +28,6 @@ const LandingPage = () => {
             minHeight="100vh"
         >
             <AppHeader isBannerDisplayed={false}/>
-            <Hide below="md">
-                <Show breakpoint="(max-height: 565px)">
-                    <Heading 
-                    as="h1" 
-                    size="lg" 
-                    textAlign="center" 
-                    backgroundColor="gold.400"
-                    padding="1vw"
-                    position="sticky"
-                    top="75px"
-                    zIndex={1000}
-                    >
-                    Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
-                    </Heading>
-                </Show>
-            </Hide>
-            <Show 
-                below="md"
-            >
-                <Heading 
-                    as="h1" 
-                    size="lg" 
-                    textAlign="center" 
-                    backgroundColor="gold.400"
-                    padding="1vw"
-                    position="sticky"
-                    top="75px"
-                    zIndex={1000}
-                >
-                    Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
-                </Heading>
-            </Show>
             <Flex
                 direction="column"
             >
