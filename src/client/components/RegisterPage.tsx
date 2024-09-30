@@ -4,7 +4,7 @@ import {
     Heading,
     Show,
   } from "@chakra-ui/react"; 
-import LandscapeRegisterForm from "./RegisterForm.js";
+import RegisterForm from "./RegisterForm.js";
 import ArtistCredit from "./ArtistCredit.js";
 import GitHubButton from "./GitHubButton.js";
   
@@ -25,7 +25,7 @@ import GitHubButton from "./GitHubButton.js";
           <GitHubButton
             isAbsolutePosition={true}
           /> 
-          <LandscapeRegisterForm/>
+          <RegisterForm/>
         </Flex>
         <ArtistCredit 
           textColor="blue.50" 
