@@ -25,7 +25,10 @@ const GitHubButton = (
             padding=".2rem"
             borderRadius="8px"
             height="40px"
-            minWidth="130px"
+            minWidth={{
+                base: "fit-content",
+                md: "130px"
+            }}
             _hover={{
                 backgroundColor: "#c2bebd"
             }}
@@ -49,6 +52,10 @@ const GitHubButton = (
                         height="100%"
                     />
                     <Text
+                        display={{
+                            base: 'none',
+                            md: 'inline'
+                        }}
                         as='b'
                         marginLeft=".5rem"
                         marginRight=".5rem"
