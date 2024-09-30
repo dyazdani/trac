@@ -131,7 +131,6 @@ const RegisterForm = () => {
                 alignItems={"center"}
             >
                 <Grid
-                    mb="1rem"
                     templateColumns="repeat(3, 1fr)"
                     templateRows="repeat(2, 1fr)"
                     minW="100%"
