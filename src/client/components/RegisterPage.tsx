@@ -1,9 +1,4 @@
-import { 
-    Flex, 
-    Hide, 
-    Heading,
-    Show,
-  } from "@chakra-ui/react"; 
+import { Flex } from "@chakra-ui/react"; 
 import RegisterForm from "./RegisterForm.js";
 import ArtistCredit from "./ArtistCredit.js";
 import GitHubButton from "./GitHubButton.js";

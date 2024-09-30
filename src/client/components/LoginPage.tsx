@@ -1,11 +1,7 @@
 import { 
     Flex, 
-    Hide, 
-    Show,
-    Heading,
     Text,
     Link,
-    Box
   } from "@chakra-ui/react";
 import LoginForm from "./LoginForm.js";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
