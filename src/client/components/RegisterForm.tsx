@@ -24,6 +24,7 @@ import {
     GridItem,
     LinkBox,
     LinkOverlay,
+    Show,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { 
@@ -126,63 +127,72 @@ const RegisterForm = () => {
                 paddingBottom={0}
                 minW="100%"
             >
-            <Flex
-                direction="column"
-                alignItems={"center"}
-            >
-                <Grid
-                    templateColumns="repeat(3, 1fr)"
-                    templateRows="repeat(2, 1fr)"
-                    minW="100%"
+                <Flex
+                    direction="column"
+                    alignItems={"center"}
                 >
-                    <GridItem
-                        colStart={2}
-                        rowStart={1}
+                    <Grid
+                        templateColumns="repeat(3, 1fr)"
+                        templateRows="repeat(2, 1fr)"
+                        minW="100%"
                     >
-                        <LinkBox>
-                            <LinkOverlay as={ReactRouterLink} to="/">
-                            <Flex
-                                gap="0.5rem"
-                                alignItems="center"
-                                justifyContent="center"
-                            >
-                                <Text fontSize="4xl">trac</Text>
-                                <Image
-                                src="/images/trac_logo.png"
-                                alt="Trac mountain logo"
-                                h="2.5rem"
-                                />
-                            </Flex>
-                            </LinkOverlay>
-                        </LinkBox>
-                    </GridItem>
-                    <GridItem
-                        colStart={1}
-                        rowStart={1}
+                        <GridItem
+                            colStart={2}
+                            rowStart={1}
+                        >
+                            <LinkBox>
+                                <LinkOverlay as={ReactRouterLink} to="/">
+                                <Flex
+                                    gap="0.5rem"
+                                    alignItems="center"
+                                    justifyContent="center"
+                                >
+                                    <Text fontSize="4xl">trac</Text>
+                                    <Image
+                                    src="/images/trac_logo.png"
+                                    alt="Trac mountain logo"
+                                    h="2.5rem"
+                                    />
+                                </Flex>
+                                </LinkOverlay>
+                            </LinkBox>
+                        </GridItem>
+                        <Show
+                            above="md"
+                        >
+                            <GridItem
+                                colStart={1}
+                                rowStart={1}
+                        >
+                        <DemoUserButton/> 
+                        </GridItem> 
+                        </Show>
+                        <GridItem
+                            colStart={3}
+                            rowStart={1}
+                            justifySelf="end"
+                        >
+                            <LinkBox>
+                                <GitHubButton
+                                    isAbsolutePosition={false}
+                                /> 
+                            </LinkBox>
+                            
+                        </GridItem>
+                        <GridItem
+                            gridColumn="1 / 4"
+                            rowStart={2}
+                            justifySelf="center"
+                        >
+                        <Text>Sign up to stay on Trac.</Text> 
+                        </GridItem>
+                    </Grid>
+                    <Show
+                        below="md"
                     >
-                    <DemoUserButton/> 
-                    </GridItem> 
-                    <GridItem
-                        colStart={3}
-                        rowStart={1}
-                        justifySelf="end"
-                    >
-                        <LinkBox>
-                            <GitHubButton
-                                isAbsolutePosition={false}
-                            /> 
-                        </LinkBox>
-                        
-                    </GridItem>
-                    <GridItem
-                        gridColumn="1 / 4"
-                        rowStart={2}
-                        justifySelf="center"
-                    >
-                    <Text>Sign up to stay on Trac.</Text> 
-                    </GridItem>
-                </Grid>
-        </Flex>          
+                        <DemoUserButton/>
+                    </Show>
+                </Flex>          
             </CardHeader>
             <CardBody>
                 <Box
