@@ -9,7 +9,7 @@ import ArtistCredit from "./ArtistCredit.js";
           alignItems="center" 
           justifyContent="center"
           w="100%" 
-          h="100vh" 
+          h="fit-content" 
           bgImage="url('/images/landing_page_bg_image.jpg')"
           bgPosition="bottom"
           bgRepeat="no-repeat"

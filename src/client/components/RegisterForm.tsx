@@ -115,6 +115,7 @@ const RegisterForm = () => {
         <Card
             variant="elevated"
             align="center"
+            margin="2rem"
             size="md" 
             bgColor="#C9E5F6"
             data-testid="landscape-register-form"
