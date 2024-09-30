@@ -77,46 +77,6 @@ const Dashboard = () => {
   return (
     currentUser ? 
     <>
-      <Show 
-        breakpoint="(max-width: 943px)"
-      >
-        <Heading 
-          as="h1" 
-          size="lg" 
-          textAlign="center" 
-          backgroundColor="gold.400"
-          padding="6px"
-          position="sticky"
-          top="0"
-          zIndex={1000}
-        >
-          Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
-        </Heading>
-        <CTABanner top="90px" isBannerDisplayed={isBannerDisplayed}/>
-      </Show>
-      <Show breakpoint="(min-width: 944px)">
-        <Hide breakpoint="(max-height: 565px)">
-          <CTABanner top="0px" isBannerDisplayed={isBannerDisplayed}/>
-        </Hide>
-      </Show>
-
-      <Hide breakpoint="(max-width: 943px)">
-        <Show breakpoint="(max-height: 565px)">
-          <Heading 
-            as="h1" 
-            size="lg" 
-            textAlign="center" 
-            backgroundColor="gold.400"
-            padding="6px"
-            position="sticky"
-            top="0"
-            zIndex={1000}
-          >
-            Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
-          </Heading>
-          <CTABanner top="90px" isBannerDisplayed={isBannerDisplayed}/>
-        </Show>
-      </Hide>     
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
     
       {
