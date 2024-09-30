@@ -25,6 +25,7 @@ const GitHubButton = (
             padding=".2rem"
             borderRadius="8px"
             height="40px"
+            minWidth="130px"
             _hover={{
                 backgroundColor: "#c2bebd"
             }}
