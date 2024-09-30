@@ -48,7 +48,7 @@ const MessagesMenu = ({label}: MessagesMenuProps) =>  {
                 buttonRef={notifButtonRef}
                 isVisible={isVisible}
                 onClose={() => setIsVisible(false)}
-                placement="auto"
+                placement="top"
             />
       </>
     );
