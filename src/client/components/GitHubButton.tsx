@@ -23,6 +23,10 @@ const GitHubButton = (
             right={isAbsolutePosition ? "30px" : undefined}
             backgroundColor="transparent"
             padding=".2rem"
+            marginBottom={{
+                base: "1rem",
+                md: undefined
+            }}
             borderRadius="8px"
             height="40px"
             minWidth={{

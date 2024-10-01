@@ -14,7 +14,7 @@ import ArtistCredit from "./ArtistCredit.js";
             base: "1rem"
           }}
           minHeight={{
-            base: "1000px",
+            base: "1050px",
             md: "674px"
           }}
           bgImage="url('/images/landing_page_bg_image.jpg')"

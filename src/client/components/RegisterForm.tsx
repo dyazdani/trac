@@ -170,18 +170,21 @@ const RegisterForm = () => {
                         <DemoUserButton/> 
                         </GridItem> 
                         </Show>
-                        <GridItem
-                            colStart={3}
-                            rowStart={1}
-                            justifySelf="end"
+                        <Show
+                            above="md"
                         >
-                            <LinkBox>
-                                <GitHubButton
-                                    isAbsolutePosition={false}
-                                /> 
-                            </LinkBox>
-                            
+                            <GridItem
+                                colStart={3}
+                                rowStart={1}
+                                justifySelf="end"
+                            >
+                                <LinkBox>
+                                    <GitHubButton
+                                        isAbsolutePosition={false}
+                                    /> 
+                                </LinkBox>
                         </GridItem>
+                        </Show>
                         <GridItem
                             gridColumn="1 / 4"
                             rowStart={2}
@@ -193,6 +196,10 @@ const RegisterForm = () => {
                     <Show
                         below="md"
                     >
+                        <GitHubButton
+                            isAbsolutePosition={false}
+                        /> 
+                        <Spacer/>
                         <DemoUserButton/>
                     </Show>
                 </Flex>          
