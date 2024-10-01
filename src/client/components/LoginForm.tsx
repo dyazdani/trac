@@ -179,7 +179,10 @@ const LoginForm = () => {
         </Flex>
       </CardHeader>
       <CardBody
-        width="70%"
+        width={{
+          base: "90%",
+          md: "70%"
+        }}
       >
         <Box
           as="form"
@@ -190,7 +193,6 @@ const LoginForm = () => {
         >
           <VStack 
             as="fieldset"
-            gap="1vw"
           >
             <FormControl
               isRequired
