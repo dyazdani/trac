@@ -24,7 +24,10 @@ import {
   LinkOverlay,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { 
+  ViewIcon, 
+  ViewOffIcon 
+} from "@chakra-ui/icons";
 import { 
   useGetAllUsersQuery, 
   useGetUserByEmailQuery, 
