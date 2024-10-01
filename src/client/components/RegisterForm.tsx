@@ -196,9 +196,11 @@ const RegisterForm = () => {
                     <Show
                         below="md"
                     >
-                        <GitHubButton
-                            isAbsolutePosition={false}
-                        /> 
+                        <LinkBox>
+                            <GitHubButton
+                                isAbsolutePosition={false}
+                            /> 
+                        </LinkBox>
                         <DemoUserButton/>
                     </Show>
                 </Flex>          
