@@ -104,7 +104,7 @@ const LoginForm = () => {
       variant="elevated" 
       align="center" 
       size="md" 
-      m="4"
+      margin="2rem"
       bgColor="#C9E5F6"
       maxHeight="90%"
     >
@@ -116,7 +116,10 @@ const LoginForm = () => {
           alignItems={"center"}
         >
           <Grid
-            mb="1rem"
+            marginBottom={{
+              base: "0",
+              md: "1rem"
+            }}
             templateColumns="repeat(3, 1fr)"
             templateRows="repeat(2, 1fr)"
             minW="100%"
@@ -176,12 +179,23 @@ const LoginForm = () => {
               <Text>Log in to stay on Trac.</Text> 
             </GridItem>
           </Grid>
+          <Show
+            below="md"
+          >
+            <GitHubButton
+              isAbsolutePosition={false}
+            /> 
+            <DemoUserButton/>
+          </Show>
         </Flex>
       </CardHeader>
       <CardBody
         width={{
           base: "90%",
           md: "70%"
+        }}
+        marginTop={{
+          base: "1rem"
         }}
       >
         <Box

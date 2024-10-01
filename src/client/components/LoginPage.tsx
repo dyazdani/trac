@@ -10,11 +10,17 @@ const LoginPage = () => {
     return (
         <>  
             <Flex 
-                alignItems="center" 
+                alignItems={{
+                    base: "start",
+                    md: "center"
+                }} 
                 justifyContent="center"
                 w="100%" 
-                h="100%" 
-                minHeight="100vh"
+                h="100dvh" 
+                minHeight={{
+                    base: "650px",
+                    // md: "675px"
+                  }}
                 bgImage="url('/images/landing_page_bg_image.jpg')"
                 bgPosition="bottom"
                 bgRepeat="no-repeat"
