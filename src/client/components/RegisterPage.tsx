@@ -6,15 +6,15 @@ import ArtistCredit from "./ArtistCredit.js";
     return (
       <>
         <Flex 
-          alignItems="center" 
+          alignItems={{
+            base: "start",
+            md: "center"
+           }} 
           justifyContent="center"
           w="100%" 
           h="100dvh" 
-          marginTop={{
-            base: "1rem"
-          }}
           minHeight={{
-            base: "1050px",
+            base: "1100px",
             md: "674px"
           }}
           bgImage="url('/images/landing_page_bg_image.jpg')"
