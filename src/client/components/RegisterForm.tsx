@@ -426,6 +426,10 @@ const RegisterForm = () => {
                         isRequired
                         isDisabled={isInputAndSubmitDisabled}
                         mt="1em"
+                        width={{
+                            base: "90%",
+                            md: "100%"
+                        }}
                     >
                         <Checkbox
                             borderColor={"darkslategray.400"}
