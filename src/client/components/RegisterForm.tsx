@@ -213,7 +213,10 @@ const RegisterForm = () => {
                             md: "row"
                         }}
                         alignItems="center"
-                        width="100%"
+                        width={{
+                            base: "90%",
+                            md: "100%"
+                        }}
                         gap="1vw"
                     >
                         <FormControl
@@ -301,7 +304,10 @@ const RegisterForm = () => {
                             md: "row"
                         }}
                         alignItems="center"
-                        width="100%"
+                        width={{
+                            base: "90%",
+                            md: "100%"
+                        }}
                         gap="1vw"
                     >
                         <FormControl
