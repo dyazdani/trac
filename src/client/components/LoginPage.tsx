@@ -5,7 +5,6 @@ import {
   } from "@chakra-ui/react";
 import LoginForm from "./LoginForm.js";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import GitHubButton from "./GitHubButton.js";
 
 const LoginPage = () => {
     return (
