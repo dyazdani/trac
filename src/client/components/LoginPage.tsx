@@ -13,7 +13,7 @@ const LoginPage = () => {
                 justifyContent="center"
                 w="100%" 
                 h="100dvh" 
-                minHeight="660px"
+                minHeight="670px"
                 bgImage="url('/images/landing_page_bg_image.jpg')"
                 bgPosition="bottom"
                 bgRepeat="no-repeat"
