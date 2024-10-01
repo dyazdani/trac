@@ -21,9 +21,6 @@ const LoginPage = () => {
                 bgRepeat="no-repeat"
                 bgSize="cover"
             >           
-                <GitHubButton
-                    isAbsolutePosition={true}
-                /> 
                 <LoginForm/>
             </Flex>
             <Text fontSize="sm" justifyContent="center" position="absolute" bottom="0" left="5px" color="blue.50">

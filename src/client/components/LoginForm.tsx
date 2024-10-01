@@ -22,6 +22,7 @@ import {
   GridItem,
   LinkBox,
   LinkOverlay,
+  Show,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { 
@@ -35,6 +36,7 @@ import {
 } from "../features/api.js";
 import { useNavigate } from "react-router";
 import DemoUserButton from "./DemoUserButton.js";
+import GitHubButton from "./GitHubButton.js";
 
 export const validEmailRegex = new RegExp(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/);
 
@@ -116,11 +118,12 @@ const LoginForm = () => {
           <Grid
             mb="1rem"
             templateColumns="repeat(3, 1fr)"
-            templateRows="repeat(1, 1fr)"
-            gap={10}
+            templateRows="repeat(2, 1fr)"
+            minW="100%"
           >
             <GridItem
               colStart={2}
+              rowStart={1}
             >
               <LinkBox>
                 <LinkOverlay as={ReactRouterLink} to="/">
@@ -138,13 +141,39 @@ const LoginForm = () => {
                   </Flex>
                 </LinkOverlay>
               </LinkBox>
+            </GridItem>
+            <Show
+              above="md"
+            >
+              <GridItem
+                colStart={1}
+                rowStart={1}
+              >
+                <DemoUserButton/> 
+              </GridItem> 
+            </Show>
+            <Show
+              above="md"
+            >
+              <GridItem
+                colStart={3}
+                rowStart={1}
+                justifySelf="end"
+              >
+                <LinkBox>
+                  <GitHubButton
+                    isAbsolutePosition={false}
+                  /> 
+                </LinkBox>
+              </GridItem>
+            </Show>
+            <GridItem
+              gridColumn="1 / 4"
+              rowStart={2}
+              justifySelf="center"
+            >
               <Text>Log in to stay on Trac.</Text> 
             </GridItem>
-            <GridItem
-              colStart={3}
-            >
-              <DemoUserButton/> 
-            </GridItem> 
           </Grid>
         </Flex>
       </CardHeader>
