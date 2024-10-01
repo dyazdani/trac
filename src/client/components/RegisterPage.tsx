@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react"; 
+import { Flex, Show, Spacer } from "@chakra-ui/react"; 
 import RegisterForm from "./RegisterForm.js";
 import ArtistCredit from "./ArtistCredit.js";
   
@@ -10,6 +10,9 @@ import ArtistCredit from "./ArtistCredit.js";
           justifyContent="center"
           w="100%" 
           h="100dvh" 
+          marginTop={{
+            base: "1rem"
+          }}
           minHeight={{
             base: "1000px",
             md: "674px"
