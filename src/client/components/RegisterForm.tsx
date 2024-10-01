@@ -366,6 +366,10 @@ const RegisterForm = () => {
                             isRequired
                             isInvalid={confirmPassword.length ? password !== confirmPassword : false}
                             isDisabled={isInputAndSubmitDisabled}
+                            marginTop={{
+                                base: "1rem",
+                                md: "0"
+                            }}
                         >
                             <FormLabel>Confirm Password</FormLabel>
                             <InputGroup 
