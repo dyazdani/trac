@@ -124,6 +124,7 @@ const LoginForm = () => {
             <GridItem
               colStart={2}
               rowStart={1}
+              margin="0 2rem"
             >
               <LinkBox>
                 <LinkOverlay as={ReactRouterLink} to="/">
