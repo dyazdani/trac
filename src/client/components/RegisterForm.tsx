@@ -145,18 +145,18 @@ const RegisterForm = () => {
                         >
                             <LinkBox>
                                 <LinkOverlay as={ReactRouterLink} to="/">
-                                <Flex
-                                    gap="0.5rem"
-                                    alignItems="center"
-                                    justifyContent="center"
-                                >
-                                    <Text fontSize="4xl">trac</Text>
-                                    <Image
-                                    src="/images/trac_logo.png"
-                                    alt="Trac mountain logo"
-                                    h="2.5rem"
-                                    />
-                                </Flex>
+                                    <Flex
+                                        gap="0.5rem"
+                                        alignItems="center"
+                                        justifyContent="center"
+                                    >
+                                        <Text fontSize="4xl">trac</Text>
+                                        <Image
+                                            src="/images/trac_logo.png"
+                                            alt="Trac mountain logo"
+                                            h="2.5rem"
+                                        />
+                                    </Flex>
                                 </LinkOverlay>
                             </LinkBox>
                         </GridItem>
