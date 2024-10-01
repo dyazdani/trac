@@ -10,7 +10,10 @@ import ArtistCredit from "./ArtistCredit.js";
           justifyContent="center"
           w="100%" 
           h="100dvh" 
-          minHeight="674px"
+          minHeight={{
+            base: "1000px",
+            md: "674px"
+          }}
           bgImage="url('/images/landing_page_bg_image.jpg')"
           bgPosition="bottom"
           bgRepeat="no-repeat"

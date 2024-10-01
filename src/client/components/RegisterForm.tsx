@@ -120,7 +120,6 @@ const RegisterForm = () => {
             size="md" 
             bgColor="#C9E5F6"
             data-testid="landscape-register-form"
-            maxHeight="90%"
             minHeight="610px"
         >
             <CardHeader
@@ -205,6 +204,10 @@ const RegisterForm = () => {
                     as="fieldset"
                 >
                     <Flex
+                        flexFlow={{
+                            base: "column",
+                            md: "row"
+                        }}
                         alignItems="center"
                         width="100%"
                         gap="1vw"
@@ -287,12 +290,16 @@ const RegisterForm = () => {
                                 <FormErrorMessage marginTop="0">Username already exists.</FormErrorMessage>
                             </Box>
                         </FormControl>
-                        </Flex>
-                        <Flex
-                            alignItems="center"
-                            width="100%"
-                            gap="1vw"
-                        >
+                    </Flex>
+                    <Flex
+                        flexFlow={{
+                            base: "column",
+                            md: "row"
+                        }}
+                        alignItems="center"
+                        width="100%"
+                        gap="1vw"
+                    >
                         <FormControl
                             isRequired
                             isInvalid={password.length && isPasswordInvalid ? getPasswordValidation(password).isTooWeak : false}
