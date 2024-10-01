@@ -166,9 +166,9 @@ const RegisterForm = () => {
                             <GridItem
                                 colStart={1}
                                 rowStart={1}
-                        >
-                        <DemoUserButton/> 
-                        </GridItem> 
+                            >
+                            <DemoUserButton/> 
+                            </GridItem> 
                         </Show>
                         <Show
                             above="md"
@@ -183,7 +183,7 @@ const RegisterForm = () => {
                                         isAbsolutePosition={false}
                                     /> 
                                 </LinkBox>
-                        </GridItem>
+                            </GridItem>
                         </Show>
                         <GridItem
                             gridColumn="1 / 4"
