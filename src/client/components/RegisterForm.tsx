@@ -199,7 +199,6 @@ const RegisterForm = () => {
                         <GitHubButton
                             isAbsolutePosition={false}
                         /> 
-                        <Spacer/>
                         <DemoUserButton/>
                     </Show>
                 </Flex>          
