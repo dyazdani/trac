@@ -22,7 +22,6 @@ import {
   GridItem,
   LinkBox,
   LinkOverlay,
-  Heading
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
