@@ -41,17 +41,15 @@ const LandingPage = () => {
     )
     return (
         <Box 
-            minHeight="100vh"
+            minHeight="100dvh"
         >
-            <AppHeader isBannerDisplayed={false}/>
+            {/* <AppHeader isBannerDisplayed={false}/> */}
             <Flex
                 direction="column"
             >
                 <Flex
-                    w="100vw"
                     flexFlow="column"
                     alignItems="center"
-                    maxWidth="100%"
                     bgImage="url('/images/landing_page_bg_image.jpg')"
                     bgPosition="center"
                     bgRepeat="no-repeat"
@@ -60,7 +58,7 @@ const LandingPage = () => {
                     <Heading
                         as="h1"
                         size="3xl"
-                        mt="4vw"
+                        marginTop="4vw"
                         textAlign="center"
                         width="90%"
                     >
@@ -103,16 +101,14 @@ const LandingPage = () => {
                     </Flex>
                 </Flex>
                 <VStack
-                    w="100vw"
-                    maxW="100%"
-                    p="4vw"
-                    pb="0"
+                    padding="2rem"
+                    paddingBottom="0"
                     backgroundColor="floralwhite.50"
                 >
                     <Heading 
                         as="h2" 
                         textAlign="center"
-                        pb="4vw"
+                        paddingBottom="2rem"
                         w="80vw"
                         lineHeight={{
                             base: "3rem",
@@ -139,12 +135,15 @@ const LandingPage = () => {
                     </Heading>
                     <Flex
                         justifyContent="center"
-                        alignItems="center"
+                        flexFlow={{
+                            base: "column",
+                            lg: "row"
+                        }}
                     >
                         <Card
                             boxShadow="2xl"
                             height="fit-content"
-                            width="fit-content"
+                            minWidth="fit-content"
                             bgColor="transparent"
                             borderRadius="20px"
                         >
@@ -153,17 +152,23 @@ const LandingPage = () => {
                                 alt="Trac screenshot"
                                 minH="40vh"
                                 borderRadius="20px"
+                                maxWidth="100%"
                             />
                         </Card>
                         <Spacer
                             minW="6vw"
-                            maxW="10vw"
+                            maxW="10%"
                         />
                         <Card
-                            p="2vw"
+                            padding="1rem"
+                            alignSelf="top"
                             boxShadow="2xl"
                             bgColor="floralwhite.50"
-                            h="fit-content"
+                            height="fit-content"
+                            marginTop={{
+                                base: "2.5rem",
+                                md: "0"
+                            }}
                         >
                             <List
                                 spacing="1vw"
@@ -198,8 +203,8 @@ const LandingPage = () => {
                     <Heading 
                         as="h2" 
                         textAlign="center"
-                        pb="4vw"
-                        pt="5vw"
+                        paddingBottom="1rem"
+                        paddingTop="3rem"
                         w="80vw"
                         lineHeight={{
                             base: "3rem",
@@ -229,13 +234,39 @@ const LandingPage = () => {
                     <Flex
                         justifyContent="center"
                         alignItems="center"
+                        flexFlow={{
+                            base: "column",
+                            lg: "row"
+                        }}
                     >
                         <Card
-                            p="2vw"
+                            boxShadow="2xl"
+                            height="fit-content"
+                            width="fit-content"
+                            bgColor="transparent"
+                            borderRadius="20px"
+                        >
+                            <Image
+                                src="/images/new_trac_screenshot_2.png"
+                                alt="status report button screenshot"
+                                minH="40vh"
+                                borderRadius="20px"
+                                maxWidth="100%"
+                            />
+                        </Card>
+                        <Spacer
+                            minW="6vw"
+                            maxW="10%"
+                        />
+                        <Card
+                            padding="1rem"
                             boxShadow="2xl"
                             bgColor="floralwhite.50"
-                            h="fit-content"
-                            maxW="50vw"
+                            height="fit-content"
+                            marginTop={{
+                                base: "2.5rem",
+                                md: "0"
+                            }}
                         >
                             <List
                                 spacing="1vw"
@@ -262,24 +293,6 @@ const LandingPage = () => {
                                 </ListItem>
                             </List>
                         </Card>
-                        <Spacer
-                            minW="6vw"
-                            maxW="10vw"
-                        />
-                        <Card
-                            boxShadow="2xl"
-                            height="fit-content"
-                            width="fit-content"
-                            bgColor="transparent"
-                            borderRadius="20px"
-                        >
-                            <Image
-                                src="/images/new_trac_screenshot_2.png"
-                                alt="status report button screenshot"
-                                minH="40vh"
-                                borderRadius="20px"
-                            />
-                        </Card>
                     </Flex>
                     <Card
                         boxShadow="2xl"
@@ -294,6 +307,7 @@ const LandingPage = () => {
                             alt="check-in report form drawer screenshot"
                             minH="40vh"
                             borderRadius="20px"
+                            maxWidth="100%"
                         />
                     </Card>
                     <Heading 
@@ -338,6 +352,7 @@ const LandingPage = () => {
                         src="/images/trac_logo.png"
                         alt="Trac mountain logo"
                         h="2.5rem"
+                        maxWidth="100%"
                         />
                     </Flex>
                     <ArtistCredit textColor="stormyblue.700"/>
