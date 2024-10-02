@@ -39,11 +39,19 @@ const LandingPage = () => {
         }, 
         {ssr: false}
     )
+    const src = useBreakpointValue(
+        {
+            base: "/images/new_trac_screenshot_4.png",
+            md: "/images/new_trac_screenshot_3.png"
+        },
+        {ssr: false}
+    )
+
     return (
         <Box 
             minHeight="100dvh"
         >
-            <AppHeader isBannerDisplayed={false}/>
+            {/* <AppHeader isBannerDisplayed={false}/> */}
             <Flex
                 direction="column"
             >
@@ -150,7 +158,6 @@ const LandingPage = () => {
                             <Image
                                 src="/images/new_trac_screenshot_1.png"
                                 alt="Trac screenshot"
-                                minH="40vh"
                                 borderRadius="20px"
                                 maxWidth="100%"
                             />
@@ -249,7 +256,6 @@ const LandingPage = () => {
                             <Image
                                 src="/images/new_trac_screenshot_2.png"
                                 alt="status report button screenshot"
-                                minH="40vh"
                                 borderRadius="20px"
                                 maxWidth="100%"
                             />
@@ -303,9 +309,8 @@ const LandingPage = () => {
                         borderRadius="20px"
                     >
                         <Image
-                            src="/images/new_trac_screenshot_3.png"
+                            src={src}
                             alt="check-in report form drawer screenshot"
-                            minH="40vh"
                             borderRadius="20px"
                             maxWidth="100%"
                         />
