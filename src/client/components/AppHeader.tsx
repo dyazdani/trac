@@ -26,9 +26,10 @@ import GitHubButton from "./GitHubButton.js";
 
 export interface AppHeaderProps {
   isBannerDisplayed: boolean | null
+  page: "landing" | "dashboard"
 }
 
-const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
+const AppHeader = ({isBannerDisplayed, page}: AppHeaderProps) => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -78,6 +79,10 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
           <Box
             ml="1vw"
             mr="1vw"
+            display={{
+              base: "none",
+              md: "block"
+            }}
           > 
             <Text>Hi, <Text as='b'>{currentUser?.username}</Text>!
             </Text>
