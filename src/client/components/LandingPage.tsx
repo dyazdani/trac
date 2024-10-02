@@ -43,7 +43,7 @@ const LandingPage = () => {
         <Box 
             minHeight="100dvh"
         >
-            {/* <AppHeader isBannerDisplayed={false}/> */}
+            <AppHeader isBannerDisplayed={false}/>
             <Flex
                 direction="column"
             >
