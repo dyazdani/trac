@@ -12,6 +12,7 @@ import {
     ListIcon,
     Text,
     Highlight,
+    useBreakpointValue,
 } from "@chakra-ui/react";
 import AppHeader from "./AppHeader.js";
 import { 
@@ -23,6 +24,21 @@ import ArtistCredit from "./ArtistCredit.js";
 
 const LandingPage = () => {
     const navigate = useNavigate();
+    const query = useBreakpointValue(
+        {
+            base: [
+                'Check-In',
+                'Report', 
+                'social', 
+                'accountability'
+            ],
+            sm: [
+                'Check-In Report', 
+                'social accountability'
+            ]
+        }, 
+        {ssr: false}
+    )
     return (
         <Box 
             minHeight="100vh"
@@ -92,14 +108,16 @@ const LandingPage = () => {
                     p="4vw"
                     pb="0"
                     backgroundColor="floralwhite.50"
-
                 >
                     <Heading 
                         as="h2" 
                         textAlign="center"
                         pb="4vw"
-                        w="60vw"
-                        lineHeight="4rem"
+                        w="80vw"
+                        lineHeight={{
+                            base: "3rem",
+                            md: "4rem"
+                        }}
                     >
                         <Highlight
                             query={[
@@ -182,14 +200,20 @@ const LandingPage = () => {
                         textAlign="center"
                         pb="4vw"
                         pt="5vw"
-                        w="60vw"
-                        lineHeight="4rem"
+                        w="80vw"
+                        lineHeight={{
+                            base: "3rem",
+                            md: "4rem"
+                        }}
                     >
                         <Highlight
-                            query={[
-                                'Check-In Report', 
-                                'Check-In Day', 
-                                'social accountability'
+                            query={
+                                query ? 
+                                query : [
+                                'Check-In',
+                                'Report', 
+                                'social', 
+                                'accountability'
                             ]}
                             styles={{ 
                                 px: '3', 
