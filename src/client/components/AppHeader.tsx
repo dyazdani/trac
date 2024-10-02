@@ -15,7 +15,8 @@ import {
     Link as ChakraLink,
     LinkOverlay,
     Flex,
-    LinkBox, 
+    LinkBox,
+    useBreakpointValue, 
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from 'react-router-dom'
 import MessagesMenu from "./MessagesMenu.js";
@@ -33,6 +34,13 @@ const AppHeader = ({isBannerDisplayed, page}: AppHeaderProps) => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const label = useBreakpointValue(
+    {
+      base: "",
+      md: "Notifications"
+    },
+    {ssr: false}
+  )
   const localStorageUser = localStorage.getItem("user")
   const appSelectorUser = useAppSelector(state => state.auth.user)
   const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
@@ -52,8 +60,8 @@ const AppHeader = ({isBannerDisplayed, page}: AppHeaderProps) => {
       zIndex={100}
     >
       <HStack 
-          justifyContent="space-between"
-          alignItems="center"
+        justifyContent="space-between"
+        alignItems="center"
       >
         <LinkBox>
           <LinkOverlay as={ReactRouterLink} to="/">
@@ -90,6 +98,10 @@ const AppHeader = ({isBannerDisplayed, page}: AppHeaderProps) => {
           <ChakraLink
             as={ReactRouterLink}
             to="/login"
+            display={{
+              base: "none",
+              md: "block"
+            }}
           >
             Log In
           </ChakraLink>
@@ -104,7 +116,7 @@ const AppHeader = ({isBannerDisplayed, page}: AppHeaderProps) => {
             userId={currentUser?.id.toString()}
           >
             <MessagesMenu 
-              label="Notifications" 
+              label={label} 
             />
           </KnockFeedProvider>
         }
@@ -113,6 +125,10 @@ const AppHeader = ({isBannerDisplayed, page}: AppHeaderProps) => {
           currentUser ?
           <Button
             type="button"
+            display={{
+              base: "none",
+              md: "block"
+            }}
             ml="1vw"
             mr="1vw"
             variant="solid"
@@ -135,6 +151,10 @@ const AppHeader = ({isBannerDisplayed, page}: AppHeaderProps) => {
           </Button> :
           <Button
             rightIcon={<ChevronRightIcon/>}
+            display={{
+              base: "none",
+              md: "block"
+            }}
             backgroundColor="peach.300"
             color="#353231"
             _hover={{
@@ -159,6 +179,10 @@ const AppHeader = ({isBannerDisplayed, page}: AppHeaderProps) => {
         }
         <LinkBox
           height="40px"
+          display={{
+            base: "none",
+            md: "block"
+          }}
         >
           <GitHubButton
             isAbsolutePosition={false}
