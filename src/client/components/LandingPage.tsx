@@ -53,7 +53,6 @@ const LandingPage = () => {
         >
             <AppHeader 
                 isBannerDisplayed={false}
-                page="landing"
             />
             <Flex
                 direction="column"

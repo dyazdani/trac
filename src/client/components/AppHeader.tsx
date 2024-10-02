@@ -27,10 +27,9 @@ import GitHubButton from "./GitHubButton.js";
 
 export interface AppHeaderProps {
   isBannerDisplayed: boolean | null
-  page: "landing" | "dashboard"
 }
 
-const AppHeader = ({isBannerDisplayed, page}: AppHeaderProps) => {
+const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
