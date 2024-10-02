@@ -51,7 +51,8 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
       zIndex={100}
     >
       <HStack 
-        justifyContent="space-between"
+          justifyContent="space-between"
+          alignItems="center"
       >
         <LinkBox>
           <LinkOverlay as={ReactRouterLink} to="/">
@@ -70,7 +71,8 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
           </LinkOverlay>
         </LinkBox>
         <HStack 
-          alignSelf="flex-end"
+          justifyContent="center"
+          alignItems="center"
         >
           {currentUser ? 
           <Box
@@ -150,7 +152,9 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
             Get Started
           </Button>
         }
-        <LinkBox>
+        <LinkBox
+          height="40px"
+        >
           <GitHubButton
             isAbsolutePosition={false}
           />
