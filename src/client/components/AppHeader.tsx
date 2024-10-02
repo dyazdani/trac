@@ -16,12 +16,17 @@ import {
     LinkOverlay,
     Flex,
     LinkBox,
-    useBreakpointValue, 
+    useBreakpointValue,
+    Menu,
+    MenuButton,
+    IconButton,
+    MenuList,
+    MenuItem, 
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from 'react-router-dom'
 import MessagesMenu from "./MessagesMenu.js";
 import { useNavigate } from "react-router";
-import { ChevronRightIcon } from "@chakra-ui/icons";
+import { ChevronRightIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { resetIsBannerDisplayed } from "../features/bannerSlice.js";
 import GitHubButton from "./GitHubButton.js";
 
@@ -81,112 +86,144 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
         <HStack 
           justifyContent="center"
           alignItems="center"
-        >
-          {currentUser ? 
-          <Box
-            ml="1vw"
-            mr="1vw"
-            display={{
-              base: "none",
-              md: "block"
-            }}
-          > 
-            <Text>Hi, <Text as='b'>{currentUser?.username}</Text>!
-            </Text>
-          </Box> : 
-          <ChakraLink
-            as={ReactRouterLink}
-            to="/login"
-            display={{
-              base: "none",
-              md: "block"
-            }}
-          >
-            Log In
-          </ChakraLink>
-        }
-        {
-          process.env.KNOCK_FEED_CHANNEL_ID && 
-          process.env.KNOCK_PUBLIC_API_KEY && 
-          currentUser &&
-          <KnockFeedProvider
-            apiKey={process.env.KNOCK_PUBLIC_API_KEY}
-            feedId={process.env.KNOCK_FEED_CHANNEL_ID}
-            userId={currentUser?.id.toString()}
-          >
-            <MessagesMenu 
-              label={label} 
-            />
-          </KnockFeedProvider>
-        }
-      
-        {
-          currentUser ?
-          <Button
-            type="button"
-            display={{
-              base: "none",
-              md: "block"
-            }}
-            ml="1vw"
-            mr="1vw"
-            variant="solid"
-            backgroundColor="skyblue.600"     
-            color="floralwhite.50"    
-            _hover={{
-                backgroundColor: "skyblue.700"
-            }}
-            _active={{
-                backgroundColor: "skyblue.800",
-            }} 
-            onClick={(e) => {
-              e.preventDefault();
-              dispatch(resetIsBannerDisplayed())
-              dispatch(logout());
-              navigate("/login");
-            }}
-          >
-            Logout 
-          </Button> :
-          <Button
-            rightIcon={<ChevronRightIcon/>}
-            display={{
-              base: "none",
-              md: "block"
-            }}
-            backgroundColor="peach.300"
-            color="#353231"
-            _hover={{
-              backgroundColor: "peach.500"
-            }}
-            _active={{
-              backgroundColor: "peach.600",
-              color: "floralwhite.50"
-            }}
-            ml="1vw"
-            mr="1vw"
-            variant="solid"
-            type="button"
-            minW="fit-content"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/register");
-            }}
-          >
-            Get Started
-          </Button>
-        }
-        <LinkBox
-          height="40px"
-          display={{
-            base: "none",
-            md: "block"
+          gap={{
+            base: "1rem",
+            md: undefined
           }}
         >
-          <GitHubButton
-            isAbsolutePosition={false}
-          />
-        </LinkBox>
+          {
+            currentUser ? 
+            <Box
+              ml="1vw"
+              mr="1vw"
+              display={{
+                base: "none",
+                md: "block"
+              }}
+            > 
+              <Text>Hi, <Text as='b'>{currentUser?.username}</Text>!
+              </Text>
+            </Box> : 
+            <ChakraLink
+              as={ReactRouterLink}
+              to="/login"
+              display={{
+                base: "none",
+                md: "block"
+              }}
+            >
+              Log In
+            </ChakraLink>
+          }
+          {
+            process.env.KNOCK_FEED_CHANNEL_ID && 
+            process.env.KNOCK_PUBLIC_API_KEY && 
+            currentUser &&
+            <KnockFeedProvider
+              apiKey={process.env.KNOCK_PUBLIC_API_KEY}
+              feedId={process.env.KNOCK_FEED_CHANNEL_ID}
+              userId={currentUser?.id.toString()}
+            >
+              <MessagesMenu 
+                label={label} 
+              />
+            </KnockFeedProvider>
+          }
+          {
+            currentUser ?
+            <Button
+              type="button"
+              display={{
+                base: "none",
+                md: "block"
+              }}
+              ml="1vw"
+              mr="1vw"
+              variant="solid"
+              backgroundColor="skyblue.600"     
+              color="floralwhite.50"    
+              _hover={{
+                  backgroundColor: "skyblue.700"
+              }}
+              _active={{
+                  backgroundColor: "skyblue.800",
+              }} 
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(resetIsBannerDisplayed())
+                dispatch(logout());
+                navigate("/login");
+              }}
+            >
+              Logout 
+            </Button> :
+            <Button
+              rightIcon={<ChevronRightIcon/>}
+              display={{
+                base: "none",
+                md: "block"
+              }}
+              backgroundColor="peach.300"
+              color="#353231"
+              _hover={{
+                backgroundColor: "peach.500"
+              }}
+              _active={{
+                backgroundColor: "peach.600",
+                color: "floralwhite.50"
+              }}
+              ml="1vw"
+              mr="1vw"
+              variant="solid"
+              type="button"
+              minW="fit-content"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/register");
+              }}
+            >
+              Get Started
+            </Button>
+          }
+          <LinkBox
+            height="40px"
+            display={{
+              base: "none",
+              md: "block"
+            }}
+          >
+            <GitHubButton
+              isAbsolutePosition={false}
+            />
+          </LinkBox>
+          <Menu
+            isLazy
+          >
+            <MenuButton
+              as={IconButton}
+              icon={<HamburgerIcon/>}
+              display={{
+                base: "block",
+                md: "none"
+              }}
+            >
+              <MenuList>
+                <MenuItem
+                  as="a"
+                  href="https://github.com/dyazdani/trac"     
+                >
+                  <Image
+                    boxSize='2rem'
+                    borderRadius='full'
+                    src='/images/github-mark.png'
+                    alt='GitHub logo'
+                    marginRight='12px'
+                  />
+                  <Text>View Code</Text>
+                </MenuItem>
+              </MenuList>
+            </MenuButton>
+          </Menu>
         </HStack> 
       </HStack>
     </Box>

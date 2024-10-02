@@ -8,7 +8,7 @@ const themes = {
         base: '0px',
         sm: '380px',
         md: '650px',
-        lg: '960px',
+        lg: '800px',
         xl: '1200px',
         '2xl': '1536px',
       },
