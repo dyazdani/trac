@@ -31,8 +31,10 @@ const LandingPage = () => {
             <Flex
                 direction="column"
             >
-                <Box
+                <Flex
                     w="100vw"
+                    flexFlow="column"
+                    alignItems="center"
                     maxWidth="100%"
                     bgImage="url('/images/landing_page_bg_image.jpg')"
                     bgPosition="center"
@@ -44,6 +46,7 @@ const LandingPage = () => {
                         size="3xl"
                         mt="4vw"
                         textAlign="center"
+                        width="90%"
                     >
                         Your secret, goal-achieving weapon.
                     </Heading>
@@ -51,6 +54,7 @@ const LandingPage = () => {
                         fontSize="xl"
                         mt="2vw"
                         textAlign="center"
+                        width="90%"
                     >
                         Track your habits. Share your progress. Crush your goals.
                     </Text>
@@ -81,7 +85,7 @@ const LandingPage = () => {
                             Get Started
                         </Button> 
                     </Flex>
-                </Box>
+                </Flex>
                 <VStack
                     w="100vw"
                     maxW="100%"
