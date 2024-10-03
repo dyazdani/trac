@@ -19,7 +19,7 @@ const ArtistCredit = ({ textColor }: ArtistCreditProps) => {
           left=".5em"
         >
           <Text 
-            fontSize="sm" 
+            fontSize="x-small" 
             justifyContent="center"
             color={textColor}
             textAlign="center"
