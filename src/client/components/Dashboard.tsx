@@ -99,21 +99,41 @@ const Dashboard = () => {
             <GridItem
               colStart={{
                 base: 2,
-                md: 1
+                lg: 1
+              }}
+              gridColumn={{
+                base: "1 / 4",
+                lg: "1 / 2"
               }}
               display="flex"
               flexDirection="column"
               alignItems="center"
+              position={{
+                base: "sticky",
+                lg: undefined
+              }}
+              top={{
+                base: `${isBannerDisplayed ? "178px" : "86px"}`,
+                lg: `${isBannerDisplayed ? "92px" : undefined}`
+              }}
+              height="fit-content"
+              paddingBottom={{
+                base: "2rem",
+                lg: undefined
+              }}
+              zIndex={101}
+              backgroundColor="#FFFFFF"
             >
               <Heading
                 as='h1'
                 size="2xl"
                 marginTop={{
                   base: "2rem",
-                  md: "3.8rem"
+                  lg: "3.8rem"
                 }}
                 position={{
-                  md: "fixed"
+                  base: undefined,
+                  lg: "fixed"
                 }}
                 paddingX="1rem"
               >
