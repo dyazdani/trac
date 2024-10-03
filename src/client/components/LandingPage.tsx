@@ -145,6 +145,7 @@ const LandingPage = () => {
                     </Heading>
                     <Flex
                         justifyContent="center"
+                        alignItems="start"
                         flexFlow={{
                             base: "column",
                             lg: "row"
@@ -170,7 +171,6 @@ const LandingPage = () => {
                         />
                         <Card
                             padding="1rem"
-                            alignSelf="top"
                             boxShadow="2xl"
                             bgColor="floralwhite.50"
                             height="fit-content"
@@ -242,7 +242,7 @@ const LandingPage = () => {
                     </Heading>
                     <Flex
                         justifyContent="center"
-                        alignItems="center"
+                        alignItems="start"
                         flexFlow={{
                             base: "column",
                             lg: "row"
