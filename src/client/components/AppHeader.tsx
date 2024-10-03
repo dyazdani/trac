@@ -9,8 +9,6 @@ import {
     Box, 
     Text,
     Button,
-    Spacer,
-    Heading,
     Image,
     Link as ChakraLink,
     LinkOverlay,
@@ -52,7 +50,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
   return (
     <Box 
       bg="turquoise.100"
-      w="100vw"
+      w="100%"
       maxWidth="100%" 
       p="1rem"
       minHeight="70px"
@@ -98,7 +96,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
               mr="1vw"
               display={{
                 base: "none",
-                md: "block"
+                lg: "block"
               }}
             > 
               <Text>Hi, <Text as='b'>{currentUser?.username}</Text>!
@@ -201,28 +199,52 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
           >
             <MenuButton
               as={IconButton}
+              aria-label="Options"
               icon={<HamburgerIcon/>}
               display={{
                 base: "block",
                 md: "none"
               }}
-            >
-              <MenuList>
-                <MenuItem
-                  as="a"
-                  href="https://github.com/dyazdani/trac"     
-                >
-                  <Image
-                    boxSize='2rem'
-                    borderRadius='full'
-                    src='/images/github-mark.png'
-                    alt='GitHub logo'
-                    marginRight='12px'
-                  />
-                  <Text>View Code</Text>
-                </MenuItem>
-              </MenuList>
-            </MenuButton>
+            />
+            <MenuList>
+              {
+                !currentUser && (
+                  <MenuItem
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate("/register");
+                    }}
+                  >
+                    <Text>Get Started</Text>
+                  </MenuItem>
+              )}
+              <MenuItem
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (currentUser) {
+                    dispatch(resetIsBannerDisplayed())
+                    dispatch(logout());
+                  } 
+                  navigate("/login");
+                }}
+              >
+                <Text>{currentUser ? "Logout" : "Log In"}</Text>
+              </MenuItem>
+              <MenuItem
+                as="a"
+                href="https://github.com/dyazdani/trac"
+                target="_blank"     
+              >
+                <Image
+                  boxSize='2rem'
+                  borderRadius='full'
+                  src='/images/github-mark.png'
+                  alt='GitHub logo'
+                  marginRight='12px'
+                />
+                <Text>View Code</Text>
+              </MenuItem>
+            </MenuList>
           </Menu>
         </HStack> 
       </HStack>
