@@ -79,7 +79,7 @@ const Dashboard = () => {
     currentUser ? 
     <Box
       height="100dvh"
-      minHeight="565px"
+      // minHeight="565px"
     >
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
       {
@@ -154,8 +154,8 @@ const Dashboard = () => {
                     as="h2"
                     size="lg"
                     marginTop={{
-                      base: "2rem",
-                      md: "4.6rem"
+                      base: `${isMilestonesEmpty ? "0" : "2rem"}`,
+                      lg: "4.6rem"
                     }}
                     textAlign="center"
                   >
