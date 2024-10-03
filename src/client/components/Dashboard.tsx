@@ -78,7 +78,8 @@ const Dashboard = () => {
   return (
     currentUser ? 
     <Box
-      minHeight="100dvh"
+      height="100dvh"
+      minHeight="565px"
     >
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
       {
@@ -93,9 +94,13 @@ const Dashboard = () => {
         <>
           <Grid
             templateColumns="repeat(3, 1fr)"
+            gap={5}
           >
             <GridItem
-              colStart={1}
+              colStart={{
+                base: 2,
+                md: 1
+              }}
               display="flex"
               flexDirection="column"
               alignItems="center"
@@ -103,8 +108,13 @@ const Dashboard = () => {
               <Heading
                 as='h1'
                 size="2xl"
-                marginTop="3.8rem"
-                position="fixed"
+                marginTop={{
+                  base: "2rem",
+                  md: "3.8rem"
+                }}
+                position={{
+                  md: "fixed"
+                }}
                 paddingX="1rem"
               >
                 My Goals:
@@ -123,7 +133,10 @@ const Dashboard = () => {
                   <Heading
                     as="h2"
                     size="lg"
-                    marginTop="4.6rem"
+                    marginTop={{
+                      base: "2rem",
+                      md: "4.6rem"
+                    }}
                     textAlign="center"
                   >
                     You currently have no Goals
