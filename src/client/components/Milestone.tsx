@@ -47,8 +47,10 @@ const Milestone = ({milestone}: MilestoneProps) => {
 
     return (
         <Card
-        w="50vw"
-        minW="570px"
+        width={{
+            base: "90dvw",
+            md: "60dvw"
+        }}
         background={milestone.isCanceled ? "#C3C1C1" : "linear-gradient(0deg, rgba(183,186,251, 1) 0%, rgba(193,232,240, 1) 100%)"}
         borderRadius="20px"
         >
@@ -57,6 +59,10 @@ const Milestone = ({milestone}: MilestoneProps) => {
             justifyContent="space-between"
             alignItems="center"
             gap="1vw"
+            flexFlow={{
+                base: "column",
+                md: "row"
+            }}
           >
             <Heading 
                 size="xl"
@@ -150,44 +156,49 @@ const Milestone = ({milestone}: MilestoneProps) => {
                  :
                 ""
             }
-            
-            <Menu
-                isLazy
-                closeOnSelect={false}
-                closeOnBlur={false}
+            <Flex
+                justifyContent="space-between"
+                alignItems="center"
+                gap="1vw"
             >
-                {({ isOpen }) => 
-                    <>
-                        <MenuButton
-                            as={IconButton}
-                            aria-label="Open Goal options menu"
-                            icon={<SettingsIcon/>}
-                            backgroundColor="turquoise.300"
-                            _hover={{
-                                backgroundColor: "turquoise.400"
-                            }}
-                            _active={{
-                                backgroundColor: "turquoise.600",
-                                color: "floralwhite.50"    
+                <Menu
+                    isLazy
+                    closeOnSelect={false}
+                    closeOnBlur={false}
+                >
+                    {({ isOpen }) => 
+                        <>
+                            <MenuButton
+                                as={IconButton}
+                                aria-label="Open Goal options menu"
+                                icon={<SettingsIcon/>}
+                                backgroundColor="turquoise.300"
+                                _hover={{
+                                    backgroundColor: "turquoise.400"
+                                }}
+                                _active={{
+                                    backgroundColor: "turquoise.600",
+                                    color: "floralwhite.50"    
 
-                            }} 
-                            flexShrink="0"
-                            isActive={isOpen}
-                        >Menu</MenuButton>
-                        <MenuList
-                            backgroundColor="turquoise.50"
-                        >   
-                            {milestone.habits.length ? <CreateHabitButton milestone={milestone}/> : ""}
-                            <UpdateMilestoneButton milestone={milestone}/>
-                            <DeleteMilestoneButton milestone={milestone}/>
-                            <CancelMilestoneButton milestone={milestone}/>
-                        </MenuList>
-                    </>
-                }
-            </Menu>
-            <CompleteMilestoneButton
-                milestone={milestone}
-            />
+                                }} 
+                                flexShrink="0"
+                                isActive={isOpen}
+                            >Menu</MenuButton>
+                            <MenuList
+                                backgroundColor="turquoise.50"
+                            >   
+                                {milestone.habits.length ? <CreateHabitButton milestone={milestone}/> : ""}
+                                <UpdateMilestoneButton milestone={milestone}/>
+                                <DeleteMilestoneButton milestone={milestone}/>
+                                <CancelMilestoneButton milestone={milestone}/>
+                            </MenuList>
+                        </>
+                    }
+                </Menu>
+                <CompleteMilestoneButton
+                    milestone={milestone}
+                />
+            </Flex>
           </Flex>
         </CardHeader>
         <Flex 
