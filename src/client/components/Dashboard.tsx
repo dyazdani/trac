@@ -78,8 +78,8 @@ const Dashboard = () => {
   return (
     currentUser ? 
     <Box
-      height="100dvh"
-      // minHeight="565px"
+      height="fit-content"
+      minHeight="100dvh"
     >
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
       {
