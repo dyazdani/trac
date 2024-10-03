@@ -145,10 +145,13 @@ const LandingPage = () => {
                     </Heading>
                     <Flex
                         justifyContent="center"
-                        alignItems="start"
+                        alignItems={{
+                            base: "center",
+                            xl: "start"
+                        }}
                         flexFlow={{
                             base: "column",
-                            lg: "row"
+                            xl: "row"
                         }}
                     >
                         <Card
@@ -176,7 +179,7 @@ const LandingPage = () => {
                             height="fit-content"
                             marginTop={{
                                 base: "2.5rem",
-                                md: "0"
+                                xl: "0"
                             }}
                         >
                             <List
@@ -212,7 +215,7 @@ const LandingPage = () => {
                     <Heading 
                         as="h2" 
                         textAlign="center"
-                        paddingBottom="1rem"
+                        paddingBottom="2rem"
                         paddingTop="3rem"
                         w="80vw"
                         lineHeight={{
@@ -242,10 +245,13 @@ const LandingPage = () => {
                     </Heading>
                     <Flex
                         justifyContent="center"
-                        alignItems="start"
+                        alignItems={{
+                            base: "center",
+                            xl: "start"
+                        }}
                         flexFlow={{
                             base: "column",
-                            lg: "row"
+                            xl: "row"
                         }}
                     >
                         <Card
@@ -273,7 +279,7 @@ const LandingPage = () => {
                             height="fit-content"
                             marginTop={{
                                 base: "2.5rem",
-                                md: "0"
+                                xl: "0"
                             }}
                         >
                             <List
