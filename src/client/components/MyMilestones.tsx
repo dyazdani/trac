@@ -9,9 +9,10 @@ export interface MyMilestonesProps {
 const MyMilestones = ({ milestones }: MyMilestonesProps) => {
     return (
         <VStack
-            paddingY="3rem"
+            // paddingY="3rem"
             align="start"
-            spacing="20"
+            spacing="10"
+            paddingBottom="3rem"
         >
             {milestones && 
                 [...milestones].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
