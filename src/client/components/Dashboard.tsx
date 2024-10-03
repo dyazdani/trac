@@ -1,4 +1,5 @@
 import { 
+  Box,
   Flex,
   Grid, 
   GridItem, 
@@ -76,9 +77,10 @@ const Dashboard = () => {
  
   return (
     currentUser ? 
-    <>
+    <Box
+      minHeight="100dvh"
+    >
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
-    
       {
       isLoading ?
       <Spinner 
@@ -91,7 +93,6 @@ const Dashboard = () => {
         <>
           <Grid
             templateColumns="repeat(3, 1fr)"
-            minHeight="100vh"
           >
             <GridItem
               colStart={1}
@@ -122,7 +123,7 @@ const Dashboard = () => {
                   <Heading
                     as="h2"
                     size="lg"
-                    mt="4.6rem"
+                    marginTop="4.6rem"
                     textAlign="center"
                   >
                     You currently have no Goals
@@ -156,7 +157,7 @@ const Dashboard = () => {
           <ArtistCredit textColor="stormyblue.700" />
         </>
       }   
-    </> :
+    </Box> :
     <Navigate to="/login" replace />
   )
 };
