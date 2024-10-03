@@ -57,7 +57,7 @@ const GitHubButton = (
                         marginLeft=".5rem"
                         marginRight=".5rem"
                     >
-                        View code
+                        View Code
                     </Text>
                 </Flex>
             </LinkOverlay>
