@@ -17,6 +17,7 @@ const CTABanner = ({ isBannerDisplayed }: CTABannerProps) => {
     const dispatch = useDispatch();
     return (
         <Box
+            zIndex={99}
             position="sticky"
             width="100%"
             minWidth="100dvw"
