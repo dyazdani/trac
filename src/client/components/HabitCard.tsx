@@ -399,7 +399,11 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               rowSpan={1}
               rowStart={3}
             >
-              <IconButton 
+              <IconButton
+                fontSize={{
+                  base: ".6rem",
+                  md: "1rem"
+                }}   
                 aria-label="see-previous-week" 
                 icon={<ArrowLeftIcon />}
                 size="sm"
@@ -418,6 +422,10 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               rowStart={3}
             >
               <IconButton 
+                fontSize={{
+                  base: ".6rem",
+                  md: "1rem"
+                }}
                 aria-label="see-next-week" 
                 icon={<ArrowRightIcon />} 
                 size="sm"
@@ -479,6 +487,11 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ?
                     <>
                       <GridItem
+                        fontSize={{
+                          base: ".6rem",
+                          'smaller-md': ".8rem",
+                          'sm-md': "1rem"
+                        }}
                       padding={".2vw"}
                       borderTop={todayBorder}
                       borderLeft={todayBorder}
@@ -493,6 +506,11 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       {dayAbbreviation}
                     </GridItem>
                     <GridItem
+                      fontSize={{
+                        base: ".6rem",
+                        'smaller-md': ".8rem",
+                        'sm-md': "1rem"
+                      }}
                       padding={".2vw"} 
                       colStart={(i * 2) + 3}
                       colSpan={1} 

@@ -7,6 +7,8 @@ const themes = {
     breakpoints: {
         base: '0px',
         sm: '368px',
+        'smaller-md': '415px',
+        'sm-md': '525px',
         md: '649px',
         lg: '800px',
         xl: '1200px',
