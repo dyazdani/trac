@@ -146,7 +146,11 @@ const Dashboard = () => {
                   base: undefined,
                   lg: "fixed"
                 }}
-                paddingX="2rem"
+                paddingLeft="2rem"
+                paddingRight={{
+                  base: "2rem",
+                  lg: "1rem"
+                }}
               >
                 My Goals:
               </Heading>

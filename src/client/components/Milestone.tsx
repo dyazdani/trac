@@ -49,7 +49,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
         <Card
         width={{
             base: "90dvw",
-            lg: "60dvw"
+            lg: "55dvw"
         }}
         background={milestone.isCanceled ? "#C3C1C1" : "linear-gradient(0deg, rgba(183,186,251, 1) 0%, rgba(193,232,240, 1) 100%)"}
         borderRadius="20px"
@@ -208,7 +208,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
           <CardBody
             width={{
                 base: "90dvw",
-                lg: "60dvw"
+                lg: "55dvw"
             }}
           >
             {
