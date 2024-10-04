@@ -206,6 +206,10 @@ const Milestone = ({milestone}: MilestoneProps) => {
             align={"center"}
         >
           <CardBody
+            width={{
+                base: "90dvw",
+                lg: "60dvw"
+            }}
           >
             {
                 milestone.habits.length ?
@@ -231,7 +235,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 ""
               }
             <Accordion
-                allowMultiple            >
+                allowMultiple           
+            >
                 {[...milestone.habits].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
                     .map(habit => {
                         const isStatusReportSent = isMostRecentStatusReportSent(habit);
@@ -245,6 +250,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
 
                     return (
                         <AccordionItem
+
                             key={habit.id}
                             as={motion.div}
                             _last={{
@@ -285,8 +291,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                 } : 
                                 {}
                             }
-                            width="42vw"
-                            minWidth="450px"
+                            width="42dvw"
+                            minWidth="248px"
                             mb=".5vw"
                             borderRadius="20px"
                             boxShadow="2xl"
