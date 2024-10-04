@@ -224,16 +224,18 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
 
   return (
     <Card
-      w="40vw" 
-      minW="424px"
       backgroundColor="transparent"
-      boxShadow="none"  
+      boxShadow="none"
     >
       <CardHeader
         paddingTop="0"      
         paddingBottom="20px"
       >
         <Flex
+          flexFlow={{
+            base: "column",
+            md: "row"
+          }}
           justifyContent="space-between"
           alignItems="center"
           gap="1vw"

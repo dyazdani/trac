@@ -250,7 +250,9 @@ const Milestone = ({milestone}: MilestoneProps) => {
 
                     return (
                         <AccordionItem
-
+                            display="flex"
+                            flexFlow="column"  
+                            alignItems="center"
                             key={habit.id}
                             as={motion.div}
                             _last={{
@@ -291,7 +293,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                 } : 
                                 {}
                             }
-                            width="42dvw"
+                            // width="42dvw"
+                            width="100%"
                             minWidth="248px"
                             mb=".5vw"
                             borderRadius="20px"
