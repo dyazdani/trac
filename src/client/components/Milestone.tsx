@@ -51,6 +51,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
             base: "90dvw",
             lg: "55dvw"
         }}
+        maxWidth="800px"
         background={milestone.isCanceled ? "#C3C1C1" : "linear-gradient(0deg, rgba(183,186,251, 1) 0%, rgba(193,232,240, 1) 100%)"}
         borderRadius="20px"
         >
@@ -210,6 +211,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 base: "90dvw",
                 lg: "55dvw"
             }}
+            maxWidth="800px"
           >
             {
                 milestone.habits.length ?

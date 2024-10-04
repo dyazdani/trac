@@ -81,6 +81,9 @@ const Dashboard = () => {
     <Box
       height="fit-content"
       minHeight="100dvh"
+      display="flex"
+      flexFlow="column"
+      alignItems="center"
     >
       <CTABanner
         isBannerDisplayed={isBannerDisplayed}
@@ -102,7 +105,7 @@ const Dashboard = () => {
               lg: "repeat(3, 1fr)"
             }}
             gap={5}
-            maxWidth="100dvw"
+            maxWidth="1330px"
           >
             <GridItem
               gridColumn={{
