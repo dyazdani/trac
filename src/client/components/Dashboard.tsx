@@ -126,7 +126,7 @@ const Dashboard = () => {
                 base: "1rem",
                 lg: undefined
               }}
-              zIndex={101}
+              zIndex={99}
               backgroundColor="#FFFFFF"
             >
               <Heading
