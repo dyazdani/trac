@@ -97,9 +97,12 @@ const Dashboard = () => {
       /> :
         <>
           <Grid
-            templateColumns="repeat(3, 1fr)"
+            templateColumns={{
+              base: "auto auto auto",
+              lg: "repeat(3, 1fr)"
+            }}
             gap={5}
-
+            maxWidth="100dvw"
           >
             <GridItem
               gridColumn={{
