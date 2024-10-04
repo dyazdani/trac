@@ -48,7 +48,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
     return (
         <Card
         width={{
-            base: "80dvw",
+            base: "90dvw",
             md: "60dvw"
         }}
         background={milestone.isCanceled ? "#C3C1C1" : "linear-gradient(0deg, rgba(183,186,251, 1) 0%, rgba(193,232,240, 1) 100%)"}
@@ -221,7 +221,12 @@ const Milestone = ({milestone}: MilestoneProps) => {
             
             {
                 !milestone.habits.length ?
-                <Text fontSize="xl">You currently have no Habits for this Goal.</Text> : 
+                <Text 
+                fontSize="xl" 
+                textAlign="center"
+                >
+                    You currently have no Habits for this Goal.
+                </Text> : 
                 ""
               }
             <Accordion

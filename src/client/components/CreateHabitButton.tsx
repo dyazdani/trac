@@ -85,6 +85,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                     Add Habit
                 </MenuItem> :
                 <Button 
+                    minWidth="80%"
                     aria-label="Add Habit" 
                     leftIcon={<AddIcon />} 
                     isDisabled={milestone && milestone.isCompleted || milestone.isCanceled}
