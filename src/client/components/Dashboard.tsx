@@ -124,6 +124,7 @@ const Dashboard = () => {
                 lg: `${isBannerDisplayed ? "92px" : undefined}`
               }}
               height="fit-content"
+              maxWidth="100dvw"
               paddingBottom={{
                 base: "1rem",
                 lg: undefined
