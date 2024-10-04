@@ -99,7 +99,14 @@ const StatusReportFormButton = ({habit, milestone, textContent}: StatusReportFor
                 backgroundColor: "yellow.700"
             }} 
             aria-label='send Check-In Report form'
-            fontSize='20px'
+            fontSize={{
+                base: "16px",
+                md: "20px"
+            }}
+            size={{
+                base: "sm",
+                md: undefined
+            }}
             border="2mm ridge rgba(249, 199, 31, 0.6)"
             onClick={(e) => {
                 e.preventDefault();
