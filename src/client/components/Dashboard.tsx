@@ -134,11 +134,11 @@ const Dashboard = () => {
                 size="2xl"
                 marginTop={{
                   base: "1rem",
-                  lg: "3.8rem"
+                  lg: "10rem"
                 }}
                 marginBottom={{
                   base: "1rem",
-                  lg: undefined
+                  lg: "0"
                 }}
                 position={{
                   base: undefined,
