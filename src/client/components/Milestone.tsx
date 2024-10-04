@@ -205,10 +205,11 @@ const Milestone = ({milestone}: MilestoneProps) => {
             direction={"column"} 
             align={"center"}
         >
-          <CardBody>
+          <CardBody
+          >
             {
                 milestone.habits.length ?
-                <Heading 
+                <Heading
                     as="h3"
                     size="lg"
                     mb=".5vw"
@@ -230,8 +231,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 ""
               }
             <Accordion
-                allowMultiple
-            >
+                allowMultiple            >
                 {[...milestone.habits].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
                     .map(habit => {
                         const isStatusReportSent = isMostRecentStatusReportSent(habit);

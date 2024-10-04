@@ -4,9 +4,6 @@ import {
   Grid, 
   GridItem, 
   Heading,
-  Hide,
-  Show,
-  Spacer,
   Spinner,
   useBreakpoint,
 } from "@chakra-ui/react";
@@ -85,6 +82,9 @@ const Dashboard = () => {
       height="fit-content"
       minHeight="100dvh"
     >
+      <CTABanner
+        isBannerDisplayed={isBannerDisplayed}
+      />
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
       {
       isLoading ?
@@ -118,7 +118,9 @@ const Dashboard = () => {
                 lg: undefined
               }}
               top={{
-                base: `${isBannerDisplayed ? "178px" : "86px"}`,
+                base: `${isBannerDisplayed ? "207.469px" : "86px"}`,
+                sm: `${isBannerDisplayed ? "188.281px" : "86px"}`,
+                md: `${isBannerDisplayed ? "173.1875px" : "86px"}`,
                 lg: `${isBannerDisplayed ? "92px" : undefined}`
               }}
               height="fit-content"

@@ -33,7 +33,6 @@ export interface AppHeaderProps {
 }
 
 const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const label = useBreakpointValue(
@@ -43,6 +42,15 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
     },
     {ssr: false}
   )
+  const top = useBreakpointValue(
+    {
+      base: "121.469px",
+      sm: "102.281px",
+      md: "87.1875px",
+    },
+    {ssr: false}
+  )
+
   const localStorageUser = localStorage.getItem("user")
   const appSelectorUser = useAppSelector(state => state.auth.user)
   const currentUser = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
@@ -55,10 +63,7 @@ const AppHeader = ({isBannerDisplayed}: AppHeaderProps) => {
       p="1rem"
       minHeight="70px"
       position={"sticky"}
-      top={
-        isBannerDisplayed ? 
-        "92px" : 
-        "0px"}
+      top={isBannerDisplayed ? top : "0px"}
       zIndex={100}
     >
       <HStack 
