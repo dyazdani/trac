@@ -49,7 +49,8 @@ const RightDrawer = ({ isMilestonesEmpty, isBannerDisplayed }: RightDrawerProps)
                         }} 
                         size={{
                             base: `${isMilestonesEmpty ? "lg" : "sm"}`,
-                            lg: "lg"
+                            lg: `${isMilestonesEmpty ? "lg" : "md"}`,
+                            xl: "lg"
                         }}
                         aria-label='create-goal'
                         leftIcon={<AddIcon />}
