@@ -293,7 +293,6 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                 } : 
                                 {}
                             }
-                            // width="42dvw"
                             width="100%"
                             minWidth="248px"
                             mb=".5vw"

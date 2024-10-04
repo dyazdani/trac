@@ -243,15 +243,22 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
           <Heading 
             sx={{ marginRight: "auto" }} 
             as="h4"
-            minWidth="0"
             flex={1}
             size="md"
             color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.600" : ""}
+            width={{
+              base: "100%",
+              md: undefined
+            }}
           >
             <Text 
               whiteSpace="nowrap"
               overflow="hidden"
               textOverflow="ellipsis"
+              textAlign={{
+                base: "center",
+                md: "start"
+              }}
             >
               {habit.name}
             </Text>
@@ -264,6 +271,10 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             {({ isOpen}) => (
               <>
                 <MenuButton
+                  marginTop={{
+                    base: "1rem",
+                    md: "0"
+                  }}
                   as={IconButton}
                   aria-label="Open Habit options menu"
                   icon={<SettingsIcon/>}
@@ -293,6 +304,10 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             !milestone.isCompleted &&
             !milestone.isCanceled ? 
             <Button
+              marginTop={{
+                base: ".5rem",
+                md: "0"
+              }}
               backgroundColor={milestone.isCompleted ? "peach.100" : "peach.300"}
               color="#353231"
               _hover={
