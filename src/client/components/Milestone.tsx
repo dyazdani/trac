@@ -61,7 +61,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
             gap="1vw"
             flexFlow={{
                 base: "column",
-                md: "row"
+                lg: "row"
             }}
           >
             <Heading 

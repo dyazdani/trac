@@ -12,6 +12,7 @@ const MyMilestones = ({ milestones }: MyMilestonesProps) => {
             align="start"
             spacing="10"
             paddingBottom="3rem"
+            paddingTop="1.5rem"
         >
             {milestones && 
                 [...milestones].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
