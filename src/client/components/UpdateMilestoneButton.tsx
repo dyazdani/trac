@@ -157,6 +157,13 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                                         configs={{
                                             dateFormat: "MM-dd-yyyy"   
                                         }}
+                                        propsConfigs={{
+                                            popoverCompProps: {
+                                            popoverBodyProps:  {
+                                                maxWidth: "100dvw"
+                                            }
+                                            }
+                                        }}
                                         name="date-input"
                                         date={datepickerValue}
                                         minDate={new Date()}
