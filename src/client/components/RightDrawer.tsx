@@ -1,25 +1,31 @@
 import {
     useDisclosure,
     Button,
-    useBreakpointValue
+    useBreakpointValue,
+    useBreakpoint
   } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import { useAppSelector } from '../app/hooks.js'
 import CreateMilestoneForm from './CreateMilestoneForm.js'
 import { User } from '@prisma/client'
+import isLessThanBreakpoint from '../utils/isLessThanBreakpoint.js'
 
 export interface RightDrawerProps {
     isMilestonesEmpty: boolean
+    isBannerDisplayed: boolean | null
 }
 
-const RightDrawer = ({ isMilestonesEmpty }: RightDrawerProps) => {
+const RightDrawer = ({ isMilestonesEmpty, isBannerDisplayed }: RightDrawerProps) => {
     const { isOpen, onClose, onOpen} = useDisclosure();
-    const position = useBreakpointValue(
+    const breakpoint = useBreakpoint({ssr: false})
+    const bottom = useBreakpointValue(
         {
-            base: "fixed"
+            base: undefined,
+            lg: "50px"
         },
         {ssr: false}
     )
+    const top = isBannerDisplayed ? "198px" : "106px"
 
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
@@ -30,8 +36,8 @@ const RightDrawer = ({ isMilestonesEmpty }: RightDrawerProps) => {
             {currentUser && 
                 <>
                     <Button
-                        position={isMilestonesEmpty ? undefined : "fixed"}
-                        bottom={isMilestonesEmpty ? undefined : "50px"}
+                        position={isMilestonesEmpty || isLessThanBreakpoint(breakpoint, "lg") ? undefined : "fixed"}
+                        bottom={isMilestonesEmpty || isLessThanBreakpoint(breakpoint, "lg") ? undefined : bottom}
                         marginTop={isMilestonesEmpty ? "3rem" : undefined}
                         variant='solid'
                         backgroundColor="yellow.500"

@@ -6,7 +6,9 @@ import {
   Heading,
   Hide,
   Show,
+  Spacer,
   Spinner,
+  useBreakpoint,
 } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
 import { useAppSelector } from "../app/hooks.js";
@@ -23,10 +25,12 @@ import { MilestoneWithDetails } from "../../types/index.js";
 import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
 import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 import { useEffect } from "react";
+import isLessThanBreakpoint from "../utils/isLessThanBreakpoint.js";
 
 
 const Dashboard = () => {
   const dispatch = useDispatch()
+  const breakpoint = useBreakpoint({ssr: false})
 
   const localStorageIsBannerDisplayed = localStorage.getItem("isBannerDisplayed")
   const appSelectorIsBannerDisplayed = useAppSelector(state => state.banner.isBannerDisplayed)
@@ -95,19 +99,17 @@ const Dashboard = () => {
           <Grid
             templateColumns="repeat(3, 1fr)"
             gap={5}
+
           >
             <GridItem
-              colStart={{
-                base: 2,
-                lg: 1
-              }}
               gridColumn={{
                 base: "1 / 4",
                 lg: "1 / 2"
               }}
               display="flex"
-              flexDirection="column"
+              flexFlow="column"
               alignItems="center"
+              justifyContent="center"
               position={{
                 base: "sticky",
                 lg: undefined
@@ -118,7 +120,7 @@ const Dashboard = () => {
               }}
               height="fit-content"
               paddingBottom={{
-                base: "2rem",
+                base: "1rem",
                 lg: undefined
               }}
               zIndex={101}
@@ -128,8 +130,12 @@ const Dashboard = () => {
                 as='h1'
                 size="2xl"
                 marginTop={{
-                  base: "2rem",
+                  base: "1rem",
                   lg: "3.8rem"
+                }}
+                marginBottom={{
+                  base: "1rem",
+                  lg: undefined
                 }}
                 position={{
                   base: undefined,
@@ -139,6 +145,14 @@ const Dashboard = () => {
               >
                 My Goals:
               </Heading>
+              {
+              !isMilestonesEmpty && isLessThanBreakpoint(breakpoint, "lg") ?
+                <RightDrawer
+                  isMilestonesEmpty={isMilestonesEmpty}
+                  isBannerDisplayed={isBannerDisplayed}
+                /> :
+              ""
+            }
             </GridItem>
             {
               !milestonesData?.milestones.length ?
@@ -163,7 +177,10 @@ const Dashboard = () => {
                   </Heading>
                   {
                     isMilestonesEmpty ? 
-                    <RightDrawer isMilestonesEmpty={isMilestonesEmpty}/> :
+                    <RightDrawer 
+                      isMilestonesEmpty={isMilestonesEmpty}
+                      isBannerDisplayed={isBannerDisplayed}
+                    /> :
                     ""
                   }
                 </Flex>
@@ -175,14 +192,17 @@ const Dashboard = () => {
               </GridItem>               
             }
             {
-              !isMilestonesEmpty ?
+              !isMilestonesEmpty && !isLessThanBreakpoint(breakpoint, "lg") ?
               <GridItem
                 colStart={isMilestonesEmpty ? 2 : 3}
                 display="flex"
                 flexDirection="column"
                 alignItems="center"
               >
-                <RightDrawer isMilestonesEmpty={isMilestonesEmpty} />
+                <RightDrawer 
+                  isMilestonesEmpty={isMilestonesEmpty}
+                  isBannerDisplayed={isBannerDisplayed}
+                />
               </GridItem> :
               ""
             }
