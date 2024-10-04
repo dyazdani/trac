@@ -205,7 +205,9 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                     </FormControl>
                                     
                                 </Box>
-                                <Box as="fieldset">
+                                <Box 
+                                    as="fieldset"
+                                >
                                     <FormLabel>
                                         <Flex
                                             alignItems="center"
@@ -237,13 +239,90 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                         value={checkboxGroupValue}
                                     >
                                         <Stack direction='row'>
-                                            <Checkbox value="sunday">Su</Checkbox>
-                                            <Checkbox value="monday">M</Checkbox>
-                                            <Checkbox value="tuesday">T</Checkbox>
-                                            <Checkbox value="wednesday">W</Checkbox>
-                                            <Checkbox value="thursday">Th</Checkbox>
-                                            <Checkbox value="friday">F</Checkbox>
-                                            <Checkbox value="saturday">Sa</Checkbox>
+                                            <Checkbox 
+                                                value="sunday" 
+                                            >
+                                                <Text 
+                                                    fontSize={{
+                                                        base: ".85rem",
+                                                        sm: "1rem"
+                                                    }}
+                                                >
+                                                    Su
+                                                </Text>
+                                            </Checkbox>
+                                            <Checkbox 
+                                                value="monday"
+                                                >
+                                                    <Text 
+                                                        fontSize={{
+                                                            base: ".85rem",
+                                                            sm: "1rem"
+                                                        }}
+                                                    >
+                                                        M
+                                                    </Text>
+                                                </Checkbox>
+                                            <Checkbox 
+                                                value="tuesday"
+                                            >
+                                                <Text 
+                                                    fontSize={{
+                                                        base: ".85rem",
+                                                        sm: "1rem"
+                                                    }}
+                                                >
+                                                    T
+                                                </Text>
+                                            </Checkbox>
+                                            <Checkbox 
+                                                value="wednesday"
+                                            >
+                                                <Text 
+                                                    fontSize={{
+                                                        base: ".85rem",
+                                                        sm: "1rem"
+                                                    }}
+                                                >
+                                                    W
+                                                </Text>
+                                            </Checkbox>
+                                            <Checkbox 
+                                                value="thursday"
+                                            >
+                                                <Text 
+                                                    fontSize={{
+                                                        base: ".85rem",
+                                                        sm: "1rem"
+                                                    }}
+                                                >
+                                                    Th
+                                                </Text>
+                                            </Checkbox>
+                                            <Checkbox 
+                                                value="friday"   
+                                            >
+                                                <Text 
+                                                    fontSize={{
+                                                        base: ".85rem",
+                                                        sm: "1rem"
+                                                    }}
+                                                >
+                                                    F
+                                                </Text>
+                                            </Checkbox>
+                                            <Checkbox 
+                                                value="saturday"  
+                                            >
+                                                <Text 
+                                                    fontSize={{
+                                                        base: ".85rem",
+                                                        sm: "1rem"
+                                                    }}
+                                                >
+                                                    Sa
+                                                </Text>
+                                            </Checkbox>
                                         </Stack>
                                     </CheckboxGroup>
                                 </Box>
