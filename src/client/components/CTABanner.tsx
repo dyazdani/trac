@@ -21,7 +21,6 @@ const CTABanner = ({ isBannerDisplayed }: CTABannerProps) => {
             width="100%"
             minWidth="100dvw"
             top="0px"
-            zIndex="1000"
             minH="40px"
             bg="gold.400"
             border="2mm ridge rgba(249, 199, 31, 0.6)"
