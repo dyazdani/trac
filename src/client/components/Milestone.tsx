@@ -47,8 +47,11 @@ const Milestone = ({milestone}: MilestoneProps) => {
 
     return (
         <Card
-        w="50vw"
-        minW="570px"
+        width={{
+            base: "90dvw",
+            lg: "55dvw"
+        }}
+        maxWidth="800px"
         background={milestone.isCanceled ? "#C3C1C1" : "linear-gradient(0deg, rgba(183,186,251, 1) 0%, rgba(193,232,240, 1) 100%)"}
         borderRadius="20px"
         >
@@ -57,6 +60,10 @@ const Milestone = ({milestone}: MilestoneProps) => {
             justifyContent="space-between"
             alignItems="center"
             gap="1vw"
+            flexFlow={{
+                base: "column",
+                lg: "row"
+            }}
           >
             <Heading 
                 size="xl"
@@ -150,54 +157,65 @@ const Milestone = ({milestone}: MilestoneProps) => {
                  :
                 ""
             }
-            
-            <Menu
-                isLazy
-                closeOnSelect={false}
-                closeOnBlur={false}
+            <Flex
+                justifyContent="space-between"
+                alignItems="center"
+                gap="1vw"
             >
-                {({ isOpen }) => 
-                    <>
-                        <MenuButton
-                            as={IconButton}
-                            aria-label="Open Goal options menu"
-                            icon={<SettingsIcon/>}
-                            backgroundColor="turquoise.300"
-                            _hover={{
-                                backgroundColor: "turquoise.400"
-                            }}
-                            _active={{
-                                backgroundColor: "turquoise.600",
-                                color: "floralwhite.50"    
+                <Menu
+                    isLazy
+                    closeOnSelect={false}
+                    closeOnBlur={false}
+                >
+                    {({ isOpen }) => 
+                        <>
+                            <MenuButton
+                                as={IconButton}
+                                aria-label="Open Goal options menu"
+                                icon={<SettingsIcon/>}
+                                backgroundColor="turquoise.300"
+                                _hover={{
+                                    backgroundColor: "turquoise.400"
+                                }}
+                                _active={{
+                                    backgroundColor: "turquoise.600",
+                                    color: "floralwhite.50"    
 
-                            }} 
-                            flexShrink="0"
-                            isActive={isOpen}
-                        >Menu</MenuButton>
-                        <MenuList
-                            backgroundColor="turquoise.50"
-                        >   
-                            {milestone.habits.length ? <CreateHabitButton milestone={milestone}/> : ""}
-                            <UpdateMilestoneButton milestone={milestone}/>
-                            <DeleteMilestoneButton milestone={milestone}/>
-                            <CancelMilestoneButton milestone={milestone}/>
-                        </MenuList>
-                    </>
-                }
-            </Menu>
-            <CompleteMilestoneButton
-                milestone={milestone}
-            />
+                                }} 
+                                flexShrink="0"
+                                isActive={isOpen}
+                            >Menu</MenuButton>
+                            <MenuList
+                                backgroundColor="turquoise.50"
+                            >   
+                                {milestone.habits.length ? <CreateHabitButton milestone={milestone}/> : ""}
+                                <UpdateMilestoneButton milestone={milestone}/>
+                                <DeleteMilestoneButton milestone={milestone}/>
+                                <CancelMilestoneButton milestone={milestone}/>
+                            </MenuList>
+                        </>
+                    }
+                </Menu>
+                <CompleteMilestoneButton
+                    milestone={milestone}
+                />
+            </Flex>
           </Flex>
         </CardHeader>
         <Flex 
             direction={"column"} 
             align={"center"}
         >
-          <CardBody>
+          <CardBody
+            width={{
+                base: "90dvw",
+                lg: "55dvw"
+            }}
+            maxWidth="800px"
+          >
             {
                 milestone.habits.length ?
-                <Heading 
+                <Heading
                     as="h3"
                     size="lg"
                     mb=".5vw"
@@ -210,11 +228,16 @@ const Milestone = ({milestone}: MilestoneProps) => {
             
             {
                 !milestone.habits.length ?
-                <Text fontSize="xl">You currently have no Habits for this Goal.</Text> : 
+                <Text 
+                fontSize="xl" 
+                textAlign="center"
+                >
+                    You currently have no Habits for this Goal.
+                </Text> : 
                 ""
               }
             <Accordion
-                allowMultiple
+                allowMultiple           
             >
                 {[...milestone.habits].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
                     .map(habit => {
@@ -229,6 +252,9 @@ const Milestone = ({milestone}: MilestoneProps) => {
 
                     return (
                         <AccordionItem
+                            display="flex"
+                            flexFlow="column"  
+                            alignItems="center"
                             key={habit.id}
                             as={motion.div}
                             _last={{
@@ -269,8 +295,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                 } : 
                                 {}
                             }
-                            width="42vw"
-                            minWidth="450px"
+                            width="100%"
+                            minWidth="248px"
                             mb=".5vw"
                             borderRadius="20px"
                             boxShadow="2xl"

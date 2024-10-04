@@ -12,9 +12,7 @@ import {
     ListIcon,
     Text,
     Highlight,
-    Show,
-    Hide,
-    HStack
+    useBreakpointValue,
 } from "@chakra-ui/react";
 import AppHeader from "./AppHeader.js";
 import { 
@@ -26,49 +24,42 @@ import ArtistCredit from "./ArtistCredit.js";
 
 const LandingPage = () => {
     const navigate = useNavigate();
+    const query = useBreakpointValue(
+        {
+            base: [
+                'Check-In',
+                'Report', 
+                'social', 
+                'accountability'
+            ],
+            sm: [
+                'Check-In Report', 
+                'social accountability'
+            ]
+        }, 
+        {ssr: false}
+    )
+    const src = useBreakpointValue(
+        {
+            base: "/images/new_trac_screenshot_4.png",
+            md: "/images/new_trac_screenshot_3.png"
+        },
+        {ssr: false}
+    )
+
     return (
         <Box 
-            minHeight="100vh"
+            minHeight="100dvh"
         >
-            <AppHeader isBannerDisplayed={false}/>
-            <Hide below="md">
-                <Show breakpoint="(max-height: 565px)">
-                    <Heading 
-                    as="h1" 
-                    size="lg" 
-                    textAlign="center" 
-                    backgroundColor="gold.400"
-                    padding="1vw"
-                    position="sticky"
-                    top="75px"
-                    zIndex={1000}
-                    >
-                    Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
-                    </Heading>
-                </Show>
-            </Hide>
-            <Show 
-                below="md"
-            >
-                <Heading 
-                    as="h1" 
-                    size="lg" 
-                    textAlign="center" 
-                    backgroundColor="gold.400"
-                    padding="1vw"
-                    position="sticky"
-                    top="75px"
-                    zIndex={1000}
-                >
-                    Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
-                </Heading>
-            </Show>
+            <AppHeader 
+                isBannerDisplayed={false}
+            />
             <Flex
                 direction="column"
             >
-                <Box
-                    w="100vw"
-                    maxWidth="100%"
+                <Flex
+                    flexFlow="column"
+                    alignItems="center"
                     bgImage="url('/images/landing_page_bg_image.jpg')"
                     bgPosition="center"
                     bgRepeat="no-repeat"
@@ -77,8 +68,9 @@ const LandingPage = () => {
                     <Heading
                         as="h1"
                         size="3xl"
-                        mt="4vw"
+                        marginTop="4vw"
                         textAlign="center"
+                        width="90%"
                     >
                         Your secret, goal-achieving weapon.
                     </Heading>
@@ -86,6 +78,7 @@ const LandingPage = () => {
                         fontSize="xl"
                         mt="2vw"
                         textAlign="center"
+                        width="90%"
                     >
                         Track your habits. Share your progress. Crush your goals.
                     </Text>
@@ -116,21 +109,21 @@ const LandingPage = () => {
                             Get Started
                         </Button> 
                     </Flex>
-                </Box>
+                </Flex>
                 <VStack
-                    w="100vw"
-                    maxW="100%"
-                    p="4vw"
-                    pb="0"
+                    padding="2rem"
+                    paddingBottom="0"
                     backgroundColor="floralwhite.50"
-
                 >
                     <Heading 
                         as="h2" 
                         textAlign="center"
-                        pb="4vw"
-                        w="60vw"
-                        lineHeight="4rem"
+                        paddingBottom="2rem"
+                        w="80vw"
+                        lineHeight={{
+                            base: "3rem",
+                            md: "4rem"
+                        }}
                     >
                         <Highlight
                             query={[
@@ -152,31 +145,42 @@ const LandingPage = () => {
                     </Heading>
                     <Flex
                         justifyContent="center"
-                        alignItems="center"
+                        alignItems={{
+                            base: "center",
+                            xl: "start"
+                        }}
+                        flexFlow={{
+                            base: "column",
+                            xl: "row"
+                        }}
                     >
                         <Card
                             boxShadow="2xl"
                             height="fit-content"
-                            width="fit-content"
+                            minWidth="fit-content"
                             bgColor="transparent"
                             borderRadius="20px"
                         >
                             <Image
                                 src="/images/new_trac_screenshot_1.png"
                                 alt="Trac screenshot"
-                                minH="40vh"
                                 borderRadius="20px"
+                                maxWidth="100%"
                             />
                         </Card>
                         <Spacer
                             minW="6vw"
-                            maxW="10vw"
+                            maxW="10%"
                         />
                         <Card
-                            p="2vw"
+                            padding="1rem"
                             boxShadow="2xl"
                             bgColor="floralwhite.50"
-                            h="fit-content"
+                            height="fit-content"
+                            marginTop={{
+                                base: "2.5rem",
+                                xl: "0"
+                            }}
                         >
                             <List
                                 spacing="1vw"
@@ -211,16 +215,22 @@ const LandingPage = () => {
                     <Heading 
                         as="h2" 
                         textAlign="center"
-                        pb="4vw"
-                        pt="5vw"
-                        w="60vw"
-                        lineHeight="4rem"
+                        paddingBottom="2rem"
+                        paddingTop="3rem"
+                        w="80vw"
+                        lineHeight={{
+                            base: "3rem",
+                            md: "4rem"
+                        }}
                     >
                         <Highlight
-                            query={[
-                                'Check-In Report', 
-                                'Check-In Day', 
-                                'social accountability'
+                            query={
+                                query ? 
+                                query : [
+                                'Check-In',
+                                'Report', 
+                                'social', 
+                                'accountability'
                             ]}
                             styles={{ 
                                 px: '3', 
@@ -235,14 +245,42 @@ const LandingPage = () => {
                     </Heading>
                     <Flex
                         justifyContent="center"
-                        alignItems="center"
+                        alignItems={{
+                            base: "center",
+                            xl: "start"
+                        }}
+                        flexFlow={{
+                            base: "column",
+                            xl: "row"
+                        }}
                     >
                         <Card
-                            p="2vw"
+                            boxShadow="2xl"
+                            height="fit-content"
+                            width="fit-content"
+                            bgColor="transparent"
+                            borderRadius="20px"
+                        >
+                            <Image
+                                src="/images/new_trac_screenshot_2.png"
+                                alt="status report button screenshot"
+                                borderRadius="20px"
+                                maxWidth="100%"
+                            />
+                        </Card>
+                        <Spacer
+                            minW="6vw"
+                            maxW="10%"
+                        />
+                        <Card
+                            padding="1rem"
                             boxShadow="2xl"
                             bgColor="floralwhite.50"
-                            h="fit-content"
-                            maxW="50vw"
+                            height="fit-content"
+                            marginTop={{
+                                base: "2.5rem",
+                                xl: "0"
+                            }}
                         >
                             <List
                                 spacing="1vw"
@@ -269,24 +307,6 @@ const LandingPage = () => {
                                 </ListItem>
                             </List>
                         </Card>
-                        <Spacer
-                            minW="6vw"
-                            maxW="10vw"
-                        />
-                        <Card
-                            boxShadow="2xl"
-                            height="fit-content"
-                            width="fit-content"
-                            bgColor="transparent"
-                            borderRadius="20px"
-                        >
-                            <Image
-                                src="/images/new_trac_screenshot_2.png"
-                                alt="status report button screenshot"
-                                minH="40vh"
-                                borderRadius="20px"
-                            />
-                        </Card>
                     </Flex>
                     <Card
                         boxShadow="2xl"
@@ -297,10 +317,10 @@ const LandingPage = () => {
                         borderRadius="20px"
                     >
                         <Image
-                            src="/images/new_trac_screenshot_3.png"
+                            src={src}
                             alt="check-in report form drawer screenshot"
-                            minH="40vh"
                             borderRadius="20px"
+                            maxWidth="100%"
                         />
                     </Card>
                     <Heading 
@@ -345,6 +365,7 @@ const LandingPage = () => {
                         src="/images/trac_logo.png"
                         alt="Trac mountain logo"
                         h="2.5rem"
+                        maxWidth="100%"
                         />
                     </Flex>
                     <ArtistCredit textColor="stormyblue.700"/>

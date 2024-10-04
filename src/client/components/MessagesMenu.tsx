@@ -6,9 +6,11 @@ import {
 import "@knocklabs/react-notification-feed/dist/index.css"
 import { Button, ButtonGroup } from "@chakra-ui/react";
 
-type MessagesMenuProps = {}
+type MessagesMenuProps = {
+    label?: string
+}
 
-const MessagesMenu = (props: MessagesMenuProps) =>  {
+const MessagesMenu = ({label}: MessagesMenuProps) =>  {
     const [isVisible, setIsVisible] = useState(false);
     const notifButtonRef = useRef(null);
     return(
@@ -26,11 +28,16 @@ const MessagesMenu = (props: MessagesMenuProps) =>  {
                     backgroundColor: "turquoise.300"
                 }}
                 >
-                <Button
+                {label ? 
+                (<Button
                     ref={notifButtonRef}
                     onClick={(e) => setIsVisible(!isVisible)}
                     ml=".5vw"
-                >Notifications</Button>
+                >{label}</Button>) : 
+                (
+                    ""
+                )
+                }
                 <NotificationIconButton
                     ref={notifButtonRef}
                     onClick={(e) => setIsVisible(!isVisible)}
@@ -41,6 +48,7 @@ const MessagesMenu = (props: MessagesMenuProps) =>  {
                 buttonRef={notifButtonRef}
                 isVisible={isVisible}
                 onClose={() => setIsVisible(false)}
+                placement="top"
             />
       </>
     );

@@ -23,8 +23,13 @@ const GitHubButton = (
             right={isAbsolutePosition ? "30px" : undefined}
             backgroundColor="transparent"
             padding=".2rem"
+            marginBottom={{
+                base: "1rem",
+                md: undefined
+            }}
             borderRadius="8px"
             height="40px"
+            minWidth="130px"
             _hover={{
                 backgroundColor: "#c2bebd"
             }}
@@ -52,7 +57,7 @@ const GitHubButton = (
                         marginLeft=".5rem"
                         marginRight=".5rem"
                     >
-                        View code
+                        View Code
                     </Text>
                 </Flex>
             </LinkOverlay>

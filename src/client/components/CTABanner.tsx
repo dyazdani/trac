@@ -11,17 +11,17 @@ import { useDispatch } from "react-redux";
 
 export interface CTABannerProps {
     isBannerDisplayed: boolean | null
-    top: "0px" | "90px"
 }
 
-const CTABanner = ({ isBannerDisplayed, top }: CTABannerProps) => {
+const CTABanner = ({ isBannerDisplayed }: CTABannerProps) => {
     const dispatch = useDispatch();
     return (
         <Box
+            zIndex={99}
             position="sticky"
-            w="100%"
-            top={top}
-            zIndex="1000"
+            width="100%"
+            minWidth="100dvw"
+            top="0px"
             minH="40px"
             bg="gold.400"
             border="2mm ridge rgba(249, 199, 31, 0.6)"
@@ -45,7 +45,10 @@ const CTABanner = ({ isBannerDisplayed, top }: CTABannerProps) => {
                     </Heading>
                     <Heading
                         as="h2"
-                        size="md"
+                        size={{
+                            base: "sm",
+                            lg: "md"
+                        }}
                         textAlign="center"
                         p="3px"
                     >

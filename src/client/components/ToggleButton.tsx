@@ -162,7 +162,11 @@ const ToggleButton = ({
         /> :
         <Checkbox
             isChecked={isCompleted}
-            size="lg"
+            size={{
+                base: "sm",
+                'smaller-md': "md",
+                'sm-md': "lg"
+              }}
             colorScheme="peach"
             borderColor="#3a3c3c"
             _disabled={{

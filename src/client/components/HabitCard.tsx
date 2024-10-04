@@ -224,16 +224,18 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
 
   return (
     <Card
-      w="40vw" 
-      minW="424px"
       backgroundColor="transparent"
-      boxShadow="none"  
+      boxShadow="none"
     >
       <CardHeader
         paddingTop="0"      
         paddingBottom="20px"
       >
         <Flex
+          flexFlow={{
+            base: "column",
+            md: "row"
+          }}
           justifyContent="space-between"
           alignItems="center"
           gap="1vw"
@@ -241,15 +243,22 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
           <Heading 
             sx={{ marginRight: "auto" }} 
             as="h4"
-            minWidth="0"
             flex={1}
             size="md"
             color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.600" : ""}
+            width={{
+              base: "100%",
+              md: undefined
+            }}
           >
             <Text 
               whiteSpace="nowrap"
               overflow="hidden"
               textOverflow="ellipsis"
+              textAlign={{
+                base: "center",
+                md: "start"
+              }}
             >
               {habit.name}
             </Text>
@@ -262,6 +271,10 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             {({ isOpen}) => (
               <>
                 <MenuButton
+                  marginTop={{
+                    base: "1rem",
+                    md: "0"
+                  }}
                   as={IconButton}
                   aria-label="Open Habit options menu"
                   icon={<SettingsIcon/>}
@@ -291,6 +304,10 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             !milestone.isCompleted &&
             !milestone.isCanceled ? 
             <Button
+              marginTop={{
+                base: ".5rem",
+                md: "0"
+              }}
               backgroundColor={milestone.isCompleted ? "peach.100" : "peach.300"}
               color="#353231"
               _hover={
@@ -382,7 +399,11 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               rowSpan={1}
               rowStart={3}
             >
-              <IconButton 
+              <IconButton
+                fontSize={{
+                  base: ".6rem",
+                  md: "1rem"
+                }}   
                 aria-label="see-previous-week" 
                 icon={<ArrowLeftIcon />}
                 size="sm"
@@ -401,6 +422,10 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               rowStart={3}
             >
               <IconButton 
+                fontSize={{
+                  base: ".6rem",
+                  md: "1rem"
+                }}
                 aria-label="see-next-week" 
                 icon={<ArrowRightIcon />} 
                 size="sm"
@@ -462,6 +487,11 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ?
                     <>
                       <GridItem
+                        fontSize={{
+                          base: ".6rem",
+                          'smaller-md': ".8rem",
+                          'sm-md': "1rem"
+                        }}
                       padding={".2vw"}
                       borderTop={todayBorder}
                       borderLeft={todayBorder}
@@ -476,6 +506,11 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       {dayAbbreviation}
                     </GridItem>
                     <GridItem
+                      fontSize={{
+                        base: ".6rem",
+                        'smaller-md': ".8rem",
+                        'sm-md': "1rem"
+                      }}
                       padding={".2vw"} 
                       colStart={(i * 2) + 3}
                       colSpan={1} 

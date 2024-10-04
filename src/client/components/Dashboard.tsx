@@ -1,11 +1,11 @@
 import { 
+  Box,
   Flex,
   Grid, 
   GridItem, 
   Heading,
-  Hide,
-  Show,
   Spinner,
+  useBreakpoint,
 } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
 import { useAppSelector } from "../app/hooks.js";
@@ -22,10 +22,12 @@ import { MilestoneWithDetails } from "../../types/index.js";
 import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
 import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 import { useEffect } from "react";
+import isLessThanBreakpoint from "../utils/isLessThanBreakpoint.js";
 
 
 const Dashboard = () => {
   const dispatch = useDispatch()
+  const breakpoint = useBreakpoint({ssr: false})
 
   const localStorageIsBannerDisplayed = localStorage.getItem("isBannerDisplayed")
   const appSelectorIsBannerDisplayed = useAppSelector(state => state.banner.isBannerDisplayed)
@@ -76,49 +78,17 @@ const Dashboard = () => {
  
   return (
     currentUser ? 
-    <>
-      <Show 
-        breakpoint="(max-width: 943px)"
-      >
-        <Heading 
-          as="h1" 
-          size="lg" 
-          textAlign="center" 
-          backgroundColor="gold.400"
-          padding="6px"
-          position="sticky"
-          top="0"
-          zIndex={1000}
-        >
-          Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
-        </Heading>
-        <CTABanner top="90px" isBannerDisplayed={isBannerDisplayed}/>
-      </Show>
-      <Show breakpoint="(min-width: 944px)">
-        <Hide breakpoint="(max-height: 565px)">
-          <CTABanner top="0px" isBannerDisplayed={isBannerDisplayed}/>
-        </Hide>
-      </Show>
-
-      <Hide breakpoint="(max-width: 943px)">
-        <Show breakpoint="(max-height: 565px)">
-          <Heading 
-            as="h1" 
-            size="lg" 
-            textAlign="center" 
-            backgroundColor="gold.400"
-            padding="6px"
-            position="sticky"
-            top="0"
-            zIndex={1000}
-          >
-            Trac not yet optimized for tablet or mobile devices. Please switch to desktop for optimum experience.
-          </Heading>
-          <CTABanner top="90px" isBannerDisplayed={isBannerDisplayed}/>
-        </Show>
-      </Hide>     
+    <Box
+      height="fit-content"
+      minHeight="100dvh"
+      display="flex"
+      flexFlow="column"
+      alignItems="center"
+    >
+      <CTABanner
+        isBannerDisplayed={isBannerDisplayed}
+      />
       <AppHeader isBannerDisplayed={isBannerDisplayed}/>
-    
       {
       isLoading ?
       <Spinner 
@@ -130,24 +100,72 @@ const Dashboard = () => {
       /> :
         <>
           <Grid
-            templateColumns="repeat(3, 1fr)"
-            minHeight="100vh"
+            templateColumns={{
+              base: "auto auto auto",
+              lg: "repeat(3, 1fr)"
+            }}
+            gap={5}
+            maxWidth="1330px"
           >
             <GridItem
-              colStart={1}
+              gridColumn={{
+                base: "1 / 4",
+                lg: "1 / 2"
+              }}
               display="flex"
-              flexDirection="column"
+              flexFlow="column"
               alignItems="center"
+              justifyContent="center"
+              position={{
+                base: "sticky",
+                lg: undefined
+              }}
+              top={{
+                base: `${isBannerDisplayed ? "207.469px" : "86px"}`,
+                sm: `${isBannerDisplayed ? "188.281px" : "86px"}`,
+                md: `${isBannerDisplayed ? "173.1875px" : "86px"}`,
+                lg: `${isBannerDisplayed ? "92px" : undefined}`
+              }}
+              height="fit-content"
+              maxWidth="100dvw"
+              paddingBottom={{
+                base: "1rem",
+                lg: undefined
+              }}
+              zIndex={98}
+              backgroundColor="#FFFFFF"
             >
               <Heading
                 as='h1'
                 size="2xl"
-                marginTop="3.8rem"
-                position="fixed"
-                paddingX="1rem"
+                marginTop={{
+                  base: "1rem",
+                  lg: "10rem"
+                }}
+                marginBottom={{
+                  base: "1rem",
+                  lg: "0"
+                }}
+                position={{
+                  base: undefined,
+                  lg: "fixed"
+                }}
+                paddingLeft="2rem"
+                paddingRight={{
+                  base: "2rem",
+                  lg: "1rem"
+                }}
               >
                 My Goals:
               </Heading>
+              {
+              !isMilestonesEmpty && isLessThanBreakpoint(breakpoint, "lg") ?
+                <RightDrawer
+                  isMilestonesEmpty={isMilestonesEmpty}
+                  isBannerDisplayed={isBannerDisplayed}
+                /> :
+              ""
+            }
             </GridItem>
             {
               !milestonesData?.milestones.length ?
@@ -162,14 +180,20 @@ const Dashboard = () => {
                   <Heading
                     as="h2"
                     size="lg"
-                    mt="4.6rem"
+                    marginTop={{
+                      base: `${isMilestonesEmpty ? "0" : "2rem"}`,
+                      lg: "4.6rem"
+                    }}
                     textAlign="center"
                   >
                     You currently have no Goals
                   </Heading>
                   {
                     isMilestonesEmpty ? 
-                    <RightDrawer isMilestonesEmpty={isMilestonesEmpty}/> :
+                    <RightDrawer 
+                      isMilestonesEmpty={isMilestonesEmpty}
+                      isBannerDisplayed={isBannerDisplayed}
+                    /> :
                     ""
                   }
                 </Flex>
@@ -181,14 +205,17 @@ const Dashboard = () => {
               </GridItem>               
             }
             {
-              !isMilestonesEmpty ?
+              !isMilestonesEmpty && !isLessThanBreakpoint(breakpoint, "lg") ?
               <GridItem
                 colStart={isMilestonesEmpty ? 2 : 3}
                 display="flex"
                 flexDirection="column"
                 alignItems="center"
               >
-                <RightDrawer isMilestonesEmpty={isMilestonesEmpty} />
+                <RightDrawer 
+                  isMilestonesEmpty={isMilestonesEmpty}
+                  isBannerDisplayed={isBannerDisplayed}
+                />
               </GridItem> :
               ""
             }
@@ -196,7 +223,7 @@ const Dashboard = () => {
           <ArtistCredit textColor="stormyblue.700" />
         </>
       }   
-    </> :
+    </Box> :
     <Navigate to="/login" replace />
   )
 };

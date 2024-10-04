@@ -1,5 +1,7 @@
 import { 
     Button,
+    IconButton,
+    useBreakpointValue,
     useToast 
 } from "@chakra-ui/react";
 import { 
@@ -31,6 +33,19 @@ export interface CompleteMilestoneButtonProps{
 }
 
 const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
+        const breakpoint = useBreakpointValue(
+        {
+            base: {
+                undo: "Undo",
+                complete: "Complete"
+            },
+            xl: {
+                undo: "Undo Complete Goal",
+                complete: "Complete Goal"
+            }
+        },
+        {ssr: false}
+    )
     const [
         updateMilestone, 
         {
@@ -220,9 +235,10 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
         }
     }
         return (
-            <Button 
+            <Button
+                marginInlineEnd={0} 
                 aria-label="Complete goal" 
-                leftIcon={milestone.isCompleted ? undefined : <CheckIcon />}
+                // leftIcon={milestone.isCompleted ? undefined : <CheckIcon/>}
                 backgroundColor={milestone.isCompleted ? "peach.100" : "peach.300"}
                 color={milestone.isCompleted ? "peach.700" : "#353231"}
                 _hover={
@@ -254,7 +270,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                     handleClick();
                 }}
             >
-                {milestone.isCompleted ? "Undo Complete Goal" : "Complete Goal"}
+                {milestone.isCompleted ? breakpoint?.undo : breakpoint?.complete}
             </Button>           
         )
     }

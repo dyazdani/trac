@@ -13,48 +13,56 @@ const ArtistCredit = ({ textColor }: ArtistCreditProps) => {
     
     
     return (
-        <Box
-            position="absolute"
-            bottom=".1em"
-            left=".1em"
+      <Box
+          position="absolute"
+          bottom=".1em"
+          left=".5em"
+        >
+          <Text 
+            fontSize="x-small" 
+            justifyContent="center"
+            color={textColor}
+            textAlign="center"
           >
-            <Text 
-              fontSize="sm" 
-              justifyContent="center"
-              color={textColor} 
-            >
-            <Link 
-              href="https://thenounproject.com/icon/mountain-flag-119605" 
-              isExternal
-            >
-              Mountain Flag
+          <Link 
+            href="https://thenounproject.com/icon/mountain-flag-119605" 
+            isExternal
+          >
+            Mountain Flag
+            <ExternalLinkIcon 
+              mr=".5em"
+              marginLeft=".2em" 
+              marginBottom=".2em"
+              boxSize=".9em" 
+            />
+          </Link>
+            by <Link 
+                  href="https://thenounproject.com/bravo/" 
+                  isExternal
+                >
+              Juan Pablo Bravo
               <ExternalLinkIcon 
                 mr=".5em" 
-                boxSize=".9em" 
+                marginLeft=".2em" 
+                marginBottom=".2em"
+                boxSize=".9em"
+              />
+            </Link> 
+            is licensed under <Link 
+                                href="https://creativecommons.org/licenses/by/2.0/" 
+                                isExternal
+                              >
+              
+                 CC BY 2.0
+              <ExternalLinkIcon 
+                mr=".5em" 
+                marginLeft=".3em" 
+                marginBottom=".35em"
+                boxSize=".9em"
               />
             </Link>
-              by <Link 
-                    href="https://thenounproject.com/bravo/" 
-                    isExternal
-                  >
-                Juan Pablo Bravo
-                <ExternalLinkIcon 
-                  mr=".3em" 
-                  boxSize="1em"
-                />
-              </Link> 
-              is licensed under <Link 
-                                  href="https://creativecommons.org/licenses/by/2.0/" 
-                                  isExternal
-                                >
-                CC BY 2.0
-                <ExternalLinkIcon 
-                  mr=".5em" 
-                  boxSize="1em"
-                />
-              </Link>
-          </Text>
-        </Box>
+        </Text>
+      </Box>
     )
 }
 
