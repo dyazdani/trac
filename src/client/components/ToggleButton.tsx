@@ -16,6 +16,7 @@ import {
     RepeatClockIcon 
 } from "@chakra-ui/icons";
 import { User } from "@prisma/client";
+import { useState } from "react";
 
  export interface ToggleButtonProps {
     date: Date
@@ -38,11 +39,10 @@ const ToggleButton = ({
     const appSelectorUser = useAppSelector(state => state.auth.user)
     const currentUser: Omit<User, "password"> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
 
+    const [isCompleted, setIsCompleted] = useState(!!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date)))
     const toast = useToast();
     
     const [updateHabit, {isLoading}] = useUpdateHabitMutation();
-
-    const isCompleted = !!habit.datesCompleted.find(el => areDatesSameDayMonthYear(new Date(el), date))
     
     // variable for current habit details to be sent with update mutation
     let habitData: HabitWithDetails;
@@ -71,6 +71,7 @@ const ToggleButton = ({
             [...habitData.datesCompleted, date]
 
             try {
+                setIsCompleted(!isCompleted);
                 setIsToggleLoading(true);
                 const updateResult = await updateHabit({
                     id: currentUser?.id,
