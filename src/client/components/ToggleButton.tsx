@@ -16,8 +16,6 @@ import {
     RepeatClockIcon 
 } from "@chakra-ui/icons";
 import { User } from "@prisma/client";
-import { useDebounce } from '../app/hooks.js';
-
 
  export interface ToggleButtonProps {
     date: Date
@@ -152,8 +150,6 @@ const ToggleButton = ({
         }
     }
 
-    const debouncedHandleSubmit = useDebounce(handleSubmit, 500);
-
     return (
         isLoading ?
         <Spinner 
@@ -184,7 +180,7 @@ const ToggleButton = ({
             }}
             onChange={(e) => {
                 e.preventDefault();
-                debouncedHandleSubmit();
+                handleSubmit();
             }}
             isDisabled={ 
                 milestone.isCanceled ||
