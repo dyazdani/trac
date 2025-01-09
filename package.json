@@ -1,7 +1,7 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "trac",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "prisma": {
     "seed": "tsx src/server/db/seed/index.ts"
@@ -78,12 +78,12 @@
     "vite": "^5.0.2",
     "vite-plugin-node-polyfills": "^0.21.0"
   },
-  "description": "",
+  "description": "A goal-tracking app",
   "main": "index.js",
   "directories": {
     "doc": "docs"
   },
   "keywords": [],
-  "author": "",
+  "author": "dara.s.yazdani@gmail.com",
   "license": "ISC"
 }
