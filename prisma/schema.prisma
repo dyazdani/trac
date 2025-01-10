@@ -19,11 +19,10 @@ model User {
   isAdmin       Boolean     @default(false)
   
   habits        Habit[]     @relation("Owner")
-  milestones    Milestone[] @relation("Owner")
+  goals    Goal[] @relation("Owner")
 }
 
-// TODO: Change "Milestone" model name to "Goal" top match UI
-model Milestone {
+model Goal {
   id                Int           @id @default(autoincrement())
   dateCreated       DateTime      @default(now())
   dateUpdated       DateTime      @updatedAt
@@ -52,8 +51,8 @@ model Habit {
   routine         Routine?
   checkIn         CheckIn?
 
-  milestone       Milestone?   @relation("Habits", fields: [milestoneId], references: [id], onDelete: Cascade)
-  milestoneId     Int?
+  goal       Goal?   @relation("Habits", fields: [goalId], references: [id], onDelete: Cascade)
+  goalId     Int?
 
   statusReports   StatusReport[]  @relation("StatusReports")
 
