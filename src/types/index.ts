@@ -41,7 +41,7 @@ export interface CreateHabitReqBody {
   routineDays: RoutineDays
   checkInDay: DayOfTheWeek
   scheduleId: string
-  milestoneId: number
+  goalId: number
 }
 
 export interface UpdateHabitReqBody {
@@ -63,13 +63,13 @@ export interface HabitWithDetails {
   checkIn: CheckIn
   statusReports: StatusReport[]
   scheduleId: string | null
-  milestoneId: number
+  goalId: number
 }
 
 
 export interface CreateScheduleReqBody {
   habitName: string
-  milestoneName: string
+  goalName: string
   days: DaysOfWeek[]
   workflowKey: string
 }
@@ -92,12 +92,12 @@ export interface statusReportsPostReqBody {
   checkInDate: Date
 }
 
-export interface CreateMilestoneReqBody {
+export interface CreateGoalReqBody {
   name: string
   dueDate: Date
 }
 
-export interface MilestoneWithDetails {
+export interface GoalWithDetails {
   id: number
   dateCreated: Date
   dateUpdated: Date
@@ -109,13 +109,13 @@ export interface MilestoneWithDetails {
   habits: HabitWithDetails[]
 }
 
-export interface CreateMilestoneMutationArgs {
+export interface CreateGoalMutationArgs {
   ownerId: number
   name: string
   dueDate: Date
 }
 
-export interface UpdateMilestoneReqBody {
+export interface UpdateGoalReqBody {
   name: string
   dueDate: Date
   isCompleted: boolean

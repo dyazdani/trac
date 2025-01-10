@@ -7,7 +7,7 @@ import { useUpdateHabitMutation } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
 import { 
     HabitWithDetails,
-    MilestoneWithDetails 
+    GoalWithDetails 
 } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
 import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
@@ -20,7 +20,7 @@ import { useState } from "react";
 
  export interface ToggleButtonProps {
     date: Date
-    milestone: MilestoneWithDetails
+    goal: GoalWithDetails
     habit: HabitWithDetails
     isOutOfRange: boolean
     isToggleLoading: boolean
@@ -29,7 +29,7 @@ import { useState } from "react";
 
 const ToggleButton = ({
         date, 
-        milestone, 
+        goal, 
         habit, 
         isOutOfRange, 
         isToggleLoading,
@@ -176,7 +176,7 @@ const ToggleButton = ({
             _checked={{
                 "& .chakra-checkbox__control": { 
                     borderColor: "#3a3c3c",
-                    color:  `${milestone.isCompleted || milestone.isCanceled ? "#FFFFFF" : "#3a3c3c"}`
+                    color:  `${goal.isCompleted || goal.isCanceled ? "#FFFFFF" : "#3a3c3c"}`
                 }
             }}
             onChange={(e) => {
@@ -184,9 +184,9 @@ const ToggleButton = ({
                 handleSubmit();
             }}
             isDisabled={ 
-                milestone.isCanceled ||
+                goal.isCanceled ||
                 isOutOfRange || 
-                milestone && milestone.isCompleted ||
+                goal && goal.isCompleted ||
                 isToggleLoading ||
                 isLoading
             } 

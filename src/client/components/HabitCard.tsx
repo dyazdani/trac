@@ -33,7 +33,7 @@ import {
 } from "@chakra-ui/icons";
 import { 
   HabitWithDetails, 
-  MilestoneWithDetails 
+  GoalWithDetails 
 } from "../../types/index.js";
 import areDatesSameDayMonthYear from "..//utils/areDatesSameDayMonthYear.js";
 import UpdateHabitButton from "./UpdateHabitButton.js";
@@ -54,7 +54,7 @@ import getCurrentWeek from "../utils/getCurrentWeek.js";
 
 type HabitProps = {
   habit: HabitWithDetails
-  milestone: MilestoneWithDetails
+  goal: GoalWithDetails
 };
 
 // for comparison with DayOfTheWeek enum on CheckIn model
@@ -71,8 +71,8 @@ const DAY_STRINGS = [
 export const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 
-const HabitCard = ({ habit, milestone }: HabitProps) => {
-  const [currentWeek, setCurrentWeek] = useState<Date[]>(getCurrentWeek(habit, milestone))
+const HabitCard = ({ habit, goal }: HabitProps) => {
+  const [currentWeek, setCurrentWeek] = useState<Date[]>(getCurrentWeek(habit, goal))
   const [isToggleLoading, setIsToggleLoading] = useState(false);
 
   const toast = useToast();
@@ -199,10 +199,10 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
   const midnightOfFirstCheckIn = getFirstCheckInDayDate(habit)?.setHours(0, 0, 0, 0)
   const isTodayBeforeFirstCheckInDayDate = midnightOfFirstCheckIn && Date.now() < midnightOfFirstCheckIn
 
-  if (currentWeek.every(date => date.setHours(0, 0, 0, 0) > new Date(milestone.dueDate).setHours(0, 0, 0, 0))) {
+  if (currentWeek.every(date => date.setHours(0, 0, 0, 0) > new Date(goal.dueDate).setHours(0, 0, 0, 0))) {
     let targetWeek = getPreviousWeek(currentWeek);
 
-    while (targetWeek.every(date => date.setHours(0, 0, 0, 0) > new Date(milestone.dueDate).setHours(0, 0, 0, 0))) {
+    while (targetWeek.every(date => date.setHours(0, 0, 0, 0) > new Date(goal.dueDate).setHours(0, 0, 0, 0))) {
       targetWeek = getPreviousWeek(targetWeek);
     }
 
@@ -245,7 +245,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             as="h4"
             flex={1}
             size="md"
-            color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.600" : ""}
+            color={goal.isCanceled || goal.isCompleted ? "darkslategray.600" : ""}
             width={{
               base: "100%",
               md: undefined
@@ -300,18 +300,18 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
           </Menu>
           {
             isHabitRoutineDay(habit, today) && 
-            !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), today) &&
-            !milestone.isCompleted &&
-            !milestone.isCanceled ? 
+            !isDateOutOfRange(new Date(habit.dateCreated), new Date(goal.dueDate), today) &&
+            !goal.isCompleted &&
+            !goal.isCanceled ? 
             <Button
               marginTop={{
                 base: ".5rem",
                 md: "0"
               }}
-              backgroundColor={milestone.isCompleted ? "peach.100" : "peach.300"}
+              backgroundColor={goal.isCompleted ? "peach.100" : "peach.300"}
               color="#353231"
               _hover={
-                milestone.isCompleted ? 
+                goal.isCompleted ? 
                 { backgroundColor: "peach.200"} :
                 { backgroundColor: "peach.500"}
               }
@@ -337,7 +337,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
       >
         {
           !currentWeek.some(date => isDateToday(date)) &&
-          today.setHours(0, 0, 0, 0) < new Date(milestone.dueDate).setHours(0, 0, 0, 0) ?
+          today.setHours(0, 0, 0, 0) < new Date(goal.dueDate).setHours(0, 0, 0, 0) ?
           <Button
             position="relative"
             leftIcon={
@@ -432,9 +432,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                 variant="unstyled"
                 isDisabled={currentWeek.some(day => {
                   return (
-                    (milestone.isCompleted || milestone.isCanceled) && 
+                    (goal.isCompleted || goal.isCanceled) && 
                     isDateToday(day) || 
-                    day.setHours(0, 0, 0, 0) >= new Date(milestone.dueDate).setHours(0, 0, 0, 0) 
+                    day.setHours(0, 0, 0, 0) >= new Date(goal.dueDate).setHours(0, 0, 0, 0) 
                   )
                 })}
                 onClick={handleRightArrowClick}
@@ -455,9 +455,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
               const isOutOfRange = isDateOutOfRange(new Date(habit.dateCreated), new Date(), day)
 
               const todayBorder =  isToday && 
-                day.setHours(0, 0, 0, 0) <= new Date(milestone.dueDate).setHours(0, 0, 0, 0) &&
-                !milestone.isCompleted &&
-                !milestone.isCanceled  ? 
+                day.setHours(0, 0, 0, 0) <= new Date(goal.dueDate).setHours(0, 0, 0, 0) &&
+                !goal.isCompleted &&
+                !goal.isCanceled  ? 
                 "2px solid #282625" : 
                 {}
                 
@@ -466,9 +466,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                 <React.Fragment key={`${day}`}>
                   {
                     isToday && 
-                    day.setHours(0, 0, 0, 0) <= new Date(milestone.dueDate).setHours(0, 0, 0, 0) &&
-                    !milestone.isCompleted &&
-                    !milestone.isCanceled ?  
+                    day.setHours(0, 0, 0, 0) <= new Date(goal.dueDate).setHours(0, 0, 0, 0) &&
+                    !goal.isCompleted &&
+                    !goal.isCanceled ?  
                     <GridItem 
                       colStart={(i * 2) + 1} 
                       textAlign="center" 
@@ -482,9 +482,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     ""
                   }
                   {
-                    (milestone.isCompleted || milestone.isCanceled) && isOutOfRange ? 
+                    (goal.isCompleted || goal.isCanceled) && isOutOfRange ? 
                     "" :
-                    !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) ?
+                    !isDateOutOfRange(new Date(habit.dateCreated), new Date(goal.dueDate), day) ?
                     <>
                       <GridItem
                         fontSize={{
@@ -501,7 +501,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       colSpan={1} 
                       rowStart={2}
                       textAlign="center"
-                      color={isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) || isOutOfRange || milestone.isCanceled || milestone.isCompleted ? "darkslategray.600" : "darkslategray.900"}
+                      color={isDateOutOfRange(new Date(habit.dateCreated), new Date(goal.dueDate), day) || isOutOfRange || goal.isCanceled || goal.isCompleted ? "darkslategray.600" : "darkslategray.900"}
                     >
                       {dayAbbreviation}
                     </GridItem>
@@ -520,7 +520,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       borderRight={todayBorder}
                       borderBottom={!isHabitRoutineDay(habit, day) ? todayBorder : ""}
                       borderBottomRadius={isToday && !isHabitRoutineDay(habit, day)? 10 : {}}
-                      color={isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) || isOutOfRange || milestone.isCanceled || milestone.isCompleted  ? "darkslategray.600" : "darkslategray.900"}
+                      color={isDateOutOfRange(new Date(habit.dateCreated), new Date(goal.dueDate), day) || isOutOfRange || goal.isCanceled || goal.isCompleted  ? "darkslategray.600" : "darkslategray.900"}
                     >
                       {
                         (day.getMonth() === 11 && day.getDate() === 31) ||
@@ -546,7 +546,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                     }
                     > 
                     <ToggleButton
-                      milestone={milestone}
+                      goal={goal}
                       date={day}
                       habit={habit}
                       isOutOfRange={isOutOfRange}
@@ -560,10 +560,10 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                   
                   {
                     isCheckInDay && 
-                    !isDateOutOfRange(new Date(habit.dateCreated), new Date(milestone.dueDate), day) &&
-                    !milestone.isCompleted &&
-                    !milestone.isCanceled &&
-                    !areDatesSameDayMonthYear(day, new Date(milestone.dueDate)) ?
+                    !isDateOutOfRange(new Date(habit.dateCreated), new Date(goal.dueDate), day) &&
+                    !goal.isCompleted &&
+                    !goal.isCanceled &&
+                    !areDatesSameDayMonthYear(day, new Date(goal.dueDate)) ?
                     <>
                       <GridItem
                         padding={".2vw"}
@@ -600,7 +600,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         rowStart={isHabitRoutineDay(habit, day) ? 5 : 4}
                         textAlign="center"
                       >
-                        <ChevronUpIcon color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.600" : "darkslategray.900"}/>
+                        <ChevronUpIcon color={goal.isCanceled || goal.isCompleted ? "darkslategray.600" : "darkslategray.900"}/>
                       </GridItem>
                       <GridItem
                         padding={".2vw"}
@@ -610,7 +610,7 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         textAlign="center"
                       >
                         <Box
-                          color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.600" : "darkslategray.900"}
+                          color={goal.isCanceled || goal.isCompleted ? "darkslategray.600" : "darkslategray.900"}
                         >
                           Start
                         </Box>
@@ -619,9 +619,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                       ""
                     }
                     {
-                      areDatesSameDayMonthYear(day, new Date(milestone.dueDate)) &&
-                      !milestone.isCompleted &&
-                      !milestone.isCanceled ?
+                      areDatesSameDayMonthYear(day, new Date(goal.dueDate)) &&
+                      !goal.isCompleted &&
+                      !goal.isCanceled ?
                       <>
                         <GridItem
                           padding={".2vw"}
@@ -632,9 +632,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         >
                           <ChevronUpIcon 
                             color={
-                              milestone.isCanceled || 
-                              milestone.isCompleted ||
-                              new Date().setHours(0, 0, 0, 0) < new Date(milestone.dueDate).setHours(0, 0, 0, 0) ?  
+                              goal.isCanceled || 
+                              goal.isCompleted ||
+                              new Date().setHours(0, 0, 0, 0) < new Date(goal.dueDate).setHours(0, 0, 0, 0) ?  
                               "darkslategray.600" : 
                               "darkslategray.900"
                             }
@@ -649,9 +649,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
                         >
                           <Box
                             color={
-                              milestone.isCanceled || 
-                              milestone.isCompleted || 
-                              new Date().setHours(0, 0, 0, 0) < new Date(milestone.dueDate).setHours(0, 0, 0, 0) ? 
+                              goal.isCanceled || 
+                              goal.isCompleted || 
+                              new Date().setHours(0, 0, 0, 0) < new Date(goal.dueDate).setHours(0, 0, 0, 0) ? 
                               "darkslategray.600" : 
                               "darkslategray.900"
                             }
@@ -668,9 +668,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
           </Grid>
         </CardBody>       
         {
-          milestone && 
-          milestone.isCompleted || 
-          milestone.isCanceled ? "" : 
+          goal && 
+          goal.isCompleted || 
+          goal.isCanceled ? "" : 
           (
             !isStatusReportSent && 
             !isTodayBeforeFirstCheckInDayDate &&
@@ -679,9 +679,9 @@ const HabitCard = ({ habit, milestone }: HabitProps) => {
             >
               <StatusReportFormButton
                 habit={habit}
-                milestone={milestone}
+                goal={goal}
                 textContent={
-                  new Date().setHours(0, 0, 0, 0) >= new Date(milestone.dueDate).setHours(0, 0, 0, 0) ? 
+                  new Date().setHours(0, 0, 0, 0) >= new Date(goal.dueDate).setHours(0, 0, 0, 0) ? 
                   "Send Final Check-In Report" :
                   "Send Check-In Report"
                 }

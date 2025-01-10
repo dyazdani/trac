@@ -9,14 +9,14 @@ import {
 import {  
     useCreateScheduleMutation, 
     useDeleteSchedulesMutation, 
-    useGetMilestonesByUserQuery, 
+    useGetGoalsByUserQuery, 
     useUpdateHabitMutation, 
-    useUpdateMilestoneMutation 
+    useUpdateGoalMutation 
 } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
-import { MilestoneWithDetails } from "../../types/index.js";
+import { GoalWithDetails } from "../../types/index.js";
 import { useDispatch } from "react-redux";
-import doOtherMilestonesHaveStatusReportDue from "../utils/doOtherMilestonesHaveStatusReportDue.js";
+import doOtherGoalsHaveStatusReportDue from "../utils/doOtherGoalsHaveStatusReportDue.js";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
@@ -25,18 +25,18 @@ import getHabitScheduleIds from "../utils/getHabitScheduleIds.js";
 import { DaysOfWeek, Schedule } from "@knocklabs/node";
 import getCapitalizedDayOfTheWeek from "../utils/getCapitalizedDayOfTheWeek.js";
 
-export interface CancelMilestoneButtonProps{
-    milestone: MilestoneWithDetails
+export interface CancelGoalButtonProps{
+    goal: GoalWithDetails
 }
 
-const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
+const CancelGoalButton = ({goal}: CancelGoalButtonProps) => {
     const [
-        updateMilestone, 
+        updateGoal, 
         {
-            isLoading: isUpdateMilestoneLoading, 
-            error: updateMilestoneError
+            isLoading: isUpdateGoalLoading, 
+            error: updateGoalError
         }
-    ] = useUpdateMilestoneMutation();
+    ] = useUpdateGoalMutation();
     const [
         deleteSchedules, 
         {
@@ -66,7 +66,7 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
     
     if (currentUser) {
         const currentUserId = currentUser.id
-        const { data, isLoading: isMilestonesLoading, error } = useGetMilestonesByUserQuery(currentUserId); 
+        const { data, isLoading: isGoalsLoading, error } = useGetGoalsByUserQuery(currentUserId); 
 
     const handleClick = async () => {
         if (
@@ -74,32 +74,32 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
             typeof deleteSchedulesError === "undefined" &&
             typeof createScheduleError === "undefined" && 
             typeof updateHabitError === "undefined" &&
-            typeof updateMilestoneError === "undefined"
+            typeof updateGoalError === "undefined"
         ) {
             try {
-                const { milestone: updatedMilestone } = await updateMilestone({
+                const { goal: updatedGoal } = await updateGoal({
                     ownerId: currentUser.id,
-                    milestoneId: milestone.id,
-                    newMilestone: {
-                        name: milestone.name,
-                        dueDate: milestone.dueDate,
-                        isCompleted: milestone.isCompleted,
-                        isCanceled: !milestone.isCanceled
+                    goalId: goal.id,
+                    newGoal: {
+                        name: goal.name,
+                        dueDate: goal.dueDate,
+                        isCompleted: goal.isCompleted,
+                        isCanceled: !goal.isCanceled
                     }
                 }).unwrap();
         
-                if (updatedMilestone) {
-                    const scheduleIds = getHabitScheduleIds(updatedMilestone);
+                if (updatedGoal) {
+                    const scheduleIds = getHabitScheduleIds(updatedGoal);
 
-                    if (updatedMilestone.isCanceled) {
-                        if (!updatedMilestone.isCompleted){
+                    if (updatedGoal.isCanceled) {
+                        if (!updatedGoal.isCompleted){
                             const deleteSchedulesResult = await deleteSchedules({
                                 scheduleIds
                             }).unwrap();
                         }
                         toast({
                             title: 'Goal Canceled',
-                            description: `Your Goal "${updatedMilestone.name}" was canceled.`,
+                            description: `Your Goal "${updatedGoal.name}" was canceled.`,
                             status: 'info',
                             variant: 'subtle',
                             duration: 9000,
@@ -108,27 +108,27 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
                         })
 
                         if (data) {
-                            if (!doOtherMilestonesHaveStatusReportDue(milestone, data.milestones)) {
+                            if (!doOtherGoalsHaveStatusReportDue(goal, data.goals)) {
                                 dispatch(setIsBannerDisplayed(false))
                             }
                         }
                     } else {
-                        if (!updatedMilestone.isCompleted) {
+                        if (!updatedGoal.isCompleted) {
                             let createdSchedules: Schedule[] = []
 
-                            for (let i = 0; i < milestone.habits.length; i++) {
+                            for (let i = 0; i < goal.habits.length; i++) {
                                 const {
                                     name: habitName, 
                                     datesCompleted, 
                                     id: habitId,
                                     checkIn, 
                                     routine
-                                } = milestone.habits[i]
+                                } = goal.habits[i]
 
                                 const { schedules } = await createSchedule({
                                     habitName,
-                                    milestoneName: milestone.name,
-                                    days: [DaysOfWeek[getCapitalizedDayOfTheWeek(milestone.habits[i].checkIn.dayOfTheWeek).slice(0, 3) as keyof typeof DaysOfWeek]],
+                                    goalName: goal.name,
+                                    days: [DaysOfWeek[getCapitalizedDayOfTheWeek(goal.habits[i].checkIn.dayOfTheWeek).slice(0, 3) as keyof typeof DaysOfWeek]],
                                     workflowKey: "check-in-day"
                                 }).unwrap()
                                 
@@ -158,7 +158,7 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
 
                         toast({
                             title: 'Goal Restored',
-                            description: `Your Goal "${updatedMilestone.name}" was restored.`,
+                            description: `Your Goal "${updatedGoal.name}" was restored.`,
                             status: 'success',
                             variant: 'subtle',
                             duration: 9000,
@@ -167,8 +167,8 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
                         })
 
                         if (
-                            !milestone.isCompleted &&
-                            milestone.habits.some(habit => {
+                            !goal.isCompleted &&
+                            goal.habits.some(habit => {
                                 const firstCheckInDate = getFirstCheckInDayDate(habit);
                                 if (firstCheckInDate) {
                                     return (
@@ -184,7 +184,7 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
                 } else {
                     toast({
                         title: 'ERROR',
-                        description: `Unable to cancel or restore "${milestone.name}"`,
+                        description: `Unable to cancel or restore "${goal.name}"`,
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
@@ -194,7 +194,7 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
                 console.error(e)
                 toast({
                     title: 'ERROR',
-                    description: `Unable to cancel or restore Goal "${milestone.name}"`,
+                    description: `Unable to cancel or restore Goal "${goal.name}"`,
                     status: 'error',
                     duration: 9000,
                     isClosable: true
@@ -203,7 +203,7 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
         } else {
             toast({
                 title: 'ERROR',
-                description: `Unable to cancel or restore Goal "${milestone.name}"`,
+                description: `Unable to cancel or restore Goal "${goal.name}"`,
                 status: 'error',
                 duration: 9000,
                 isClosable: true
@@ -212,12 +212,12 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
     }
         return (
             <MenuItem 
-                aria-label={milestone.isCanceled ? "Restore Goal" : "Cancel Goal"} 
-                icon={milestone.isCanceled ? (<ArrowUpIcon />) : (<NotAllowedIcon/>)} 
+                aria-label={goal.isCanceled ? "Restore Goal" : "Cancel Goal"} 
+                icon={goal.isCanceled ? (<ArrowUpIcon />) : (<NotAllowedIcon/>)} 
                 backgroundColor="turquoise.50"
                 isDisabled={
-                    isUpdateMilestoneLoading || 
-                    isMilestonesLoading ||
+                    isUpdateGoalLoading || 
+                    isGoalsLoading ||
                     isDeleteSchedulesLoading ||
                     isCreateScheduleLoading ||
                     isUpdateHabitLoading
@@ -232,9 +232,9 @@ const CancelMilestoneButton = ({milestone}: CancelMilestoneButtonProps) => {
                     e.preventDefault();
                     handleClick();
                 }}
-            >{milestone.isCanceled ? "Restore Goal" : "Cancel Goal"}</MenuItem>           
+            >{goal.isCanceled ? "Restore Goal" : "Cancel Goal"}</MenuItem>           
         )
     }
 }
 
-export default CancelMilestoneButton;
+export default CancelGoalButton;

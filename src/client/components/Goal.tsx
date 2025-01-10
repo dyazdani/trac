@@ -26,11 +26,11 @@ import {
     keyframes
 } from "@chakra-ui/react";
 import HabitCard from "./HabitCard.js";
-import { MilestoneWithDetails } from "../../types/index.js";
-import UpdateMilestoneButton from "./UpdateMilestoneButton.js";
-import DeleteMilestoneButton from "./DeleteMilestoneButton.js";
-import CompleteMilestoneButton from "./CompleteMilestoneButton.js";
-import CancelMilestoneButton from "./CancelMilestoneButton.js";
+import { GoalWithDetails } from "../../types/index.js";
+import UpdateGoalButton from "./UpdateGoalButton.js";
+import DeleteGoalButton from "./DeleteGoalButton.js";
+import CompleteGoalButton from "./CompleteGoalButton.js";
+import CancelGoalButton from "./CancelGoalButton.js";
 import CreateHabitButton from "./CreateHabitButton.js";
 import areDatesSameDayMonthYear from "../utils/areDatesSameDayMonthYear.js";
 import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
@@ -38,12 +38,12 @@ import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 import { motion } from "framer-motion";
 import isHabitRoutineDay from "../utils/isHabitRoutineDay.js";
 
-export interface MilestoneProps {
-    milestone: MilestoneWithDetails
+export interface GoalProps {
+    goal: GoalWithDetails
 }
 
-const Milestone = ({milestone}: MilestoneProps) => {
-    const textColor = milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : ""
+const Goal = ({goal}: GoalProps) => {
+    const textColor = goal.isCanceled || goal.isCompleted ? "darkslategray.400" : ""
 
     return (
         <Card
@@ -52,7 +52,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
             lg: "55dvw"
         }}
         maxWidth="800px"
-        background={milestone.isCanceled ? "#C3C1C1" : "linear-gradient(0deg, rgba(183,186,251, 1) 0%, rgba(193,232,240, 1) 100%)"}
+        background={goal.isCanceled ? "#C3C1C1" : "linear-gradient(0deg, rgba(183,186,251, 1) 0%, rgba(193,232,240, 1) 100%)"}
         borderRadius="20px"
         >
         <CardHeader>
@@ -71,10 +71,10 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 as="h2"
                 textAlign="center"
             >
-             {milestone.name}
+             {goal.name}
             </Heading>
             {
-                milestone.isCompleted ? 
+                goal.isCompleted ? 
                 <>
                     <Spacer/>
                     <Flex
@@ -84,13 +84,13 @@ const Milestone = ({milestone}: MilestoneProps) => {
                         <CheckCircleIcon
                             boxSize="1.3rem"
                             marginRight=".5rem"
-                            color={milestone.isCanceled ? "darkslategray.400" : "darkslategray.800"}
+                            color={goal.isCanceled ? "darkslategray.400" : "darkslategray.800"}
                         />
                         <Text
                             fontSize="2rem"
                             as="b"
                             marginRight=".5rem"
-                            color={milestone.isCanceled ? "darkslategray.400" : "darkslategray.800"}
+                            color={goal.isCanceled ? "darkslategray.400" : "darkslategray.800"}
                         >
                             Done! 
                         </Text>
@@ -106,16 +106,16 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 "" 
             }
             {
-                !milestone.isCompleted ?
+                !goal.isCompleted ?
                 <>
                     {
-                        areDatesSameDayMonthYear(new Date(), new Date(milestone.dueDate)) ? 
+                        areDatesSameDayMonthYear(new Date(), new Date(goal.dueDate)) ? 
                         <Text 
                             textAlign="center" 
                             fontSize="lg"
                             color={textColor}
                         >
-                            Due {new Date(milestone.dueDate).toLocaleDateString()} {  
+                            Due {new Date(goal.dueDate).toLocaleDateString()} {  
                                 <Badge 
                                     colorScheme="yellow" 
                                     variant="solid" 
@@ -126,13 +126,13 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                 </Badge> 
                             }
                         </Text> : 
-                        new Date().getTime() > new Date(milestone.dueDate).setHours(23, 59, 59, 999) ?
+                        new Date().getTime() > new Date(goal.dueDate).setHours(23, 59, 59, 999) ?
                         <Text  
                             textAlign="center"
                             fontSize="lg"
                             color={textColor}
                         >
-                            Due {new Date(milestone.dueDate).toLocaleDateString()} {  
+                            Due {new Date(goal.dueDate).toLocaleDateString()} {  
                                 <Badge 
                                     colorScheme="red" 
                                     variant="solid" 
@@ -147,7 +147,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                             fontSize="lg"
                             color={textColor}
                         >
-                            Due {new Date(milestone.dueDate).toLocaleDateString()}
+                            Due {new Date(goal.dueDate).toLocaleDateString()}
                         </Text>
                     }
                     <Spacer
@@ -188,16 +188,16 @@ const Milestone = ({milestone}: MilestoneProps) => {
                             <MenuList
                                 backgroundColor="turquoise.50"
                             >   
-                                {milestone.habits.length ? <CreateHabitButton milestone={milestone}/> : ""}
-                                <UpdateMilestoneButton milestone={milestone}/>
-                                <DeleteMilestoneButton milestone={milestone}/>
-                                <CancelMilestoneButton milestone={milestone}/>
+                                {goal.habits.length ? <CreateHabitButton goal={goal}/> : ""}
+                                <UpdateGoalButton goal={goal}/>
+                                <DeleteGoalButton goal={goal}/>
+                                <CancelGoalButton goal={goal}/>
                             </MenuList>
                         </>
                     }
                 </Menu>
-                <CompleteMilestoneButton
-                    milestone={milestone}
+                <CompleteGoalButton
+                    goal={goal}
                 />
             </Flex>
           </Flex>
@@ -214,12 +214,12 @@ const Milestone = ({milestone}: MilestoneProps) => {
             maxWidth="800px"
           >
             {
-                milestone.habits.length ?
+                goal.habits.length ?
                 <Heading
                     as="h3"
                     size="lg"
                     mb=".5vw"
-                    color= {milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : ""}
+                    color= {goal.isCanceled || goal.isCompleted ? "darkslategray.400" : ""}
                 >
                     Habits
                 </Heading> : 
@@ -227,7 +227,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
             }
             
             {
-                !milestone.habits.length ?
+                !goal.habits.length ?
                 <Text 
                 fontSize="xl" 
                 textAlign="center"
@@ -239,7 +239,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
             <Accordion
                 allowMultiple           
             >
-                {[...milestone.habits].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
+                {[...goal.habits].sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
                     .map(habit => {
                         const isStatusReportSent = isMostRecentStatusReportSent(habit);
 
@@ -261,33 +261,33 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                 borderBottomWidth: "7px"
                             }}
                             animation={
-                                milestone && milestone.isCompleted || milestone.isCanceled ? "" :
+                                goal && goal.isCompleted || goal.isCanceled ? "" :
                                 !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? animation : ""
                             }
                             bg={
-                                milestone && milestone.isCanceled ? "#CDCBCB" :
-                                milestone && milestone.isCompleted ? "#C9E5F6" :
+                                goal && goal.isCanceled ? "#CDCBCB" :
+                                goal && goal.isCompleted ? "#C9E5F6" :
                                 !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? "linear-gradient(-45deg, #C9E5F6 40%, #DCEEF9 50%, #C9E5F6 60%)" : "#C9E5F6"
                             }
                             border={
-                                milestone && milestone.isCompleted ||
-                                milestone.isCanceled ? 
+                                goal && goal.isCompleted ||
+                                goal.isCanceled ? 
                                 "none" :
                                 !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? 
                                 "7px ridge rgba(249, 199, 31, 0.6)" : 
                                 "none"
                             }
                             backgroundSize={
-                                milestone && milestone.isCompleted || 
-                                milestone.isCanceled ? 
+                                goal && goal.isCompleted || 
+                                goal.isCanceled ? 
                                 "" :
                                 !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? 
                                 "300%" : 
                                 ""
                             }
                             sx={
-                                milestone && milestone.isCompleted || 
-                                milestone.isCanceled ? 
+                                goal && goal.isCompleted || 
+                                goal.isCanceled ? 
                                 {} :
                                 !isStatusReportSent && !isTodayBeforeFirstCheckInDayDate ? 
                                 {
@@ -316,7 +316,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                             as="span" 
                                             flex='1' 
                                             textAlign='left'
-                                            color={milestone.isCanceled || milestone.isCompleted ? "darkslategray.400" : ""}
+                                            color={goal.isCanceled || goal.isCompleted ? "darkslategray.400" : ""}
                                         >
                                             {
                                                 isExpanded ? 
@@ -326,8 +326,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                             {
                                                 !isExpanded && 
                                                 isHabitRoutineDay(habit, new Date()) && 
-                                                !milestone.isCompleted && 
-                                                !milestone.isCanceled ?
+                                                !goal.isCompleted && 
+                                                !goal.isCanceled ?
                                                 <Badge
                                                     colorScheme="peach"
                                                     color="darkslategray.800" 
@@ -350,7 +350,7 @@ const Milestone = ({milestone}: MilestoneProps) => {
                                     >
                                         <HabitCard 
                                             habit={habit}
-                                            milestone={milestone}
+                                            goal={goal}
                                         />
                                     </AccordionPanel>
                                 </>
@@ -364,8 +364,8 @@ const Milestone = ({milestone}: MilestoneProps) => {
                 marginBottom="2rem"    
             >
                 {
-                    !milestone.habits.length ?
-                    <CreateHabitButton milestone={milestone}/> :
+                    !goal.habits.length ?
+                    <CreateHabitButton goal={goal}/> :
                     ""
                 }
             </CardFooter>
@@ -374,4 +374,4 @@ const Milestone = ({milestone}: MilestoneProps) => {
     )
 }
 
-export default Milestone;
+export default Goal;

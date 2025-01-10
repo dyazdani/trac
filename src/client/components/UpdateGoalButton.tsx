@@ -19,23 +19,23 @@ import {
     useToast 
 } from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
-import {  useUpdateMilestoneMutation } from "../features/api.js";
+import {  useUpdateGoalMutation } from "../features/api.js";
 import React, { useState } from "react";
 import { useAppSelector } from "../app/hooks.js";
-import { MilestoneWithDetails } from "../../types/index.js";
+import { GoalWithDetails } from "../../types/index.js";
 import { SingleDatepicker } from "chakra-dayzed-datepicker";
 import { User } from "@prisma/client";
 
-export interface UpdateMilestoneMenuItemProps{
-    milestone: MilestoneWithDetails
+export interface UpdateGoalMenuItemProps{
+    goal: GoalWithDetails
 }
 
-const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
-    const [datepickerValue, setDatepickerValue] = useState<Date | undefined>(new Date(milestone.dueDate))
-    const [milestoneNameValue, setMilestoneNameValue] = useState(milestone.name)
-    const { isOpen: isOpenForUpdateMilestone, onClose: onCloseForUpdateMilestone, onOpen: onOpenForUpdateMilestone} = useDisclosure();
+const UpdateGoalButton = ({goal}: UpdateGoalMenuItemProps) => {
+    const [datepickerValue, setDatepickerValue] = useState<Date | undefined>(new Date(goal.dueDate))
+    const [goalNameValue, setGoalNameValue] = useState(goal.name)
+    const { isOpen: isOpenForUpdateGoal, onClose: onCloseForUpdateGoal, onOpen: onOpenForUpdateGoal} = useDisclosure();
 
-    const [updateMilestone, { isLoading }] = useUpdateMilestoneMutation();
+    const [updateGoal, { isLoading }] = useUpdateGoalMutation();
 
     const inputRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
@@ -51,7 +51,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                 <MenuItem
                     aria-label="Edit Goal" 
                     icon={<EditIcon/>}
-                    onClick={onOpenForUpdateMilestone}
+                    onClick={onOpenForUpdateGoal}
                     backgroundColor="turquoise.50"
                     _hover={{
                         backgroundColor: "turquoise.100"
@@ -62,8 +62,8 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                 >Edit Goal</MenuItem>
                 <Drawer 
                     placement='right' 
-                    onClose={onCloseForUpdateMilestone} 
-                    isOpen={isOpenForUpdateMilestone}
+                    onClose={onCloseForUpdateGoal} 
+                    isOpen={isOpenForUpdateGoal}
                     closeOnEsc={false}
                     closeOnOverlayClick={false}
                     size="sm"
@@ -83,24 +83,24 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                                 e.preventDefault();
                                 if (currentUser && datepickerValue) {
                                     try {
-                                            const { milestone: updatedMilestone } = await updateMilestone({
+                                            const { goal: updatedGoal } = await updateGoal({
                                                 ownerId: currentUser.id,
-                                                milestoneId: milestone.id,
-                                                newMilestone: {
-                                                    name: milestoneNameValue,
+                                                goalId: goal.id,
+                                                newGoal: {
+                                                    name: goalNameValue,
                                                     dueDate: datepickerValue,
-                                                    isCompleted: milestone.isCompleted,
-                                                    isCanceled: milestone.isCanceled
+                                                    isCompleted: goal.isCompleted,
+                                                    isCanceled: goal.isCanceled
                                                 }
                                             }).unwrap()
 
-                                            console.log(updatedMilestone)
+                                            console.log(updatedGoal)
 
-                                            onCloseForUpdateMilestone()
+                                            onCloseForUpdateGoal()
 
                                             toast({
                                                 title: `Goal Updated`,
-                                                description: `"${milestone.name}" was successfully updated.`,
+                                                description: `"${goal.name}" was successfully updated.`,
                                                 status: 'success',
                                                 variant: 'subtle',
                                                 duration: 9000,
@@ -111,7 +111,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                                         console.error(e)
                                         toast({
                                             title: 'ERROR',
-                                            description: `Unable to update Goal "${milestone.name}"`,
+                                            description: `Unable to update Goal "${goal.name}"`,
                                             status: 'error',
                                             duration: 4000,
                                             isClosable: true
@@ -119,25 +119,25 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                                     }
                                 }
                             }}
-                            id="updateMilestoneForm"
+                            id="updateGoalForm"
                             spacing="3vw"
                         >
                             <Box>
                                 <FormControl isRequired>
                                     <FormLabel
-                                        htmlFor="milestoneName"
+                                        htmlFor="goalName"
                                     >
                                         Name
                                     </FormLabel>
                                     <Editable
-                                        defaultValue={milestone.name}
+                                        defaultValue={goal.name}
                                     >
                                         <EditablePreview />
                                         <EditableInput 
-                                            id="milestoneName" 
+                                            id="goalName" 
                                             ref={inputRef}
-                                            onChange={(e) => {setMilestoneNameValue(e.target.value)}}
-                                            value={milestoneNameValue}
+                                            onChange={(e) => {setGoalNameValue(e.target.value)}}
+                                            value={goalNameValue}
                                             paddingLeft="16px"
                                             paddingRight="16px"
                                         />
@@ -181,7 +181,7 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                                 variant="outline" 
                                 colorScheme='yellow' 
                                 mr={3} 
-                                onClick={onCloseForUpdateMilestone}
+                                onClick={onCloseForUpdateGoal}
                             >
                                 Cancel
                             </Button>
@@ -189,9 +189,9 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
                                 mr={3}  
                                 colorScheme='yellow' 
                                 type="submit"
-                                form="updateMilestoneForm"
+                                form="updateGoalForm"
                                 isLoading={isLoading}
-                                isDisabled={!datepickerValue || !milestoneNameValue}
+                                isDisabled={!datepickerValue || !goalNameValue}
                             >
                                 Save
                             </Button>
@@ -204,4 +204,4 @@ const UpdateMilestoneButton = ({milestone}: UpdateMilestoneMenuItemProps) => {
     }
 }
 
-export default UpdateMilestoneButton;
+export default UpdateGoalButton;

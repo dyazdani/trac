@@ -6,16 +6,16 @@ import {
   } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import { useAppSelector } from '../app/hooks.js'
-import CreateMilestoneForm from './CreateMilestoneForm.js'
+import CreateGoalForm from './CreateGoalForm.js'
 import { User } from '@prisma/client'
 import isLessThanBreakpoint from '../utils/isLessThanBreakpoint.js'
 
 export interface RightDrawerProps {
-    isMilestonesEmpty: boolean
+    isGoalsEmpty: boolean
     isBannerDisplayed: boolean | null
 }
 
-const RightDrawer = ({ isMilestonesEmpty, isBannerDisplayed }: RightDrawerProps) => {
+const RightDrawer = ({ isGoalsEmpty, isBannerDisplayed }: RightDrawerProps) => {
     const { isOpen, onClose, onOpen} = useDisclosure();
     const breakpoint = useBreakpoint({ssr: false})
     const bottom = useBreakpointValue(
@@ -36,9 +36,9 @@ const RightDrawer = ({ isMilestonesEmpty, isBannerDisplayed }: RightDrawerProps)
             {currentUser && 
                 <>
                     <Button
-                        position={isMilestonesEmpty || isLessThanBreakpoint(breakpoint, "lg") ? undefined : "fixed"}
-                        bottom={isMilestonesEmpty || isLessThanBreakpoint(breakpoint, "lg") ? undefined : bottom}
-                        marginTop={isMilestonesEmpty ? "3rem" : undefined}
+                        position={isGoalsEmpty || isLessThanBreakpoint(breakpoint, "lg") ? undefined : "fixed"}
+                        bottom={isGoalsEmpty || isLessThanBreakpoint(breakpoint, "lg") ? undefined : bottom}
+                        marginTop={isGoalsEmpty ? "3rem" : undefined}
                         variant='solid'
                         backgroundColor="yellow.500"
                         _hover={{
@@ -48,19 +48,19 @@ const RightDrawer = ({ isMilestonesEmpty, isBannerDisplayed }: RightDrawerProps)
                             backgroundColor: "yellow.700"
                         }} 
                         size={{
-                            base: `${isMilestonesEmpty ? "lg" : "sm"}`,
-                            lg: `${isMilestonesEmpty ? "lg" : "md"}`,
+                            base: `${isGoalsEmpty ? "lg" : "sm"}`,
+                            lg: `${isGoalsEmpty ? "lg" : "md"}`,
                             xl: "lg"
                         }}
                         aria-label='create-goal'
                         leftIcon={<AddIcon />}
                         onClick={onOpen}
                     >
-                        {isMilestonesEmpty ? "Add your first Goal" : "Add Goal"}
+                        {isGoalsEmpty ? "Add your first Goal" : "Add Goal"}
                     </Button>
-                    <CreateMilestoneForm
-                        onCloseForMilestone={onClose}
-                        isOpenForMilestone={isOpen}
+                    <CreateGoalForm
+                        onCloseForGoal={onClose}
+                        isOpenForGoal={isOpen}
                     />
                 </>     
             }

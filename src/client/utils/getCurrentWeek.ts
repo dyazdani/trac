@@ -1,11 +1,11 @@
-import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
+import { HabitWithDetails, GoalWithDetails } from "../../types/index.js";
 
-const getCurrentWeek = (habit: HabitWithDetails, milestone: MilestoneWithDetails) => {
+const getCurrentWeek = (habit: HabitWithDetails, goal: GoalWithDetails) => {
     let currentWeek: Date[] = [];
     let firstDay = new Date()
 
-    // If Habit is in a Milestone that is overdue, make sure the first day of week is =< due date
-    while (firstDay.setHours(0, 0, 0, 0) > new Date(milestone.dueDate).setHours(0, 0, 0, 0)) {
+    // If Habit is in a Goal that is overdue, make sure the first day of week is =< due date
+    while (firstDay.setHours(0, 0, 0, 0) > new Date(goal.dueDate).setHours(0, 0, 0, 0)) {
       firstDay = new Date(firstDay.setDate(firstDay.getDate() - 1))
     }
 

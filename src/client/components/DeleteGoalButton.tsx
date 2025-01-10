@@ -4,30 +4,30 @@ import {
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { 
-    useDeleteMilestoneMutation, 
-    useGetMilestonesByUserQuery, 
+    useDeleteGoalMutation, 
+    useGetGoalsByUserQuery, 
     useDeleteSchedulesMutation 
 } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
-import { MilestoneWithDetails } from "../../types/index.js";
+import { GoalWithDetails } from "../../types/index.js";
 import { useDispatch } from "react-redux";
-import doOtherMilestonesHaveStatusReportDue from "../utils/doOtherMilestonesHaveStatusReportDue.js";
+import doOtherGoalsHaveStatusReportDue from "../utils/doOtherGoalsHaveStatusReportDue.js";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 import { User } from "@prisma/client";
 import getHabitScheduleIds from "../utils/getHabitScheduleIds.js";
 
-export interface DeleteMilestoneButtonProps{
-    milestone: MilestoneWithDetails
+export interface DeleteGoalButtonProps{
+    goal: GoalWithDetails
 }
 
-const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
+const DeleteGoalButton = ({goal}: DeleteGoalButtonProps) => {
     const [
-        deleteMilestone, 
+        deleteGoal, 
         {
-            isLoading: isDeleteMilestoneLoading, 
-            error: deleteMilestoneError
+            isLoading: isDeleteGoalLoading, 
+            error: deleteGoalError
         }
-    ] = useDeleteMilestoneMutation();
+    ] = useDeleteGoalMutation();
     const [
         deleteSchedules, 
         {
@@ -46,25 +46,25 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
         const currentUserId = currentUser.id
         const { 
             data, 
-            isLoading: isMilestonesLoading, 
+            isLoading: isGoalsLoading, 
             error 
-        } = useGetMilestonesByUserQuery(currentUserId); 
+        } = useGetGoalsByUserQuery(currentUserId); 
 
-        const handleDeleteMilestone = async () => {
+        const handleDeleteGoal = async () => {
             if (
                 typeof error === "undefined" &&
-                typeof deleteMilestoneError === "undefined" &&
+                typeof deleteGoalError === "undefined" &&
                 typeof deleteSchedulesError === "undefined"
                 ) {
                 try {
-                    const scheduleIds = getHabitScheduleIds(milestone);
+                    const scheduleIds = getHabitScheduleIds(goal);
 
-                    const { milestone: deletedMilestone } = await deleteMilestone({
+                    const { goal: deletedGoal } = await deleteGoal({
                         ownerId: currentUser.id,
-                        milestoneId: milestone.id
+                        goalId: goal.id
                     }).unwrap();
 
-                    if (deletedMilestone) {
+                    if (deletedGoal) {
                         if (scheduleIds.length) {
                             const deleteSchedulesResponse = await deleteSchedules({
                                 scheduleIds
@@ -73,7 +73,7 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                             if (deleteSchedulesResponse.message === "successfully deleted") {
                                 toast({
                                     title: 'Goal Deleted',
-                                    description: `"${milestone.name}" has been successfully deleted`,
+                                    description: `"${goal.name}" has been successfully deleted`,
                                     status: 'info',
                                     variant: 'subtle',
                                     duration: 4000,
@@ -83,7 +83,7 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                             } else {
                                 toast({
                                     title: 'ERROR',
-                                    description: `Unable to delete "${milestone.name}" Line 100`,                        
+                                    description: `Unable to delete "${goal.name}" Line 100`,                        
                                     status: 'error',
                                     duration: 4000,
                                     isClosable: true
@@ -92,7 +92,7 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                         } else {
                             toast({
                                 title: 'Goal Deleted',
-                                description: `"${milestone.name}" has been successfully deleted`,
+                                description: `"${goal.name}" has been successfully deleted`,
                                 status: 'info',
                                 variant: 'subtle',
                                 duration: 4000,
@@ -103,7 +103,7 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                     } else {
                         toast({
                             title: 'ERROR',
-                            description: `Unable to delete "${milestone.name}"`,                        
+                            description: `Unable to delete "${goal.name}"`,                        
                             status: 'error',
                             duration: 4000,
                             isClosable: true
@@ -111,8 +111,8 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                     }
                     
                     if (data) {
-                        if (data.milestones.length) {
-                            if (!doOtherMilestonesHaveStatusReportDue(milestone, data.milestones)) {
+                        if (data.goals.length) {
+                            if (!doOtherGoalsHaveStatusReportDue(goal, data.goals)) {
                                 dispatch(setIsBannerDisplayed(false))
                             }
                         } else {
@@ -123,7 +123,7 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                 } catch (e) {
                     toast({
                         title: 'ERROR',
-                        description: `Unable to delete "${milestone.name}"`,
+                        description: `Unable to delete "${goal.name}"`,
                         status: 'error',
                         duration: 9000,
                         isClosable: true
@@ -132,7 +132,7 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
             } else {
                 toast({
                     title: 'ERROR',
-                    description: `Unable to delete "${milestone.name}"`,
+                    description: `Unable to delete "${goal.name}"`,
                     status: 'error',
                     duration: 9000,
                     isClosable: true
@@ -146,8 +146,8 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                 icon={<DeleteIcon/>}
                 backgroundColor="turquoise.50"
                 isDisabled={
-                    isMilestonesLoading || 
-                    isDeleteMilestoneLoading || 
+                    isGoalsLoading || 
+                    isDeleteGoalLoading || 
                     isDeleteSchedulesLoading
                 }
                 _hover={{
@@ -158,11 +158,11 @@ const DeleteMilestoneButton = ({milestone}: DeleteMilestoneButtonProps) => {
                 }}
                 onClick={(e) => {
                     e.preventDefault();
-                    handleDeleteMilestone();
+                    handleDeleteGoal();
                 }}
             >Delete Goal</MenuItem>
         )
     }
 }
 
-export default DeleteMilestoneButton;
+export default DeleteGoalButton;

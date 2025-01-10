@@ -3,7 +3,7 @@ import excludePassword from "../../utils/excludePassword.js";
 import prisma from "../../utils/test/prisma.js";
 import requireUser from "../../utils/requireUser.js";
 import formatStatusReportMessage from "../../utils/formatStatusReportMessage.js";
-import { CreateHabitReqBody, CreateMilestoneReqBody, UpdateHabitReqBody, UpdateMilestoneReqBody, statusReportsPostReqBody } from "../../types/index.js";
+import { CreateHabitReqBody, CreateGoalReqBody, UpdateHabitReqBody, UpdateGoalReqBody, statusReportsPostReqBody } from "../../types/index.js";
 import nodemailer from 'nodemailer';
 import { Knock } from "@knocklabs/node";
 import getNodemailerTransporter from "../../utils/getNodemailerTransporter.js";
@@ -101,7 +101,7 @@ usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<voi
                 routineDays, 
                 checkInDay,
                 scheduleId,
-                milestoneId
+                goalId
             }: CreateHabitReqBody = req.body
 
             // Create Habit
@@ -112,7 +112,7 @@ usersRouter.post("/:id/habits", requireUser, async (req, res, next): Promise<voi
                     name,
                     ownerId,
                     scheduleId,
-                    milestoneId
+                    goalId
                 }
             });
 
@@ -296,17 +296,17 @@ usersRouter.get("/:id/schedules", requireUser, async (req, res, next) => {
      }
 })
 
-// POST /api/users/:id/milestones
-usersRouter.post("/:id/milestones", requireUser, async (req, res, next): Promise<void> => {
+// POST /api/users/:id/goals
+usersRouter.post("/:id/goals", requireUser, async (req, res, next): Promise<void> => {
     if (req.user) {
         try {
             const ownerId = Number(req.params.id)
             const { 
                 name,
                 dueDate
-            }: CreateMilestoneReqBody = req.body
+            }: CreateGoalReqBody = req.body
 
-            const milestone = await prisma.milestone.create({
+            const goal = await prisma.goal.create({
                 data: {
                     name,
                     dueDate,
@@ -318,7 +318,7 @@ usersRouter.post("/:id/milestones", requireUser, async (req, res, next): Promise
 
             const habits = await prisma.habit.findMany({
                 where: {
-                    milestoneId: milestone.id
+                    goalId: goal.id
                 },
                 include: {
                     routine: true,
@@ -332,8 +332,8 @@ usersRouter.post("/:id/milestones", requireUser, async (req, res, next): Promise
             })
 
             res.send({ 
-                milestone: {
-                    ...milestone,
+                goal: {
+                    ...goal,
                     habits
                 }   
             });
@@ -343,11 +343,11 @@ usersRouter.post("/:id/milestones", requireUser, async (req, res, next): Promise
     }
 })
 
-// GET /api/users/:id/milestones
-usersRouter.get("/:id/milestones", requireUser, async (req, res, next): Promise<void> => {
+// GET /api/users/:id/goals
+usersRouter.get("/:id/goals", requireUser, async (req, res, next): Promise<void> => {
     const ownerId = Number(req.params.id)
     try {
-        const milestones = await prisma.milestone.findMany({
+        const goals = await prisma.goal.findMany({
             where: {
                 ownerId: ownerId
             },
@@ -365,27 +365,27 @@ usersRouter.get("/:id/milestones", requireUser, async (req, res, next): Promise<
                 }
             }
         })
-        res.send({ milestones })
+        res.send({ goals })
     } catch(e) {
         next(e)
     }
 })
 
-// PUT /api/users/:id/milestones/:milestoneId
-usersRouter.put("/:id/milestones/:milestoneId", requireUser, async (req, res, next) => {
+// PUT /api/users/:id/goals/:goalId
+usersRouter.put("/:id/goals/:goalId", requireUser, async (req, res, next) => {
     try {
         const ownerId = Number(req.params.id)
-        const milestoneId = Number(req.params.milestoneId)
+        const goalId = Number(req.params.goalId)
         const { 
             name,
             dueDate,
             isCompleted,
             isCanceled
-        }:UpdateMilestoneReqBody = req.body
+        }:UpdateGoalReqBody = req.body
 
         const habits = await prisma.habit.findMany({
             where: {
-                milestoneId
+                goalId
             },
             include: {
                 routine: true,
@@ -398,10 +398,10 @@ usersRouter.put("/:id/milestones/:milestoneId", requireUser, async (req, res, ne
             }
         })
 
-        const milestone = await prisma.milestone.update({
+        const goal = await prisma.goal.update({
             where: {
                 ownerId,
-                id: milestoneId
+                id: goalId
             },
             data: {
                 name,
@@ -412,8 +412,8 @@ usersRouter.put("/:id/milestones/:milestoneId", requireUser, async (req, res, ne
         })
 
         res.send({ 
-            milestone: {
-                ...milestone,
+            goal: {
+                ...goal,
                 habits
             }   
         });
@@ -422,14 +422,14 @@ usersRouter.put("/:id/milestones/:milestoneId", requireUser, async (req, res, ne
     }
 })
 
-// DELETE /api/users/:id/milestones/:milestoneId
-usersRouter.delete("/:id/milestones/:milestoneId", requireUser, async (req, res, next): Promise<void> => {
+// DELETE /api/users/:id/goals/:goalId
+usersRouter.delete("/:id/goals/:goalId", requireUser, async (req, res, next): Promise<void> => {
     const ownerId = Number(req.params.id);
-    const milestoneId = Number(req.params.milestoneId);
+    const goalId = Number(req.params.goalId);
     try {
         const habits = await prisma.habit.findMany({
             where: {
-                milestoneId
+                goalId
             },
             include: {
                 routine: true,
@@ -442,16 +442,16 @@ usersRouter.delete("/:id/milestones/:milestoneId", requireUser, async (req, res,
             }
         })
 
-        const milestone = await prisma.milestone.delete({
+        const goal = await prisma.goal.delete({
             where: {
                 ownerId: ownerId,
-                id: milestoneId 
+                id: goalId 
             }
         })
         
         res.send({ 
-            milestone: {
-                ...milestone,
+            goal: {
+                ...goal,
                 habits
             }   
         });
