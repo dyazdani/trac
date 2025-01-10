@@ -11,28 +11,28 @@ import {
 import {  
     useCreateScheduleMutation, 
     useDeleteSchedulesMutation, 
-    useGetMilestonesByUserQuery, 
+    useGetGoalsByUserQuery, 
     useUpdateHabitMutation, 
-    useUpdateMilestoneMutation 
+    useUpdateGoalMutation 
 } from "../features/api.js";
 import { useAppSelector } from "../app/hooks.js";
-import { MilestoneWithDetails } from "../../types/index.js";
+import { GoalWithDetails } from "../../types/index.js";
 import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
 import { useDispatch } from "react-redux";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
-import doOtherMilestonesHaveStatusReportDue from "../utils/doOtherMilestonesHaveStatusReportDue.js";
+import doOtherGoalsHaveStatusReportDue from "../utils/doOtherGoalsHaveStatusReportDue.js";
 import { DayOfTheWeek, User } from "@prisma/client";
 import getHabitScheduleIds from "../utils/getHabitScheduleIds.js";
 import { DaysOfWeek, Schedule } from "@knocklabs/node";
 import getDaysOfWeekArray from "../utils/getDaysOfWeekArray.js";
 import getCapitalizedDayOfTheWeek from "../utils/getCapitalizedDayOfTheWeek.js";
 
-export interface CompleteMilestoneButtonProps{
-    milestone: MilestoneWithDetails
+export interface CompleteGoalButtonProps{
+    goal: GoalWithDetails
 }
 
-const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
+const CompleteGoalButton = ({goal}: CompleteGoalButtonProps) => {
         const breakpoint = useBreakpointValue(
         {
             base: {
@@ -47,12 +47,12 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
         {ssr: false}
     )
     const [
-        updateMilestone, 
+        updateGoal, 
         {
-            isLoading: isUpdateMilestoneLoading, 
-            error: updateMilestoneError
+            isLoading: isUpdateGoalLoading, 
+            error: updateGoalError
         }
-    ] = useUpdateMilestoneMutation();
+    ] = useUpdateGoalMutation();
     const [
         deleteSchedules, 
         {
@@ -86,9 +86,9 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
         const currentUserId = currentUser.id
         const { 
             data, 
-            isLoading: isMilestonesLoading, 
+            isLoading: isGoalsLoading, 
             error 
-        } = useGetMilestonesByUserQuery(currentUserId); 
+        } = useGetGoalsByUserQuery(currentUserId); 
 
     const handleClick = async () => {
         if (
@@ -96,25 +96,25 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
             typeof deleteSchedulesError === "undefined" &&
             typeof createScheduleError === "undefined" && 
             typeof updateHabitError === "undefined" &&
-            typeof updateMilestoneError === "undefined"
+            typeof updateGoalError === "undefined"
         ) {
             try {
-                const { milestone: updatedMilestone } = await updateMilestone({
+                const { goal: updatedGoal } = await updateGoal({
                     ownerId: currentUser.id,
-                    milestoneId: milestone.id,
-                    newMilestone: {
-                        name: milestone.name,
-                        dueDate: milestone.dueDate,
-                        isCompleted: !milestone.isCompleted,
-                        isCanceled: milestone.isCanceled
+                    goalId: goal.id,
+                    newGoal: {
+                        name: goal.name,
+                        dueDate: goal.dueDate,
+                        isCompleted: !goal.isCompleted,
+                        isCanceled: goal.isCanceled
                     }
                 }).unwrap();
         
-                if (updatedMilestone) {
-                    const scheduleIds = getHabitScheduleIds(updatedMilestone);
+                if (updatedGoal) {
+                    const scheduleIds = getHabitScheduleIds(updatedGoal);
 
-                    if (updatedMilestone.isCompleted) {
-                        if (!updatedMilestone.isCanceled){
+                    if (updatedGoal.isCompleted) {
+                        if (!updatedGoal.isCanceled){
                             const deleteSchedulesResult = await deleteSchedules({
                                 scheduleIds
                             }).unwrap();
@@ -122,37 +122,37 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
 
                         toast({
                             title: 'Goal Completed!',
-                            description: `Your Goal "${updatedMilestone.name}" was marked as complete.`,
+                            description: `Your Goal "${updatedGoal.name}" was marked as complete.`,
                             variant: 'subtle',
                             status: 'success',
                             duration: 9000,
                             isClosable: true
                         })
                         if (data) {
-                            if (data.milestones.length) {
-                                if (!doOtherMilestonesHaveStatusReportDue(milestone, data.milestones)) {
+                            if (data.goals.length) {
+                                if (!doOtherGoalsHaveStatusReportDue(goal, data.goals)) {
                                     dispatch(setIsBannerDisplayed(false))
                                 }
                             }                       
                         }
                         
                     } else {
-                        if (!updatedMilestone.isCanceled) {
+                        if (!updatedGoal.isCanceled) {
                             let createdSchedules: Schedule[] = []
 
-                            for (let i = 0; i < milestone.habits.length; i++) {
+                            for (let i = 0; i < goal.habits.length; i++) {
                                 const {
                                     name: habitName, 
                                     datesCompleted, 
                                     id: habitId,
                                     checkIn, 
                                     routine
-                                } = milestone.habits[i]
+                                } = goal.habits[i]
 
                                 const { schedules } = await createSchedule({
                                     habitName,
-                                    milestoneName: milestone.name,
-                                    days: [DaysOfWeek[getCapitalizedDayOfTheWeek(milestone.habits[i].checkIn.dayOfTheWeek).slice(0, 3) as keyof typeof DaysOfWeek]],
+                                    goalName: goal.name,
+                                    days: [DaysOfWeek[getCapitalizedDayOfTheWeek(goal.habits[i].checkIn.dayOfTheWeek).slice(0, 3) as keyof typeof DaysOfWeek]],
                                     workflowKey: "check-in-day"
                                 }).unwrap()
                                 
@@ -182,7 +182,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                         
                         toast({
                             title: 'Goal Incomplete',
-                            description: `Your Goal "${milestone.name}" was marked as incomplete.`,
+                            description: `Your Goal "${goal.name}" was marked as incomplete.`,
                             variant: 'subtle',
                             status: 'info',
                             duration: 9000,
@@ -191,8 +191,8 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                         })
                         
                         if (
-                            !updatedMilestone.isCanceled &&
-                            updatedMilestone.habits.some(habit => {
+                            !updatedGoal.isCanceled &&
+                            updatedGoal.habits.some(habit => {
                                 const firstCheckInDate = getFirstCheckInDayDate(habit);
                                 if (firstCheckInDate) {
                                     return (
@@ -208,7 +208,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                 } else {
                     toast({
                         title: 'ERROR',
-                        description: `Unable to mark Goal "${milestone.name}" as complete or incomplete`,
+                        description: `Unable to mark Goal "${goal.name}" as complete or incomplete`,
                         status: 'error',
                         duration: 9000,
                         isClosable: true
@@ -218,7 +218,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                 console.error(e)
                 toast({
                     title: 'ERROR',
-                    description: `Unable to mark Goal "${milestone.name}" as complete or incomplete`,
+                    description: `Unable to mark Goal "${goal.name}" as complete or incomplete`,
                     status: 'error',
                     duration: 9000,
                     isClosable: true
@@ -227,7 +227,7 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
         } else {
             toast({
                 title: 'ERROR',
-                description: `Unable to mark Goal "${milestone.name}" as complete or incomplete`,
+                description: `Unable to mark Goal "${goal.name}" as complete or incomplete`,
                 status: 'error',
                 duration: 9000,
                 isClosable: true
@@ -238,11 +238,11 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
             <Button
                 marginInlineEnd={0} 
                 aria-label="Complete goal" 
-                // leftIcon={milestone.isCompleted ? undefined : <CheckIcon/>}
-                backgroundColor={milestone.isCompleted ? "peach.100" : "peach.300"}
-                color={milestone.isCompleted ? "peach.700" : "#353231"}
+                // leftIcon={goal.isCompleted ? undefined : <CheckIcon/>}
+                backgroundColor={goal.isCompleted ? "peach.100" : "peach.300"}
+                color={goal.isCompleted ? "peach.700" : "#353231"}
                 _hover={
-                    milestone.isCompleted ? 
+                    goal.isCompleted ? 
                     { backgroundColor: "peach.200"} :
                     { backgroundColor: "peach.500"}
                 }
@@ -252,15 +252,15 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                 }}
                 flexShrink="0"
                 isLoading={
-                    isUpdateMilestoneLoading || 
-                    isMilestonesLoading ||
+                    isUpdateGoalLoading || 
+                    isGoalsLoading ||
                     isDeleteSchedulesLoading ||
                     isCreateScheduleLoading ||
                     isUpdateHabitLoading
                 }
                 isDisabled={
-                    isUpdateMilestoneLoading || 
-                    isMilestonesLoading ||
+                    isUpdateGoalLoading || 
+                    isGoalsLoading ||
                     isDeleteSchedulesLoading ||
                     isCreateScheduleLoading ||
                     isUpdateHabitLoading
@@ -270,10 +270,10 @@ const CompleteMilestoneButton = ({milestone}: CompleteMilestoneButtonProps) => {
                     handleClick();
                 }}
             >
-                {milestone.isCompleted ? breakpoint?.undo : breakpoint?.complete}
+                {goal.isCompleted ? breakpoint?.undo : breakpoint?.complete}
             </Button>           
         )
     }
 }
 
-export default CompleteMilestoneButton;
+export default CompleteGoalButton;

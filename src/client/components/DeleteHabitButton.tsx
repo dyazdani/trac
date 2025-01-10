@@ -1,6 +1,6 @@
 import { useAppSelector } from "../app/hooks.js";
 import { useDeleteHabitMutation, useDeleteSchedulesMutation } from "../features/api.js";
-import { HabitWithDetails, MilestoneWithDetails } from "../../types/index.js";
+import { HabitWithDetails, GoalWithDetails } from "../../types/index.js";
 
 import { 
     useToast,

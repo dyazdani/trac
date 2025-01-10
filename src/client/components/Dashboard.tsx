@@ -9,16 +9,16 @@ import {
 } from "@chakra-ui/react";
 import RightDrawer from "./RightDrawer.js";
 import { useAppSelector } from "../app/hooks.js";
-import { useGetMilestonesByUserQuery } from "../features/api.js";
+import { useGetGoalsByUserQuery } from "../features/api.js";
 import AppHeader from "./AppHeader.js";
 import CTABanner from "./CTABanner.js";
-import MyMilestones from "./MyMilestones.js";
+import MyGoals from "./MyGoals.js";
 import { Navigate } from "react-router-dom";
 import { User } from "@prisma/client";
 import { useDispatch } from "react-redux";
 import { setIsBannerDisplayed } from "../features/bannerSlice.js";
 import ArtistCredit from "./ArtistCredit.js";
-import { MilestoneWithDetails } from "../../types/index.js";
+import { GoalWithDetails } from "../../types/index.js";
 import isMostRecentStatusReportSent from "../utils/isMostRecentStatusReportSent.js";
 import getFirstCheckInDayDate from "../utils/getFirstCheckInDayDate.js";
 import { useEffect } from "react";
@@ -42,16 +42,16 @@ const Dashboard = () => {
     currentUserId = currentUser.id
   }
 
-  const { data: milestonesData, isLoading } = useGetMilestonesByUserQuery(currentUserId)
+  const { data: goalsData, isLoading } = useGetGoalsByUserQuery(currentUserId)
 
 
   useEffect(() => {
-    if (milestonesData) {
-      const isAStatusReportDue = milestonesData.milestones.some((milestone: MilestoneWithDetails) => {
+    if (goalsData) {
+      const isAStatusReportDue = goalsData.goals.some((goal: GoalWithDetails) => {
         return (
-          !milestone.isCompleted &&
-          !milestone.isCanceled &&
-          milestone.habits.some(habit => {
+          !goal.isCompleted &&
+          !goal.isCanceled &&
+          goal.habits.some(habit => {
             const firstCheckInDate = getFirstCheckInDayDate(habit);
             if (firstCheckInDate) {
               return (
@@ -71,10 +71,10 @@ const Dashboard = () => {
         dispatch(setIsBannerDisplayed(true))
       }
     }
-  }, [milestonesData])
+  }, [goalsData])
   
 
-  const isMilestonesEmpty = !isLoading && !milestonesData?.milestones.length
+  const isGoalsEmpty = !isLoading && !goalsData?.goals.length
  
   return (
     currentUser ? 
@@ -159,16 +159,16 @@ const Dashboard = () => {
                 My Goals:
               </Heading>
               {
-              !isMilestonesEmpty && isLessThanBreakpoint(breakpoint, "lg") ?
+              !isGoalsEmpty && isLessThanBreakpoint(breakpoint, "lg") ?
                 <RightDrawer
-                  isMilestonesEmpty={isMilestonesEmpty}
+                  isGoalsEmpty={isGoalsEmpty}
                   isBannerDisplayed={isBannerDisplayed}
                 /> :
               ""
             }
             </GridItem>
             {
-              !milestonesData?.milestones.length ?
+              !goalsData?.goals.length ?
               <GridItem
                 colStart={2}
               >
@@ -181,7 +181,7 @@ const Dashboard = () => {
                     as="h2"
                     size="lg"
                     marginTop={{
-                      base: `${isMilestonesEmpty ? "0" : "2rem"}`,
+                      base: `${isGoalsEmpty ? "0" : "2rem"}`,
                       lg: "4.6rem"
                     }}
                     textAlign="center"
@@ -189,9 +189,9 @@ const Dashboard = () => {
                     You currently have no Goals
                   </Heading>
                   {
-                    isMilestonesEmpty ? 
+                    isGoalsEmpty ? 
                     <RightDrawer 
-                      isMilestonesEmpty={isMilestonesEmpty}
+                      isGoalsEmpty={isGoalsEmpty}
                       isBannerDisplayed={isBannerDisplayed}
                     /> :
                     ""
@@ -201,19 +201,19 @@ const Dashboard = () => {
               <GridItem
                 colStart={2}
               >
-                <MyMilestones milestones={milestonesData?.milestones} />
+                <MyGoals goals={goalsData?.goals} />
               </GridItem>               
             }
             {
-              !isMilestonesEmpty && !isLessThanBreakpoint(breakpoint, "lg") ?
+              !isGoalsEmpty && !isLessThanBreakpoint(breakpoint, "lg") ?
               <GridItem
-                colStart={isMilestonesEmpty ? 2 : 3}
+                colStart={isGoalsEmpty ? 2 : 3}
                 display="flex"
                 flexDirection="column"
                 alignItems="center"
               >
                 <RightDrawer 
-                  isMilestonesEmpty={isMilestonesEmpty}
+                  isGoalsEmpty={isGoalsEmpty}
                   isBannerDisplayed={isBannerDisplayed}
                 />
               </GridItem> :

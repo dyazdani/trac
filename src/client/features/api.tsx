@@ -15,9 +15,9 @@ import {
   UpdateHabitReqBody, 
   HabitWithDetails, 
   SendStatusReportMutationArgs, 
-  MilestoneWithDetails, 
-  CreateMilestoneMutationArgs, 
-  UpdateMilestoneReqBody, 
+  GoalWithDetails, 
+  CreateGoalMutationArgs, 
+  UpdateGoalReqBody, 
   RegisterMutationResponse,
   LoginMutationResponse
 } from '../../types/index.js';
@@ -49,7 +49,7 @@ export const api = createApi({
       'KnockUser',
       'Schedule',
       'StatusReport',
-      'Milestone'
+      'Goal'
     ],
     endpoints: (builder) => ({
       register: builder.mutation<RegisterMutationResponse, {email: string, username: string, password: string}>({
@@ -68,13 +68,13 @@ export const api = createApi({
         }),
         invalidatesTags: ["CurrentUser"],
       }),
-      createSchedule: builder.mutation<{schedules: Schedule[]}, {habitName: string, milestoneName: string, days: DaysOfWeek[], workflowKey: string}>({
-        query: ({habitName, milestoneName, days, workflowKey}) => ({
+      createSchedule: builder.mutation<{schedules: Schedule[]}, {habitName: string, goalName: string, days: DaysOfWeek[], workflowKey: string}>({
+        query: ({habitName, goalName, days, workflowKey}) => ({
           url: `/notifications/schedules`,
           method: "POST",
           body: {
             habitName,
-            milestoneName,
+            goalName,
             days,
             workflowKey
           },
@@ -151,10 +151,10 @@ export const api = createApi({
             routineDays: habitDetails.routineDays, 
             checkInDay: habitDetails.checkInDay,
             scheduleId: habitDetails.scheduleId,
-            milestoneId: habitDetails.milestoneId
+            goalId: habitDetails.goalId
           },
         }),
-        invalidatesTags: ["Habit", "Milestone", "CheckIn"],
+        invalidatesTags: ["Habit", "Goal", "CheckIn"],
       }),
       updateHabit: builder.mutation<{habit: Habit, routine: Routine, checkIn: CheckIn}, {id: number, habitId: number, newHabit: UpdateHabitReqBody}>({
         query: ({id, habitId, newHabit}) => ({
@@ -169,14 +169,14 @@ export const api = createApi({
             scheduleId: newHabit.scheduleId
           },
         }),
-        invalidatesTags: ["Habit", "Milestone", "CheckIn"],
+        invalidatesTags: ["Habit", "Goal", "CheckIn"],
       }),
       deleteHabit: builder.mutation<{habit: Habit}, {id: number, habitId: number}>({
         query: ({ id, habitId }) => ({
           url: `/users/${id}/habits/${habitId}`,
           method: 'DELETE'
         }),
-        invalidatesTags: ["Habit", "Milestone", "CheckIn"]
+        invalidatesTags: ["Habit", "Goal", "CheckIn"]
       }),
       sendStatusReport: builder.mutation<{status: "Message Sent", statusReport: StatusReport}, SendStatusReportMutationArgs>({
         query: ({id, habitId, user, habitName, emails, message, checkInDate}) => ({
@@ -190,46 +190,46 @@ export const api = createApi({
             checkInDate
           },
         }),
-        invalidatesTags: ["StatusReport", "Habit", "Milestone"],
+        invalidatesTags: ["StatusReport", "Habit", "Goal"],
       }),
       getStatusReportsByHabitId: builder.query<{statusReports: StatusReport[]}, {id: number, habitId: number}>({
         query: ({id, habitId}) => `/users/${id}/habits/${habitId}/statusReports`,
         providesTags: ["StatusReport"]
       }),
-      createMilestone: builder.mutation<{milestone: MilestoneWithDetails}, CreateMilestoneMutationArgs>({
+      createGoal: builder.mutation<{goal: GoalWithDetails}, CreateGoalMutationArgs>({
         query: ({ownerId, name, dueDate}) => ({
-          url: `/users/${ownerId}/milestones`,
+          url: `/users/${ownerId}/goals`,
           method: "POST",
           body: {
             name,
             dueDate
           },
         }),
-        invalidatesTags: ["Milestone"],
+        invalidatesTags: ["Goal"],
       }),
-      getMilestonesByUser: builder.query<{ milestones: MilestoneWithDetails[] }, number | undefined>({
-        query: (ownerId) => `/users/${ownerId}/milestones`,
-        providesTags: ["Milestone"]
+      getGoalsByUser: builder.query<{ goals: GoalWithDetails[] }, number | undefined>({
+        query: (ownerId) => `/users/${ownerId}/goals`,
+        providesTags: ["Goal"]
       }),
-      updateMilestone: builder.mutation<{milestone: MilestoneWithDetails}, {ownerId: number, milestoneId: number, newMilestone: UpdateMilestoneReqBody}>({
-        query: ({ownerId, milestoneId, newMilestone}) => ({
-          url: `users/${ownerId}/milestones/${milestoneId}`,
+      updateGoal: builder.mutation<{goal: GoalWithDetails}, {ownerId: number, goalId: number, newGoal: UpdateGoalReqBody}>({
+        query: ({ownerId, goalId, newGoal}) => ({
+          url: `users/${ownerId}/goals/${goalId}`,
           method: "PUT",
           body: {
-            name: newMilestone.name,
-            dueDate: newMilestone.dueDate,
-            isCompleted: newMilestone.isCompleted,
-            isCanceled: newMilestone.isCanceled
+            name: newGoal.name,
+            dueDate: newGoal.dueDate,
+            isCompleted: newGoal.isCompleted,
+            isCanceled: newGoal.isCanceled
           },
         }),
-        invalidatesTags: ["Milestone", "Habit"],
+        invalidatesTags: ["Goal", "Habit"],
       }),
-      deleteMilestone: builder.mutation<{milestone: MilestoneWithDetails}, {ownerId: number, milestoneId: number}>({
-        query: ({ ownerId, milestoneId }) => ({
-          url: `/users/${ownerId}/milestones/${milestoneId}`,
+      deleteGoal: builder.mutation<{goal: GoalWithDetails}, {ownerId: number, goalId: number}>({
+        query: ({ ownerId, goalId }) => ({
+          url: `/users/${ownerId}/goals/${goalId}`,
           method: 'DELETE'
         }),
-        invalidatesTags: ["Milestone", "Habit"]
+        invalidatesTags: ["Goal", "Habit"]
       }),
     })
   })
@@ -255,10 +255,10 @@ export const api = createApi({
     useGetSchedulesByUserQuery,
     useGetStatusReportsByHabitIdQuery,
     useDeleteSchedulesMutation,
-    useCreateMilestoneMutation,
-    useGetMilestonesByUserQuery,
-    useUpdateMilestoneMutation,
-    useDeleteMilestoneMutation,
+    useCreateGoalMutation,
+    useGetGoalsByUserQuery,
+    useUpdateGoalMutation,
+    useDeleteGoalMutation,
     useGetAllUsersQuery,
     useGetUserByEmailQuery
   } = api

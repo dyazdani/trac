@@ -1,8 +1,8 @@
-import { MilestoneWithDetails } from "../../types/index.js";
+import { GoalWithDetails } from "../../types/index.js";
 
-const getHabitScheduleIds = (milestone: MilestoneWithDetails) => {
+const getHabitScheduleIds = (goal: GoalWithDetails) => {
     const scheduleIds: string[] = []
-    milestone.habits.forEach(habit => {
+    goal.habits.forEach(habit => {
         if (habit.scheduleId) {
             scheduleIds.push(habit.scheduleId)
         }

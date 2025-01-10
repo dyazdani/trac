@@ -36,14 +36,14 @@ import { DayOfTheWeek, User } from "@prisma/client";
 import React, { useState } from "react";
 import getBooleanRoutineDays from "..//utils/getBooleanRoutineDays.js";
 import { useAppSelector } from "../app/hooks.js";
-import { MilestoneWithDetails, RoutineDaysArrayType } from "../../types/index.js";
+import { GoalWithDetails, RoutineDaysArrayType } from "../../types/index.js";
 import { DaysOfWeek } from "@knocklabs/node";
 
 export interface CreateHabitButtonProps{
-    milestone: MilestoneWithDetails
+    goal: GoalWithDetails
 }
 
-const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
+const CreateHabitButton = ({goal}: CreateHabitButtonProps) => {
     const [menuValue, setMenuValue] = useState<string | string[]>('Monday')
     const [checkboxGroupValue, setCheckboxGroupValue] = useState<RoutineDaysArrayType>([])
     const [habitNameValue, setHabitNameValue] = useState("New Habit")
@@ -68,11 +68,11 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
     if (currentUser) {
         return (
             <>
-                {milestone.habits.length ?
+                {goal.habits.length ?
                 <MenuItem
                     aria-label="Add Habit" 
                     icon={<AddIcon/>}
-                    display={milestone && milestone.isCompleted || milestone.isCanceled ? "none" : ""}
+                    display={goal && goal.isCompleted || goal.isCanceled ? "none" : ""}
                     onClick={onOpen}
                     backgroundColor="turquoise.50"
                     _hover={{
@@ -88,7 +88,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                     minWidth="80%"
                     aria-label="Add Habit" 
                     leftIcon={<AddIcon />} 
-                    isDisabled={milestone && milestone.isCompleted || milestone.isCanceled}
+                    isDisabled={goal && goal.isCompleted || goal.isCanceled}
                     variant="solid"
                     onClick={onOpen}
                     backgroundColor="turquoise.50"
@@ -99,7 +99,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                         backgroundColor: "turquoise.200"
                     }}
                 >
-                    {`Add first Habit to "${milestone.name}"`}
+                    {`Add first Habit to "${goal.name}"`}
                 </Button>
                 }
                 <Drawer 
@@ -132,7 +132,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                     try {
                                         const { schedules } = await createSchedule({
                                             habitName: habitNameValue,
-                                            milestoneName: milestone.name,
+                                            goalName: goal.name,
                                             days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]],
                                             workflowKey: "check-in-day"
                                         }).unwrap()
@@ -145,7 +145,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
                                                     routineDays: getBooleanRoutineDays(checkboxGroupValue),
                                                     checkInDay:  DayOfTheWeek[menuValue.toUpperCase() as keyof typeof DayOfTheWeek],
                                                     scheduleId: schedules[0].id,
-                                                    milestoneId: milestone.id
+                                                    goalId: goal.id
                                                 }
                                             }).unwrap()
 
@@ -155,7 +155,7 @@ const CreateHabitButton = ({milestone}: CreateHabitButtonProps) => {
 
                                             toast({
                                                 title: 'Habit Created',
-                                                description: `"${habit.name}" added to Goal "${milestone.name}"`,
+                                                description: `"${habit.name}" added to Goal "${goal.name}"`,
                                                 variant: 'subtle',
                                                 status: 'success',
                                                 duration: 9000,

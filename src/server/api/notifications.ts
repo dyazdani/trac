@@ -14,7 +14,7 @@ notificationsRouter.post("/schedules", requireUser, async (req, res, next) => {
             const userId = String(req.user.id)
             const { 
                 habitName,
-                milestoneName,
+                goalName,
                 days,
                 workflowKey
             }: CreateScheduleReqBody = req.body
@@ -32,7 +32,7 @@ notificationsRouter.post("/schedules", requireUser, async (req, res, next) => {
                 ],
                 data: {
                     habit: habitName,
-                    milestone: milestoneName
+                    goal: goalName
                 }
             })
 

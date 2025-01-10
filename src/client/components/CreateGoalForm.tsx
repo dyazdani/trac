@@ -19,20 +19,20 @@ import {
   } from '@chakra-ui/react'
 import { useAppSelector } from '../app/hooks.js';
 import { SingleDatepicker } from 'chakra-dayzed-datepicker';
-import { useCreateMilestoneMutation } from '../features/api.js';
+import { useCreateGoalMutation } from '../features/api.js';
 import { AddIcon } from '@chakra-ui/icons';
 import { User } from '@prisma/client';
 
-export interface CreateMilestoneFormProps {
-    isOpenForMilestone: boolean
-    onCloseForMilestone: () => void
+export interface CreateGoalFormProps {
+    isOpenForGoal: boolean
+    onCloseForGoal: () => void
 }
 
-const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMilestoneFormProps) => {
+const CreateGoalForm = ({isOpenForGoal, onCloseForGoal}: CreateGoalFormProps) => {
     const [datepickerValue, setDatepickerValue] = useState<Date | undefined>()
-    const [milestoneNameValue, setMilestoneNameValue] = useState("New Goal")
+    const [goalNameValue, setGoalNameValue] = useState("New Goal")
 
-    const [createMilestone, {isLoading}] = useCreateMilestoneMutation();
+    const [createGoal, {isLoading}] = useCreateGoalMutation();
 
     const inputRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
@@ -44,8 +44,8 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
     return (
         <Drawer 
             placement='right' 
-            onClose={onCloseForMilestone} 
-            isOpen={isOpenForMilestone}
+            onClose={onCloseForGoal} 
+            isOpen={isOpenForGoal}
             closeOnEsc={false}
             closeOnOverlayClick={false}
             size="sm"
@@ -68,19 +68,19 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                             e.preventDefault();
                             if (currentUser && datepickerValue) {
                                 try {
-                                        const { milestone } = await createMilestone({
+                                        const { goal } = await createGoal({
                                             ownerId: currentUser.id,
-                                            name: milestoneNameValue,
+                                            name: goalNameValue,
                                             dueDate: datepickerValue
                                         }).unwrap()
 
-                                        console.log(milestone)
+                                        console.log(goal)
 
-                                        onCloseForMilestone()
+                                        onCloseForGoal()
 
                                         toast({
                                             title: 'Goal Added',
-                                            description: `"${milestone.name}" was added to your dashboard.`,
+                                            description: `"${goal.name}" was added to your dashboard.`,
                                             status: 'success',
                                             variant: 'subtle',
                                             duration: 9000,
@@ -92,13 +92,13 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                                 }
                             }
                         }}
-                        id="milestoneForm"
+                        id="goalForm"
                         spacing="3vw"
                     >
                         <Box>
                             <FormControl isRequired>
                                 <FormLabel
-                                    htmlFor="milestoneName"
+                                    htmlFor="goalName"
                                 >
                                     Name
                                 </FormLabel>
@@ -107,10 +107,10 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                                 >
                                     <EditablePreview />
                                     <EditableInput 
-                                        id="milestoneName" 
+                                        id="goalName" 
                                         ref={inputRef}
-                                        onChange={(e) => {setMilestoneNameValue(e.target.value)}}
-                                        value={milestoneNameValue}
+                                        onChange={(e) => {setGoalNameValue(e.target.value)}}
+                                        value={goalNameValue}
                                         paddingLeft="16px"
                                         paddingRight="16px"
                                     />
@@ -155,9 +155,9 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                             mr={6} 
                             onClick={(e) => {
                                 e.preventDefault();
-                                onCloseForMilestone();
+                                onCloseForGoal();
                                 setDatepickerValue(undefined);
-                                setMilestoneNameValue("New Goal");
+                                setGoalNameValue("New Goal");
                             }}
                         >
                             Cancel
@@ -172,10 +172,10 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
                                 backgroundColor: "yellow.700"
                             }} 
                             type="submit"
-                            form="milestoneForm"
+                            form="goalForm"
                             isLoading={isLoading}
                             paddingX={"2rem"}
-                            isDisabled={!datepickerValue || !milestoneNameValue}
+                            isDisabled={!datepickerValue || !goalNameValue}
                         >
                             Add
                         </Button>
@@ -186,4 +186,4 @@ const CreateMilestoneForm = ({isOpenForMilestone, onCloseForMilestone}: CreateMi
     )
 }
 
-export default CreateMilestoneForm;
+export default CreateGoalForm;

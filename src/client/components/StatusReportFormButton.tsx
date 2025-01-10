@@ -21,7 +21,7 @@ import {
     useToast 
 } from '@chakra-ui/react';
 import { useAppSelector } from '../app/hooks.js';
-import { HabitWithDetails, MilestoneWithDetails } from '../../types/index.js';
+import { HabitWithDetails, GoalWithDetails } from '../../types/index.js';
 import getDefaultStatusReportMessage from '..//utils/getDefaultStatusReportMessage.js';
 import getMostRecentCheckInDayDate from '..//utils/getMostRecentCheckInDayDate.js';
 import { EmailIcon } from '@chakra-ui/icons';
@@ -30,18 +30,18 @@ import { User } from '@prisma/client';
 
 export interface StatusReportFormButtonProps {
     habit: HabitWithDetails
-    milestone: MilestoneWithDetails
+    goal: GoalWithDetails
     textContent: string
 }
 
-const StatusReportFormButton = ({habit, milestone, textContent}: StatusReportFormButtonProps) => {
+const StatusReportFormButton = ({habit, goal, textContent}: StatusReportFormButtonProps) => {
     const localStorageUser = localStorage.getItem("user")
     const appSelectorUser = useAppSelector(state => state.auth.user)
     const currentUser: Omit<User, "password"> | null = localStorageUser ? JSON.parse(localStorageUser) : appSelectorUser
     
     if (currentUser) {
         const [emails, setEmails] = useState<string[]>([])
-        const [message, setMessage] = useState(getDefaultStatusReportMessage(habit, milestone, currentUser.username))
+        const [message, setMessage] = useState(getDefaultStatusReportMessage(habit, goal, currentUser.username))
         const { isOpen, onOpen, onClose } = useDisclosure()
         const inputRef = React.useRef<HTMLInputElement>(null);
         const toast = useToast();
@@ -111,7 +111,7 @@ const StatusReportFormButton = ({habit, milestone, textContent}: StatusReportFor
             onClick={(e) => {
                 e.preventDefault();
                 if (!message) {
-                    setMessage(getDefaultStatusReportMessage(habit, milestone, currentUser.username))
+                    setMessage(getDefaultStatusReportMessage(habit, goal, currentUser.username))
                 }
                 onOpen();
             }}
