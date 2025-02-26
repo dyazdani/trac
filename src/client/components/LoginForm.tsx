@@ -66,27 +66,25 @@ const LoginForm = () => {
 
   const handleSubmit = async () => {
     try {
-      if (!isUsersLoading && !isLoading) {
-        if (data) {
-          const isUnregisteredEmail = data.users.every(element => element.user.email !== email)
-          if (isUnregisteredEmail) {
-            setIsEmailUnregistered(true);
-            return;
-          }
-        }
-
-        const user = await login({ email, password }).unwrap();
-        if (user.name === "IncorrectPassword") {
-          setIsPasswordInvalid(true);
+      if (data) {
+        const isUnregisteredEmail = data.users.every(element => element.user.email !== email)
+        if (isUnregisteredEmail) {
+          setIsEmailUnregistered(true);
           return;
         }
-        
-        if (isSuccess || isError || isLoading) {
-          setIsInputAndSubmitDisabled(true);
-        }
+      }
+
+      const user = await login({ email, password }).unwrap();
+      if (user.name === "IncorrectPassword") {
+        setIsPasswordInvalid(true);
+        return;
+      }
+      
+      if (isSuccess || isError || isLoading) {
+        setIsInputAndSubmitDisabled(true);
+      }
 
         navigate("/goals")
-      }
     } catch (e) {
       console.error(e);    
     }
@@ -304,7 +302,16 @@ const LoginForm = () => {
                 data-testid="submit-button"
                 type="submit"
                 isLoading={isLoading}
-                isDisabled={isInputAndSubmitDisabled || isPasswordInvalid || isEmailInvalid || isEmailUnregistered || password.length === 0}
+                isDisabled={
+                  isInputAndSubmitDisabled || 
+                  isPasswordInvalid || 
+                  isEmailInvalid || 
+                  isEmailUnregistered || 
+                  isUsersLoading || 
+                  isLoading ||
+                  email.length === 0 ||
+                  password.length === 0
+                }
               >
                 <Text>Log In</Text>
               </Button>
