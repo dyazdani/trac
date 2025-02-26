@@ -129,10 +129,6 @@ export const api = createApi({
         query: () => '/users',
         providesTags: ['User']
       }),
-      getUserByEmail: builder.query<{user: User}, string>({
-        query: (email) => `/users`,
-        providesTags: ["User"]
-      }),
       getHabitsByUser: builder.query<{ habits: HabitWithDetails[] }, number | undefined>({
         query: (id) => `/users/${id}/habits`,
         providesTags: ["Habit"]
@@ -260,7 +256,6 @@ export const api = createApi({
     useUpdateGoalMutation,
     useDeleteGoalMutation,
     useGetAllUsersQuery,
-    useGetUserByEmailQuery
   } = api
 
 

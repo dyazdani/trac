@@ -31,7 +31,6 @@ import {
 } from "@chakra-ui/icons";
 import { 
   useGetAllUsersQuery, 
-  useGetUserByEmailQuery, 
   useLoginMutation 
 } from "../features/api.js";
 import { useNavigate } from "react-router";
@@ -64,13 +63,10 @@ const LoginForm = () => {
       isLoading: isUsersLoading 
   } = useGetAllUsersQuery();
 
-  const { 
-    isLoading: isUserLoading
-  } = useGetUserByEmailQuery(email);
 
   const handleSubmit = async () => {
     try {
-      if (!isUsersLoading && !isUserLoading && !isLoading) {
+      if (!isUsersLoading && !isLoading) {
         if (data) {
           const isUnregisteredEmail = data.users.every(element => element.user.email !== email)
           if (isUnregisteredEmail) {
