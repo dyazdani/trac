@@ -74,10 +74,7 @@ const LoginForm = () => {
         if (data) {
           const isUnregisteredEmail = data.users.every(element => element.user.email !== email)
           if (isUnregisteredEmail) {
-            setIsEmailInvalid(true);
-          }
-
-          if (isUnregisteredEmail) {
+            setIsEmailUnregistered(true);
             return;
           }
         }
@@ -85,7 +82,7 @@ const LoginForm = () => {
         const user = await login({ email, password }).unwrap();
         if (user.name === "IncorrectPassword") {
           setIsPasswordInvalid(true);
-          return
+          return;
         }
         
         if (isSuccess || isError || isLoading) {
@@ -227,16 +224,9 @@ const LoginForm = () => {
                 }}
                 onChange={(e) => {
                   e.preventDefault();
+                  setIsEmailUnregistered(false);
                   setEmail(e.target.value);
                   setIsEmailInvalid(!validEmailRegex.test(e.target.value));
-                  if (!isUsersLoading && data) {
-                    const isUnregisteredEmail = data.users.every(element => element.user.email !== e.target.value)
-                    if (isUnregisteredEmail) {
-                      setIsEmailUnregistered(true);
-                    } else {
-                      setIsEmailUnregistered(false);
-                    }
-                  }
                 }}
                 value={email}
               />
