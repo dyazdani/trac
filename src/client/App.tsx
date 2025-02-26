@@ -9,7 +9,9 @@ import Register from './components/Register.js';
 import Login from './components/Login.js';
 
 const App: React.FC = () => {
-
+  // Saying hi to developers checking out my app :-)
+  console.log("Hi, I’m Dara. Thanks for checking out Trac. Cheers!")
+    
 
   return (
     <Routes>
