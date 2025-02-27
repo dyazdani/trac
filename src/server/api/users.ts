@@ -306,6 +306,8 @@ usersRouter.post("/:id/goals", requireUser, async (req, res, next): Promise<void
                 dueDate
             }: CreateGoalReqBody = req.body
 
+            console.log(prisma);
+
             const goal = await prisma.goal.create({
                 data: {
                     name,
