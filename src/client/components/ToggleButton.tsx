@@ -169,7 +169,6 @@ const ToggleButton = ({
             _disabled={{
                 "& .chakra-checkbox__control": { 
                     borderColor: "darkslategray.600",
-                    background:  "darkslategray.600",
                     cursor: "not-allowed"
                 }
             }}
