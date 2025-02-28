@@ -52,7 +52,7 @@ const ToggleButton = ({
     }
 
     const handleSubmit = async () => {
-        if (currentUser && habitData) {
+        if (currentUser && habitData && !isToggleLoading) {
             const {
                 monday,
                 tuesday,
@@ -94,7 +94,7 @@ const ToggleButton = ({
                 }).unwrap()
 
                 setIsToggleLoading(false);
-       
+    
                 if (updateResult.habit.datesCompleted.length > habit.datesCompleted.length) {
                     toast({
                         title: 'Routine Day Completed',
@@ -147,7 +147,7 @@ const ToggleButton = ({
                     isClosable: true
                 })
                 setIsToggleLoading(false);
-            }           
+            }  
         }
     }
 
@@ -186,7 +186,6 @@ const ToggleButton = ({
                 goal.isCanceled ||
                 isOutOfRange || 
                 goal && goal.isCompleted ||
-                isToggleLoading ||
                 isLoading
             } 
             display={!isHabitRoutineDay(habit, date) ? "none" : ""}
