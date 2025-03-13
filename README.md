@@ -23,6 +23,8 @@
 
 ![Product Name Screenshot][product-screenshot]
 
+<img src="public/images/landing_and_login.gif"/>
+
  Trac is a web application for tracking goals and holding users accountable through updates to their social circle. A user creates Goals with a due date, then gives each Goal any number of Habits, which are tasks that need to be completed weekly in order to meet the Goal by the Goal's due date. The user also chooses a day of the week for each Habit to be its Check-In Day. Each week on that day, Trac will prompt the user via email and within the app to send an update on the Habit's progress to their friends directly from Trac. Research shows that being accountable to others helps people follow through with goals. Trac builds that functionality right into the app.
 
 
