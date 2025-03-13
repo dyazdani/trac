@@ -19,7 +19,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![Product Name Screen Shot][product-screenshot]
+![Landing Page Screenshot][landing-page-screenshot]
+
+![Product Name Screenshot][product-screenshot]
 
  Trac is a web application for tracking goals and holding users accountable through updates to their social circle. A user creates Goals with a due date, then gives each Goal any number of Habits, which are tasks that need to be completed weekly in order to meet the Goal by the Goal's due date. The user also chooses a day of the week for each Habit to be its Check-In Day. Each week on that day, Trac will prompt the user via email and within the app to send an update on the Habit's progress to their friends directly from Trac. Research shows that being accountable to others helps people follow through with goals. Trac builds that functionality right into the app.
 
@@ -73,6 +75,7 @@ Dara Yazdani - dara.s.yazdani@gmail.com • [linkedin.com/in/darayazdani](https:
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [product-screenshot]: public/images/README-screenshot-1.png
+[landing-page-screenshot]: public/images/landing_page.png
 [Express.js]: https://img.shields.io/badge/Express.js-grey?style=for-the-badge&logo=express&logoColor=white
 [Express-url]: https://expressjs.com
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
