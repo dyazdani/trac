@@ -7,12 +7,11 @@ import Dashboard from './components/Dashboard.js';
 import HomePage from './components/HomePage.js';
 import Register from './components/Register.js';
 import Login from './components/Login.js';
-import consoleLogStyles from './constants/consoleLogStyles.js';
+import getConsoleStyles from './utils/getConsoleLogStyles.js';
+import CONSOLE_LOG_CONTENT from './constants/consoleLogContent.js';
 
 const App: React.FC = () => {
-  console.log("%c Welcome! d(-_☆)", consoleLogStyles)  
-  console.log("Hi, I'm Dara. Thanks for checking Trac. Feel free to reach out if you have any questions or just want connect: https://www.linkedin.com/in/darayazdani. You can find all my projects at https://www.darayazdani.com. Cheers!") 
-  console
+  console.log(CONSOLE_LOG_CONTENT, ...getConsoleStyles(8))  
 
   return (
     <Routes>
