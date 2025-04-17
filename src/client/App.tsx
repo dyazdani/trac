@@ -7,11 +7,11 @@ import Dashboard from './components/Dashboard.js';
 import HomePage from './components/HomePage.js';
 import Register from './components/Register.js';
 import Login from './components/Login.js';
+import rainbowConsoleLogStyles from './constants/rainbowConsoleLogStyles.js'
 
 const App: React.FC = () => {
-  // Saying hi to developers checking out my app :-)
-  console.log("Hi, I’m Dara. Thanks for checking out Trac. Cheers!")
-    
+  console.log("%c Hi! I'm Dara Yazdani", rainbowConsoleLogStyles)  
+  console.log("Thanks for checking out Trac! Find my other projects at https://www.darayazdani.com. Feel free to reach out or connect: https://www.linkedin.com/in/darayazdani. Cheers!") 
 
   return (
     <Routes>
