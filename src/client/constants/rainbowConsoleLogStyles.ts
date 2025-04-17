@@ -10,8 +10,8 @@ const rainbowConsoleLogStyles: string = `
         15px 15px 0 rgb(2,135,206), 
         18px 18px 0 rgb(4,77,145), 
         21px 21px 0 rgb(42,21,113); 
-    margin-bottom: 
-    12px; padding: 5%
+    margin-bottom: 12px; 
+    padding: 5%
 `;
 
 export default rainbowConsoleLogStyles;
