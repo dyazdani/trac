@@ -1,4 +1,4 @@
-const rainbowConsoleLogStyles: string = `
+const consoleLogStyles: string = `
     font-weight: bold; 
     font-size: 50px;
     color: #17689c; 
@@ -6,4 +6,4 @@ const rainbowConsoleLogStyles: string = `
     padding: 5%
 `;
 
-export default rainbowConsoleLogStyles;
+export default consoleLogStyles;
