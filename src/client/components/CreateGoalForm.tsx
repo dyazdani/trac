@@ -74,8 +74,6 @@ const CreateGoalForm = ({isOpenForGoal, onCloseForGoal}: CreateGoalFormProps) =>
                                             dueDate: datepickerValue
                                         }).unwrap()
 
-                                        console.log(goal)
-
                                         onCloseForGoal()
 
                                         toast({

@@ -94,8 +94,6 @@ const UpdateGoalButton = ({goal}: UpdateGoalMenuItemProps) => {
                                                 }
                                             }).unwrap()
 
-                                            console.log(updatedGoal)
-
                                             onCloseForUpdateGoal()
 
                                             toast({

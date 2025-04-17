@@ -85,11 +85,8 @@ const RegisterForm = () => {
             const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             const response = await register({ email, username, password }).unwrap();
 
-            console.log(response)
-
             if (response.user) {
                 const knockUser = await identifyUser({id: String(response.user?.id), email, username, timezone})
-                console.log(knockUser)
             } 
 
             if (
@@ -287,10 +284,8 @@ const RegisterForm = () => {
                                     if (!isUsersLoading && data) {
                                         const isUsernameFree = data.users.every(element => element.user.username !== e.target.value)
                                         if (isUsernameFree) {
-                                            console.log("Username not taken")
                                             setIsUsernameTaken(false);
                                         } else {
-                                            console.log("Username taken")
                                             setIsUsernameTaken(true);
                                         }
                                     }

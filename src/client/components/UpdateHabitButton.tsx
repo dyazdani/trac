@@ -128,17 +128,11 @@ const UpdateHabitButton = ({habit}: UpdateHabitButtonProps) => {
                                                 scheduleId: habit.scheduleId
                                             }}).unwrap()
 
-                                        console.log(newHabit)  
-                                        console.log(routine) 
-                                        console.log(checkIn)
-
                                         if (checkIn.dayOfTheWeek !== habit.checkIn.dayOfTheWeek) {
                                             const { schedules } = await updateSchedule({
                                                 scheduleIds: [habit.scheduleId],
                                                 days: [DaysOfWeek[menuValue.slice(0, 3) as keyof typeof DaysOfWeek]]
                                             }).unwrap()
-
-                                            console.log("updatedSchedules: ", schedules);
                                         }
                                         onClose();
                                         toast({

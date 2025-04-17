@@ -151,8 +151,6 @@ const CreateHabitButton = ({goal}: CreateHabitButtonProps) => {
 
                                             onClose()
 
-                                            console.log(schedules)
-
                                             toast({
                                                 title: 'Habit Created',
                                                 description: `"${habit.name}" added to Goal "${goal.name}"`,
